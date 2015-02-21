@@ -9,7 +9,7 @@ Autor
 * Rogério Gomes Lopes Moreira (74634)
 * Samuel Ferreira
 
-Informação geral
+General information
 ----------------
 
 Some information about Lightbot game:

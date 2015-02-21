@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<meta http-equiv='X-UA-Compatible' content='chrome=1' />
+<meta http-equiv='Content-Type' content='text/html;charset=utf-8' />
+<title>Tabuleiro Lightbot</title>
+<script type='text/javascript' src='http://www.x3dom.org/release/x3dom.js'></script>
+<link rel='stylesheet' type='text/css' href='style.css'/>
+</head>
+<body>
+<center>
+<h1>Tabuleiro Lightbot</h1>
+</center>
+<center>
+<p class='case'>
+<X3D xmlns='http://www.web3d.org/specifications/x3d-namespace' id='boxes' showStat='false' showLog='false'>
+<scene>
+<Viewpoint position='1.5 2.0 11' orientation='0 0 1 2' centerOfRotation='1.5 2.0 0' description='camera'></Viewpoint>
+<shape DEF='quadrado'>
+<Appearance>
+<material diffuseColor='.3 .3 .3'/>
+</Appearance>
+<box size='.99 .99 .99'/>
+</shape>
+<shape DEF='quadradol'>
+<appearance>
+<material diffuseColor='0 0 1.0'/>
+</appearance> <box size='.99 .99 .99'/>
+</shape>
+<transform DEF = 'robot'>
+<transform scale='.5 .5 .5'>
+<transform translation='0 0 1.4'  scale='0.8 0.7 .7'>
+<shape>
+<appearance>
+<material diffuseColor='0.7 0.7 0.7'/>
+</appearance>
+<sphere></sphere>
+</shape>
+</transform>
+<transform translation='0 0 0' rotation='0 0 1 3.2' scale='1 1 1'>,
+<shape>
+<appearance>
+<material diffuseColor='0.7 0.7 0.7'/>
+</appearance>
+<sphere></sphere>
+</shape>
+</transform>
+<transform translation='0 0.2 2.5' rotation='0 0 0 0' scale='.1 .1 .1'>
+<shape>
+<appearance>
+<material diffuseColor='1 1 1'/>
+</appearance>
+<sphere></sphere>
+</shape>
+</transform>
+<transform translation='0 0.2 2.3' rotation='0 0 0 0' scale='0.03 0.03 0.3'>
+<shape>
+<appearance>
+<material diffuseColor='0.7 0.7 0.7'/>
+</appearance>
+<sphere></sphere>
+</shape>
+</transform>
+<transform translation='-.3 .7 1.4' scale='.15 .05 .15'>
+<shape>
+<appearance>
+<material diffuseColor='1 1 1'/>
+</appearance>
+<sphere></sphere>
+</shape>
+</transform>
+<transform translation='.3 .7 1.4' scale='.15 .05 .15'>
+<shape>
+<appearance>
+<material diffuseColor='1 1 1'/>
+</appearance>
+<sphere></sphere>
+</shape>
+</transform>
+<transform translation='0 0.71 1.1' scale='.2 0 .075'>
+<shape>
+<appearance>
+<material diffuseColor='1 1 1'/>
+</appearance>
+<sphere></sphere>
+</shape>
+</transform>
+</transform>
+</transform>
+<transform translation='0 0 1'><shape USE='quadradol'/></transform>
+<transform translation='0 0 0'><shape USE='quadrado'/></transform>
+<transform translation='0 1 1'><shape USE='quadrado'/></transform>
+<transform translation='0 1 0'><shape USE='quadrado'/></transform>
+<transform translation='0 2 0'><shape USE='quadrado'/></transform>
+<transform translation='0 3 0'><shape USE='quadrado'/></transform>
+<transform translation='1 0 0'><shape USE='quadrado'/></transform>
+<transform translation='1 1 0'><shape USE='quadrado'/></transform>
+<transform translation='1 2 1'><shape USE='quadrado'/></transform>
+<transform translation='1 2 0'><shape USE='quadrado'/></transform>
+<transform translation='1 3 1'><shape USE='quadradol'/></transform>
+<transform translation='1 3 0'><shape USE='quadrado'/></transform>
+<transform translation='2 0 1'><shape USE='quadradol'/></transform>
+<transform translation='2 0 0'><shape USE='quadrado'/></transform>
+<transform translation='2 1 1'><shape USE='quadrado'/></transform>
+<transform translation='2 1 0'><shape USE='quadrado'/></transform>
+<transform translation='2 2 0'><shape USE='quadrado'/></transform>
+<transform translation='2 3 0'><shape USE='quadrado'/></transform>
+<timeSensor DEF='time' cycleInterval='21' loop='true'> </timeSensor>
+<PositionInterpolator DEF='move' key='0 5.0e-2 0.1 0.15 0.2 0.25 0.3 0.35000002 0.40000004 0.45000005 0.50000006 0.5500001 0.6000001 0.6500001 0.7000001 0.7500001 0.80000013 0.85000014 0.90000015 0.95000017 1' keyValue='0 3 1  0 2 1  0 1 2  0 0 2  0 0 2  0 0 2  0 0 2  0 0 2  0 0 2  1 0 1  1 0 1  1 1 1  1 2 2  1 3 2  1 3 2  1 3 2  2 3 1  2 3 1  2 2 1  2 1 2  2 0 2  2 0 2 '> </PositionInterpolator>
+<Route fromNode='time' fromField ='fraction_changed' toNode='move' toField='set_fraction'> </Route>
+<Route fromNode='move' fromField ='value_changed' toNode='robot' toField='translation'> </Route>
+<orientationInterpolator DEF='roda' key='0 0.35000002 0.39761906761904764 0.45000005 0.4976190976190476 0.7000001 0.7476191476190477 0.80000013 0.8476191776190476 1' keyValue='0 0 1 3.14 0 0 1 3.14  0 0 1 4.71   0 0 1 4.71  0 0 1 6.28   0 0 1 6.28  0 0 1 4.71   0 0 1 4.71  0 0 1 3.1399999   0 0 1 3.1399999 '></orientationInterpolator>
+<ROUTE fromNode='time' fromField='fraction_changed' toNode='roda' toField='set_fraction'></Route>
+<ROUTE fromNode='roda' fromField='value_changed' toNode='robot' toField='set_rotation'></Route>
+</scene> </X3D> </p> </body> </html>

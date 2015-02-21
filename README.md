@@ -31,7 +31,7 @@ Makefile
 Other stuff
 -------------
 
-#### Space erros Haskell
+#### Space errors (Haskell)
 
 Use this specific preferences in Sublime Text (preferrences-settings-syntax specific):
 

@@ -6,8 +6,8 @@ Computer labs project (UMinho/LEI - 1 ano)
 Autor
 -----
 
-Rogério Gomes Lopes Moreira (74634)
-Samuel Ferreira
+* Rogério Gomes Lopes Moreira (74634)
+* Samuel Ferreira
 
 Informação geral
 ----------------

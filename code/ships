@@ -1,0 +1,11 @@
+O tabuleiro tem de ter 10 navios:
+1 Battleship		<##>
+2 Cruisers		<#> <#>
+3 Destroyers		<> <> <>
+4 Submarines		O O O O  
+
+Outros símbolos:
+'.' para indicar que algo está indefinido;
+'o' para indicar que está ocupado mas ainda não se sabe com o quê
+'~' àgua
+

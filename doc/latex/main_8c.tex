@@ -1,0 +1,188 @@
+\hypertarget{main_8c}{}\section{main.\+c File Reference}
+\label{main_8c}\index{main.\+c@{main.\+c}}
+{\ttfamily \#include \char`\"{}header.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{main_8c_a314372e535e866722bd17db02f387421}{init\+L\+C\+H\+R} (\hyperlink{header_8h_acd492c0f13149abfdbdc3c684f56cbad}{L\+C\+H\+R} $\ast$\hyperlink{structlchr}{lchr})
+\item 
+void \hyperlink{main_8c_ae7a8dc51221ae93196dfa17b60542b8e}{carregar} (F\+I\+L\+E $\ast$var, \hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$\hyperlink{structtab}{tab})
+\item 
+\hyperlink{header_8h_acd492c0f13149abfdbdc3c684f56cbad}{L\+C\+H\+R} \hyperlink{main_8c_ad19f8ed125da7fe828d2eeaead7f0adc}{backup} (\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$prev, \hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$next, \hyperlink{header_8h_acd492c0f13149abfdbdc3c684f56cbad}{L\+C\+H\+R} \hyperlink{structlchr}{lchr}, int flag)
+\item 
+int \hyperlink{main_8c_aa8e0e39e43f62eef0eb0a32c9d23fcda}{is\+Same} (\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$tab1, \hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$tab2)
+\item 
+\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} \hyperlink{main_8c_a134b4f5fc54fd39c19bc66444409005d}{mostrar} (\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} x)
+\item 
+void \hyperlink{main_8c_a5449dae0c0fbfb21a1f115e591b703fd}{colocar} (\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$\hyperlink{structtab}{tab}, char c, int x, int y)
+\item 
+void \hyperlink{main_8c_a4eebea202611d1926cfefcc593e92357}{preencherl} (\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$\hyperlink{structtab}{tab}, int x)
+\item 
+void \hyperlink{main_8c_a6c08e03e13ee753d4b36839005f1d1f2}{preencherc} (\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$\hyperlink{structtab}{tab}, int y)
+\item 
+void \hyperlink{main_8c_a3379ad84b2a516ee1ff8a36de2688915}{escrever} (F\+I\+L\+E $\ast$var, \hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$\hyperlink{structtab}{tab})
+\item 
+int \hyperlink{main_8c_a4101ba830e7902562b75f16a46b79b1e}{validar} (\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} \hyperlink{structtab}{tab})
+\item 
+int \hyperlink{main_8c_a9fcb967cc442f91ee60d0fee137b3402}{validar\+Aux} (\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} \hyperlink{structtab}{tab})
+\item 
+void \hyperlink{main_8c_a13f5cd63c8dbf8f0ef88a254dd2d9923}{E1} (\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$\hyperlink{structtab}{tab})
+\item 
+void \hyperlink{main_8c_a7c6555437f1976a32a6744a58716916e}{E2} (\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$\hyperlink{structtab}{tab})
+\item 
+void \hyperlink{main_8c_a3e59499177be26b72f6353d4e7c08d59}{E3} (\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$\hyperlink{structtab}{tab})
+\item 
+void \hyperlink{main_8c_a8b307504695cfe10460999204749bb8d}{resolver\+Tab} (\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$\hyperlink{structtab}{tab})
+\item 
+void \hyperlink{main_8c_aad8e89126fc43c967d23e22b3d1f5bad}{criar\+Tab} (\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$\hyperlink{structtab}{tab}, int l, int c)
+\item 
+int \hyperlink{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{main_8c_ad19f8ed125da7fe828d2eeaead7f0adc}{}\index{main.\+c@{main.\+c}!backup@{backup}}
+\index{backup@{backup}!main.\+c@{main.\+c}}
+\subsubsection[{backup}]{\setlength{\rightskip}{0pt plus 5cm}{\bf L\+C\+H\+R} backup (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+A\+B} $\ast$}]{prev, }
+\item[{{\bf T\+A\+B} $\ast$}]{next, }
+\item[{{\bf L\+C\+H\+R}}]{lchr, }
+\item[{int}]{flag}
+\end{DoxyParamCaption}
+)}\label{main_8c_ad19f8ed125da7fe828d2eeaead7f0adc}
+\hypertarget{main_8c_ae7a8dc51221ae93196dfa17b60542b8e}{}\index{main.\+c@{main.\+c}!carregar@{carregar}}
+\index{carregar@{carregar}!main.\+c@{main.\+c}}
+\subsubsection[{carregar}]{\setlength{\rightskip}{0pt plus 5cm}void carregar (
+\begin{DoxyParamCaption}
+\item[{F\+I\+L\+E $\ast$}]{var, }
+\item[{{\bf T\+A\+B} $\ast$}]{tab}
+\end{DoxyParamCaption}
+)}\label{main_8c_ae7a8dc51221ae93196dfa17b60542b8e}
+Utilizamos fgets para armazenar a informação inserida no terminal com espaços, sendo posteriormente \char`\"{}processada\char`\"{} por sscanf de forma a (na estrutura tab) indicar o número de linhas e colunas respetivamente.
+
+Introdução do número de segmentos por linha.
+
+Será inserido no elemento de índice i no vetor o valor introduzido anteriormente.
+
+Irá copiar o resto para linha de forma a ser novamente \char`\"{}processado\char`\"{}.
+
+Vai preencher as entradas do tabuleiro consoante a informação dada.
+
+Informação para preencher uma linha do tabuleiro. \hypertarget{main_8c_a5449dae0c0fbfb21a1f115e591b703fd}{}\index{main.\+c@{main.\+c}!colocar@{colocar}}
+\index{colocar@{colocar}!main.\+c@{main.\+c}}
+\subsubsection[{colocar}]{\setlength{\rightskip}{0pt plus 5cm}void colocar (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+A\+B} $\ast$}]{tab, }
+\item[{char}]{c, }
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}\label{main_8c_a5449dae0c0fbfb21a1f115e591b703fd}
+\hypertarget{main_8c_aad8e89126fc43c967d23e22b3d1f5bad}{}\index{main.\+c@{main.\+c}!criar\+Tab@{criar\+Tab}}
+\index{criar\+Tab@{criar\+Tab}!main.\+c@{main.\+c}}
+\subsubsection[{criar\+Tab}]{\setlength{\rightskip}{0pt plus 5cm}void criar\+Tab (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+A\+B} $\ast$}]{tab, }
+\item[{int}]{l, }
+\item[{int}]{c}
+\end{DoxyParamCaption}
+)}\label{main_8c_aad8e89126fc43c967d23e22b3d1f5bad}
+Função que cria um tabuleiro, correspondente ao comando G \hypertarget{main_8c_a13f5cd63c8dbf8f0ef88a254dd2d9923}{}\index{main.\+c@{main.\+c}!E1@{E1}}
+\index{E1@{E1}!main.\+c@{main.\+c}}
+\subsubsection[{E1}]{\setlength{\rightskip}{0pt plus 5cm}void E1 (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+A\+B} $\ast$}]{tab}
+\end{DoxyParamCaption}
+)}\label{main_8c_a13f5cd63c8dbf8f0ef88a254dd2d9923}
+Função principal da estratégia 1 que coloca água à volta de todos os navios que já estão no tabuleiro \hypertarget{main_8c_a7c6555437f1976a32a6744a58716916e}{}\index{main.\+c@{main.\+c}!E2@{E2}}
+\index{E2@{E2}!main.\+c@{main.\+c}}
+\subsubsection[{E2}]{\setlength{\rightskip}{0pt plus 5cm}void E2 (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+A\+B} $\ast$}]{tab}
+\end{DoxyParamCaption}
+)}\label{main_8c_a7c6555437f1976a32a6744a58716916e}
+Função principal da estratégia 2 que coloca água nas linhas e colunas em que todos os segmentos de barcos já foram colocados \hypertarget{main_8c_a3e59499177be26b72f6353d4e7c08d59}{}\index{main.\+c@{main.\+c}!E3@{E3}}
+\index{E3@{E3}!main.\+c@{main.\+c}}
+\subsubsection[{E3}]{\setlength{\rightskip}{0pt plus 5cm}void E3 (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+A\+B} $\ast$}]{tab}
+\end{DoxyParamCaption}
+)}\label{main_8c_a3e59499177be26b72f6353d4e7c08d59}
+Função Principal da estratégia 3 que coloca segmentos de barcos nas linhas e colunas nas quais todos os espaços vazios. \hypertarget{main_8c_a3379ad84b2a516ee1ff8a36de2688915}{}\index{main.\+c@{main.\+c}!escrever@{escrever}}
+\index{escrever@{escrever}!main.\+c@{main.\+c}}
+\subsubsection[{escrever}]{\setlength{\rightskip}{0pt plus 5cm}void escrever (
+\begin{DoxyParamCaption}
+\item[{F\+I\+L\+E $\ast$}]{var, }
+\item[{{\bf T\+A\+B} $\ast$}]{tab}
+\end{DoxyParamCaption}
+)}\label{main_8c_a3379ad84b2a516ee1ff8a36de2688915}
+Função que escrever num ficheiro o tabuleiro atual \hypertarget{main_8c_a314372e535e866722bd17db02f387421}{}\index{main.\+c@{main.\+c}!init\+L\+C\+H\+R@{init\+L\+C\+H\+R}}
+\index{init\+L\+C\+H\+R@{init\+L\+C\+H\+R}!main.\+c@{main.\+c}}
+\subsubsection[{init\+L\+C\+H\+R}]{\setlength{\rightskip}{0pt plus 5cm}void init\+L\+C\+H\+R (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+H\+R} $\ast$}]{lchr}
+\end{DoxyParamCaption}
+)}\label{main_8c_a314372e535e866722bd17db02f387421}
+\hypertarget{main_8c_aa8e0e39e43f62eef0eb0a32c9d23fcda}{}\index{main.\+c@{main.\+c}!is\+Same@{is\+Same}}
+\index{is\+Same@{is\+Same}!main.\+c@{main.\+c}}
+\subsubsection[{is\+Same}]{\setlength{\rightskip}{0pt plus 5cm}int is\+Same (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+A\+B} $\ast$}]{tab1, }
+\item[{{\bf T\+A\+B} $\ast$}]{tab2}
+\end{DoxyParamCaption}
+)}\label{main_8c_aa8e0e39e43f62eef0eb0a32c9d23fcda}
+Função que compara dois tabuleiros para saber se são iguais, 1 corresponde a diferentes e 0 a iguais \hypertarget{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{}\index{main.\+c@{main.\+c}!main@{main}}
+\index{main@{main}!main.\+c@{main.\+c}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}
+A informação da estrutura passará a ser aquela que introduzirmos. \hypertarget{main_8c_a134b4f5fc54fd39c19bc66444409005d}{}\index{main.\+c@{main.\+c}!mostrar@{mostrar}}
+\index{mostrar@{mostrar}!main.\+c@{main.\+c}}
+\subsubsection[{mostrar}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+A\+B} mostrar (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+A\+B}}]{x}
+\end{DoxyParamCaption}
+)}\label{main_8c_a134b4f5fc54fd39c19bc66444409005d}
+Tal como sugere, quando invocada mostrar imprime no ecrã o tabuleiro. No fim de cada linha é impresso o número de segmentos na mesma e avança de linha.
+
+Imprime sequencialmente o número de segmentos por coluna. \hypertarget{main_8c_a6c08e03e13ee753d4b36839005f1d1f2}{}\index{main.\+c@{main.\+c}!preencherc@{preencherc}}
+\index{preencherc@{preencherc}!main.\+c@{main.\+c}}
+\subsubsection[{preencherc}]{\setlength{\rightskip}{0pt plus 5cm}void preencherc (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+A\+B} $\ast$}]{tab, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}\label{main_8c_a6c08e03e13ee753d4b36839005f1d1f2}
+\hypertarget{main_8c_a4eebea202611d1926cfefcc593e92357}{}\index{main.\+c@{main.\+c}!preencherl@{preencherl}}
+\index{preencherl@{preencherl}!main.\+c@{main.\+c}}
+\subsubsection[{preencherl}]{\setlength{\rightskip}{0pt plus 5cm}void preencherl (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+A\+B} $\ast$}]{tab, }
+\item[{int}]{x}
+\end{DoxyParamCaption}
+)}\label{main_8c_a4eebea202611d1926cfefcc593e92357}
+Vai substituir \textquotesingle{}.\textquotesingle{} por \textquotesingle{}$\sim$\textquotesingle{} numa linha. \hypertarget{main_8c_a8b307504695cfe10460999204749bb8d}{}\index{main.\+c@{main.\+c}!resolver\+Tab@{resolver\+Tab}}
+\index{resolver\+Tab@{resolver\+Tab}!main.\+c@{main.\+c}}
+\subsubsection[{resolver\+Tab}]{\setlength{\rightskip}{0pt plus 5cm}void resolver\+Tab (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+A\+B} $\ast$}]{tab}
+\end{DoxyParamCaption}
+)}\label{main_8c_a8b307504695cfe10460999204749bb8d}
+Função que resolve o tabuleiro apenas aplicado as estratégias E1,E2 e E3 \hypertarget{main_8c_a4101ba830e7902562b75f16a46b79b1e}{}\index{main.\+c@{main.\+c}!validar@{validar}}
+\index{validar@{validar}!main.\+c@{main.\+c}}
+\subsubsection[{validar}]{\setlength{\rightskip}{0pt plus 5cm}int validar (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+A\+B}}]{tab}
+\end{DoxyParamCaption}
+)}\label{main_8c_a4101ba830e7902562b75f16a46b79b1e}
+\hypertarget{main_8c_a9fcb967cc442f91ee60d0fee137b3402}{}\index{main.\+c@{main.\+c}!validar\+Aux@{validar\+Aux}}
+\index{validar\+Aux@{validar\+Aux}!main.\+c@{main.\+c}}
+\subsubsection[{validar\+Aux}]{\setlength{\rightskip}{0pt plus 5cm}int validar\+Aux (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+A\+B}}]{tab}
+\end{DoxyParamCaption}
+)}\label{main_8c_a9fcb967cc442f91ee60d0fee137b3402}
+Função de validação do tabuleiro com várias etapas 

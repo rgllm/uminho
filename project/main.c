@@ -1,73 +1,80 @@
 #include <stdio.h>
 #include <string.h>
-/*
-#include "clientes.h"
-#include "produtos.h"
-#include "vendas.h"
-*/
-#define MAXBUFF 64
 
-void main()
-{
-	int c,j,i,nc,np;
-	char buffer[MAXBUFF], clientes[20000][10], produtos[200000][10];
-	char* aux;
-	FILE *fp;
+#define MAXBUFF 128
 
-	//CLIENTES
-	c=0;
-	fp=fopen("files/Clientes.txt","r"); 
-	while( fgets (buffer, MAXBUFF, fp)!=NULL ) 
-    {
-    	strcpy(clientes[c],buffer);
-    	strtok(clientes[c],"\r\n");
-      	c++;
-    }
-    printf("Clientes : %d\n",c );
-    fclose(fp);
+char aclientes[20000][10], aprodutos[200000][10];
 
-    nc=c;
+int nclientes(){
 
-    // PRODUTOS
-    c=0;
-    fp=fopen("files/Produtos.txt","r");
-    while( fgets (buffer, MAXBUFF, fp)!=NULL ) 
-    {
-    	strcpy(produtos[c],buffer);
-    	strtok(produtos[c],"\r\n");
-      	c++;
-    }
-    printf("Produtos : %d\n",c );
-    fclose(fp);
-    np=c;
+char buffer[MAXBUFF];
+int n=0;
+FILE *fp=fopen("files/Clientes.txt","r");
 
-	//VENDAS
-	char *s1,*s2;
+while( fgets (buffer, MAXBUFF, fp)){
+		strcpy(aclientes[n],buffer);
+		strtok(aclientes[n],"\r\n");
+	   n++;
+	}
 
-	c=0;
-    fp=fopen("files/Vendas1.txt","r");
-    while( fgets(buffer, MAXBUFF, fp)!=NULL ) 
-    {
-  		s1=strtok(buffer," ");
-    	strtok(NULL," ");
-    	strtok(NULL," ");
-    	strtok(NULL," ");
-    	s2=strtok(NULL," ");
-    	for(i = 0; i < nc; i++)
-		{
-		    if(!strcmp(clientes[i],s2))
-		    {
-		        for(j = 0; j < np; j++)
-				{
-				    if(!strcmp(produtos[i],s1))
-				    {
-				        c++;
-				    }
-				}
-		    }
+fclose(fp);
+return n;
+}
+
+int nprodutos(){
+
+char buffer[MAXBUFF];
+int n=0;
+FILE *fp=fopen("files/Produtos.txt","r");
+
+while( fgets (buffer, MAXBUFF, fp)){
+	strcpy(aprodutos[n],buffer);
+	strtok(aprodutos[n],"\r\n");
+	n++;
+}
+fclose(fp);
+return n;
+}
+
+
+
+int nvendas(int clientes, int produtos){
+
+int n=0,i,j;
+char buffer[MAXBUFF];
+char* aux;
+char *s1,*s2;
+FILE *fp=fopen("files/Vendas1.txt","r");
+
+while( fgets(buffer, MAXBUFF, fp)){
+	s1=strtok(buffer," ");
+	strtok(NULL," ");
+	strtok(NULL," ");
+	strtok(NULL," ");
+	s2=strtok(NULL," ");
+for(i = 0; i < clientes; i++){
+	if(!strcmp(aclientes[i],s2)){
+		for(j = 0; j <produtos; j++){
+			if(!strcmp(aprodutos[i],s1)) n++;
 		}
-    }
-    printf("Vendas : %d \n",c );
-    fclose(fp);
+	}
+}
+}
 
+fclose(fp);
+return n;
+}
+
+
+int main(){
+int clientes,produtos,vendas;
+
+clientes=nclientes();
+printf("Número de Clientes : %d\n",clientes );
+produtos=nprodutos();
+printf("Número de Produtos : %d\n",produtos );
+vendas=nvendas(clientes, produtos);
+printf("Número de Vendas : %d\n",clientes );
+
+return 1;
 }

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "avlLib/avl.h"
 
 #define MAXBUFF 128
 
@@ -65,10 +66,33 @@ fclose(fp);
 return n;
 }
 
+/*
+void carregaClientes(avl_table * clientes[]){
+	int n=0;
+	char buffer[MAXBUFF];
+	FILE *fp=fopen("files/Clientes.txt","r");
 
+	for(i=0;i<26;i++){
+		clientes[i]=avl_create (strcmp, void *,
+                              struct libavl_allocator *);
+	}
+	while( fgets (buffer, MAXBUFF, fp)){
+			strcpy(lista[n],buffer);
+			strtok(lista[n],"\r\n");
+		   	avl_t_insert (struct avl_traverser *, struct avl_table *, void *);
+		}
+
+	fclose(fp);
+
+}
+
+*/
 int main(){
 int clientes,produtos,vendas;
-
+/*
+avl_table aClientes[26];
+carregaClientes(&aClientes);
+*/
 clientes=nclientes();
 printf("Número de Clientes : %d\n",clientes );
 produtos=nprodutos();

@@ -1,43 +1,30 @@
 #include <stdio.h>
 #include <string.h>
+<<<<<<< HEAD
+=======
+#include <stdlib.h>
+#define MAXBUFF 64
+>>>>>>> 6b2b31d70ef5a906a049d6a34e68dc1e996fb0ae
 
-#define MAXBUFF 128
+void main(){
 
-char aclientes[20000][10], aprodutos[200000][10];
+	int c=0,j,i,nc,np;
+	char buffer[MAXBUFF], clientes[20000][10], produtos[200000][10];
+	FILE *fp;
 
-int nclientes(){
+//CLIENTES
+	fp = fopen( "files/Clientes.txt", "r" );
+	while (fgets(buffer, MAXBUFF,fp)!=NULL) {strcpy(clientes[c],buffer);strtok(clientes[c],"\r\n");c++;}
+	printf("%d\n", c);
+	fclose(fp);
+	nc=c;
 
-char buffer[MAXBUFF];
-int n=0;
-FILE *fp=fopen("files/Clientes.txt","r");
+//PRODUTOS
+	c=0;
+	fp = fopen( "files/Produtos.txt", "r" );
+	while (fgets(buffer, MAXBUFF,fp)!=NULL) {strcpy(produtos[c],buffer);strtok(produtos[c],"\r\n");c++;}
 
-while( fgets (buffer, MAXBUFF, fp)){
-		strcpy(aclientes[n],buffer);
-		strtok(aclientes[n],"\r\n");
-	   n++;
-	}
-
-fclose(fp);
-return n;
-}
-
-int nprodutos(){
-
-char buffer[MAXBUFF];
-int n=0;
-FILE *fp=fopen("files/Produtos.txt","r");
-
-while( fgets (buffer, MAXBUFF, fp)){
-	strcpy(aprodutos[n],buffer);
-	strtok(aprodutos[n],"\r\n");
-	n++;
-}
-fclose(fp);
-return n;
-}
-
-
-
+<<<<<<< HEAD
 int nvendas(int nclientes, int nprodutos){
 
 int c=0,i,j;
@@ -74,4 +61,33 @@ vendas=nvendas(clientes, produtos);
 printf("Número de Vendas : %d\n",clientes );
 
 return 1;
+=======
+	printf("%d\n", c);
+	fclose(fp);
+	np=c;
+
+//VENDAS
+	c=0;i=0;
+	char* s1, *s2;
+	fp = fopen( "files/Vendas1.txt", "r" );
+	while (fgets(buffer, MAXBUFF,fp)!=NULL){
+			s1=strtok(buffer," ");
+			strtok(NULL," ");
+			strtok(NULL," ");
+			strtok(NULL," ");
+			s2=strtok(NULL," ");
+
+			for(i = 0; i < nc; i++)
+
+		   		 if(strcmp(clientes[i],s2)==0)
+
+		     			for(j = 0; j < np; j++)
+
+			 		  		if(strcmp(produtos[j],s1)==0) {c++; break;}
+
+		    }
+
+    printf("%d\n", c);
+	fclose(fp);
+>>>>>>> 6b2b31d70ef5a906a049d6a34e68dc1e996fb0ae
 }

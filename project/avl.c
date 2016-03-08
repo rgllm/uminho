@@ -20,13 +20,11 @@ int altura(nodo *raiz){
     return 0;
 }
 
-void ajustaAltura(nodo *raiz){    
+void ajustaAltura(nodo *raiz){
     raiz->altura = 1 + max(altura(raiz->esq), altura(raiz->dir));
 }
 
-/* We can assume nodo->esq is non-null due to how this is called */
 nodo *rodaDir(nodo *raiz){
-    /* Fix pointers */
     nodo *new = raiz->esq;
     if (raiz->pai)
     {
@@ -39,16 +37,14 @@ nodo *rodaDir(nodo *raiz){
     if (raiz->esq) raiz->esq->pai = raiz;
     new->dir = raiz;
 
-    /* Fix alturas; raiz and new may be wrong. Do bottom-up */
     ajustaAltura(raiz);
     ajustaAltura(new);
     return new;
 }
 
-/* We can assume nodo->dir is non-null due to how this is called */
 nodo *rodaEsq(nodo *raiz)
 {
-    /* Fix pointers */
+
     nodo *new = raiz->dir;
     if (raiz->pai)
     {
@@ -61,7 +57,6 @@ nodo *rodaEsq(nodo *raiz)
     if (raiz->dir) raiz->dir->pai = raiz;
     new->esq = raiz;
 
-    /* Fix alturas; raiz and new may be wrong */
     ajustaAltura(raiz);
     ajustaAltura(new);
     return new;
@@ -108,35 +103,10 @@ nodo *balance(nodo *raiz)
     return raiz;
 }
 
-
-
-
-
-
-void print_tree_indent(nodo *nodo, int indent)
-{
-    int i;
-    for (i = 0; i < indent; i++) printf(" ");
-    if (!nodo) printf("Empty child\n");
-    else
-    {
-        printf("nodo: %s; altura: %d\n", nodo->codigo, nodo->altura);
-        print_tree_indent(nodo->esq, indent + 4);
-        print_tree_indent(nodo->dir, indent + 4);
-    }
-}
-
-void print_tree(nodo *nodo)
-{
-    print_tree_indent(nodo, 0);
-}
-
-
 nodo *insert(char codigo[],nodo *raiz)
 {
     nodo *aux = raiz;
-    int cmp;
-    while (!cmp)
+    while (strcmp(codigo,aux->codigo))
     {
         if (strcmp(codigo,aux->codigo)<0)
         {
@@ -156,35 +126,50 @@ nodo *insert(char codigo[],nodo *raiz)
                 aux = aux->dir;
             }
         }
-        else return raiz; /* codigoue was in the tree, dumbass */
+        else return raiz;
     }
-    
+
     do
     {
-        
+
         aux  = aux->pai;
-        //printf("akldmasdaszd  aux->altura: %d \n",aux->altura);
         ajustaAltura(aux);
-        print_tree(aux);
         aux = balance(aux);
     } while (aux->pai);
-    
+
     return aux;
 }
 
-/* Tests to make sure above code actually works */
 
+/*
+void print_tree_indent(nodo *nodo, int indent)
+{
+    int i;
+    for (i = 0; i < indent; i++) printf(" ");
+    if (!nodo) printf("*\n");
+    else
+    {
+        printf("NODO: %s; altura: %d\n", nodo->codigo, nodo->altura);
+        print_tree_indent(nodo->esq, indent + 4);
+        print_tree_indent(nodo->dir, indent + 4);
+    }
+}
+
+void print_tree(nodo *nodo)
+{
+    print_tree_indent(nodo, 0);
+}
 
 
 int main(int argc, char *argv[])
 {;
     nodo *raiz = criaNodo("ddddd", NULL);
-    raiz = insert("fffffff",raiz);;
+    raiz = insert("fffffff",raiz);
     raiz = insert("aaaaaa",raiz);
-    raiz = insert("aaaaab",raiz);
+    raiz = insert("zzzz",raiz);
     raiz = insert("bbab",raiz);
-
     print_tree(raiz);
-    
+
     return 0;
 }
+*/

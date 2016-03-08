@@ -66,33 +66,33 @@ fclose(fp);
 return n;
 }
 
-/*
-void carregaClientes(avl_table * clientes[]){
-	int n=0;
+
+void carregaClientes(struct avl_table * clientes[]){
+	int i=0;
+	char aux[10];
 	char buffer[MAXBUFF];
 	FILE *fp=fopen("files/Clientes.txt","r");
 
 	for(i=0;i<26;i++){
-		clientes[i]=avl_create (strcmp, void *,
-                              struct libavl_allocator *);
+		clientes[i]=avl_create(strcmp,NULL,&avl_allocator_default);
 	}
 	while( fgets (buffer, MAXBUFF, fp)){
-			strcpy(lista[n],buffer);
-			strtok(lista[n],"\r\n");
-		   	avl_t_insert (struct avl_traverser *, struct avl_table *, void *);
+			strcpy(aux,buffer);
+			strtok(aux,"\r\n");
+		   	avl_t_insert (clientes[(aux[0]-65)], aux);
 		}
 
 	fclose(fp);
 
 }
 
-*/
+
 int main(){
 int clientes,produtos,vendas;
-/*
-avl_table aClientes[26];
+
+struct avl_table aClientes[26];
 carregaClientes(&aClientes);
-*/
+
 clientes=nclientes();
 printf("Número de Clientes : %d\n",clientes );
 produtos=nprodutos();

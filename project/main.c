@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include "avlLib/avl.h"
 
 #define MAXBUFF 128
 
@@ -39,59 +38,33 @@ return n;
 
 
 
-int nvendas(int clientes, int produtos){
+int nvendas(int nclientes, int nprodutos){
 
-int n=0,i,j;
+int c=0,i,j;
 char buffer[MAXBUFF];
-char* aux;
-char *s1,*s2;
-FILE *fp=fopen("files/Vendas1.txt","r");
-
-while( fgets(buffer, MAXBUFF, fp)){
+char* s1, *s2;
+FILE *fp= fopen( "files/Vendas1.txt", "r" );
+while (fgets(buffer, MAXBUFF,fp)!=NULL){
 	s1=strtok(buffer," ");
 	strtok(NULL," ");
 	strtok(NULL," ");
 	strtok(NULL," ");
 	s2=strtok(NULL," ");
-for(i = 0; i < clientes; i++){
-	if(!strcmp(aclientes[i],s2)){
-		for(j = 0; j <produtos; j++){
-			if(!strcmp(aprodutos[i],s1)) n++;
-		}
-	}
-}
+
+	for(i = 0; i < nclientes; i++)
+		if(strcmp(aclientes[i],s2)==0)
+			for(j = 0; j < nprodutos; j++)
+				if(strcmp(aprodutos[j],s1)==0) {c++; break;}
+
 }
 
+printf("%d\n", c);
 fclose(fp);
-return n;
-}
-
-
-void carregaClientes(struct avl_table * clientes[]){
-	int i=0;
-	char aux[10];
-	char buffer[MAXBUFF];
-	FILE *fp=fopen("files/Clientes.txt","r");
-
-	for(i=0;i<26;i++){
-		clientes[i]=avl_create(strcmp,NULL,&avl_allocator_default);
-	}
-	while( fgets (buffer, MAXBUFF, fp)){
-			strcpy(aux,buffer);
-			strtok(aux,"\r\n");
-		   	avl_t_insert (clientes[(aux[0]-65)], aux);
-		}
-
-	fclose(fp);
-
 }
 
 
 int main(){
 int clientes,produtos,vendas;
-
-struct avl_table aClientes[26];
-carregaClientes(&aClientes);
 
 clientes=nclientes();
 printf("Número de Clientes : %d\n",clientes );

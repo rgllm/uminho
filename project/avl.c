@@ -141,7 +141,7 @@ nodo *insert(char codigo[],nodo *raiz)
 }
 
 
-/*
+
 void print_tree_indent(nodo *nodo, int indent)
 {
     int i;
@@ -160,7 +160,7 @@ void print_tree(nodo *nodo)
     print_tree_indent(nodo, 0);
 }
 
-
+/*
 int main(int argc, char *argv[])
 {;
     nodo *raiz = criaNodo("ddddd", NULL);

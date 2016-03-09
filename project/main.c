@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "avl.h"
-#include "avl2.h"
+
 
 
 #define MAXBUFF 128
@@ -185,6 +185,6 @@ for(i=0;i<26;i++)
 	printf("produtos:%d\n",altura(aProdutos[i]) );
 */
 carregaVendas(aVendas,aClientes,aProdutos);
-//print_tree(aClientes[0]);
+//print_tree(aClientes[24],0);
 return 1;
 }

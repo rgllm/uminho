@@ -71,16 +71,17 @@ while (fgets(buffer, MAXBUFF,fp)!=NULL){
 
 */
 void carregaClientes(nodo* clientes[]){
-	char buffer[MAXBUFF],cod[8],aux;
+	char buffer[MAXBUFF],cod[8];
+	int aux;
 	int i=0,c=0;
 	FILE *fp=fopen("files/Clientes.txt","r");
-	for(i=0;i<26;i++) 
+	for(i=0;i<26;i++)
 		clientes[i]=NULL;
 
 	while( fgets (buffer, MAXBUFF, fp)){
 			strcpy(cod,buffer);
 			strtok(cod,"\r\n");
-			aux=cod[0]-65;
+			aux=((unsigned char)cod[0])-65;
 			if(clientes[aux]==NULL)
 				clientes[aux]=criaNodo(cod,NULL);
 			else
@@ -92,16 +93,17 @@ void carregaClientes(nodo* clientes[]){
 }
 
 void carregaProdutos(nodo* produtos[]){
-	char buffer[MAXBUFF],cod[8],aux;
+	char buffer[MAXBUFF],cod[8];
+	int aux;
 	int i=0,c=0;
 	FILE *fp=fopen("files/Produtos.txt","r");
-	for(i=0;i<26;i++) 
+	for(i=0;i<26;i++)
 		produtos[i]=NULL;
 
 	while( fgets (buffer, MAXBUFF, fp)){
 			strcpy(cod,buffer);
 			strtok(cod,"\r\n");
-			aux=cod[0]-65;
+			aux=((unsigned char)cod[0])-65;
 			if(produtos[aux]==NULL)
 				produtos[aux]=criaNodo(cod,NULL);
 			else
@@ -112,18 +114,15 @@ void carregaProdutos(nodo* produtos[]){
 	fclose(fp);
 }
 
-
-
-
 void carregaVendas(nodoV* vendas[],nodo* clientes[],nodo* produtos[]){
 	int i,c=0,aux,qtd,mes,fil;
 	double prec;
 	char buffer[MAXBUFF],*prod,np,*cli,*precAux;
 	venda info;
-	
+
 	FILE *fp = fopen( "files/Vendas1.txt", "r" );
 
-	for(i=0;i<26;i++) 
+	for(i=0;i<26;i++)
 		vendas[i]=NULL;
 
 	while (fgets(buffer, MAXBUFF,fp)!=NULL){
@@ -147,7 +146,7 @@ void carregaVendas(nodoV* vendas[],nodo* clientes[],nodo* produtos[]){
 					vendas[aux]=insertV(info,vendas[aux]);
 				c++;
 
-					
+
 			}
 
 		}
@@ -161,21 +160,18 @@ void carregaVendas(nodoV* vendas[],nodo* clientes[],nodo* produtos[]){
 
 
 int main(){
-int clientes,produtos,vendas;
 nodo * aClientes[26], * aProdutos[26];
 nodoV * aVendas[26];
 
-
-
-//clientes=nclientes();
-//printf("Número de Clientes : %d\n",clientes );
-//produtos=nprodutos();
-//printf("Número de Produtos : %d\n",produtos );
-//vendas=nvendas(clientes, produtos);
-//printf("Número de Vendas : %d\n",clientes );
+/*clientes=nclientes();
+printf("Número de Clientes : %d\n",clientes );
+produtos=nprodutos();
+printf("Número de Produtos : %d\n",produtos );
+vendas=nvendas(clientes, produtos);
+printf("Número de Vendas : %d\n",clientes ); */
 carregaClientes(aClientes);
 carregaProdutos(aProdutos);
-//if(search(aProdutos['X'-65],"X4054"))printf("sdfasdfasdfasdf\n");
+/*if(search(aProdutos['X'-65],"X4054"))printf("sdfasdfasdfasdf\n");*/
 /*
 int i;
 for(i=0;i<26;i++)
@@ -185,6 +181,6 @@ for(i=0;i<26;i++)
 	printf("produtos:%d\n",altura(aProdutos[i]) );
 */
 carregaVendas(aVendas,aClientes,aProdutos);
-//print_tree(aClientes[24],0);
+/*print_tree(aClientes[24],0);*/
 return 1;
 }

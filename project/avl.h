@@ -28,7 +28,7 @@ void padding ( char ch, int n );
 
 
 
-// ARVORE DE VENDAS
+/* ARVORE DE VENDAS */
 
 
 typedef struct venda{

@@ -1,12 +1,13 @@
 #
-#	Makefile Code LI3 (v1.0)
+#	Makefile Code
 #
 
-CFLAGS = -ansi
-OBJS = $(patsubst %.c,%.o,$(wildcard *.c))
+CFLAGS=-Wall -Wextra -ansi -pedantic -O2
+
+OBJS=$(patsubst %.c,%.o,$(wildcard *.c))
 
 hipergest: $(OBJS)
 	$(CC) $(CFLAGS) -o hipergest $(OBJS)
 
-clean:
-		rm hipergest $(wildcard *.o)
+limpar:
+	rm bm *.o

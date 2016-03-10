@@ -1,8 +1,9 @@
 #include "avl.h"
 
 nodo *search(nodo *raiz, char codigo[]){
+   int cmp;
     if (raiz == NULL) return NULL;
-    int cmp=strcmp(codigo,raiz->codigo);
+    cmp=strcmp(codigo,raiz->codigo);
     if (cmp<0)
         return search(raiz->esq, codigo);
     else if (cmp > 0)
@@ -170,7 +171,6 @@ void padding ( char ch, int n )
 
 void print_tree ( nodo *root, int level )
 {
-  int i;
   if ( root == NULL ) {
     padding ( '\t', level );
     puts ( "~" );
@@ -185,11 +185,7 @@ void print_tree ( nodo *root, int level )
 
 
 
-// ARVORES DE VENDAS
-
-
-
-
+/* ARVORES DE VENDAS */
 
 int vendaCmp(venda v1,venda v2){
     int cmp= strcmp(v1.produto,v2.produto);
@@ -204,8 +200,9 @@ int vendaCmp(venda v1,venda v2){
 }
 
 nodoV *searchV(nodoV *raiz, venda info){
+   int cmp;
     if (raiz == NULL) return NULL;
-    int cmp=vendaCmp(info,raiz->info);
+    cmp=vendaCmp(info,raiz->info);
     if (cmp<0)
         return searchV(raiz->esq, info);
     else if (cmp > 0)

@@ -71,10 +71,11 @@ while (fgets(buffer, MAXBUFF,fp)!=NULL){
 
 */
 void carregaClientes(nodo* clientes[]){
-	char buffer[MAXBUFF],cod[8];
+	char buffer[MAXBUFF],cod[10];
 	int aux;
+		FILE *fp;
 	int i=0,c=0;
-	FILE *fp=fopen("files/Clientes.txt","r");
+	fp=fopen("files/Clientes.txt","r");
 	for(i=0;i<26;i++)
 		clientes[i]=NULL;
 
@@ -93,21 +94,22 @@ void carregaClientes(nodo* clientes[]){
 }
 
 void carregaProdutos(nodo* produtos[]){
-	char buffer[MAXBUFF],cod[8];
+	char buffer[MAXBUFF],cod[10];
+	FILE *fp;
 	int aux;
 	int i=0,c=0;
-	FILE *fp=fopen("files/Produtos.txt","r");
-	for(i=0;i<26;i++)
+	fp=fopen("files/Produtos.txt","r");
+	for(i=0;i<26;i++){
 		produtos[i]=NULL;
-
+}
 	while( fgets (buffer, MAXBUFF, fp)){
 			strcpy(cod,buffer);
 			strtok(cod,"\r\n");
 			aux=((unsigned char)cod[0])-65;
-			if(produtos[aux]==NULL)
-				produtos[aux]=criaNodo(cod,NULL);
-			else
-				produtos[aux]=insert(cod,produtos[aux]);
+			if(produtos[aux]==NULL){
+				produtos[aux]=criaNodo(cod,NULL);}
+			else{
+				produtos[aux]=insert(cod,produtos[aux]);}
 			c++;
 		}
 	printf("Produtos: %d\n",c );

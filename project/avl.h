@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 
-
-
 typedef struct nodo
 {
 	char codigo[8];

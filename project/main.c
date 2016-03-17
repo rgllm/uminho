@@ -64,8 +64,10 @@ int main(){
 	            strcpy(cod,buffer);
 	            strtok(cod,"\r\n");
 	            aux=cod[0]-65;
-	            if(clientes[aux]==NULL)
+	            if(clientes[aux]==NULL){
 	                clientes[aux]=criaCliente(cod);
+	                c++;
+	            }
 	            else if(search(clientes[aux],cod)==NULL){
 		                clientes[aux]=insereCliente(cod,clientes[aux]);
 		            	c++;
@@ -84,8 +86,10 @@ int main(){
 	            strcpy(cod,buffer);
 	            strtok(cod,"\r\n");
 	            aux=cod[0]-65;
-	            if(produtos[aux]==NULL)
+	            if(produtos[aux]==NULL){
 	                produtos[aux]=criaProduto(cod);
+	                c++;
+	            }
 	            else if(search(produtos[aux],cod)==NULL){
 		                produtos[aux]=insereProduto(cod,produtos[aux]);
 		            	c++;
@@ -117,6 +121,7 @@ int main(){
 				aux=prod[0]-65;
 				if(vendas[aux]==NULL){
 					vendas[aux]=criaVenda(inf);
+					c++;
 				}
 				else if (searchV(vendas[aux],inf)==NULL){
 						vendas[aux]=insereVenda(inf,vendas[aux]);

@@ -196,6 +196,12 @@ int vendaCmp(info v1,info v2){
     if(v1.mes < v2.mes) return -1;
     if(v1.filial > v2.filial) return 1;
     if(v1.filial < v2.filial) return -1;
+    if(v1.np > v2.np) return 1;
+    if(v1.np < v2.np) return -1;
+    if(v1.preco > v2.preco) return 1;
+    if(v1.preco < v2.preco) return -1;
+    if(v1.qtd > v2.qtd) return 1;
+    if(v1.qtd < v2.qtd) return -1;
     return 0;
 }
 

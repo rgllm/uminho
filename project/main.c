@@ -70,6 +70,8 @@ int main(){
 		                clientes[aux]=insereCliente(cod,clientes[aux]);
 		            	c++;
 		             }
+		        else printf("%s\n",cod );
+
 	}
 	fclose(fp);
 	printf("Clientes: %d\n",c );
@@ -88,6 +90,7 @@ int main(){
 		                produtos[aux]=insereProduto(cod,produtos[aux]);
 		            	c++;
 		             }
+		        else printf("%s\n",cod );
 	}
 	fclose(fp);
 	printf("Produtos: %d\n",c );
@@ -98,7 +101,6 @@ int main(){
 	c=0;
 	initV(vendas);
     fp = fopen( "files/Vendas1.txt", "r" );
-
 	while (fgets(buffer, MAXBUFF,fp)!=NULL){
 		prod=strtok(buffer," ");
 		aux=prod[0]-65;
@@ -120,6 +122,7 @@ int main(){
 						vendas[aux]=insereVenda(inf,vendas[aux]);
 						c++;
 					 }
+				else printf("%s %f %d %c %s %d %d\n",prod,prec,qtd,np,cli,mes,fil );
 			}
 
 		}

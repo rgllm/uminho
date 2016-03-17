@@ -187,7 +187,7 @@ void print_tree ( nodo *root, int level )
 
 /* ARVORES DE VENDAS */
 
-int vendaCmp(venda v1,venda v2){
+int vendaCmp(info v1,info v2){
     int cmp= strcmp(v1.produto,v2.produto);
     if(cmp!=0){ return cmp ; }
     cmp=strcmp(v1.cliente,v2.cliente);
@@ -199,14 +199,14 @@ int vendaCmp(venda v1,venda v2){
     return 0;
 }
 
-nodoV *searchV(nodoV *raiz, venda info){
+nodoV *searchV(nodoV *raiz, info inf){
    int cmp;
     if (raiz == NULL) return NULL;
-    cmp=vendaCmp(info,raiz->info);
+    cmp=vendaCmp(inf,raiz->inf);
     if (cmp<0)
-        return searchV(raiz->esq, info);
+        return searchV(raiz->esq, inf);
     else if (cmp > 0)
-        return searchV(raiz->dir, info);
+        return searchV(raiz->dir, inf);
     else
         return raiz;
 }
@@ -260,17 +260,7 @@ nodoV *rodaEsqV(nodoV *raiz)
     return new;
 }
 
-void criaVenda(venda * info,char produto[], double preco, int qtd, char np, char cliente[], int mes, int filial){
-    strcpy(info->produto,produto);
-    info->preco = preco;
-    info->qtd = qtd;
-    info->np = np;
-    strcpy(info->cliente,cliente);
-    info->mes = mes;
-    info->filial = filial;
-}
-
-void vendaCopy(venda *v1,venda v2){
+void vendaCopy(info *v1,info v2){
     strcpy(v1->produto,v2.produto);
     v1->preco = v2.preco;
     v1->qtd   = v2.qtd;
@@ -280,11 +270,11 @@ void vendaCopy(venda *v1,venda v2){
     v1->filial= v2.filial;
 }
 
-nodoV *criaNodoV(venda info, nodoV *pai)
+nodoV *criaNodoV(info inf, nodoV *pai)
 {
     nodoV *n = malloc(sizeof(nodoV));
 
-    vendaCopy(&n->info,info);
+    vendaCopy(&n->inf,inf);
     n->pai = pai;
     n->altura = 1;
     n->esq = NULL;
@@ -322,26 +312,26 @@ nodoV *balanceV(nodoV *raiz)
     return raiz;
 }
 
-nodoV *insertV(venda info,nodoV *raiz)
+nodoV *insertV(info inf,nodoV *raiz)
 {
     nodoV *aux = raiz;
-    while (vendaCmp(info,aux->info)!=0)
+    while (vendaCmp(inf,aux->inf)!=0)
     {
-        if (vendaCmp(info,aux->info)<0)
+        if (vendaCmp(inf,aux->inf)<0)
         {
             if (aux->esq) aux = aux->esq;
             else
             {
-                aux->esq = criaNodoV(info, aux);
+                aux->esq = criaNodoV(inf, aux);
                 aux = aux->esq;
             }
         }
-        else if (vendaCmp(info,aux->info)>0)
+        else if (vendaCmp(inf,aux->inf)>0)
         {
             if (aux->dir) aux = aux->dir;
             else
             {
-                aux->dir = criaNodoV(info, aux);
+                aux->dir = criaNodoV(inf, aux);
                 aux = aux->dir;
                 break;
             }
@@ -359,27 +349,6 @@ nodoV *insertV(venda info,nodoV *raiz)
 
     return aux;
 }
-
-
-
-void print_tree_indentV(nodoV *nodoV, int indent)
-{
-    int i;
-    for (i = 0; i < indent; i++) printf(" ");
-    if (!nodoV) printf("*\n");
-    else
-    {
-        printf("NODOV: %s; altura: %d\n", nodoV->info.produto, nodoV->altura);
-        print_tree_indentV(nodoV->esq, indent + 4);
-        print_tree_indentV(nodoV->dir, indent + 4);
-    }
-}
-
-void print_treeV(nodoV *nodoV)
-{
-    print_tree_indentV(nodoV, 0);
-}
-
 
 
 

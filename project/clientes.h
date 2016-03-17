@@ -4,13 +4,12 @@
 #endif
 
 
-
 typedef nodo* cliente;
 typedef cliente catClientes[26];
 
 cliente criaCliente(char * cod);
 cliente insereCliente(char * cod,cliente raiz);
-void carregaClientes(catClientes clientes);
+void initC(cliente* c);
 
 
 

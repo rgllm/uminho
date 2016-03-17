@@ -8,7 +8,7 @@ typedef produto catProdutos[26];
 
 produto criaProduto(char * cod);
 produto insereProduto(char * cod,produto raiz);
-void carregaProdutos(catProdutos produtos);
+void initP(catProdutos c);
 
 
 

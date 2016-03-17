@@ -1,6 +1,23 @@
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
+#ifndef INFO
+#define INFO
+typedef struct info{
+    char produto[8];
+    double preco;
+    int qtd;
+    char np;
+    char cliente[8];
+    int mes;
+    int filial;
+}info;
+
+#endif
+
+
 
 typedef struct nodo
 {
@@ -29,35 +46,22 @@ void padding ( char ch, int n );
 /* ARVORE DE VENDAS */
 
 
-typedef struct venda{
-	char produto[8];
-	double preco;
-	int qtd;
-	char np;
-	char cliente[8];
-	int mes;
-	int filial;
-}venda;
-
 
 typedef struct nodoV
 {
-	venda info;
+	info inf;
 	struct nodoV *esq;
 	struct nodoV *dir;
 	struct nodoV *pai;
 	int altura;
 } nodoV;
 
-nodoV *searchV(nodoV *raiz, venda info);
+nodoV *searchV(nodoV *raiz, info inf);
 int alturaV(nodoV *raiz);
 void ajustaAlturaV(nodoV *raiz);
 nodoV *rodaDirV(nodoV *raiz);
 nodoV *rodaEsqV(nodoV *raiz);
-nodoV *criaNodoV(venda info, nodoV *pai);
+nodoV *criaNodoV(info inf, nodoV *pai);
 nodoV *balanceV(nodoV *raiz);
-nodoV *insertV(venda info,nodoV *raiz);
-void print_tree_indentV(nodoV *nodoV, int indent);
-void print_treeV(nodoV *nodoV);
-void criaVenda(venda * info,char produto[], double preco, int qtd, char np, char cliente[], int mes, int filial);
-int vendaCmp(venda v1,venda v2);
+nodoV *insertV(info inf,nodoV *raiz);
+int vendaCmp(info v1,info v2);

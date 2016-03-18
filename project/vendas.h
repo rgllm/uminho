@@ -1,6 +1,6 @@
-#ifndef MAXBUFF
+#ifndef AVL
 #include "avl.h"
-#define MAXBUFF 128
+#define AVL
 #endif
 
 #ifndef INFO
@@ -14,11 +14,7 @@ typedef struct info{
     int mes;
     int filial;
 }info;
-
 #endif
-
-
-
 
 typedef nodoV * venda;
 typedef venda catVendas[26];

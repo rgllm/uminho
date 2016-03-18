@@ -1,4 +1,3 @@
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -14,13 +13,9 @@ typedef struct info{
     int mes;
     int filial;
 }info;
-
 #endif
 
-
-
-typedef struct nodo
-{
+typedef struct nodo{
 	char codigo[8];
 	struct nodo *esq;
 	struct nodo *dir;
@@ -42,10 +37,7 @@ void print_tree(nodo *root,int level);
 void padding ( char ch, int n );
 
 
-
 /* ARVORE DE VENDAS */
-
-
 
 typedef struct nodoV
 {

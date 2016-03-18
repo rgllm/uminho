@@ -1,8 +1,7 @@
-#ifndef MAXBUFF
+#ifndef AVL
 #include "avl.h"
-#define MAXBUFF 128
+#define AVL
 #endif
-
 
 typedef nodo* cliente;
 typedef cliente catClientes[26];

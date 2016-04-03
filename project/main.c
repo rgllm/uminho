@@ -28,6 +28,8 @@ void registaVenda(info * inf,char produto[], double preco, int qtd, char np, cha
     inf->filial = filial;
 }
 
+/*
+
 venda criaVenda(info inf){
     return criaNodoV(inf,NULL);
 }
@@ -36,11 +38,14 @@ venda insereVenda(info cod,venda raiz){
     return insertV(cod,raiz);
 }
 
+
 void initV(venda * c){
     int i;
     for(i=0;i<26;i++)
         c[i]=NULL;
 }
+
+*/
 
 int validaVenda(catClientes clientes,catProdutos produtos,info* inf){
 	int aux;
@@ -63,12 +68,14 @@ int validaVenda(catClientes clientes,catProdutos produtos,info* inf){
 int main(){
 	catClientes clientes;
 	catProdutos produtos;
-	catVendas vendas;
+   /*) catVendas vendas; */
 	int aux,c=0,qtd,mes,fil;
 	char cod[10],linha[MAXBUFF], buffer[MAXBUFF],*prod,np,*cli,*precAux;
 	double prec;
-	info inf;
+	info venda;
 	FILE *fp,*fp2;
+    int pzero=0,unidades=0;
+    double ftotal=0, filial1=0, filial2=0, filial3=0;
 
 	/*                 Leitura dos clientes                 */
 	
@@ -113,9 +120,8 @@ int main(){
 	printf("Produtos: %d\n",c );
     
 	/*                 Leitura das vendas                   */
-
 	c=0;
-	initV(vendas);
+	/*initV(vendas); */
     fp = fopen( "files/Vendas1.txt", "r" );
     fp2=fopen("Vendas_1MValidas.txt", "w");
 	while (fgets(buffer, MAXBUFF,fp)!=NULL){
@@ -127,15 +133,25 @@ int main(){
 		cli=strtok(NULL," ");
 		mes=atoi(strtok(NULL," "));
 		fil=atoi(strtok(NULL," "));
-		registaVenda(&inf,prod,prec,qtd,np,cli,mes,fil);
-		if(validaVenda(clientes,produtos,&inf)==0){
+		registaVenda(&venda,prod,prec,qtd,np,cli,mes,fil);
+		if(validaVenda(clientes,produtos,&venda)==0){
 			fprintf(fp2,"%s", linha);
 			c++;
+            /* Testes sobre as vendas */
+            if(prec==0) pzero++;
+            ftotal+=(prec*qtd);
+            unidades+=qtd;
+            if(fil==1) filial1++;
+            if(fil==2) filial2++;
+            if(fil==3) filial3++;
 		}
 	}
 	printf("Vendas:%d\n",c );
+    printf("Vendas preço zero: %d\n",pzero);
+    printf("Faturação Total: %f\n",ftotal);
+    printf("Unidades Vendidas: %d\n",unidades);
+    printf("Filial 1: %f Filial 2: %f Filial 3: %f \n",filial1,filial2,filial3 );
 	fclose(fp2);
 	fclose(fp);
-
 	return 1;
 }

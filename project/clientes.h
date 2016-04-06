@@ -14,5 +14,3 @@ int existeCliente(catClientes clientes,int indice,char * cod);
 int totalClientes(catClientes clientes);
 int totalClientesLetra(catClientes clientes, char letra); 
 void removeCatClientes(catClientes clientes); 
-
-

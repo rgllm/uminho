@@ -1,7 +1,7 @@
 #include "avl.h"
 
 nodo *search(nodo *raiz, char codigo[]){
-   int cmp;
+    int cmp;
     if (raiz == NULL) return NULL;
     cmp=strcmp(codigo,raiz->codigo);
     if (cmp<0)
@@ -156,7 +156,7 @@ int vendaCmp(info v1,info v2){
 }
 
 nodoV *searchV(nodoV *raiz, info inf){
-   int cmp;
+    int cmp;
     if (raiz == NULL) return NULL;
     cmp=vendaCmp(inf,raiz->inf);
     if (cmp<0)

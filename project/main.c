@@ -18,6 +18,25 @@ typedef struct info{
 }info;
 #endif
 
+/*
+
+venda criaVenda(info inf){
+    return criaNodoV(inf,NULL);
+}
+
+venda insereVenda(info cod,venda raiz){
+    return insertV(cod,raiz);
+}
+
+
+void initV(venda * c){
+    int i;
+    for(i=0;i<26;i++)
+        c[i]=NULL;
+}
+
+*/
+
 void registaVenda(info * inf,char produto[], double preco, int qtd, char np, char cliente[], int mes, int filial){
     strcpy(inf->produto,produto);
     inf->preco = preco;
@@ -62,62 +81,61 @@ int main(){
 	initC(clientes);
 	fp=fopen("files/Clientes.txt","r");
 	while( fgets (buffer, MAXBUFF, fp)){
-	    strcpy(cod,buffer);
-	    strtok(cod,"\r\n");
-	    aux=cod[0]-65;
-	    if(clientes[aux]==NULL){
-	        clientes[aux]=criaCliente(cod);
-	    }
-	   else if(!existeCliente(clientes,aux,cod)){
-		        clientes[aux]=insereCliente(cod,clientes[aux]);
-		     }
-	}
-	fclose(fp);
-	printf("Clientes: %d\n",totalClientes(clientes) );
+       strcpy(cod,buffer);
+       strtok(cod,"\r\n");
+       aux=cod[0]-65;
+       if(clientes[aux]==NULL){
+           clientes[aux]=criaCliente(cod);
+       }
+       else if(!existeCliente(clientes,aux,cod)){
+          clientes[aux]=insereCliente(cod,clientes[aux]);
+      }
+    }
+    fclose(fp);
 
 
 	/*                 Leitura dos produtos                 */
 
-	initP(produtos);
-	fp=fopen("files/Produtos.txt","r");
-	while( fgets (buffer, MAXBUFF, fp)){
-	    strcpy(cod,buffer);
-	    strtok(cod,"\r\n");
-	    aux=cod[0]-65;
-	    if(produtos[aux]==NULL){
-	        produtos[aux]=criaProduto(cod);
-	    }
-	    else if(!existeProduto(produtos,aux,cod)){
-		        produtos[aux]=insereProduto(cod,produtos[aux]);
-		     }
-	}
-	fclose(fp);
-	printf("Produtos: %d\n",totalProdutos(produtos) );
-    
-	/*                 Leitura das vendas                   */
-	c=0;
-	/*initV(vendas); */
+    initP(produtos);
+    fp=fopen("files/Produtos.txt","r");
+    while( fgets (buffer, MAXBUFF, fp)){
+        strcpy(cod,buffer);
+        strtok(cod,"\r\n");
+        aux=cod[0]-65;
+        if(produtos[aux]==NULL){
+            produtos[aux]=criaProduto(cod);
+        }
+        else if(!existeProduto(produtos,aux,cod)){
+            produtos[aux]=insereProduto(cod,produtos[aux]);
+        }
+    }
+    fclose(fp);
+
+    	/*                 Leitura das vendas                   */
+    c=0;
+    	/*initV(vendas); */
     fp = fopen( "files/Vendas1.txt", "r" );
     fp2=fopen("Vendas_1MValidas.txt", "w");
-	while (fgets(buffer, MAXBUFF,fp)!=NULL){
-		strcpy(linha,buffer);
-		prod=strtok(buffer," ");
-		prec=strtod(strtok(NULL," "),&precAux);
-		qtd=atoi(strtok(NULL," "));
-		np=strtok(NULL," ")[0];
-		cli=strtok(NULL," ");
-		mes=atoi(strtok(NULL," "));
-		fil=atoi(strtok(NULL," "));
-		registaVenda(&venda,prod,prec,qtd,np,cli,mes,fil);
-		if(validaVenda(clientes,produtos,&venda)==0){
-			fprintf(fp2,"%s", linha);
-			c++;
-		}
-	}
+    while (fgets(buffer, MAXBUFF,fp)!=NULL){
+        strcpy(linha,buffer);
+        prod=strtok(buffer," ");
+        prec=strtod(strtok(NULL," "),&precAux);
+        qtd=atoi(strtok(NULL," "));
+        np=strtok(NULL," ")[0];
+        cli=strtok(NULL," ");
+        mes=atoi(strtok(NULL," "));
+        fil=atoi(strtok(NULL," "));
+        registaVenda(&venda,prod,prec,qtd,np,cli,mes,fil);
+        if(validaVenda(clientes,produtos,&venda)==0){
+           fprintf(fp2,"%s", linha);
+           c++;
+        }
+    }
+    fclose(fp2);
+    fclose(fp);
 
-    
-	printf("Vendas:%d\n",c );
-	fclose(fp2);
-	fclose(fp);
-	return 1;
+    printf("Clientes: %d\n",totalClientes(clientes) );
+    printf("Produtos: %d\n",totalProdutos(produtos) );
+    printf("Vendas:%d\n",c );
+    return 1;
 }

@@ -124,6 +124,13 @@ nodo *insert(char codigo[],nodo *raiz){
     return aux;
 }
 
+int conta(nodo * raiz){
+    if(raiz==NULL)
+        return 0;
+    return 1+conta(raiz->esq)+conta(raiz->dir);
+}
+
+
     /*###################################################################*/
 /*##################################################################################*/
 /*                              ARVORES DE VENDAS                                     */

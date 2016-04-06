@@ -32,9 +32,7 @@ nodo *rodaEsq(nodo *raiz);
 nodo *criaNodo(char codigo[], nodo *pai);
 nodo *balance(nodo *raiz);
 nodo *insert(char codigo[],nodo *raiz);
-void print_tree_indent(nodo *nodo, int indent);
-void print_tree(nodo *root,int level);
-void padding ( char ch, int n );
+int conta(nodo * raiz);
 
 
 /* ARVORE DE VENDAS */

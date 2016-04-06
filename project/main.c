@@ -55,6 +55,9 @@ int main(){
 	double prec;
 	info venda;
 	FILE *fp,*fp2;
+	int pzero=0,unidades=0;
+ 	int filial1=0, filial2=0, filial3=0;
+ 	double ftotal=0;
 
 
 	/*                 Leitura dos clientes                 */
@@ -112,11 +115,21 @@ int main(){
 		if(validaVenda(clientes,produtos,&venda)==0){
 			fprintf(fp2,"%s", linha);
 			c++;
+			/* Testes sobre as vendas */
+ 			if(prec==0) pzero++;
+ 			ftotal+=(prec*qtd);
+ 			unidades+=qtd;
+			if(fil==1) filial1++;
+			if(fil==2) filial2++;
+			if(fil==3) filial3++;
 		}
 	}
 
-    
-	printf("Vendas:%d\n",c );
+	printf("Vendas: %d\n",c );
+	printf("Vendas de preço zero: %d\n",pzero);
+ 	printf("Faturação Total: %f\n",ftotal);
+	printf("Unidades Vendidas: %d\n",unidades);
+ 	printf("Filial 1: %d Filial 2: %d Filial 3: %d \n",filial1,filial2,filial3 );
 	fclose(fp2);
 	fclose(fp);
 	return 1;

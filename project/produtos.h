@@ -13,4 +13,4 @@ void initP(catProdutos c);
 int existeProduto(catProdutos produtos,int indice,char * cod);
 int totalProdutos(catProdutos produtos);
 int totalProdutosLetra(catProdutos produtos, char letra); 
-void removeCatProdutos(catProdutos produtos); 
+void removeCatProdutos(catProdutos produtos);

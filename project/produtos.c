@@ -1,40 +1,76 @@
 #include "produtos.h"
+#ifndef PROD
+typedef struct prod{
+    char * cod;
+}prod;
 
-produto criaProduto(char* cod){
-    return criaNodo(cod,NULL);
+typedef nodo * NodoProd;
+
+typedef struct listaP{
+    NodoProd prod;
+    /*int count*/
+}listaP;
+
+typedef struct Produtos{
+    int num;
+    NodoProd prods;
+}Produtos[26];
+#define PROD
+#endif
+
+
+Produto criaProduto(char * codigo){
+    Produto prod=malloc(sizeof(Produto));
+    prod->cod=codigo;
+    return prod;
 }
 
-produto insereProduto(char * cod,produto raiz){
-    return insert(cod,raiz);
+CatProdutos insereProduto(CatProdutos catP,Produto prod){
+    int aux=prod->cod[0]-65;
+    if(catP[aux].prods==NULL){
+        catP[aux].prods=criaNodo(prod->cod,NULL);
+    }
+    else catP[aux].prods=insert(prod->cod,catP[aux].prods);
+    catP[aux].num++;
+    return catP;
 }
 
-void initP(catProdutos c){
+
+CatProdutos initCatProds(){
     int i;
-    for(i=0;i<26;i++)
-        c[i]=NULL;
+    CatProdutos produtos=malloc(26*sizeof(struct Produtos));
+    for(i=0;i<26;i++){
+        produtos[i].num=0;
+        produtos[i].prods=NULL;
+    }
+    return produtos;
+
 }
 
-int existeProduto(catProdutos produtos,int indice,char * cod){
-    if(search(produtos[indice],cod)==NULL)
+int existeProduto(CatProdutos produtos,Produto prod){
+    int aux=prod->cod[0]-65;
+    if(search(produtos[aux].prods,prod->cod)==NULL)
         return 0;
     return 1;
 }
 
-int totalProdutos(catProdutos produtos){
+int totalProdutos(CatProdutos produtos){
     int i,count=0;
     for(i=0;i<26;i++){
-        count+=conta(produtos[i]);
+        count+=produtos[i].num;
     }
     return count;
 }
 
-int totalProdutosLetra(catProdutos produtos, char letra){
-    return conta(produtos[letra-65]);
+int totalProdutosLetra(CatProdutos produtos, char letra){
+    return produtos[letra-65].num;
 }
 
-void removeCatProdutos(catProdutos produtos){
+
+void removeCatProdutos(CatProdutos produtos){
     int i;
     for(i = 0; i < 26; i++){
-        produtos[i]=NULL;      
+        freeTree(produtos[i].prods);
     }
+    free(produtos);
 }

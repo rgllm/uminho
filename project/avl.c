@@ -130,6 +130,25 @@ int conta(nodo * raiz){
     return 1+conta(raiz->esq)+conta(raiz->dir);
 }
 
+void printInOrder(nodo * raiz){
+    if(raiz!=NULL){
+        printInOrder(raiz->esq);
+        printf("%s\n",raiz->codigo);
+        printInOrder(raiz->dir);
+    }
+}
+
+void freeTree(nodo * raiz){
+    if(raiz!=NULL){
+        if(raiz->esq!=NULL){
+            freeTree(raiz->esq);
+        }
+        if(raiz->dir!=NULL)
+            freeTree(raiz->dir);
+        free(raiz);
+    }
+}
+
 
     /*###################################################################*/
 /*##################################################################################*/

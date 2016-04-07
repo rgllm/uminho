@@ -33,6 +33,8 @@ nodo *criaNodo(char codigo[], nodo *pai);
 nodo *balance(nodo *raiz);
 nodo *insert(char codigo[],nodo *raiz);
 int conta(nodo * raiz);
+void printInOrder(nodo * raiz);
+void freeTree(nodo * raiz);
 
 
 /* ARVORE DE VENDAS */

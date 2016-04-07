@@ -1,23 +1,70 @@
 #include "produtos.h"
-#ifndef PROD
+#ifndef PRODUTOS
+
 typedef struct prod{
     char * cod;
 }prod;
 
-typedef nodo * NodoProd;
+typedef nodo * nodoProd;
 
 typedef struct listaP{
-    NodoProd prod;
-    /*int count*/
+    nodoProd prod;
+    /* TODO - size of lista */
 }listaP;
 
-typedef struct Produtos{
-    int num;
-    NodoProd prods;
-}Produtos[26];
-#define PROD
+typedef struct catProdutos{
+    int size;
+    nodoProd produtos;
+}catProdutos[26];
+#define PRODUTOS
 #endif
 
+
+/*Funções sobre o tipo catProdutos */
+
+
+CatProdutos initCatProdutos(){
+    int i;
+    CatProdutos produtos=malloc(26*sizeof(struct catProdutos));
+    for(i=0;i<26;i++){
+        produtos[i].size=0;
+        produtos[i].produtos=NULL;
+    }
+    return produtos;
+
+}
+
+CatProdutos insereProduto(CatProdutos catP, Produto prod){
+    int lInicial=prod->cod[0]-65;
+    if(catP[lInicial].produtos==NULL){
+        catP[lInicial].produtos=criaNodo(prod->cod,NULL);
+    }
+    else {
+        catP[lInicial].produtos=insert(prod->cod,catP[lInicial].produtos);
+    }
+    catP[lInicial].size++;
+    return catP;
+}
+
+int existeProduto(CatProdutos catP,Produto prod){
+    int lInicial=prod->cod[0]-65;
+    if(search(catP[lInicial].produtos,prod->cod)==NULL) return 0;
+    else return 1;
+}
+
+int totalProdutos(CatProdutos catP){
+    int i,total=0;
+    for(i=0;i<26;i++){
+       total+=catP[i].size;
+    }
+    return total;
+}
+
+int totalProdutosLetra(CatProdutos catP, char letra){
+    return catP[letra-65].size;
+}
+
+/* Funções sobre o tipo Produto */
 
 Produto criaProduto(char * codigo){
     Produto prod=malloc(sizeof(Produto));
@@ -25,52 +72,9 @@ Produto criaProduto(char * codigo){
     return prod;
 }
 
-CatProdutos insereProduto(CatProdutos catP,Produto prod){
-    int aux=prod->cod[0]-65;
-    if(catP[aux].prods==NULL){
-        catP[aux].prods=criaNodo(prod->cod,NULL);
-    }
-    else catP[aux].prods=insert(prod->cod,catP[aux].prods);
-    catP[aux].num++;
-    return catP;
+
+char * getCodProd(Produto p){
+    return p->cod;
 }
 
 
-CatProdutos initCatProds(){
-    int i;
-    CatProdutos produtos=malloc(26*sizeof(struct Produtos));
-    for(i=0;i<26;i++){
-        produtos[i].num=0;
-        produtos[i].prods=NULL;
-    }
-    return produtos;
-
-}
-
-int existeProduto(CatProdutos produtos,Produto prod){
-    int aux=prod->cod[0]-65;
-    if(search(produtos[aux].prods,prod->cod)==NULL)
-        return 0;
-    return 1;
-}
-
-int totalProdutos(CatProdutos produtos){
-    int i,count=0;
-    for(i=0;i<26;i++){
-        count+=produtos[i].num;
-    }
-    return count;
-}
-
-int totalProdutosLetra(CatProdutos produtos, char letra){
-    return produtos[letra-65].num;
-}
-
-
-void removeCatProdutos(CatProdutos produtos){
-    int i;
-    for(i = 0; i < 26; i++){
-        freeTree(produtos[i].prods);
-    }
-    free(produtos);
-}

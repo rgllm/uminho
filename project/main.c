@@ -47,12 +47,13 @@ void registaVenda(info * inf,char produto[], double preco, int qtd, char np, cha
     inf->filial = filial;
 }
 
-int validaVenda(catClientes clientes,CatProdutos produtos,info* inf){
-	int aux;
-	aux=inf->produto[0]-65;
-	if(search(produtos[aux].prods,inf->produto)!=NULL){
-		aux=inf->cliente[0]-65;
-		if(search(clientes[aux],inf->cliente)!=NULL){
+int validaVenda(CatClientes c,CatProdutos p,info* inf){
+	int lC,lP;
+	lP=inf->produto[0]-65;
+    lC=inf->cliente[0]-65;
+
+	if(search(p[lP].produtos,inf->produto)!=NULL){
+		if(search(c[lC].clientes,inf->cliente)!=NULL){
 			if(inf->qtd>0 && 
 				inf->preco>=0 &&
 				inf->mes>=1 && inf->mes <=12 &&
@@ -66,41 +67,44 @@ int validaVenda(catClientes clientes,CatProdutos produtos,info* inf){
 
 
 int main(){
-	catClientes clientes;
+	CatClientes catClientes;
 	CatProdutos catProd;
    /*) catVendas vendas; */
 	int aux,c,qtd,mes,fil;
 	char cod[10],linha[MAXBUFF], buffer[MAXBUFF],*produto,np,*cli,*precAux;
 	double prec;
-    int count=0,i;
+    int i,nprodutos=0,nclientes=0;
 	info venda;
 	FILE *fp,*fp2;
 	int pzero=0,unidades=0;
  	int filial1=0, filial2=0, filial3=0;
  	double ftotal=0;
     Produto prod;
+    Cliente cliente;
 
 
 	/*                 Leitura dos clientes                 */
 	
-	initC(clientes);
+	catClientes=initCatClientes();
 	fp=fopen("files/Clientes.txt","r");
 	while( fgets (buffer, MAXBUFF, fp)){
        strcpy(cod,buffer);
        strtok(cod,"\r\n");
        aux=cod[0]-65;
-       if(clientes[aux]==NULL){
-           clientes[aux]=criaCliente(cod);
-       }
-       else if(!existeCliente(clientes,aux,cod)){
-          clientes[aux]=insereCliente(cod,clientes[aux]);
-      }
+       cliente = criaCliente(cod);
+       if(!existeCliente(catClientes,cliente)){
+            catClientes=insereCliente(catClientes,cliente);
+        }
     }
     fclose(fp);
 
+    for(i=0;i<26;i++)
+        nclientes+=catClientes[i].size;
+    printf("Clientes: %d\n",nclientes);
+
 
 	/*                 Leitura dos produtos                 */
-    catProd=initCatProds();
+    catProd=initCatProdutos();
     fp=fopen("files/Produtos.txt","r");
     while( fgets (buffer, MAXBUFF, fp)){
         strcpy(cod,buffer);
@@ -114,8 +118,8 @@ int main(){
     fclose(fp);
     
     for(i=0;i<26;i++)
-        count+=catProd[i].num;
-    printf("Produtos: %d\n",count);
+        nprodutos+=catProd[i].size;
+    printf("Produtos: %d\n",nprodutos);
 
     	/*                 Leitura das vendas                   */
     c=0;
@@ -132,7 +136,7 @@ int main(){
 		mes=atoi(strtok(NULL," "));
 		fil=atoi(strtok(NULL," "));
 		registaVenda(&venda,produto,prec,qtd,np,cli,mes,fil);
-		if(validaVenda(clientes,catProd,&venda)==0){
+		if(validaVenda(catClientes,catProd,&venda)==0){
 			fprintf(fp2,"%s", linha);
 			c++;
 			/* Testes sobre as vendas */ 

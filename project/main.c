@@ -52,8 +52,8 @@ int validaVenda(CatClientes c,CatProdutos p,info* inf){
 	lP=inf->produto[0]-65;
     lC=inf->cliente[0]-65;
 
-	if(search(p[lP].produtos,inf->produto)!=NULL){
-		if(search(c[lC].clientes,inf->cliente)!=NULL){
+	if(search(getAVLProd(p,lP),inf->produto)!=NULL){
+		if(search(getAVLCli(c,lC),inf->cliente)!=NULL){
 			if(inf->qtd>0 && 
 				inf->preco>=0 &&
 				inf->mes>=1 && inf->mes <=12 &&
@@ -73,7 +73,6 @@ int main(){
 	int aux,c,qtd,mes,fil;
 	char cod[10],linha[MAXBUFF], buffer[MAXBUFF],*produto,np,*cli,*precAux;
 	double prec;
-    int i,nprodutos=0,nclientes=0;
 	info venda;
 	FILE *fp,*fp2;
 	int pzero=0,unidades=0;
@@ -97,10 +96,7 @@ int main(){
         }
     }
     fclose(fp);
-
-    for(i=0;i<26;i++)
-        nclientes+=catClientes[i].size;
-    printf("Clientes: %d\n",nclientes);
+    printf("Clientes: %d\n",totalClientes(catClientes));
 
 
 	/*                 Leitura dos produtos                 */
@@ -117,11 +113,9 @@ int main(){
     }
     fclose(fp);
     
-    for(i=0;i<26;i++)
-        nprodutos+=catProd[i].size;
-    printf("Produtos: %d\n",nprodutos);
+    printf("Produtos: %d\n",totalProdutos(catProd));
 
-    	/*                 Leitura das vendas                   */
+    /*                 Leitura das vendas                   */
     c=0;
     	/*initV(vendas); */  
     fp = fopen( "files/Vendas1.txt", "r" );

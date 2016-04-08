@@ -5,7 +5,6 @@ typedef struct cliente{
     char * cod;
 }cliente;
 
-typedef nodo * nodoCliente;
 
 typedef struct listaC{
     nodoCliente cliente;
@@ -18,6 +17,10 @@ typedef struct catClientes{
 }catClientes[26];
 #define CLIENTE
 #endif
+
+nodoCliente getAVLCli(CatClientes p,int lC){
+    return p[lC].clientes;
+}
 
 /* Funções relativas ao tipo CatClientes */
 

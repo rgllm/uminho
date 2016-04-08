@@ -5,19 +5,22 @@ typedef struct prod{
     char * cod;
 }prod;
 
-typedef nodo * nodoProd;
 
-typedef struct listaP{
-    nodoProd prod;
+typedef struct listaProdutos{
+    nodoProduto produtos;
     /* TODO - size of lista */
-}listaP;
+}listaProdutos;
 
 typedef struct catProdutos{
     int size;
-    nodoProd produtos;
+    nodoProduto produtos;
 }catProdutos[26];
 #define PRODUTOS
 #endif
+
+nodoProduto getAVLProd(CatProdutos p,int lP){
+    return p[lP].produtos;
+}
 
 
 /*Funções sobre o tipo catProdutos */

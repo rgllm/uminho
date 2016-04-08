@@ -21,7 +21,7 @@ typedef struct nodo{
 	struct nodo *dir;
 	struct nodo *pai;
 	int altura;
-} nodo;
+} nodo,*nodoCliente,*nodoProduto;
 
 int max ( int a, int b );
 nodo *search(nodo *raiz, char codigo[]);

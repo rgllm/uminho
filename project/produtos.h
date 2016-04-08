@@ -3,27 +3,6 @@
 #define AVL
 #endif
 
-#ifndef PRODUTOS
-
-typedef struct prod{
-    char * cod;
-}prod;
-
-typedef nodo * nodoProd;
-
-typedef struct listaP{
-    nodoProd prod;
-    /* TODO - size of lista */
-}listaP;
-
-typedef struct catProdutos{
-    int size;
-    nodoProd produtos;
-}catProdutos[26];
-#define PRODUTOS
-#endif
-
-
 typedef struct prod* Produto;
 typedef struct listaP* ListaProdutos;
 typedef struct catProdutos* CatProdutos;
@@ -37,6 +16,7 @@ int existeProduto(CatProdutos catP,Produto prod);
 int totalProdutos(CatProdutos catP);
 int totalProdutosLetra(CatProdutos catP, char letra); 
 void removeCatProdutos(CatProdutos catP);
+nodoProduto getAVLProd(CatProdutos p,int lP);
 
 /* Funções sobre o tipo Produto */
 

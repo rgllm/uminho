@@ -1,0 +1,23 @@
+#BlueJ class context
+comment0.params=
+comment0.target=double\ getArea()
+comment0.text=parte\ habitacional
+comment1.params=
+comment1.target=boolean\ isWc()
+comment2.params=
+comment2.target=java.lang.String\ getTipoNegocio()
+comment3.params=
+comment3.target=int\ getnPorta()
+comment4.params=area
+comment4.target=void\ setArea(double)
+comment5.params=wc
+comment5.target=void\ setWc(boolean)
+comment6.params=tipoNegocio
+comment6.target=void\ setTipoNegocio(java.lang.String)
+comment7.params=nPorta
+comment7.target=void\ setnPorta(int)
+comment8.params=obj
+comment8.target=boolean\ equals(java.lang.Object)
+comment9.params=
+comment9.target=java.lang.String\ toString()
+numComments=10

@@ -1,0 +1,26 @@
+#BlueJ class context
+comment0.params=
+comment0.target=java.lang.String\ getTipo()
+comment1.params=
+comment1.target=double\ getArea()
+comment10.params=obj
+comment10.target=boolean\ equals(java.lang.Object)
+comment11.params=
+comment11.target=java.lang.String\ toString()
+comment2.params=
+comment2.target=int\ getnQuartos()
+comment3.params=
+comment3.target=int\ getnWCs()
+comment4.params=
+comment4.target=boolean\ isGaragem()
+comment5.params=tipo
+comment5.target=void\ setTipo(java.lang.String)
+comment6.params=area
+comment6.target=void\ setArea(double)
+comment7.params=nQuartos
+comment7.target=void\ setnQuartos(int)
+comment8.params=nWCs
+comment8.target=void\ setnWCs(int)
+comment9.params=garagem
+comment9.target=void\ setGaragem(boolean)
+numComments=12

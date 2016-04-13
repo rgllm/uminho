@@ -8,9 +8,10 @@ public class Imovel{
     private Double preco;
     private Double precoMinimo;
 
+    /*           Construtores         */
     public Imovel(){
-        id="";
-        rua="";
+        id=new String("");
+        rua=new String("");
         preco=0.0;
         precoMinimo=0.0;
     }
@@ -23,12 +24,13 @@ public class Imovel{
     }
 
     public Imovel(Imovel i){
-        this.id=i.getId();
-        this.rua=i.getRua();
+        this.id=new String(i.getId());
+        this.rua=new String(i.getRua());
         this.preco=i.getPreco();
         this.precoMinimo=i.getPrecoMinimo();
     }
 
+    /*      Métodos de instância    */
     public String getId() {return new String(id);}
     public String getRua() {return new String(rua);}
     public Double getPreco() {return preco;}
@@ -46,14 +48,16 @@ public class Imovel{
             return false;
         }
         final Imovel other = (Imovel) obj;
-        if (Objects.equals(this.id, other.id) && Objects.equals(this.rua, other.rua)
-            && Objects.equals(this.preco, other.preco) && Objects.equals(this.precoMinimo, other.precoMinimo)) {
+        if (Objects.equals(this.id, other.id) &&
+            Objects.equals(this.rua, other.rua) &&
+            Objects.equals(this.preco, other.preco) &&
+            Objects.equals(this.precoMinimo, other.precoMinimo)) {
             return true;
         }
         return false;
     }
 
-   public String toString() {
+    public String toString() {
         return "Imovel{" + "id=" + id + ", rua=" + rua + ", preco=" + preco + ", precoMinimo=" + precoMinimo + '}';
     }
 

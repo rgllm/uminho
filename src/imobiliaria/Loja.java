@@ -8,15 +8,41 @@ public class Loja extends Imovel{
     private int nPorta;
     /*parte habitacional */
 
+    /*           Construtores         */
+    public Loja(){
+        super("","",0.0,0.0);
+        area=0.0;
+        wc=false;
+        tipoNegocio=new String("");
+        nPorta=0;        
+    }
+
+    public Loja(String id,String rua,double preco,double precoMinimo,double area,boolean wc,String tipoNegocio,int nPorta){
+        super(id,rua,preco,precoMinimo);
+        this.area=area;
+        this.wc=wc;
+        this.tipoNegocio=new String(tipoNegocio);
+        this.nPorta=nPorta;
+    }
+
+    public Loja(Loja x){
+        super(x.getId(),x.getRua(),x.getPreco(),x.getPrecoMinimo());
+        this.area=x.getArea();
+        this.wc=x.isWc();
+        this.tipoNegocio=new String(x.getTipoNegocio());
+        this.nPorta=x.getNPorta();
+    }
+
+    /*      Métodos de instância    */
     public double getArea() {return area;}
     public boolean isWc() {return wc;}
     public String getTipoNegocio() {return tipoNegocio;}
-    public int getnPorta() {return nPorta;}
+    public int getNPorta() {return nPorta;}
 
     public void setArea(double area) {this.area = area;}
     public void setWc(boolean wc) {this.wc = wc;}
     public void setTipoNegocio(String tipoNegocio) {this.tipoNegocio = tipoNegocio;}
-    public void setnPorta(int nPorta) {this.nPorta = nPorta;}
+    public void setNPorta(int nPorta) {this.nPorta = nPorta;}
 
     public boolean equals(Object obj) {
         if (this == obj) {return true;}

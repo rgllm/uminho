@@ -3,15 +3,35 @@ import java.util.Objects;
 import java.util.List;
 import java.util.ArrayList;
 public class Vendedor extends Utilizador{
-    ArrayList<Imovel> portfolio;
-    ArrayList<Imovel> historico;
 
+    private ArrayList<Imovel> portfolio;
+    private ArrayList<Imovel> historico;
+
+    /*           Construtores         */
+    public Vendedor(){
+        super("","","","","");
+        portfolio=null;
+        historico=null;
+    }
+
+    public Vendedor(String email,String nome,String password,String morada,String data_nascimento,ArrayList<Imovel> portfolio,ArrayList<Imovel> historico){
+        super(email,nome,password,morada,data_nascimento);
+        this.portfolio=new ArrayList<Imovel>(portfolio);
+        this.historico=new ArrayList<Imovel>(historico);
+    }
+
+    public Vendedor(Vendedor x){
+        super(x.getEmail() , x.getNome() , x.getPassword() , x.getMorada() , x.getDataNasc() );
+        this.portfolio=new ArrayList<Imovel>(x.getPortfolio());
+        this.historico=new ArrayList<Imovel>(x.getHistorico());
+    }
+
+    /*      Métodos de instância    */
     public ArrayList<Imovel> getPortfolio() {return portfolio;}
     public ArrayList<Imovel> getHistorico() {return historico;}
     
     public void setPortfolio(ArrayList<Imovel> portfolio){this.portfolio = (ArrayList<Imovel>)portfolio.clone();}
     public void setHistorico(ArrayList<Imovel> historico){this.historico = (ArrayList<Imovel>)historico.clone();}
-
 
     public boolean equals(Object obj) {
         if (this == obj) {return true;}

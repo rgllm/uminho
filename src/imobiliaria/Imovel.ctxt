@@ -1,6 +1,7 @@
 #BlueJ class context
 comment0.params=
 comment0.target=Imovel()
+comment0.text=Construtores
 comment1.params=id\ rua\ preco\ precoMinimo
 comment1.target=Imovel(java.lang.String,\ java.lang.String,\ double,\ double)
 comment10.params=precoMinimo

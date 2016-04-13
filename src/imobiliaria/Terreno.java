@@ -7,6 +7,41 @@ public class Terreno extends Imovel{
     private double potenciaEletrica;
     private boolean esgotos;
 
+    /*           Construtores         */
+    public Terreno(){
+        super("","",0.0,0.0);
+        areaConstrucao=0.0;
+        habitacao=false;
+        armazem=false;
+        diamCanalizacoes=0.0;
+        eletricidade=false;
+        potenciaEletrica=0.0;
+        esgotos=false;       
+    }
+
+    public Terreno(String id,String rua,double preco,double precoMinimo,double areaConstrucao,boolean habitacao,boolean armazem,double diamCanalizacoes,boolean eletricidade,double potenciaEletrica,boolean esgotos){
+        super(id,rua,preco,precoMinimo);
+        this.areaConstrucao=areaConstrucao;
+        this.habitacao=habitacao;
+        this.armazem=armazem;
+        this.diamCanalizacoes=diamCanalizacoes;
+        this.eletricidade=eletricidade;
+        this.potenciaEletrica=potenciaEletrica;
+        this.esgotos=esgotos;
+    }
+
+    public Terreno(Terreno x){
+        super(x.getId(),x.getRua(),x.getPreco(),x.getPrecoMinimo());
+        this.areaConstrucao=x.getAreaConstrucao();
+        this.habitacao=x.isHabitacao();
+        this.armazem=x.isArmazem();
+        this.diamCanalizacoes=x.getDiamCanalizacoes();
+        this.eletricidade=x.isEletricidade();
+        this.potenciaEletrica=x.getPotenciaEletrica();
+        this.esgotos=x.isEsgotos();
+    }
+
+    /*      Métodos de instância    */
     public double getAreaConstrucao() {return areaConstrucao;}
     public boolean isHabitacao() {return habitacao;}
     public boolean isArmazem() {return armazem;}

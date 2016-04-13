@@ -8,28 +8,46 @@ public class Apartamento extends Imovel{
     private int nWCs;
     private boolean garagem;
 
+    /*           Construtores         */
     public Apartamento(){
-        super("","",0,0);
+        super("","",0.0,0.0);
         tipo="";
-        area=0;
+        area=0.0;
         nQuartos=0;
         nWCs=0;
         garagem=false;
     }
 
+    public Apartamento(String id,String rua,double preco,double precoMinimo,String tipo,double area,int nQuartos,int nWCs,boolean garagem){
+        super(id,rua,preco,precoMinimo);
+        this.tipo=new String(tipo);
+        this.area=area;
+        this.nQuartos=nQuartos;
+        this.nWCs=nWCs;
+        this.garagem=garagem;
+    }
+
+    public Apartamento(Apartamento x){
+        super(x.getId(),x.getRua(),x.getPreco(),x.getPrecoMinimo());
+        this.tipo=new String(x.getTipo());
+        this.area=x.getArea();
+        this.nQuartos=x.getNQuartos();
+        this.nWCs=x.getNWCs();
+        this.garagem=x.isGaragem();
+    }
+
+    /*      Métodos de instância    */
     public String getTipo() {return tipo;}
     public double getArea() {return area;}
-    public int getnQuartos() {return nQuartos;}
-    public int getnWCs() {return nWCs;}
+    public int getNQuartos() {return nQuartos;}
+    public int getNWCs() {return nWCs;}
     public boolean isGaragem() {return garagem;}
 
     public void setTipo(String tipo) {this.tipo = tipo;}
     public void setArea(double area) {this.area = area;}
-    public void setnQuartos(int nQuartos) {this.nQuartos = nQuartos;}
-    public void setnWCs(int nWCs) {this.nWCs = nWCs;}
+    public void setNQuartos(int nQuartos) {this.nQuartos = nQuartos;}
+    public void setNWCs(int nWCs) {this.nWCs = nWCs;}
     public void setGaragem(boolean garagem) {this.garagem = garagem;}
-
-
 
     public boolean equals(Object obj) {
         if (this == obj) {return true;}

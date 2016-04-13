@@ -1,6 +1,7 @@
 #BlueJ class context
 comment0.params=
 comment0.target=Terreno()
+comment0.text=Construtores
 comment1.params=id\ rua\ preco\ precoMinimo\ areaConstrucao\ habitacao\ armazem\ diamCanalizacoes\ eletricidade\ potenciaEletrica\ esgotos
 comment1.target=Terreno(java.lang.String,\ java.lang.String,\ double,\ double,\ double,\ boolean,\ boolean,\ double,\ boolean,\ double,\ boolean)
 comment10.params=areaConstrucao

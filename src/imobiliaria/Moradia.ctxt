@@ -1,6 +1,7 @@
 #BlueJ class context
 comment0.params=
 comment0.target=Moradia()
+comment0.text=Construtores
 comment1.params=id\ rua\ preco\ precoMinimo\ tipo\ areaImplantacao\ areaCoberta\ areaTerreno\ nQuartos\ nWCs\ nPorta
 comment1.target=Moradia(java.lang.String,\ java.lang.String,\ double,\ double,\ java.lang.String,\ double,\ double,\ double,\ int,\ int,\ int)
 comment10.params=tipo

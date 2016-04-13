@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.params=
 comment0.target=Loja()
-comment0.text=parte\ habitacional
+comment0.text=Construtores
 comment1.params=id\ rua\ preco\ precoMinimo\ area\ wc\ tipoNegocio\ nPorta
 comment1.target=Loja(java.lang.String,\ java.lang.String,\ double,\ double,\ double,\ boolean,\ java.lang.String,\ int)
 comment10.params=nPorta

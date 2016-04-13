@@ -43,11 +43,11 @@ public class Utilizador{
     public String getMorada(){return morada;}
     public String getDataNasc(){return data_nascimento;}
     
-    public void setEmail(String e){email=e;}
-    public void setNome(String n){nome=n;}
-    public void setPassword(String p){password=p;}
-    public void setMorada(String m){morada=m;}
-    public void setDataNasc(String d){data_nascimento=d;}
+    public void setEmail(String email){this.email=new String(email);}
+    public void setNome(String nome){this.nome=new String(nome);}
+    public void setPassword(String password){this.password=new String(password);}
+    public void setMorada(String morada){this.morada=new String(morada);}
+    public void setDataNasc(String data_nascimento){this.data_nascimento=new String(data_nascimento);}
     
     public boolean equals(Object obj) {
         if (this == obj) {return true;}

@@ -7,7 +7,7 @@
 typedef struct info{
     char produto[8];
     double preco;
-    int qtd;
+    int qtd; 
     char np;
     char cliente[8];
     int mes;
@@ -21,7 +21,7 @@ typedef struct nodo{
 	struct nodo *dir;
 	struct nodo *pai;
 	int altura;
-} nodo,*nodoCliente,*nodoProduto;
+} nodo;
 
 int max ( int a, int b );
 nodo *search(nodo *raiz, char codigo[]);

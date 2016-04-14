@@ -3,7 +3,6 @@
 #define AVL
 #endif
 
-
 /*
  * Definição das estruturas
  */
@@ -11,6 +10,8 @@
 typedef struct cliente* Cliente;
 typedef struct listaC* ListaClientes;
 typedef struct catClientes* CatClientes;
+typedef nodo * nodoCliente;
+
 
 /*
  * Funções sobre o tipo CATCLIENTES

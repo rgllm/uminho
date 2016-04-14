@@ -6,6 +6,7 @@
 typedef struct prod* Produto;
 typedef struct listaP* ListaProdutos;
 typedef struct catProdutos* CatProdutos;
+typedef nodo * nodoProduto;
 
 
 /*Funções sobre o tipo CatProdutos */

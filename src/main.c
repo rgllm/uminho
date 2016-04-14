@@ -1,3 +1,12 @@
+/*  mudar de char[8] para char* 
+    perguntar sobre o modulos de faturaçao e filial
+    duvida typedefs
+    perguntar sobre replicação de dados
+    comparaProduto
+
+ */
+
+
 #include "clientes.h"
 #include "produtos.h"
 #define MAXBUFF 64
@@ -70,7 +79,7 @@ int main(){
 	CatClientes catClientes;
 	CatProdutos catProd;
    /*) catVendas vendas; */
-	int aux,c,qtd,mes,fil;
+	int c,qtd,mes,fil;
 	char cod[10],linha[MAXBUFF], buffer[MAXBUFF],*produto,np,*cli,*precAux;
 	double prec;
 	info venda;
@@ -89,7 +98,6 @@ int main(){
 	while( fgets (buffer, MAXBUFF, fp)){
        strcpy(cod,buffer);
        strtok(cod,"\r\n");
-       aux=cod[0]-65;
        cliente = criaCliente(cod);
        if(!existeCliente(catClientes,cliente)){
             catClientes=insereCliente(catClientes,cliente);
@@ -105,7 +113,6 @@ int main(){
     while( fgets (buffer, MAXBUFF, fp)){
         strcpy(cod,buffer);
         strtok(cod,"\r\n");
-        aux=cod[0]-65;
         prod=criaProduto(cod);
         if(!existeProduto(catProd,prod)){
             catProd=insereProduto(catProd,prod);

@@ -2,10 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifndef DUP
-#include "outros.h"
-#define DUP
-#endif
 
 #ifndef INFOPROD
 typedef struct infoProduto{

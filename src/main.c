@@ -60,7 +60,6 @@ void registaVenda(info * inf,char produto[], double preco, int qtd, char np, cha
 */
 int validaVenda(CatClientes c,CatProdutos p,char * produto,double preco,int qtd,char np,char * cliente,int mes,int filial){
 	int lC,lP;
-    printf("INICIO\n");
 	lP=produto[0]-65;
     lC=cliente[0]-65;
 	if(search(getAVLProd(p,lP),produto)!=NULL){
@@ -71,12 +70,10 @@ int validaVenda(CatClientes c,CatProdutos p,char * produto,double preco,int qtd,
 				mes>=1 && mes <=12 &&
 				(np=='N' || np=='P') &&
 				filial>=1 && filial<=3 )
-                printf("FIM\n");
 				return 0;
 		}
 
 	}
-    printf("FIM\n");
 	return 1;
 }
 
@@ -138,27 +135,28 @@ int main(){
 		cli=strtok(NULL," ");
 		mes=atoi(strtok(NULL," "));
 		fil=atoi(strtok(NULL," "));
+        printf("Venda vai ser testada\n");
         
 		if(validaVenda(catClientes,catProd,produto,prec,qtd,np,cli,mes,fil)==0){
-            printf("-\n");
+            printf("    Venda Válida\n");
             prec=qtd*prec;
             if(np=='N'){
-                printf("    NORMAL\n");
+                printf("        NORMAL\n");
 
                 aux=(infoP)criaInfoProduto(produto,qtd,0,prec,0);
                 registaFaturacaoProduto(aux, mes , fil );
 
             }
             else {
-                printf("    PROMOCAO\n");
+                printf("        PROMOCAO -I\n");
                 aux=(infoP)criaInfoProduto(produto,0,qtd,0,prec);
                 printf("    %f\n",aux->totalPromocao);
                 registaFaturacaoProduto(aux , mes , fil);
-                printf("    PROMOCAO\n");
+                printf("        PROMOCAO -F\n");
             }
             c++;
 		}
-        else printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+        else printf("      Venda Inválida\n");
 	}
 
 	printf("Vendas: %d\n",c );

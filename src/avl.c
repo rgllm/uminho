@@ -66,7 +66,7 @@ nodo *rodaEsq(nodo *raiz){
 
 nodo *criaNodo(char codigo[], nodo *pai){
     nodo *n = malloc(sizeof(nodo));
-    n->codigo=myStrdup(codigo);
+    n->codigo=strdup(codigo);
     n->pai = pai;
     n->altura = 1;
     n->esq = NULL;
@@ -213,7 +213,7 @@ nodoFaturacaoProduto rodaEsqV(nodoFaturacaoProduto raiz){
 }
 
 void infoProdutoCopy(infoP p1,infoP p2){
-    p1->produto=myStrdup(p2->produto);
+    p1->produto=strdup(p2->produto);
     p1->qtdNormal=p2->qtdNormal;
     p1->qtdPromocao=p2->qtdPromocao;
     p1->totalNormal=p2->totalNormal;

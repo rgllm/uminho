@@ -3,10 +3,6 @@
 #define AVL
 #endif
 
-#ifndef DUP
-#include "outros.h"
-#define DUP
-#endif
 
 
 #ifndef INFOPROD

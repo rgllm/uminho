@@ -18,7 +18,7 @@ faturacaoProduto initNComprados(){
 
 infoP criaInfoProduto(char * produto,int qtdNormal,int qtdPromocao,double totalNormal,double totalPromocao ){
     struct infoProduto *ret=(struct infoProduto*)malloc(sizeof(struct infoProduto));
-    ret->produto=myStrdup(produto);
+    ret->produto=strdup(produto);
     ret->qtdNormal=qtdNormal;
     ret->qtdPromocao=qtdPromocao;
     ret->totalNormal=totalNormal;
@@ -32,14 +32,17 @@ void registaFaturacaoProduto(infoP produto,int mes,int filial){
         tabela[mes-1][filial-1]=insertNodoFat(produto,tabela[mes-1][filial-1]);
     else tabela[mes-1][filial-1]=criaNodoFat(produto,NULL);
 
+
     if(tabela[3][filial-1] != NULL){
-        aux=searchProduto(tabela[3][filial-1],produto->produto);
-        aux->produto->qtdNormal+=produto->qtdNormal;
-        aux->produto->qtdPromocao+=produto->qtdPromocao;
-        aux->produto->totalNormal+=produto->totalNormal;
-        aux->produto->totalPromocao+=produto->totalPromocao;
+        if(aux=searchProduto(tabela[3][filial-1],produto->produto) != NULL){
+            aux->produto->qtdNormal+=produto->qtdNormal;
+            aux->produto->qtdPromocao+=produto->qtdPromocao;
+            aux->produto->totalNormal+=produto->totalNormal;
+            aux->produto->totalPromocao+=produto->totalPromocao;
+        }
+        else tabela[3][filial-1]=criaNodoFat(produto,NULL);
     }
-    else tabela[3][filial-1]=tabela[mes-1][filial-1];
+    else tabela[3][filial-1]=criaNodoFat(produto,NULL);
 
     if(tabela[mes-1][12]!=NULL){
         aux=searchProduto(tabela[mes-1][12],produto->produto);

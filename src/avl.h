@@ -2,21 +2,24 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifndef INFO
-#define INFO
-typedef struct info{
-    char produto[8];
-    double preco;
-    int qtd; 
-    char np;
-    char cliente[8];
-    int mes;
-    int filial;
-}info;
+#ifndef DUP
+#include "outros.h"
+#define DUP
+#endif
+
+#ifndef INFOPROD
+typedef struct infoProduto{
+    char * produto;
+    int qtdNormal;
+    int qtdPromocao;
+    double totalNormal;
+    double totalPromocao;
+}* infoP;
+#define INFOPROD
 #endif
 
 typedef struct nodo{
-	char codigo[8];
+	char *codigo;
 	struct nodo *esq;
 	struct nodo *dir;
 	struct nodo *pai;
@@ -39,21 +42,20 @@ void freeTree(nodo * raiz);
 
 /* ARVORE DE VENDAS */
 
-typedef struct nodoV
-{
-	info inf;
-	struct nodoV *esq;
-	struct nodoV *dir;
-	struct nodoV *pai;
+typedef struct nodoFaturacaoProduto{
+	infoP produto;
+	struct nodoFaturacaoProduto *esq;
+	struct nodoFaturacaoProduto *dir;
+	struct nodoFaturacaoProduto *pai;
 	int altura;
-} nodoV;
+} *nodoFaturacaoProduto;
 
-nodoV *searchV(nodoV *raiz, info inf);
-int alturaV(nodoV *raiz);
-void ajustaAlturaV(nodoV *raiz);
-nodoV *rodaDirV(nodoV *raiz);
-nodoV *rodaEsqV(nodoV *raiz);
-nodoV *criaNodoV(info inf, nodoV *pai);
-nodoV *balanceV(nodoV *raiz);
-nodoV *insertV(info inf,nodoV *raiz);
-int vendaCmp(info v1,info v2);
+nodoFaturacaoProduto searchProduto(nodoFaturacaoProduto raiz, char * produto);
+int alturaV(nodoFaturacaoProduto raiz);
+void ajustaAlturaV(nodoFaturacaoProduto raiz);
+nodoFaturacaoProduto rodaDirV(nodoFaturacaoProduto raiz);
+nodoFaturacaoProduto rodaEsqV(nodoFaturacaoProduto raiz);
+void infoProdutoCopy(infoP p1,infoP p2);
+nodoFaturacaoProduto criaNodoFat(infoP produto, nodoFaturacaoProduto pai);
+nodoFaturacaoProduto balanceV(nodoFaturacaoProduto raiz);
+nodoFaturacaoProduto insertNodoFat(infoP produto,nodoFaturacaoProduto raiz);

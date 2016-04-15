@@ -20,6 +20,7 @@ typedef struct catClientes{
 
 nodoCliente getAVLCli(CatClientes p,int lC){
     return p[lC].clientes;
+
 }
 
 /* Funções relativas ao tipo CatClientes */

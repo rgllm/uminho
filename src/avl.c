@@ -1,5 +1,7 @@
 #include "avl.h"
 
+
+
 nodo *search(nodo *raiz, char codigo[]){
     int cmp;
     if (raiz == NULL) return NULL;
@@ -64,12 +66,11 @@ nodo *rodaEsq(nodo *raiz){
 
 nodo *criaNodo(char codigo[], nodo *pai){
     nodo *n = malloc(sizeof(nodo));
-    strcpy(n->codigo,codigo);
+    n->codigo=myStrdup(codigo);
     n->pai = pai;
     n->altura = 1;
     n->esq = NULL;
     n->dir = NULL;
-
     return n;
 }
 
@@ -156,47 +157,30 @@ void freeTree(nodo * raiz){
 /*##################################################################################*/
     /*###################################################################*/
 
-int vendaCmp(info v1,info v2){
-    int cmp= strcmp(v1.produto,v2.produto);
-    if(cmp!=0){ return cmp ; }
-    cmp=strcmp(v1.cliente,v2.cliente);
-    if(cmp!=0) return cmp;
-    if(v1.mes > v2.mes) return 1;
-    if(v1.mes < v2.mes) return -1;
-    if(v1.filial > v2.filial) return 1;
-    if(v1.filial < v2.filial) return -1;
-    if(v1.np > v2.np) return 1;
-    if(v1.np < v2.np) return -1;
-    if(v1.preco > v2.preco) return 1;
-    if(v1.preco < v2.preco) return -1;
-    if(v1.qtd > v2.qtd) return 1;
-    if(v1.qtd < v2.qtd) return -1;
-    return 0;
-}
 
-nodoV *searchV(nodoV *raiz, info inf){
+nodoFaturacaoProduto searchProduto(nodoFaturacaoProduto raiz, char * produto){
     int cmp;
     if (raiz == NULL) return NULL;
-    cmp=vendaCmp(inf,raiz->inf);
+    cmp=strcmp(produto,raiz->produto->produto);
     if (cmp<0)
-        return searchV(raiz->esq, inf);
+        return searchProduto(raiz->esq, produto);
     else if (cmp > 0)
-        return searchV(raiz->dir, inf);
+        return searchProduto(raiz->dir, produto);
     else
         return raiz;
 }
 
-int alturaV(nodoV *raiz){
+int alturaV(nodoFaturacaoProduto raiz){
     if(raiz) return raiz->altura;
     return 0;
 }
 
-void ajustaAlturaV(nodoV *raiz){
+void ajustaAlturaV(nodoFaturacaoProduto raiz){
     raiz->altura = 1 + max(alturaV(raiz->esq), alturaV(raiz->dir));
 }
 
-nodoV *rodaDirV(nodoV *raiz){
-    nodoV *new = raiz->esq;
+nodoFaturacaoProduto rodaDirV(nodoFaturacaoProduto raiz){
+    nodoFaturacaoProduto new = raiz->esq;
     if (raiz->pai){
         if (raiz->pai->esq == raiz) raiz->pai->esq = new;
         else raiz->pai->dir = new;
@@ -211,9 +195,9 @@ nodoV *rodaDirV(nodoV *raiz){
     return new;
 }
 
-nodoV *rodaEsqV(nodoV *raiz){
+nodoFaturacaoProduto rodaEsqV(nodoFaturacaoProduto raiz){
 
-    nodoV *new = raiz->dir;
+    nodoFaturacaoProduto new = raiz->dir;
     if (raiz->pai){
         if (raiz->pai->dir == raiz) raiz->pai->dir = new;
         else raiz->pai->esq = new;
@@ -228,19 +212,17 @@ nodoV *rodaEsqV(nodoV *raiz){
     return new;
 }
 
-void vendaCopy(info *v1,info v2){
-    strcpy(v1->produto,v2.produto);
-    strcpy(v1->cliente,v2.cliente);
-    v1->preco = v2.preco;
-    v1->qtd   = v2.qtd;
-    v1->np    = v2.np;
-    v1->mes  = v2.mes;
-    v1->filial= v2.filial;
+void infoProdutoCopy(infoP p1,infoP p2){
+    p1->produto=myStrdup(p2->produto);
+    p1->qtdNormal=p2->qtdNormal;
+    p1->qtdPromocao=p2->qtdPromocao;
+    p1->totalNormal=p2->totalNormal;
+    p1->totalPromocao=p2->totalPromocao;
 }
 
-nodoV *criaNodoV(info inf, nodoV *pai){
-    nodoV *n = malloc(sizeof(nodoV));
-    vendaCopy(&n->inf,inf);
+nodoFaturacaoProduto criaNodoFat(infoP produto, nodoFaturacaoProduto pai){
+    nodoFaturacaoProduto n = malloc(sizeof(nodoFaturacaoProduto));
+    infoProdutoCopy(&n->produto,produto);
     n->pai = pai;
     n->altura = 1;
     n->esq = NULL;
@@ -248,7 +230,7 @@ nodoV *criaNodoV(info inf, nodoV *pai){
     return n;
 }
 
-nodoV *balanceV(nodoV *raiz){
+nodoFaturacaoProduto balanceV(nodoFaturacaoProduto raiz){
     if (alturaV(raiz->esq) - alturaV(raiz->dir) > 1)
     {
         if (alturaV(raiz->esq->esq) > alturaV(raiz->esq->dir)){
@@ -271,20 +253,22 @@ nodoV *balanceV(nodoV *raiz){
     return raiz;
 }
 
-nodoV *insertV(info inf,nodoV *raiz){
-    nodoV *aux = raiz;
-    while (vendaCmp(inf,aux->inf)!=0){
-        if (vendaCmp(inf,aux->inf)<0){
+nodoFaturacaoProduto insertNodoFat(infoP produto,nodoFaturacaoProduto raiz){
+    nodoFaturacaoProduto aux = raiz;
+    printf("aaaaaaaaaaaaaaaaaaaaaaaaa\n");
+    while (strcmp(produto->produto,aux->produto->produto)!=0){
+        printf("bbbbbbbbbbbbbbbb\n");
+        if (strcmp(produto->produto,aux->produto->produto)<0){
             if (aux->esq) aux = aux->esq;
             else{
-                aux->esq = criaNodoV(inf, aux);
+                aux->esq = criaNodoFat(produto, aux);
                 aux = aux->esq;
             }
         }
-        else if (vendaCmp(inf,aux->inf)>0){
+        else if (strcmp(produto->produto,aux->produto->produto)>0){
             if (aux->dir) aux = aux->dir;
             else{
-                aux->dir = criaNodoV(inf, aux);
+                aux->dir = criaNodoFat(produto, aux);
                 aux = aux->dir;
                 break;
             }

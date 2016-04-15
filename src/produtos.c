@@ -1,5 +1,4 @@
 #include "produtos.h"
-#ifndef PRODUTOS
 
 typedef struct prod{
     char * cod;
@@ -15,8 +14,6 @@ typedef struct catProdutos{
     int size;
     nodoProduto produtos;
 }catProdutos[26];
-#define PRODUTOS
-#endif
 
 nodoProduto getAVLProd(CatProdutos p,int lP){
     return p[lP].produtos;

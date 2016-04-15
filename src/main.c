@@ -1,7 +1,5 @@
-/*  mudar de char[8] para char* 
-    perguntar sobre o modulos de faturaçao e filial
+/*   
     duvida typedefs
-    perguntar sobre replicação de dados
     comparaProduto
 
  */
@@ -9,8 +7,14 @@
 
 #include "clientes.h"
 #include "produtos.h"
+#include "faturacao.h"
 #define MAXBUFF 64
 
+
+
+
+
+/*
 typedef nodoV* venda;
 typedef venda catVendas[26];
 
@@ -27,8 +31,6 @@ typedef struct info{
 }info;
 #endif
 
-/*
-
 venda criaVenda(info inf){
     return criaNodoV(inf,NULL);
 }
@@ -44,7 +46,7 @@ void initV(venda * c){
         c[i]=NULL;
 }
 
-*/
+
 
 void registaVenda(info * inf,char produto[], double preco, int qtd, char np, char cliente[], int mes, int filial){
     strcpy(inf->produto,produto);
@@ -55,22 +57,26 @@ void registaVenda(info * inf,char produto[], double preco, int qtd, char np, cha
     inf->mes = mes;
     inf->filial = filial;
 }
-
-int validaVenda(CatClientes c,CatProdutos p,info* inf){
+*/
+int validaVenda(CatClientes c,CatProdutos p,char * produto,double preco,int qtd,char np,char * cliente,int mes,int filial){
 	int lC,lP;
-	lP=inf->produto[0]-65;
-    lC=inf->cliente[0]-65;
+    printf("INICIO\n");
+	lP=produto[0]-65;
+    lC=cliente[0]-65;
+	if(search(getAVLProd(p,lP),produto)!=NULL){
+		if(search(getAVLCli(c,lC),cliente)!=NULL){
 
-	if(search(getAVLProd(p,lP),inf->produto)!=NULL){
-		if(search(getAVLCli(c,lC),inf->cliente)!=NULL){
-			if(inf->qtd>0 && 
-				inf->preco>=0 &&
-				inf->mes>=1 && inf->mes <=12 &&
-				(inf->np=='N' || inf->np=='P') &&
-				inf->filial>=1 && inf->filial<=3 )
+			if(qtd>0 && 
+				preco>=0 &&
+				mes>=1 && mes <=12 &&
+				(np=='N' || np=='P') &&
+				filial>=1 && filial<=3 )
+                printf("FIM\n");
 				return 0;
 		}
+
 	}
+    printf("FIM\n");
 	return 1;
 }
 
@@ -78,12 +84,11 @@ int validaVenda(CatClientes c,CatProdutos p,info* inf){
 int main(){
 	CatClientes catClientes;
 	CatProdutos catProd;
-   /*) catVendas vendas; */
 	int c,qtd,mes,fil;
 	char cod[10],linha[MAXBUFF], buffer[MAXBUFF],*produto,np,*cli,*precAux;
 	double prec;
-	info venda;
-	FILE *fp,*fp2;
+	infoP aux;
+	FILE *fp;
 	int pzero=0,unidades=0;
  	int filial1=0, filial2=0, filial3=0;
  	double ftotal=0;
@@ -104,7 +109,6 @@ int main(){
         }
     }
     fclose(fp);
-    printf("Clientes: %d\n",totalClientes(catClientes));
 
 
 	/*                 Leitura dos produtos                 */
@@ -120,13 +124,11 @@ int main(){
     }
     fclose(fp);
     
-    printf("Produtos: %d\n",totalProdutos(catProd));
 
     /*                 Leitura das vendas                   */
     c=0;
-    	/*initV(vendas); */  
+    initTabela();
     fp = fopen( "files/Vendas1.txt", "r" );
-    fp2=fopen("Vendas_1MValidas.txt", "w");
 	while (fgets(buffer, MAXBUFF,fp)!=NULL){
 		strcpy(linha,buffer);
 		produto=strtok(buffer," ");
@@ -136,18 +138,27 @@ int main(){
 		cli=strtok(NULL," ");
 		mes=atoi(strtok(NULL," "));
 		fil=atoi(strtok(NULL," "));
-		registaVenda(&venda,produto,prec,qtd,np,cli,mes,fil);
-		if(validaVenda(catClientes,catProd,&venda)==0){
-			fprintf(fp2,"%s", linha);
-			c++;
-			/* Testes sobre as vendas */ 
- 			if(prec==0) pzero++;
- 			ftotal+=(prec*qtd);
- 			unidades+=qtd;
-			if(fil==1) filial1++;
-			if(fil==2) filial2++;
-			if(fil==3) filial3++;
+        
+		if(validaVenda(catClientes,catProd,produto,prec,qtd,np,cli,mes,fil)==0){
+            printf("-\n");
+            prec=qtd*prec;
+            if(np=='N'){
+                printf("    NORMAL\n");
+
+                aux=(infoP)criaInfoProduto(produto,qtd,0,prec,0);
+                registaFaturacaoProduto(aux, mes , fil );
+
+            }
+            else {
+                printf("    PROMOCAO\n");
+                aux=(infoP)criaInfoProduto(produto,0,qtd,0,prec);
+                printf("    %f\n",aux->totalPromocao);
+                registaFaturacaoProduto(aux , mes , fil);
+                printf("    PROMOCAO\n");
+            }
+            c++;
 		}
+        else printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
 	}
 
 	printf("Vendas: %d\n",c );
@@ -156,7 +167,6 @@ int main(){
 	printf("Unidades Vendidas: %d\n",unidades);
  	printf("Filial 1: %d\nFilial 2: %d\nFilial 3: %d\n",filial1,filial2,filial3 );
 
-	fclose(fp2);
 	fclose(fp);
 	return 1;
 }

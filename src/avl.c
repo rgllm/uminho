@@ -138,7 +138,7 @@ void printInOrder(nodo * raiz){
         printInOrder(raiz->dir);
     }
 }
-
+/*
 void printInOrderProd(nodoFaturacaoProduto raiz){
     if(raiz!=NULL){
         printInOrder(raiz->esq);
@@ -146,7 +146,7 @@ void printInOrderProd(nodoFaturacaoProduto raiz){
         printInOrder(raiz->dir);
     }
 }
-
+*/
 void freeTree(nodo * raiz){
     if(raiz!=NULL){
         if(raiz->esq!=NULL){
@@ -267,7 +267,6 @@ nodoFaturacaoProduto balanceV(nodoFaturacaoProduto raiz){
 
 nodoFaturacaoProduto insertNodoFat(infoP produto,nodoFaturacaoProduto raiz){
     nodoFaturacaoProduto aux = raiz;
-    printf("asdfasdfasdfasdf\n");
     while (strcmp(produto->produto,aux->produto->produto)){
         if (strcmp(produto->produto,aux->produto->produto)<0){
             if (aux->esq) aux = aux->esq;
@@ -281,15 +280,18 @@ nodoFaturacaoProduto insertNodoFat(infoP produto,nodoFaturacaoProduto raiz){
             else{
                 aux->dir = criaNodoFat(produto, aux);
                 aux = aux->dir;
-                /*break;*/
             }
         }
         else return raiz;
     }
+    if(strcmp(produto->produto,aux->produto->produto)==0)
+        return raiz;
     do {
+
         aux  = aux->pai;
         ajustaAlturaV(aux);
         aux = balanceV(aux);
+
     } while (aux->pai);
     return aux;
 }

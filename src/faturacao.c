@@ -27,11 +27,10 @@ infoP criaInfoProduto(char * produto,int qtdNormal,int qtdPromocao,double totalN
 }
 
 void registaFaturacaoProduto(infoP produto,int filial,int mes){
-    faturacaoProduto aux;
 
+    nodoFaturacaoProduto aux;
     tabela[filial-1][mes-1]=insertNodoFat(produto,tabela[filial-1][mes-1]);
-printf("--------------------------------\n");
-    aux=searchProduto(produto->produto,tabela[filial-1][mes-1]);
+    aux=searchProduto(tabela[filial-1][mes-1],produto->produto);
     aux->produto->qtdNormal+=produto->qtdNormal;
     aux->produto->qtdPromocao+=produto->qtdPromocao;
     aux->produto->totalNormal+=produto->totalNormal;
@@ -39,7 +38,7 @@ printf("--------------------------------\n");
 
     tabela[3][mes-1]=insertNodoFat(produto,tabela[3][mes-1]);
 
-    aux=searchProduto((tabela[3][mes-1]),produto->produto);
+    aux=searchProduto(tabela[3][mes-1],produto->produto);
     aux->produto->qtdNormal+=produto->qtdNormal;
     aux->produto->qtdPromocao+=produto->qtdPromocao;
     aux->produto->totalNormal+=produto->totalNormal;
@@ -47,7 +46,7 @@ printf("--------------------------------\n");
 
     tabela[filial-1][12]=insertNodoFat(produto,tabela[filial-1][12]);
 
-    aux=searchProduto((tabela[filial-1][12]),produto->produto);
+    aux=searchProduto(tabela[filial-1][12],produto->produto);
     aux->produto->qtdNormal+=produto->qtdNormal;
     aux->produto->qtdPromocao+=produto->qtdPromocao;
     aux->produto->totalNormal+=produto->totalNormal;
@@ -55,69 +54,54 @@ printf("--------------------------------\n");
 
     tabela[3][12]=insertNodoFat(produto,tabela[3][12]);
 
-    aux=searchProduto((tabela[3][12]),produto->produto);
+    aux=searchProduto(tabela[3][12],produto->produto);
     aux->produto->qtdNormal+=produto->qtdNormal;
     aux->produto->qtdPromocao+=produto->qtdPromocao;
     aux->produto->totalNormal+=produto->totalNormal;
     aux->produto->totalPromocao+=produto->totalPromocao;
+
 }
+
 /*
 
-    printf("    inserir produto em tabela[%d][%d] \n",filial-1,mes-1);
+nodo getNaoComprados(){
+    nodo NaoComprados;
+    return NaoComprados(NaoComprados, tabela[3][12]);
+}
 
-    if(tabela[filial-1][mes-1]){
-        printf("        tabela[%d][%d] NAO NULO \n",filial-1,mes-1);
-        tabela[filial-1][mes-1]=insertNodoFat(produto,tabela[filial-1][mes-1]);
+nodo NaoComprados(nodo NaoComprados, faturacaoProduto totais){
+if(raiz==NULL) return NULL;
+nodo pai = NaoComprados;
+infoP produto = totais->produto;
+if(produto->qtdPromocao==0 && produto->qtdNormal==0){
+    if(NaoComprados==NULL){
+        NaoComprados=criaNodo(produto->produto,NULL);
     }
-    else {
-        printf("      tabela[%d][%d] NULO \n",filial-1,mes-1);
-        tabela[filial-1][mes-1]=criaNodoFat(produto,NULL);
+    else{
+        NaoComprados=insert(produto->produto, NaoComprados);
     }
-    printf("    inserir produto em tabela[3][%d] \n",mes-1);
-    if(tabela[3][mes-1]){
-        printf("      tabela[3][%d] NAO NULO \n",mes-1);
-        if(aux=searchProduto((tabela[3][mes-1]),produto->produto) != NULL){
-            aux->produto->qtdNormal+=produto->qtdNormal;
-            aux->produto->qtdPromocao+=produto->qtdPromocao;
-            aux->produto->totalNormal+=produto->totalNormal;
-            aux->produto->totalPromocao+=produto->totalPromocao;
-        }
-        else {
-            insertNodoFat(produto,(tabela[3][mes-1]));
-        }
-    }
-    else {printf("      tabela[3][%d] NULO \n",filial-1);
-        tabela[3][mes-1]=criaNodoFat(produto,NULL);
-    }
-
-    printf("    inserir produto em tabela[%d][12] \n",filial-1);
-    if(tabela[filial-1][12]){
-        printf("      tabela[%d][12] NAO NULO \n",mes-1);
-        if(aux=searchProduto((tabela[filial-1][12]),produto->produto)){
-            aux->produto->qtdNormal+=produto->qtdNormal;
-            aux->produto->qtdPromocao+=produto->qtdPromocao;
-            aux->produto->totalNormal+=produto->totalNormal;
-            aux->produto->totalPromocao+=produto->totalPromocao;
-        }
-        else {insertNodoFat(produto,tabela[filial-1][12]);}
-    }
-    else tabela[filial-1][12]=criaNodoFat(produto,NULL);
-
-    if(tabela[3][12]!=NULL){
-        if(aux=searchProduto((tabela[3][12]),produto->produto)){
-            aux->produto->qtdNormal+=produto->qtdNormal;
-            aux->produto->qtdPromocao+=produto->qtdPromocao;
-            aux->produto->totalNormal+=produto->totalNormal;
-            aux->produto->totalPromocao+=produto->totalPromocao;
-        }
-        else insertNodoFat(produto,(tabela[3][12]));
-    }
-    else tabela[3][12]=criaNodoFat(produto,NULL);
-
+}
+NaoComprados=NaoComprados(NaoComprados, totais->esq);
+NaoComprados=NaoComprados(NaoComprados, totais->dir);
+return pai;
 }
 
 */
 
+/*
+int getNaoComprados(){
+    return contaNaoComprados(tabela[3][12]);
+}
+
+int contaNaoComprados(faturacaoProduto raiz){
+    if(raiz==NULL)
+        return 0;
+    infoP aux=raiz->produto;
+    if(aux->qtdPromocao==0 && aux->qtdNormal==0)
+        return (1 + contaNaoComprados(raiz->esq) + contaNaoComprados(raiz->dir));
+    return contaNaoComprados(raiz->esq) + contaNaoComprados(raiz->dir);
+}
+*/
 void carregaProduto(infoP produto){
     int i,j;
      for(i=0;i<4;i++)
@@ -139,4 +123,40 @@ int aux(nodoFaturacaoProduto x){
 }
 
 
-/*printf("P2:\n%s\n%d\n%d\n%f\n%f\n",p2->produto,p2->qtdPromocao,p2->qtdNormal,p2->totalPromocao,p2->totalNormal );*/
+void getQuery3(int mes,char * produto,double * totFat,int * totVendas){
+    faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
+    infoP aux= nodo->produto;
+    *totFat=aux->totalNormal+aux->totalPromocao;
+    *totVendas=aux->qtdNormal+aux->qtdPromocao;
+}
+
+double contaTotFat(faturacaoProduto raiz){
+    infoP produto = raiz->produto;
+    double faturacao;
+    if(raiz==NULL) return 0;
+    else {
+        faturacao=(produto->totalNormal*produto->qtdNormal)+(produto->totalPromocao*produto->qtdPromocao);
+        return faturacao + contaTotFat(raiz->esq) + contaTotFat(raiz->dir);
+    }
+}
+
+int contaTotVendas(faturacaoProduto raiz){
+    infoP produto = raiz->produto;
+    int vendas;
+    if(raiz==NULL) return 0;
+    else {
+        vendas=(produto->qtdNormal+produto->qtdPromocao);
+        return vendas + contaTotVendas(raiz->esq) + contaTotVendas(raiz->dir);
+    }
+}
+
+void getQuery6(int mesI, int mesF, double *totFat, int * totVendas){
+int i;
+*totFat=0;
+*totVendas=0;
+for(i=mesI-1;i<mesF;i++){
+    *totFat+=contaTotFat(tabela[3][i]);
+    *totVendas+=contaTotVendas(tabela[3][i]);
+}
+}
+

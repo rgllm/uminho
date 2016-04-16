@@ -1,7 +1,6 @@
 /*
     duvida typedefs
     comparaProduto
-
  */
 
 
@@ -9,58 +8,53 @@
 #include "produtos.h"
 #include "faturacao.h"
 #define MAXBUFF 64
+#include <unistd.h>
+
+
+void query3(){
+    int mes,totalVendas;
+    double totalFaturado;
+    char buf[MAXBUFF];
+    char * produto;
+    printf("--- QUERY 3 ---\n");
+    printf("Mês: ");
+    scanf("%d",&mes);
+    fgets(buf,MAXBUFF,stdin);
+    mes=atoi(strtok(buf,"\r\n"));
+    printf("Produto: ");
+    fgets(buf, MAXBUFF,stdin);
+    produto=strtok(buf,"\r\n");
+    scanf("%s",produto);
+    getQuery3(mes,produto,&totalFaturado,&totalVendas);
+    printf("Total faturado: %.2f\nTotal de vendas: %d\n",totalFaturado,totalVendas );
+}
+
+void query6(){
+int mesI, mesF,totVendas;
+double totFat;
+printf("--- QUERY 6 ---\n");
+printf("Mês inicial: ");
+scanf("%d",&mesI);
+printf("\nMês Final: ");
+scanf("%d",&mesF);
+getQuery6(mesI,mesF,&totFat,&totVendas);
+printf("Total de vendas registadas entre o mês %d e o mês %d é: %d\n", mesI,mesF,totVendas);
+printf("Total faturado entre o mês %d e o mês %d é: %.2f\n", mesI,mesF,totFat);
+}
 
 /*
-typedef nodoV* venda;
-typedef venda catVendas[26];
-
-#ifndef INFO
-#define INFO
-typedef struct info{
-    char produto[8];
-    double preco;
-    int qtd;
-    char np;
-    char cliente[8];
-    int mes;
-    int filial;
-}info;
-#endif
-
-venda criaVenda(info inf){
-    return criaNodoV(inf,NULL);
+void query4(){
+    printf("%d\n",getNaoComprados());
 }
 
-venda insereVenda(info cod,venda raiz){
-    return insertV(cod,raiz);
-}
-
-
-void initV(venda * c){
-    int i;
-    for(i=0;i<26;i++)
-        c[i]=NULL;
-}
-
-
-
-void registaVenda(info * inf,char produto[], double preco, int qtd, char np, char cliente[], int mes, int filial){
-    strcpy(inf->produto,produto);
-    inf->preco = preco;
-    inf->qtd = qtd;
-    inf->np = np;
-    strcpy(inf->cliente,cliente);
-    inf->mes = mes;
-    inf->filial = filial;
-}
 */
+
 int validaVenda(CatClientes c,CatProdutos p,char * produto,double preco,int qtd,char np,char * cliente,int mes,int filial){
 	int lC,lP;
 	lP=produto[0]-65;
     lC=cliente[0]-65;
 	if(search(getAVLProd(p,lP),produto)!=NULL){
 		if(search(getAVLCli(c,lC),cliente)!=NULL){
-
 			if(qtd>0 &&
 				preco>=0 &&
 				mes>=1 && mes <=12 &&
@@ -68,16 +62,14 @@ int validaVenda(CatClientes c,CatProdutos p,char * produto,double preco,int qtd,
 				filial>=1 && filial<=3 )
 				return 0;
 		}
-
 	}
 	return 1;
 }
 
-
 int main(){
 	CatClientes catClientes;
 	CatProdutos catProd;
-	int c,qtd,mes,fil,i,j;
+	int c,qtd,mes,fil,op=1;
 	char cod[10],linha[MAXBUFF], buffer[MAXBUFF],*produto,np,*cli,*precAux;
 	double prec;
 	infoP aux;
@@ -124,7 +116,6 @@ int main(){
 
     /*                 Leitura das vendas    */
     c=0;
-    initTabela();
 
     fp = fopen( "files/Vendas1.txt", "r" );
     while (fgets(buffer, MAXBUFF,fp)!=NULL){
@@ -136,37 +127,45 @@ int main(){
         cli=strtok(NULL," ");
         mes=atoi(strtok(NULL," "));
         fil=atoi(strtok(NULL," "));
-        printf("Venda vai ser testada\n");
+        /*printf("Venda vai ser testada\n");*/
 
         if(validaVenda(catClientes,catProd,produto,prec,qtd,np,cli,mes,fil)==0){
-            printf("    Venda Válida\n");
+            /*printf("    Venda Válida\n");*/
             prec=qtd*prec;
             if(np=='N'){
-                printf("        NORMAL\n");
-
+                /*printf("NI\n");*/
                 aux=(infoP)criaInfoProduto(produto,qtd,0,prec,0);
-                registaFaturacaoProduto(aux, mes , fil );
-
+                registaFaturacaoProduto(aux, fil , mes );
+                /*printf("NF\n");*/
             }
             else {
-                printf("        PROMOCAO -INICIO");
+                /*printf("PI\n");*/
                 aux=(infoP)criaInfoProduto(produto,0,qtd,0,prec);
-                printf("    %f\n",aux->totalPromocao);
+                /*printf(".....................\n");*/
                 registaFaturacaoProduto(aux , fil , mes);
-                printf("        PROMOCAO -FIM\n");
+                /*printf("PF\n");*/
             }
-            c++;
+
         }
-        else printf("      Venda Inválida\n");
+        /*else printf("      Venda Inválida\n");*/
     }
 
+/*
     printf("Vendas: %d\n",c );
     printf("Vendas de preço zero: %d\n",pzero);
     printf("Faturação Total: %f\n",ftotal);
     printf("Unidades Vendidas: %d\n",unidades);
     printf("Filial 1: %d\nFilial 2: %d\nFilial 3: %d\n",filial1,filial2,filial3 );
-
+*/
     fclose(fp);
+    printf("\nEscola uma query (6 ou 3) ou 0 para sair: ");
+    scanf("%d",&op);
+    while(op!=0){
+    if (op==3) query3();
+    if (op==6) query6();
+   printf("\nEscolha uma query (6 ou 3) ou 0 para sair: ");
+    scanf("%d",&op);
+}
 	return 1;
 }
 
@@ -177,10 +176,10 @@ int main(){
 
     printf("1- Ler ficheiros para memória\n");
     printf("2- Determinar a lista e o total de produtos cujo código se inicia por uma dada letra\n");
-    printf("3- Dado um mês e um código de produto determinar e apresentar o número total de vendas e o total faturado com esse produto\n");
-    printf("4- Determinar a lista ordenada dos códigos dos produtos que ninguém comprou\n");
+    printf("3- Dado um mês e um código de produto determinar e apresentar o número total de vendas e o total faturado com esse produto\n"); - DONE
+    printf("4- Determinar a lista ordenada dos códigos dos produtos que ninguém comprou\n"); - PARTIAL DONE
     printf("5- Dado um código de cliente criar uma tabela com o número total de produtos comprados mês a mês\n");
-    printf("6- Dado um intervalo de meses determinar o total de vendas registadas e o total faturado\n");
+    printf("6- Dado um intervalo de meses determinar o total de vendas registadas e o total faturado\n"); - DONE
     printf("7- Determinar a lista ordenada de códigos de clientes que realizaram compras em todas a filiais\n");
     printf("8- Dado um código de produto e uma filial determinar os códigos dos clientes que o compraram\n");
     printf("9- Dado um código de cliente e um mês determinar a lista de códigos de produtos que mais comprou por quantidade\n");

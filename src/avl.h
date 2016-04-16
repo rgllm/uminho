@@ -45,6 +45,7 @@ typedef struct nodoFaturacaoProduto{
 	struct nodoFaturacaoProduto *pai;
 	int altura;
 } *nodoFaturacaoProduto;
+
 void printInOrderProd(nodoFaturacaoProduto raiz);
 nodoFaturacaoProduto searchProduto(nodoFaturacaoProduto raiz, char * produto);
 int alturaV(nodoFaturacaoProduto raiz);
@@ -55,47 +56,6 @@ void infoProdutoCopy(infoP p1,infoP p2);
 nodoFaturacaoProduto criaNodoFat(infoP produto, nodoFaturacaoProduto pai);
 nodoFaturacaoProduto balanceV(nodoFaturacaoProduto raiz);
 nodoFaturacaoProduto insertNodoFat(infoP produto,nodoFaturacaoProduto raiz);
-
-
-
-
-
-
-/*
-
-
-nodo *insert(char codigo[],nodo *raiz){
-    nodo *aux = raiz;
-    while (strcmp(codigo,aux->codigo)){
-        if (strcmp(codigo,aux->codigo)<0){
-            if (aux->esq) aux = aux->esq;
-            else{
-                aux->esq = criaNodo(codigo, aux);
-                aux = aux->esq;
-            }
-        }
-        else if (strcmp(codigo,aux->codigo)>0){
-            if (aux->dir) aux = aux->dir;
-            else{
-                aux->dir = criaNodo(codigo, aux);
-                aux = aux->dir;
-            }
-        }
-        else return raiz;
-    }
-
-    do{
-        aux  = aux->pai;
-        ajustaAltura(aux);
-        aux = balance(aux);
-    } while (aux->pai);
-
-    return aux;
-}
-*/
-
-
-
 
 
 

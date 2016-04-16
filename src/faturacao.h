@@ -25,9 +25,8 @@ faturacaoProduto naoComprados;
 void initTabela();
 faturacaoProduto initNComprados();
 infoP criaInfoProduto(char * produto,int qtdNormal,int qtdPromocao,double totalNormal,double totalPromocao );
-void registaFaturacaoProduto(infoP produto,int mes,int filial);
-
-
+void registaFaturacaoProduto(infoP produto,int filial, int mes);
+void carregaProduto(infoP produto);
 
 
 

@@ -66,7 +66,7 @@ nodo *rodaEsq(nodo *raiz){
 
 nodo *criaNodo(char codigo[], nodo *pai){
     nodo *n = malloc(sizeof(nodo));
-    n->codigo=strdup(codigo);
+    n->codigo = strdup(codigo);
     n->pai = pai;
     n->altura = 1;
     n->esq = NULL;
@@ -135,6 +135,14 @@ void printInOrder(nodo * raiz){
     if(raiz!=NULL){
         printInOrder(raiz->esq);
         printf("%s\n",raiz->codigo);
+        printInOrder(raiz->dir);
+    }
+}
+
+void printInOrderProd(nodoFaturacaoProduto raiz){
+    if(raiz!=NULL){
+        printInOrder(raiz->esq);
+        printf("%s\n",raiz->produto->produto);
         printInOrder(raiz->dir);
     }
 }
@@ -212,17 +220,21 @@ nodoFaturacaoProduto rodaEsqV(nodoFaturacaoProduto raiz){
     return new;
 }
 
+
+/*TESTADA*/
 void infoProdutoCopy(infoP p1,infoP p2){
-    p1->produto=strdup(p2->produto);
     p1->qtdNormal=p2->qtdNormal;
     p1->qtdPromocao=p2->qtdPromocao;
     p1->totalNormal=p2->totalNormal;
     p1->totalPromocao=p2->totalPromocao;
+    p1->produto=strdup(p2->produto);
 }
 
+/*TESTADA*/
 nodoFaturacaoProduto criaNodoFat(infoP produto, nodoFaturacaoProduto pai){
-    nodoFaturacaoProduto n = malloc(sizeof(nodoFaturacaoProduto));
-    infoProdutoCopy(&n->produto,produto);
+    struct nodoFaturacaoProduto *n = malloc(sizeof(struct nodoFaturacaoProduto));
+    n->produto=malloc(sizeof(struct infoProduto));
+    infoProdutoCopy(n->produto,produto);
     n->pai = pai;
     n->altura = 1;
     n->esq = NULL;
@@ -255,9 +267,8 @@ nodoFaturacaoProduto balanceV(nodoFaturacaoProduto raiz){
 
 nodoFaturacaoProduto insertNodoFat(infoP produto,nodoFaturacaoProduto raiz){
     nodoFaturacaoProduto aux = raiz;
-    printf("aaaaaaaaaaaaaaaaaaaaaaaaa\n");
-    while (strcmp(produto->produto,aux->produto->produto)!=0){
-        printf("bbbbbbbbbbbbbbbb\n");
+    printf("asdfasdfasdfasdf\n");
+    while (strcmp(produto->produto,aux->produto->produto)){
         if (strcmp(produto->produto,aux->produto->produto)<0){
             if (aux->esq) aux = aux->esq;
             else{
@@ -270,7 +281,7 @@ nodoFaturacaoProduto insertNodoFat(infoP produto,nodoFaturacaoProduto raiz){
             else{
                 aux->dir = criaNodoFat(produto, aux);
                 aux = aux->dir;
-                break;
+                /*break;*/
             }
         }
         else return raiz;
@@ -282,3 +293,6 @@ nodoFaturacaoProduto insertNodoFat(infoP produto,nodoFaturacaoProduto raiz){
     } while (aux->pai);
     return aux;
 }
+
+
+

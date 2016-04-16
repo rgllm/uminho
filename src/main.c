@@ -1,4 +1,4 @@
-/*   
+/*
     duvida typedefs
     comparaProduto
 
@@ -9,10 +9,6 @@
 #include "produtos.h"
 #include "faturacao.h"
 #define MAXBUFF 64
-
-
-
-
 
 /*
 typedef nodoV* venda;
@@ -65,7 +61,7 @@ int validaVenda(CatClientes c,CatProdutos p,char * produto,double preco,int qtd,
 	if(search(getAVLProd(p,lP),produto)!=NULL){
 		if(search(getAVLCli(c,lC),cliente)!=NULL){
 
-			if(qtd>0 && 
+			if(qtd>0 &&
 				preco>=0 &&
 				mes>=1 && mes <=12 &&
 				(np=='N' || np=='P') &&
@@ -81,7 +77,7 @@ int validaVenda(CatClientes c,CatProdutos p,char * produto,double preco,int qtd,
 int main(){
 	CatClientes catClientes;
 	CatProdutos catProd;
-	int c,qtd,mes,fil;
+	int c,qtd,mes,fil,i,j;
 	char cod[10],linha[MAXBUFF], buffer[MAXBUFF],*produto,np,*cli,*precAux;
 	double prec;
 	infoP aux;
@@ -94,7 +90,7 @@ int main(){
 
 
 	/*                 Leitura dos clientes                 */
-	
+
 	catClientes=initCatClientes();
 	fp=fopen("files/Clientes.txt","r");
 	while( fgets (buffer, MAXBUFF, fp)){
@@ -107,8 +103,9 @@ int main(){
     }
     fclose(fp);
 
-
-	/*                 Leitura dos produtos                 */
+    c=0;
+    initTabela();
+    /*                 Leitura dos produtos                 */
     catProd=initCatProdutos();
     fp=fopen("files/Produtos.txt","r");
     while( fgets (buffer, MAXBUFF, fp)){
@@ -117,27 +114,31 @@ int main(){
         prod=criaProduto(cod);
         if(!existeProduto(catProd,prod)){
             catProd=insereProduto(catProd,prod);
+            c++;
+            carregaProduto(criaInfoProduto(cod,0,0,0,0));
         }
     }
+    /*printf("%d\n",c );*/
     fclose(fp);
-    
 
-    /*                 Leitura das vendas                   */
+
+    /*                 Leitura das vendas    */
     c=0;
     initTabela();
+
     fp = fopen( "files/Vendas1.txt", "r" );
-	while (fgets(buffer, MAXBUFF,fp)!=NULL){
-		strcpy(linha,buffer);
-		produto=strtok(buffer," ");
-		prec=strtod(strtok(NULL," "),&precAux);
-		qtd=atoi(strtok(NULL," "));
-		np=strtok(NULL," ")[0];
-		cli=strtok(NULL," ");
-		mes=atoi(strtok(NULL," "));
-		fil=atoi(strtok(NULL," "));
+    while (fgets(buffer, MAXBUFF,fp)!=NULL){
+        strcpy(linha,buffer);
+        produto=strtok(buffer," ");
+        prec=strtod(strtok(NULL," "),&precAux);
+        qtd=atoi(strtok(NULL," "));
+        np=strtok(NULL," ")[0];
+        cli=strtok(NULL," ");
+        mes=atoi(strtok(NULL," "));
+        fil=atoi(strtok(NULL," "));
         printf("Venda vai ser testada\n");
-        
-		if(validaVenda(catClientes,catProd,produto,prec,qtd,np,cli,mes,fil)==0){
+
+        if(validaVenda(catClientes,catProd,produto,prec,qtd,np,cli,mes,fil)==0){
             printf("    Venda Válida\n");
             prec=qtd*prec;
             if(np=='N'){
@@ -148,24 +149,24 @@ int main(){
 
             }
             else {
-                printf("        PROMOCAO -I\n");
+                printf("        PROMOCAO -INICIO");
                 aux=(infoP)criaInfoProduto(produto,0,qtd,0,prec);
                 printf("    %f\n",aux->totalPromocao);
-                registaFaturacaoProduto(aux , mes , fil);
-                printf("        PROMOCAO -F\n");
+                registaFaturacaoProduto(aux , fil , mes);
+                printf("        PROMOCAO -FIM\n");
             }
             c++;
-		}
+        }
         else printf("      Venda Inválida\n");
-	}
+    }
 
-	printf("Vendas: %d\n",c );
-	printf("Vendas de preço zero: %d\n",pzero);
- 	printf("Faturação Total: %f\n",ftotal);
-	printf("Unidades Vendidas: %d\n",unidades);
- 	printf("Filial 1: %d\nFilial 2: %d\nFilial 3: %d\n",filial1,filial2,filial3 );
+    printf("Vendas: %d\n",c );
+    printf("Vendas de preço zero: %d\n",pzero);
+    printf("Faturação Total: %f\n",ftotal);
+    printf("Unidades Vendidas: %d\n",unidades);
+    printf("Filial 1: %d\nFilial 2: %d\nFilial 3: %d\n",filial1,filial2,filial3 );
 
-	fclose(fp);
+    fclose(fp);
 	return 1;
 }
 
@@ -186,7 +187,7 @@ int main(){
     printf("10- Criar uma lista nos N produtos mais vendidos em todo o ano\n");
     printf("11- Dado um código de cliente determinar quais os códigos dos 3 produtos em que gastou mais dinheiro durante o ano\n");
     printf("12- Determinar o número de clientes registados que não realizaram compras e o número de produtos que ninguém comprou\n");
- 
+
     while(fgets(querie,MAXBUFF,0)!="q"){
         if(querie=="1"){
             catClientes clientes;

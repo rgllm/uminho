@@ -57,6 +57,13 @@ void query6(){
     scanf("%d",&mesI);
     printf("Mês Final: ");
     scanf("%d",&mesF);
+    if((mesI<1 || mesI >12) || (mesF<1 || mesF >12) || (mesF-mesI<0)){
+        printf("Mês inválido!\n");
+        printf("(Prima ENTER para voltar ao menu)\n");
+        getchar();
+        getchar();
+        return;
+    }
     totalVendas=contaTotalVendas(mesI,mesF);
     totalFaturado=contaTotalFaturado(mesI,mesF);
     printf("Total de vendas registadas entre o mês %d e o mês %d é: %d\n", mesI,mesF,totalVendas);

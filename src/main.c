@@ -19,7 +19,7 @@ void query3(){
         execlp("clear","clear",NULL);
     wait(&status);
     carregaArt("LOGO.txt");
-    printf("\t|-------------------------------------Query 3--------------------------------------------|\n");
+    printf("|-------------------------------------Query 3--------------------------------------------|\n\n");
     printf("Mês: ");
     scanf("%d",&mes);
     if(mes<1 || mes >12){
@@ -54,7 +54,7 @@ void query6(){
         execlp("clear","clear",NULL);
     wait(&status);
     carregaArt("LOGO.txt");
-    printf("\t|-------------------------------------Query 6--------------------------------------------|\n");
+    printf("|-------------------------------------Query 6--------------------------------------------|\n\n");
     printf("Mês inicial: ");
     scanf("%d",&mesI);
     printf("Mês Final: ");
@@ -102,7 +102,7 @@ void carregaArt(char *nome_ficheiro) {
     ficheiro = fopen(nome_ficheiro,"r");
 
     while((lido = fgets(linha,256,ficheiro)) != NULL) {
-        printf("\t%s",linha);
+        printf("%s",linha);
     }
 
     fclose(ficheiro);
@@ -203,16 +203,22 @@ int main(){
             execlp("clear","clear",NULL);
         wait(&status);
         carregaArt("LOGO.txt");
-        printf("\t|--------------------------------------MENU----------------------------------------------|\n");
-        puts("\n");
+        printf("|--------------------------------------MENU----------------------------------------------|\n\n");
         printf("3- Dado um mês e um código de produto determinar e apresentar o número total de vendas e o total faturado com esse produto\n");
         printf("6- Dado um intervalo de meses determinar o total de vendas registadas e o total faturado\n");
         printf("\nEscolha uma query (6 ou 3) ou 0 para sair: ");
         scanf("%d",&op);
         if (op==3) query3();
         else if (op==6) query6();
-        else if(op!=0) printf("Ainda não está mas vai estar\n");
+        else if(op!=0){
+            printf("Ainda não está mas vai estar\n");
+            getchar();
+            getchar();
+        }
 }
+    if(fork()==0)
+            execlp("clear","clear",NULL);
+    wait(&status);
 	return 1;
 }
 

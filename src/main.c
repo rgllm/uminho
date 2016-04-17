@@ -18,7 +18,8 @@ void query3(){
     if(fork()==0)
         execlp("clear","clear",NULL);
     wait(&status);
-    printf("--- QUERY 3 ---\n");
+    carregaArt("LOGO.txt");
+    printf("\t|-------------------------------------Query 3--------------------------------------------|\n");
     printf("Mês: ");
     scanf("%d",&mes);
     if(mes<1 || mes >12){
@@ -52,7 +53,8 @@ void query6(){
     if(fork()==0)
         execlp("clear","clear",NULL);
     wait(&status);
-    printf("--- QUERY 6 ---\n");
+    carregaArt("LOGO.txt");
+    printf("\t|-------------------------------------Query 6--------------------------------------------|\n");
     printf("Mês inicial: ");
     scanf("%d",&mesI);
     printf("Mês Final: ");
@@ -201,6 +203,7 @@ int main(){
             execlp("clear","clear",NULL);
         wait(&status);
         carregaArt("LOGO.txt");
+        printf("\t|--------------------------------------MENU----------------------------------------------|\n");
         puts("\n");
         printf("3- Dado um mês e um código de produto determinar e apresentar o número total de vendas e o total faturado com esse produto\n");
         printf("6- Dado um intervalo de meses determinar o total de vendas registadas e o total faturado\n");

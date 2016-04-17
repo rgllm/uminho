@@ -4,6 +4,11 @@
 faturacaoProduto tabela[4][13];
 
 
+/**
+ * Inicia a estrutura tabela.
+ * @param m
+ * @return
+ */
 void initTabela(){
     int i,j;
     for(i=0;i<4;i++)
@@ -11,11 +16,26 @@ void initTabela(){
             tabela[i][j]=NULL;
 }
 
+/**
+ * Inicia a estrutura.
+ * @param m
+ * @return
+ */
 faturacaoProduto initNComprados(){
     faturacaoProduto ret=malloc(sizeof(faturacaoProduto));
     return ret;
 }
-/*TESTADO*/
+
+
+/**
+ * Coloca os vários parâmetros de um produto na respetiva estrutura infoProduto.
+ * @param produto
+ * @param qtdNormal
+ * @param qtdPromocao
+ * @param totalNormal
+ * @param totalPromocao
+ * @return
+ */
 infoP criaInfoProduto(char * produto,int qtdNormal,int qtdPromocao,double totalNormal,double totalPromocao ){
     struct infoProduto *ret=(struct infoProduto*)malloc(sizeof(struct infoProduto));
     ret->produto=strdup(produto);
@@ -26,6 +46,15 @@ infoP criaInfoProduto(char * produto,int qtdNormal,int qtdPromocao,double totalN
     return ret;
 }
 
+
+/**
+ * Dado um produto coloca as informações desse produto na respetiva célula da matriz faturação
+ * e adiciona também os totais nas linhas das filais, linhas dos meses e o total geral.
+ * @param produto
+ * @param filial
+ * @param mes
+ * @return
+ */
 void registaFaturacaoProduto(infoP produto,int filial,int mes){
 
     nodoFaturacaoProduto aux;
@@ -61,6 +90,120 @@ void registaFaturacaoProduto(infoP produto,int filial,int mes){
     aux->produto->totalPromocao+=produto->totalPromocao;
 
 }
+
+/**
+ * Carrega um produto para a matriz dos meses/filiais.
+ * @param produto
+ * @return
+ */
+void carregaProduto(infoP produto){
+    int i,j;
+     for(i=0;i<4;i++)
+            for(j=0;j<13;j++){
+                if(tabela[i][j]){
+
+                    tabela[i][j]=insertNodoFat(produto,tabela[i][j]);
+                }
+                else {
+                    tabela[i][j]=criaNodoFat(produto,NULL);
+
+                }
+            }
+}
+
+/**
+ * Dado um mês e um código de um produto retorna o total faturado nesse mês com esse produto em todas as filiais.
+ * @param mes
+ * @param produto
+ * @return
+ */
+double getTotalFaturadoMes(int mes,char * produto){
+    infoP aux;
+    faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
+    if(nodo==NULL) return -1;
+    aux= nodo->produto;
+    return aux->totalNormal + aux->totalPromocao;
+
+}
+
+/**
+ * Dado um mês e um código de um produto retorna o número total de vendas desse produto em todas as filiais.
+ * @param mes
+ * @param produto
+ * @return
+ */
+int getTotalVendasMes(int mes,char * produto){
+    infoP aux;
+    faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
+    if(nodo==NULL) return -1;
+    aux = nodo->produto;
+    return aux->qtdNormal + aux->qtdPromocao;
+
+}
+
+/**
+ * Dado a árvore do respetivo mes/total e respetiva filial/total retorna o total faturado em todos os produtos.
+ * Função auxiliar da função contaTotalFaturado.
+ * @param raiz
+ * @return
+ */
+double contaTotalFaturadoMes(faturacaoProduto raiz){
+    infoP produto;
+    double faturacao;
+    if(raiz==NULL) return 0;
+    else {
+        produto = raiz->produto;
+        faturacao=produto->totalNormal+produto->totalPromocao;
+        return faturacao + contaTotalFaturadoMes(raiz->esq) + contaTotalFaturadoMes(raiz->dir);
+    }
+}
+
+/**
+ * Dado um mês inicial e um mês final conta o total faturado entre esse período em todas as filiais.
+ * @param mesI
+ * @param mesF
+ * @return
+ */
+double contaTotalFaturado(int mesI, int mesF){
+    double totFat=0;
+    int i;
+    for(i=mesI-1; i<mesF; i++){
+        totFat+=contaTotalFaturadoMes(tabela[3][i]);
+    }
+return totFat;
+}
+
+/**
+ * Dado a árvore do respetivo mes/total e respetiva filial/total retorna o total de vendas em todas as filiais.
+ * Função auxiliar da função contaTotalVendas.
+ * @param raiz
+ * @return
+ */
+int contaTotalVendasMes(faturacaoProduto raiz){
+    infoP produto;
+    int vendas;
+    if(raiz==NULL) return 0;
+    else {
+        produto = raiz->produto;
+        vendas=(produto->qtdNormal+produto->qtdPromocao);
+        return vendas + contaTotalVendasMes(raiz->esq) + contaTotalVendasMes(raiz->dir);
+    }
+}
+
+/**
+ * Dado um mês inicial e um mês final conta o total de vendas entre esse período em todas as filiais.
+ * @param mesI
+ * @param mesF
+ * @return
+ */
+int contaTotalVendas(int mesI, int mesF){
+   int totVendas=0,i;
+    for(i=mesI-1; i<mesF; i++){
+        totVendas+=contaTotalVendasMes(tabela[3][i]);
+    }
+return totVendas;
+}
+
 
 /*
 
@@ -102,79 +245,14 @@ int contaNaoComprados(faturacaoProduto raiz){
     return contaNaoComprados(raiz->esq) + contaNaoComprados(raiz->dir);
 }
 */
-void carregaProduto(infoP produto){
-    int i,j;
-     for(i=0;i<4;i++)
-            for(j=0;j<13;j++){
-                if(tabela[i][j]){
 
-                    tabela[i][j]=insertNodoFat(produto,tabela[i][j]);
-                }
-                else {
-                    tabela[i][j]=criaNodoFat(produto,NULL);
-
-                }
-            }
-}
-
-double getTotalFaturadoMes(int mes,char * produto){
+/*void getQuery3(int mes,char * produto,double * totFat,int * totVendas){
+    infoP aux;
     faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
-    if(nodo==NULL) return -1;
-    infoP aux= nodo->produto;
-    return aux->totalNormal + aux->totalPromocao;
-
-}
-
-int getTotalVendasMes(int mes,char * produto){
-    faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
-    if(nodo==NULL) return -1;
-    infoP aux= nodo->produto;
-    return aux->qtdNormal + aux->qtdPromocao;
-
-}
-
-
-void getQuery3(int mes,char * produto,double * totFat,int * totVendas){
-    faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
-    if(nodo==NULL) totFat=-1;
+    if(nodo==NULL) *totFat=-1;
     else{
-        infoP aux= nodo->produto;
+        aux= nodo->produto;
         *totFat=aux->totalNormal+aux->totalPromocao;
         *totVendas=aux->qtdNormal+aux->qtdPromocao;
     }
-}
-
-double contaTotalFaturado(faturacaoProduto raiz){
-    if(raiz==NULL) return 0;
-    else {
-        infoP produto = raiz->produto;
-        double faturacao;
-        faturacao=produto->totalNormal+produto->totalPromocao;
-        return faturacao + contaTotalFaturado(raiz->esq) + contaTotalFaturado(raiz->dir);
-    }
-}
-
-int contaTotalVendas(faturacaoProduto raiz){
-    if(raiz==NULL) return 0;
-    else {
-        infoP produto = raiz->produto;
-        int vendas;
-        vendas=(produto->qtdNormal+produto->qtdPromocao);
-        return vendas + contaTotalVendas(raiz->esq) + contaTotalVendas(raiz->dir);
-    }
-}
-
-void getQuery6(int mesI, int mesF, double * totFat, int * totVendas){
-    int i;
-    *totFat=0;
-    *totVendas=0;
-    for(i=mesI-1;i<mesF;i++){
-
-        *totFat+=contaTotalFaturado(tabela[3][i]);
-        *totVendas+=contaTotalVendas(tabela[3][i]);
-    }
-
-}
-
-
-
+}*/

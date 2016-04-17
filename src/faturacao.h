@@ -2,7 +2,7 @@
 #include "avl.h"
 #define AVL
 #endif
-
+#include "avl_vendas.h"
 
 
 #ifndef INFOPROD
@@ -30,9 +30,8 @@ void carregaProduto(infoP produto);
 /*nodo getNaoComprados();*/
 int contaNaoComprados(faturacaoProduto raiz);
 void getQuery3(int mes,char * produto,double * totFat,int * totVendas);
-void getQuery6(int mesI, int mesF, double * totFat, int * totVendas);
-int contaTotalVendas(faturacaoProduto raiz);
-double contaTotalFaturado(faturacaoProduto raiz);
+int contaTotalVendas(int mesI, int mesF);
+double contaTotalFaturado(int mesI, int mesF);
 int getTotalVendasMes(int mes,char * produto);
 double getTotalFaturadoMes(int mes,char * produto);
 

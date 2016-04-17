@@ -12,12 +12,12 @@
 
 
 void query3(){
-    int mes,totalVendas;
+    int mes,totalVendas,status;
     double totalFaturado;
     char produto[10];
     if(fork()==0)
         execlp("clear","clear",NULL);
-    wait();
+    wait(&status);
     printf("--- QUERY 3 ---\n");
     printf("Mês: ");
     scanf("%d",&mes);
@@ -47,17 +47,18 @@ void query3(){
 }
 
 void query6(){
-    int mesI, mesF,totalVendas=0;
+    int mesI, mesF,totalVendas=0,status;
     double totalFaturado=0;
     if(fork()==0)
         execlp("clear","clear",NULL);
-    wait();
+    wait(&status);
     printf("--- QUERY 6 ---\n");
     printf("Mês inicial: ");
     scanf("%d",&mesI);
     printf("Mês Final: ");
     scanf("%d",&mesF);
-    getQuery6(mesI,mesF,&totalFaturado,&totalVendas);
+    totalVendas=contaTotalVendas(mesI,mesF);
+    totalFaturado=contaTotalFaturado(mesI,mesF);
     printf("Total de vendas registadas entre o mês %d e o mês %d é: %d\n", mesI,mesF,totalVendas);
     printf("Total faturado entre o mês %d e o mês %d é: %.2f\n", mesI,mesF,totalFaturado);
     printf("(Prima ENTER para voltar ao menu)\n");
@@ -71,6 +72,32 @@ void query4(){
 }
 
 */
+
+
+/*    printf("2- Determinar a lista e o total de produtos cujo código se inicia por uma dada letra\n");*/
+
+void query2(){
+
+}
+
+/**
+ * Lê um ficheiro .txt que contem um TextArt
+ * NOTA: o ficheiro já tem os \n
+ * @param nome_ficheiro
+ */
+void carregaArt(char *nome_ficheiro) {
+    char *lido;
+    char *linha = (char *) malloc(256);
+    FILE *ficheiro;
+
+    ficheiro = fopen(nome_ficheiro,"r");
+
+    while((lido = fgets(linha,256,ficheiro)) != NULL) {
+        printf("\t%s",linha);
+    }
+
+    fclose(ficheiro);
+}
 
 int validaVenda(CatClientes c,CatProdutos p,char * produto,double preco,int qtd,char np,char * cliente,int mes,int filial){
 	int lC,lP;
@@ -92,7 +119,7 @@ int validaVenda(CatClientes c,CatProdutos p,char * produto,double preco,int qtd,
 int main(){
 	CatClientes catClientes;
 	CatProdutos catProd;
-	int c,qtd,mes,fil,op=1;
+	int c,qtd,mes,fil,op=1,status;
 	char cod[10],linha[MAXBUFF], buffer[MAXBUFF],*produto,np,*cli,*precAux;
 	double prec;
 	infoP aux;
@@ -165,7 +192,9 @@ int main(){
     while(op!=0){
         if(fork()==0)
             execlp("clear","clear",NULL);
-        wait();
+        wait(&status);
+        carregaArt("LOGO.txt");
+        puts("\n");
         printf("3- Dado um mês e um código de produto determinar e apresentar o número total de vendas e o total faturado com esse produto\n");
         printf("6- Dado um intervalo de meses determinar o total de vendas registadas e o total faturado\n");
         printf("\nEscolha uma query (6 ou 3) ou 0 para sair: ");
@@ -184,10 +213,8 @@ int main(){
 
     printf("1- Ler ficheiros para memória\n");
     printf("2- Determinar a lista e o total de produtos cujo código se inicia por uma dada letra\n");
-    printf("3- Dado um mês e um código de produto determinar e apresentar o número total de vendas e o total faturado com esse produto\n"); - DONE
-    printf("4- Determinar a lista ordenada dos códigos dos produtos que ninguém comprou\n"); - PARTIAL DONE
+    printf("4- Determinar a lista ordenada dos códigos dos produtos que ninguém comprou\n");
     printf("5- Dado um código de cliente criar uma tabela com o número total de produtos comprados mês a mês\n");
-    printf("6- Dado um intervalo de meses determinar o total de vendas registadas e o total faturado\n"); - DONE
     printf("7- Determinar a lista ordenada de códigos de clientes que realizaram compras em todas a filiais\n");
     printf("8- Dado um código de produto e uma filial determinar os códigos dos clientes que o compraram\n");
     printf("9- Dado um código de cliente e um mês determinar a lista de códigos de produtos que mais comprou por quantidade\n");

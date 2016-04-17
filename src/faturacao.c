@@ -117,46 +117,64 @@ void carregaProduto(infoP produto){
             }
 }
 
-int aux(nodoFaturacaoProduto x){
-    if(x==NULL) return 0;
-    return 1 + aux(x->esq) + aux(x->dir);
+double getTotalFaturado(int mes,char * produto){
+    faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
+    if(nodo==NULL) return -1;
+    infoP aux= nodo->produto;
+    return aux->totalNormal + aux->totalPromocao;
+
+}
+
+int getTotalVendas(int mes,char * produto){
+    faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
+    if(nodo==NULL) return -1;
+    infoP aux= nodo->produto;
+    return aux->qtdNormal + aux->qtdPromocao;
+
 }
 
 
 void getQuery3(int mes,char * produto,double * totFat,int * totVendas){
     faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
-    infoP aux= nodo->produto;
-    *totFat=aux->totalNormal+aux->totalPromocao;
-    *totVendas=aux->qtdNormal+aux->qtdPromocao;
+    if(nodo==NULL) totFat=-1;
+    else{
+        infoP aux= nodo->produto;
+        *totFat=aux->totalNormal+aux->totalPromocao;
+        *totVendas=aux->qtdNormal+aux->qtdPromocao;
+    }
 }
 
 double contaTotFat(faturacaoProduto raiz){
-    infoP produto = raiz->produto;
-    double faturacao;
     if(raiz==NULL) return 0;
     else {
+        infoP produto = raiz->produto;
+        double faturacao;
         faturacao=produto->totalNormal+produto->totalPromocao;
         return faturacao + contaTotFat(raiz->esq) + contaTotFat(raiz->dir);
     }
 }
 
 int contaTotVendas(faturacaoProduto raiz){
-    infoP produto = raiz->produto;
-    int vendas;
     if(raiz==NULL) return 0;
     else {
+        infoP produto = raiz->produto;
+        int vendas;
         vendas=(produto->qtdNormal+produto->qtdPromocao);
         return vendas + contaTotVendas(raiz->esq) + contaTotVendas(raiz->dir);
     }
 }
 
 void getQuery6(int mesI, int mesF, double * totFat, int * totVendas){
-int i;
-*totFat=0;
-*totVendas=0;
-for(i=mesI-1;i<mesF;i++){
-    *totFat+=contaTotFat(tabela[3][i]);
-    *totVendas+=contaTotVendas(tabela[3][i]);
+    int i;
+    *totFat=0;
+    *totVendas=0;
+    for(i=mesI-1;i<mesF;i++){
+
+        *totFat+=contaTotFat(tabela[3][i]);
+        *totVendas+=contaTotVendas(tabela[3][i]);
+    }
+
 }
-}
+
+
 

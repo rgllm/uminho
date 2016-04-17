@@ -31,6 +31,11 @@ void carregaProduto(infoP produto);
 int contaNaoComprados(faturacaoProduto raiz);
 void getQuery3(int mes,char * produto,double * totFat,int * totVendas);
 void getQuery6(int mesI, int mesF, double * totFat, int * totVendas);
+int contaTotVendas(faturacaoProduto raiz);
+double contaTotFat(faturacaoProduto raiz);
+int getTotalVendas(int mes,char * produto);
+double getTotalFaturado(int mes,char * produto);
+
 
 
 

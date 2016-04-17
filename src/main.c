@@ -14,32 +14,55 @@
 void query3(){
     int mes,totalVendas;
     double totalFaturado;
-    char buf[MAXBUFF];
     char produto[10];
+    if(fork()==0)
+        execlp("clear","clear",NULL);
+    wait();
     printf("--- QUERY 3 ---\n");
     printf("Mês: ");
     scanf("%d",&mes);
-    /*fgets(buf,MAXBUFF,stdin);
-    mes=atoi(strtok(buf,"\r\n"));*/
+    if(mes<1 || mes >12){
+        printf("Mês inválido!\n");
+        printf("(Prima ENTER para continuar)\n");
+        getchar();
+        getchar();
+        return;
+    }
     printf("Produto: ");
-    /*fgets(buf, MAXBUFF,stdin);
-    produto=strtok(buf,"\r\n");*/
-    scanf("%s",&produto);
-    getQuery3(mes,produto,&totalFaturado,&totalVendas);
+    scanf("%s",produto);
+
+    totalFaturado=getTotalFaturado(mes,produto);
+    totalVendas=getTotalVendas(mes,produto);
+    if(totalFaturado==-1){
+        printf("Produto inválido!\n");
+        printf("(Prima ENTER para continuar)\n");
+        getchar();
+        getchar();
+        return;
+    }
     printf("Total faturado: %.2f\nTotal de vendas: %d\n",totalFaturado,totalVendas );
+    printf("(Prima ENTER para continuar)\n");
+    getchar();
+    getchar();
 }
 
 void query6(){
-int mesI, mesF,totVendas;
-double totFat;
-printf("--- QUERY 6 ---\n");
-printf("Mês inicial: ");
-scanf("%d",&mesI);
-printf("\nMês Final: ");
-scanf("%d",&mesF);
-getQuery6(mesI,mesF,&totFat,&totVendas);
-printf("Total de vendas registadas entre o mês %d e o mês %d é: %d\n", mesI,mesF,totVendas);
-printf("Total faturado entre o mês %d e o mês %d é: %.2f\n", mesI,mesF,totFat);
+    int mesI, mesF,totVendas;
+    double totFat;
+    if(fork()==0)
+        execlp("clear","clear",NULL);
+    wait();
+    printf("--- QUERY 6 ---\n");
+    printf("Mês inicial: ");
+    scanf("%d",&mesI);
+    printf("Mês Final: ");
+    scanf("%d",&mesF);
+    getQuery6(mesI,mesF,&totFat,&totVendas);
+    printf("Total de vendas registadas entre o mês %d e o mês %d é: %d\n", mesI,mesF,totVendas);
+    printf("Total faturado entre o mês %d e o mês %d é: %.2f\n", mesI,mesF,totFat);
+    printf("(Prima ENTER para continuar)\n");
+    getchar();
+    getchar();
 }
 
 /*
@@ -74,9 +97,6 @@ int main(){
 	double prec;
 	infoP aux;
 	FILE *fp;
-	int pzero=0,unidades=0;
- 	int filial1=0, filial2=0, filial3=0;
- 	double ftotal=0;
     Produto prod;
     Cliente cliente;
 
@@ -110,7 +130,6 @@ int main(){
             carregaProduto(criaInfoProduto(cod,0,0,0,0));
         }
     }
-    /*printf("%d\n",c );*/
     fclose(fp);
 
 
@@ -127,45 +146,33 @@ int main(){
         cli=strtok(NULL," ");
         mes=atoi(strtok(NULL," "));
         fil=atoi(strtok(NULL," "));
-        /*printf("Venda vai ser testada\n");*/
 
         if(validaVenda(catClientes,catProd,produto,prec,qtd,np,cli,mes,fil)==0){
-            /*printf("    Venda Válida\n");*/
             prec=qtd*prec;
             if(np=='N'){
-                /*printf("NI\n");*/
                 aux=(infoP)criaInfoProduto(produto,qtd,0,prec,0);
                 registaFaturacaoProduto(aux, fil , mes );
-                /*printf("NF\n");*/
             }
             else {
-                /*printf("PI\n");*/
                 aux=(infoP)criaInfoProduto(produto,0,qtd,0,prec);
-                /*printf(".....................\n");*/
                 registaFaturacaoProduto(aux , fil , mes);
-                /*printf("PF\n");*/
             }
-
         }
-        /*else printf("      Venda Inválida\n");*/
     }
 
-/*
-    printf("Vendas: %d\n",c );
-    printf("Vendas de preço zero: %d\n",pzero);
-    printf("Faturação Total: %f\n",ftotal);
-    printf("Unidades Vendidas: %d\n",unidades);
-    printf("Filial 1: %d\nFilial 2: %d\nFilial 3: %d\n",filial1,filial2,filial3 );
-*/
     fclose(fp);
-    printf("\nEscola uma query (6 ou 3) ou 0 para sair: ");
-    scanf("%d",&op);
+
     while(op!=0){
-    if (op==3) query3();
-    else if (op==6) query6();
-    else printf("Ainda não está mas vai estar\n");
-    printf("\nEscolha uma query (6 ou 3) ou 0 para sair: ");
-    scanf("%d",&op);
+        if(fork()==0)
+            execlp("clear","clear",NULL);
+        wait();
+        printf("3- Dado um mês e um código de produto determinar e apresentar o número total de vendas e o total faturado com esse produto\n");
+        printf("6- Dado um intervalo de meses determinar o total de vendas registadas e o total faturado\n");
+        printf("\nEscolha uma query (6 ou 3) ou 0 para sair: ");
+        scanf("%d",&op);
+        if (op==3) query3();
+        else if (op==6) query6();
+        else if(op!=0) printf("Ainda não está mas vai estar\n");
 }
 	return 1;
 }

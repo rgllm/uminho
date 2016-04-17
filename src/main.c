@@ -23,7 +23,7 @@ void query3(){
     scanf("%d",&mes);
     if(mes<1 || mes >12){
         printf("Mês inválido!\n");
-        printf("(Prima ENTER para continuar)\n");
+        printf("(Prima ENTER para voltar ao menu)\n");
         getchar();
         getchar();
         return;
@@ -31,24 +31,24 @@ void query3(){
     printf("Produto: ");
     scanf("%s",produto);
 
-    totalFaturado=getTotalFaturado(mes,produto);
-    totalVendas=getTotalVendas(mes,produto);
+    totalFaturado=getTotalFaturadoMes(mes,produto);
+    totalVendas=getTotalVendasMes(mes,produto);
     if(totalFaturado==-1){
         printf("Produto inválido!\n");
-        printf("(Prima ENTER para continuar)\n");
+        printf("(Prima ENTER para voltar ao menu)\n");
         getchar();
         getchar();
         return;
     }
     printf("Total faturado: %.2f\nTotal de vendas: %d\n",totalFaturado,totalVendas );
-    printf("(Prima ENTER para continuar)\n");
+    printf("(Prima ENTER para voltar ao menu)\n");
     getchar();
     getchar();
 }
 
 void query6(){
-    int mesI, mesF,totVendas;
-    double totFat;
+    int mesI, mesF,totalVendas=0;
+    double totalFaturado=0;
     if(fork()==0)
         execlp("clear","clear",NULL);
     wait();
@@ -57,10 +57,10 @@ void query6(){
     scanf("%d",&mesI);
     printf("Mês Final: ");
     scanf("%d",&mesF);
-    getQuery6(mesI,mesF,&totFat,&totVendas);
-    printf("Total de vendas registadas entre o mês %d e o mês %d é: %d\n", mesI,mesF,totVendas);
-    printf("Total faturado entre o mês %d e o mês %d é: %.2f\n", mesI,mesF,totFat);
-    printf("(Prima ENTER para continuar)\n");
+    getQuery6(mesI,mesF,&totalFaturado,&totalVendas);
+    printf("Total de vendas registadas entre o mês %d e o mês %d é: %d\n", mesI,mesF,totalVendas);
+    printf("Total faturado entre o mês %d e o mês %d é: %.2f\n", mesI,mesF,totalFaturado);
+    printf("(Prima ENTER para voltar ao menu)\n");
     getchar();
     getchar();
 }

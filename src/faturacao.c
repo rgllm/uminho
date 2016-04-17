@@ -117,7 +117,7 @@ void carregaProduto(infoP produto){
             }
 }
 
-double getTotalFaturado(int mes,char * produto){
+double getTotalFaturadoMes(int mes,char * produto){
     faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
     if(nodo==NULL) return -1;
     infoP aux= nodo->produto;
@@ -125,7 +125,7 @@ double getTotalFaturado(int mes,char * produto){
 
 }
 
-int getTotalVendas(int mes,char * produto){
+int getTotalVendasMes(int mes,char * produto){
     faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
     if(nodo==NULL) return -1;
     infoP aux= nodo->produto;
@@ -144,23 +144,23 @@ void getQuery3(int mes,char * produto,double * totFat,int * totVendas){
     }
 }
 
-double contaTotFat(faturacaoProduto raiz){
+double contaTotalFaturado(faturacaoProduto raiz){
     if(raiz==NULL) return 0;
     else {
         infoP produto = raiz->produto;
         double faturacao;
         faturacao=produto->totalNormal+produto->totalPromocao;
-        return faturacao + contaTotFat(raiz->esq) + contaTotFat(raiz->dir);
+        return faturacao + contaTotalFaturado(raiz->esq) + contaTotalFaturado(raiz->dir);
     }
 }
 
-int contaTotVendas(faturacaoProduto raiz){
+int contaTotalVendas(faturacaoProduto raiz){
     if(raiz==NULL) return 0;
     else {
         infoP produto = raiz->produto;
         int vendas;
         vendas=(produto->qtdNormal+produto->qtdPromocao);
-        return vendas + contaTotVendas(raiz->esq) + contaTotVendas(raiz->dir);
+        return vendas + contaTotalVendas(raiz->esq) + contaTotalVendas(raiz->dir);
     }
 }
 
@@ -170,8 +170,8 @@ void getQuery6(int mesI, int mesF, double * totFat, int * totVendas){
     *totVendas=0;
     for(i=mesI-1;i<mesF;i++){
 
-        *totFat+=contaTotFat(tabela[3][i]);
-        *totVendas+=contaTotVendas(tabela[3][i]);
+        *totFat+=contaTotalFaturado(tabela[3][i]);
+        *totVendas+=contaTotalVendas(tabela[3][i]);
     }
 
 }

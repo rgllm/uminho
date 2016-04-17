@@ -30,7 +30,7 @@ void carregaProduto(infoP produto);
 /*nodo getNaoComprados();*/
 int contaNaoComprados(faturacaoProduto raiz);
 void getQuery3(int mes,char * produto,double * totFat,int * totVendas);
-void getQuery6(int mesI, int mesF, double *totFat, int * totVendas);
+void getQuery6(int mesI, int mesF, double * totFat, int * totVendas);
 
 
 

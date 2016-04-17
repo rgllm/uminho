@@ -15,16 +15,16 @@ void query3(){
     int mes,totalVendas;
     double totalFaturado;
     char buf[MAXBUFF];
-    char * produto;
+    char produto[10];
     printf("--- QUERY 3 ---\n");
     printf("Mês: ");
     scanf("%d",&mes);
-    fgets(buf,MAXBUFF,stdin);
-    mes=atoi(strtok(buf,"\r\n"));
+    /*fgets(buf,MAXBUFF,stdin);
+    mes=atoi(strtok(buf,"\r\n"));*/
     printf("Produto: ");
-    fgets(buf, MAXBUFF,stdin);
-    produto=strtok(buf,"\r\n");
-    scanf("%s",produto);
+    /*fgets(buf, MAXBUFF,stdin);
+    produto=strtok(buf,"\r\n");*/
+    scanf("%s",&produto);
     getQuery3(mes,produto,&totalFaturado,&totalVendas);
     printf("Total faturado: %.2f\nTotal de vendas: %d\n",totalFaturado,totalVendas );
 }
@@ -162,8 +162,9 @@ int main(){
     scanf("%d",&op);
     while(op!=0){
     if (op==3) query3();
-    if (op==6) query6();
-   printf("\nEscolha uma query (6 ou 3) ou 0 para sair: ");
+    else if (op==6) query6();
+    else printf("Ainda não está mas vai estar\n");
+    printf("\nEscolha uma query (6 ou 3) ou 0 para sair: ");
     scanf("%d",&op);
 }
 	return 1;

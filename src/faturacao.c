@@ -135,7 +135,7 @@ double contaTotFat(faturacaoProduto raiz){
     double faturacao;
     if(raiz==NULL) return 0;
     else {
-        faturacao=(produto->totalNormal*produto->qtdNormal)+(produto->totalPromocao*produto->qtdPromocao);
+        faturacao=produto->totalNormal+produto->totalPromocao;
         return faturacao + contaTotFat(raiz->esq) + contaTotFat(raiz->dir);
     }
 }
@@ -150,7 +150,7 @@ int contaTotVendas(faturacaoProduto raiz){
     }
 }
 
-void getQuery6(int mesI, int mesF, double *totFat, int * totVendas){
+void getQuery6(int mesI, int mesF, double * totFat, int * totVendas){
 int i;
 *totFat=0;
 *totVendas=0;

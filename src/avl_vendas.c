@@ -137,3 +137,11 @@ nodoFaturacaoProduto insertNodoFat(infoP produto,nodoFaturacaoProduto raiz){
 
 
 
+int contaNaoComprados(nodoFaturacaoProduto raiz){
+    if(raiz==NULL)
+        return 0;
+    infoP aux = raiz->produto;
+    if (aux->qtdNormal == 0 && aux->qtdPromocao == 0)return 1+contaNaoComprados(raiz->esq)+contaNaoComprados(raiz->dir);
+        else return contaNaoComprados(raiz->esq)+contaNaoComprados(raiz->dir);
+}
+

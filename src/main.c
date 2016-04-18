@@ -65,6 +65,45 @@ void query3(){
     getchar();
 }
 
+
+void query4(){
+    int filial, status;
+    int totalNaocomprado1 = 0, totalNaocomprado2 = 0, totalNaocomprado3 = 0;
+    char tipo;
+    if(fork()==0)
+        execlp("clear","clear",NULL);
+    wait(&status);
+    carregaArt("LOGO.txt");
+    printf("|-------------------------------------Query 4--------------------------------------------|\n\n");
+    printf("Apresentar resultado total ou por filial? (T ou F): ");
+    
+    scanf(" %c", &tipo);
+    if (tipo==84||tipo==116){
+        printf("Total: %d\n", contaNaoCompradosFilial(4));
+        printf("(Prima ENTER para voltar ao menu)\n");
+        getchar();
+        getchar();
+        return;
+    }
+    else if (tipo==70||tipo==102){
+        printf("\nIndique a filial pretendida (1, 2 ou 3): ");
+        scanf(" %d", &filial);
+        printf("Total filial %d: %d\n", filial, contaNaoCompradosFilial(filial));
+        printf("(Prima ENTER para voltar ao menu)\n");
+        getchar();
+        getchar();
+        return;
+
+    }
+    else printf("informação inválida\n");
+         printf("(Prima ENTER para voltar ao menu)\n");
+         getchar();
+         getchar();
+}
+
+
+
+
 void query6(){
     int mesI, mesF,totalVendas=0,status;
     double totalFaturado=0;
@@ -233,6 +272,7 @@ int main(){
         if (op==2) query2(catProd);
         else if (op==3) query3();
         else if (op==6) query6();
+        else if (op==4) query4();
         else if(op!=0){
             printf("Ainda não está mas vai estar\n");
             getchar();

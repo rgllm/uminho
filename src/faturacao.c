@@ -202,6 +202,11 @@ int contaTotalVendas(int mesI, int mesF){
 return totVendas;
 }
 
+int contaNaoCompradosFilial(int filial){
+    int indice = filial-1;
+    return contaNaoComprados(tabela[indice][12]);
+
+}
 
 /*
 nodo getNaoComprados(){
@@ -225,9 +230,8 @@ NaoComprados=NaoComprados(NaoComprados, totais->esq);
 NaoComprados=NaoComprados(NaoComprados, totais->dir);
 return pai;
 }
+
 */
-
-
 
 /*
 int getNaoComprados(){

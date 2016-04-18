@@ -1,8 +1,6 @@
 #include "faturacao.h"
 
-
 faturacaoProduto tabela[4][13];
-
 
 /**
  * Inicia a estrutura tabela.
@@ -206,7 +204,6 @@ return totVendas;
 
 
 /*
-
 nodo getNaoComprados(){
     nodo NaoComprados;
     return NaoComprados(NaoComprados, tabela[3][12]);
@@ -228,8 +225,9 @@ NaoComprados=NaoComprados(NaoComprados, totais->esq);
 NaoComprados=NaoComprados(NaoComprados, totais->dir);
 return pai;
 }
-
 */
+
+
 
 /*
 int getNaoComprados(){

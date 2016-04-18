@@ -113,6 +113,14 @@ void query2(CatProdutos catProd){
     printf("|-------------------------------------Query 2--------------------------------------------|\n\n");
     printf("Letra: ");
     scanf(" %c",&letra);
+    if(letra >=97 && letra <= 122) letra-=32; /*Caso em que a letra inserida é minúscula */
+    else if(letra < 65 || letra > 90){ /*Caso em que o caracter introduzido não é uma letra minúscula nem maiúscula */
+        printf("Letra inválida!\n");
+        printf("(Prima ENTER para voltar ao menu)\n");
+        getchar();
+        getchar();
+        return;
+    }
     indice=letra-65;
     printInOrder(getAVLProd(catProd,indice));
     printf("Total de produtos: %d\n",totalProdutosLetra(catProd,letra));
@@ -217,9 +225,10 @@ int main(){
         wait(&status);
         carregaArt("LOGO.txt");
         printf("|--------------------------------------MENU----------------------------------------------|\n\n");
+        printf("2- Determinar a lista e o total de produtos cujo código se inicia por uma dada letra\n");
         printf("3- Dado um mês e um código de produto determinar e apresentar o número total de vendas e o total faturado com esse produto\n");
         printf("6- Dado um intervalo de meses determinar o total de vendas registadas e o total faturado\n");
-        printf("\nEscolha uma query (6 ou 3) ou 0 para sair: ");
+        printf("\nEscolha uma query ou 0 para sair: ");
         scanf("%d",&op);
         if (op==2) query2(catProd);
         else if (op==3) query3();

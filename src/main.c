@@ -29,6 +29,32 @@ void carregaArt(char *nome_ficheiro) {
     fclose(ficheiro);
 }
 
+void query2(CatProdutos catProd){
+    char letra;
+    int indice,status;
+    if(fork()==0)
+        execlp("clear","clear",NULL);
+    wait(&status);
+    carregaArt("LOGO.txt");
+    printf("|-------------------------------------Query 2--------------------------------------------|\n\n");
+    printf("Letra: ");
+    scanf(" %c",&letra);
+    if(letra >=97 && letra <= 122) letra-=32; /*Caso em que a letra inserida é minúscula */
+    else if(letra < 65 || letra > 90){ /*Caso em que o caracter introduzido não é uma letra minúscula nem maiúscula */
+        printf("Letra inválida!\n");
+        printf("(Prima ENTER para voltar ao menu)\n");
+        getchar();
+        getchar();
+        return;
+    }
+    indice=letra-65;
+    printInOrder(getAVLProd(catProd,indice));
+    printf("Total de produtos: %d\n",totalProdutosLetra(catProd,letra));
+    printf("(Prima ENTER para voltar ao menu)\n");
+    getchar();
+    getchar();
+}
+
 void query3(){
     int mes,totalVendas,status;
     double totalFaturado;
@@ -140,34 +166,6 @@ void query4(){
 */
 
 
-/*    printf("2- Determinar a lista e o total de produtos cujo código se inicia por uma dada letra\n");*/
-
-void query2(CatProdutos catProd){
-    char letra;
-    int indice,status;
-    if(fork()==0)
-        execlp("clear","clear",NULL);
-    wait(&status);
-    carregaArt("LOGO.txt");
-    printf("|-------------------------------------Query 2--------------------------------------------|\n\n");
-    printf("Letra: ");
-    scanf(" %c",&letra);
-    if(letra >=97 && letra <= 122) letra-=32; /*Caso em que a letra inserida é minúscula */
-    else if(letra < 65 || letra > 90){ /*Caso em que o caracter introduzido não é uma letra minúscula nem maiúscula */
-        printf("Letra inválida!\n");
-        printf("(Prima ENTER para voltar ao menu)\n");
-        getchar();
-        getchar();
-        return;
-    }
-    indice=letra-65;
-    printInOrder(getAVLProd(catProd,indice));
-    printf("Total de produtos: %d\n",totalProdutosLetra(catProd,letra));
-    printf("(Prima ENTER para voltar ao menu)\n");
-    getchar();
-    getchar();
-}
-
 int validaVenda(CatClientes c,CatProdutos p,char * produto,double preco,int qtd,char np,char * cliente,int mes,int filial){
 	int lC,lP;
 	lP=produto[0]-65;
@@ -222,15 +220,12 @@ int main(){
         prod=criaProduto(cod);
         if(!existeProduto(catProd,prod)){
             catProd=insereProduto(catProd,prod);
-            c++;
             carregaProduto(criaInfoProduto(cod,0,0,0,0));
         }
     }
     fclose(fp);
 
-
     /*                 Leitura das vendas    */
-    c=0;
 
     fp = fopen( "files/Vendas1.txt", "r" );
     while (fgets(buffer, MAXBUFF,fp)!=NULL){
@@ -266,6 +261,7 @@ int main(){
         printf("|--------------------------------------MENU----------------------------------------------|\n\n");
         printf("2- Determinar a lista e o total de produtos cujo código se inicia por uma dada letra\n");
         printf("3- Dado um mês e um código de produto determinar e apresentar o número total de vendas e o total faturado com esse produto\n");
+        printf("4- Determinar a lista ordenada dos códigos dos produtos que ninguém comprou\n");
         printf("6- Dado um intervalo de meses determinar o total de vendas registadas e o total faturado\n");
         printf("\nEscolha uma query ou 0 para sair: ");
         scanf("%d",&op);

@@ -56,37 +56,57 @@ infoP criaInfoProduto(char * produto,int qtdNormal,int qtdPromocao,double totalN
 void registaFaturacaoProduto(infoP produto,int filial,int mes){
 
     nodoFaturacaoProduto aux;
-    tabela[filial-1][mes-1]=insertNodoFat(produto,tabela[filial-1][mes-1]);
-    aux=searchProduto(tabela[filial-1][mes-1],produto->produto);
-    aux->produto->qtdNormal+=produto->qtdNormal;
-    aux->produto->qtdPromocao+=produto->qtdPromocao;
-    aux->produto->totalNormal+=produto->totalNormal;
-    aux->produto->totalPromocao+=produto->totalPromocao;
+    if(tabela[filial-1][mes-1]==NULL)
+        tabela[filial-1][mes-1]=criaNodoFat(produto,NULL);
+    else{
+        tabela[filial-1][mes-1]=insertNodoFat(produto,tabela[filial-1][mes-1]);
+        aux=searchProduto(tabela[filial-1][mes-1],produto->produto);
+        if(aux->produto->qtdNormal!=produto->qtdNormal || aux->produto->qtdPromocao!=produto->qtdPromocao){
+            aux->produto->qtdNormal+=produto->qtdNormal;
+            aux->produto->qtdPromocao+=produto->qtdPromocao;
+            aux->produto->totalNormal+=produto->totalNormal;
+            aux->produto->totalPromocao+=produto->totalPromocao;
+        }
+    }
 
-    tabela[3][mes-1]=insertNodoFat(produto,tabela[3][mes-1]);
+    if(tabela[3][mes-1]==NULL)
+        tabela[3][mes-1]=criaNodoFat(produto,NULL);
+    else{
+        tabela[3][mes-1]=insertNodoFat(produto,tabela[3][mes-1]);
+        aux=searchProduto(tabela[3][mes-1],produto->produto);
+        if(aux->produto->totalNormal!=produto->totalNormal || aux->produto->totalPromocao!=produto->totalPromocao ){
+            aux->produto->qtdNormal+=produto->qtdNormal;
+            aux->produto->qtdPromocao+=produto->qtdPromocao;
+            aux->produto->totalNormal+=produto->totalNormal;
+            aux->produto->totalPromocao+=produto->totalPromocao;
+        }
+    }
 
-    aux=searchProduto(tabela[3][mes-1],produto->produto);
-    aux->produto->qtdNormal+=produto->qtdNormal;
-    aux->produto->qtdPromocao+=produto->qtdPromocao;
-    aux->produto->totalNormal+=produto->totalNormal;
-    aux->produto->totalPromocao+=produto->totalPromocao;
+    if(tabela[filial-1][12]==NULL)
+        tabela[filial-1][12]=criaNodoFat(produto,NULL);
+    else{
+        tabela[filial-1][12]=insertNodoFat(produto,tabela[filial-1][12]);
+        aux=searchProduto(tabela[filial-1][12],produto->produto);
+        if(aux->produto->qtdNormal!=produto->qtdNormal || aux->produto->qtdPromocao!=produto->qtdPromocao){
+            aux->produto->qtdNormal+=produto->qtdNormal;
+            aux->produto->qtdPromocao+=produto->qtdPromocao;
+            aux->produto->totalNormal+=produto->totalNormal;
+            aux->produto->totalPromocao+=produto->totalPromocao;
+        }
+    }
 
-    tabela[filial-1][12]=insertNodoFat(produto,tabela[filial-1][12]);
-
-    aux=searchProduto(tabela[filial-1][12],produto->produto);
-    aux->produto->qtdNormal+=produto->qtdNormal;
-    aux->produto->qtdPromocao+=produto->qtdPromocao;
-    aux->produto->totalNormal+=produto->totalNormal;
-    aux->produto->totalPromocao+=produto->totalPromocao;
-
-    tabela[3][12]=insertNodoFat(produto,tabela[3][12]);
-
-    aux=searchProduto(tabela[3][12],produto->produto);
-    aux->produto->qtdNormal+=produto->qtdNormal;
-    aux->produto->qtdPromocao+=produto->qtdPromocao;
-    aux->produto->totalNormal+=produto->totalNormal;
-    aux->produto->totalPromocao+=produto->totalPromocao;
-
+    if(tabela[3][12]==NULL)
+        tabela[3][12]=criaNodoFat(produto,NULL);
+    else{
+        tabela[3][12]=insertNodoFat(produto,tabela[3][12]);
+        aux=searchProduto(tabela[3][12],produto->produto);
+        if(aux->produto->qtdNormal!=produto->qtdNormal || aux->produto->qtdPromocao!=produto->qtdPromocao){
+            aux->produto->qtdNormal+=produto->qtdNormal;
+            aux->produto->qtdPromocao+=produto->qtdPromocao;
+            aux->produto->totalNormal+=produto->totalNormal;
+            aux->produto->totalPromocao+=produto->totalPromocao;
+        }
+    }
 }
 
 /**
@@ -95,18 +115,15 @@ void registaFaturacaoProduto(infoP produto,int filial,int mes){
  * @return
  */
 void carregaProduto(infoP produto){
-    int i,j;
-     for(i=0;i<4;i++)
-            for(j=0;j<13;j++){
-                if(tabela[i][j]){
-
-                    tabela[i][j]=insertNodoFat(produto,tabela[i][j]);
-                }
-                else {
-                    tabela[i][j]=criaNodoFat(produto,NULL);
-
-                }
-            }
+    int i;
+    for(i=0;i<4;i++){
+        if(tabela[i][12]){
+            tabela[i][12]=insertNodoFat(produto,tabela[i][12]);
+        }
+        else {
+            tabela[i][12]=criaNodoFat(produto,NULL);
+        }
+    }
 }
 
 /**
@@ -201,6 +218,16 @@ int contaTotalVendas(int mesI, int mesF){
     }
 return totVendas;
 }
+
+int contaNaoComprados(nodoFaturacaoProduto raiz){
+    if(raiz==NULL)
+        return 0;
+    infoP aux = raiz->produto;
+    if(aux->qtdNormal == 0 && aux->qtdPromocao == 0)return 1+contaNaoComprados(raiz->esq)+contaNaoComprados(raiz->dir);
+    else return contaNaoComprados(raiz->esq)+contaNaoComprados(raiz->dir);
+}
+
+
 
 int contaNaoCompradosFilial(int filial){
     int indice = filial-1;

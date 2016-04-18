@@ -11,6 +11,7 @@ typedef nodo * nodoProduto;
 
 /*Funções sobre o tipo CatProdutos */
 
+int getSize(struct catProdutos catProd);
 CatProdutos initCatProdutos();
 CatProdutos insereProduto(CatProdutos catP,Produto prod);
 int existeProduto(CatProdutos catP,Produto prod);

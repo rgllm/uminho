@@ -103,8 +103,22 @@ void query4(){
 
 /*    printf("2- Determinar a lista e o total de produtos cujo código se inicia por uma dada letra\n");*/
 
-void query2(){
-
+void query2(CatProdutos catProd){
+    char letra;
+    int indice,status;
+    if(fork()==0)
+        execlp("clear","clear",NULL);
+    wait(&status);
+    carregaArt("LOGO.txt");
+    printf("|-------------------------------------Query 2--------------------------------------------|\n\n");
+    printf("Letra: ");
+    scanf(" %c",&letra);
+    indice=letra-65;
+    printInOrder(getAVLProd(catProd,indice));
+    printf("Total de produtos: %d\n",totalProdutosLetra(catProd,letra));
+    printf("(Prima ENTER para voltar ao menu)\n");
+    getchar();
+    getchar();
 }
 
 int validaVenda(CatClientes c,CatProdutos p,char * produto,double preco,int qtd,char np,char * cliente,int mes,int filial){
@@ -207,7 +221,8 @@ int main(){
         printf("6- Dado um intervalo de meses determinar o total de vendas registadas e o total faturado\n");
         printf("\nEscolha uma query (6 ou 3) ou 0 para sair: ");
         scanf("%d",&op);
-        if (op==3) query3();
+        if (op==2) query2(catProd);
+        else if (op==3) query3();
         else if (op==6) query6();
         else if(op!=0){
             printf("Ainda não está mas vai estar\n");

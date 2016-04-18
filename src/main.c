@@ -10,6 +10,24 @@
 #define MAXBUFF 64
 #include <unistd.h>
 
+/**
+ * Lê um ficheiro .txt que contem um TextArt
+ * NOTA: o ficheiro já tem os \n
+ * @param nome_ficheiro
+ */
+void carregaArt(char *nome_ficheiro) {
+    char *lido;
+    char *linha = (char *) malloc(256);
+    FILE *ficheiro;
+
+    ficheiro = fopen(nome_ficheiro,"r");
+
+    while((lido = fgets(linha,256,ficheiro)) != NULL) {
+        printf("%s",linha);
+    }
+
+    fclose(ficheiro);
+}
 
 void query3(){
     int mes,totalVendas,status;
@@ -87,25 +105,6 @@ void query4(){
 
 void query2(){
 
-}
-
-/**
- * Lê um ficheiro .txt que contem um TextArt
- * NOTA: o ficheiro já tem os \n
- * @param nome_ficheiro
- */
-void carregaArt(char *nome_ficheiro) {
-    char *lido;
-    char *linha = (char *) malloc(256);
-    FILE *ficheiro;
-
-    ficheiro = fopen(nome_ficheiro,"r");
-
-    while((lido = fgets(linha,256,ficheiro)) != NULL) {
-        printf("%s",linha);
-    }
-
-    fclose(ficheiro);
 }
 
 int validaVenda(CatClientes c,CatProdutos p,char * produto,double preco,int qtd,char np,char * cliente,int mes,int filial){

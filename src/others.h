@@ -5,3 +5,5 @@
 #include <string.h>
 
 char getch();
+void carregaArt(char *nome_ficheiro);
+

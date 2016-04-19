@@ -142,6 +142,66 @@ double getTotalFaturadoMes(int mes,char * produto){
 }
 
 /**
+ * Dado um mês e um código de um produto retorna o total faturado em modo normal nesse mês com esse produto em todas as filiais.
+ * @param mes
+ * @param produto
+ * @return
+ */
+double getTotalFaturadoMesN(int mes,char * produto){
+    infoP aux;
+    faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
+    if(nodo==NULL) return -1;
+    aux= nodo->produto;
+    return aux->totalNormal;
+}
+
+/**
+ * Dado um mês e um código de um produto retorna o total faturado em modo normal nesse mês com esse produto numa
+ * determinada filial.
+ * @param mes
+ * @param produto
+ * @param filial
+ * @return
+ */
+double getTotalFaturadoMesN_filial(int mes,char * produto,int filial){
+    infoP aux;
+    faturacaoProduto nodo=searchProduto(tabela[filial-1][mes-1],produto);
+    if(nodo==NULL) return -1;
+    aux= nodo->produto;
+    return aux->totalNormal;
+}
+
+/**
+ * Dado um mês e um código de um produto retorna o total faturado em modo promoção nesse mês com esse produto em todas as filiais.
+ * @param mes
+ * @param produto
+ * @return
+ */
+double getTotalFaturadoMesP(int mes,char * produto){
+    infoP aux;
+    faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
+    if(nodo==NULL) return -1;
+    aux= nodo->produto;
+    return aux->totalPromocao;
+}
+
+/**
+ * Dado um mês e um código de um produto retorna o total faturado em modo promoção nesse mês com esse produto numa
+ * determinada filial.
+ * @param mes
+ * @param produto
+ * @param filial
+ * @return
+ */
+double getTotalFaturadoMesP_filial(int mes,char * produto, int filial){
+    infoP aux;
+    faturacaoProduto nodo=searchProduto(tabela[filial-1][mes-1],produto);
+    if(nodo==NULL) return -1;
+    aux= nodo->produto;
+    return aux->totalPromocao;
+}
+
+/**
  * Dado um mês e um código de um produto retorna o número total de vendas desse produto em todas as filiais.
  * @param mes
  * @param produto
@@ -154,6 +214,69 @@ int getTotalVendasMes(int mes,char * produto){
     aux = nodo->produto;
     return aux->qtdNormal + aux->qtdPromocao;
 
+}
+
+/**
+ * Dado um mês e um código de um produto retorna o número total de vendas em modo normal desse produto em todas as filiais.
+ * @param mes
+ * @param produto
+ * @return
+ */
+int getTotalVendasMesN(int mes,char * produto){
+    infoP aux;
+    faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
+    if(nodo==NULL) return -1;
+    aux = nodo->produto;
+    return aux->qtdNormal;
+
+}
+
+/**
+ * Dado um mês e um código de um produto retorna o número total de vendas em modo normal desse produto
+ * numa determinada filial.
+ * @param mes
+ * @param produto
+ * @param filial
+ * @return
+ */
+int getTotalVendasMesN_filial(int mes,char * produto, int filial){
+    infoP aux;
+    faturacaoProduto nodo=searchProduto(tabela[filial-1][mes-1],produto);
+    if(nodo==NULL) return -1;
+    aux = nodo->produto;
+    return aux->qtdNormal;
+
+}
+
+/**
+ * Dado um mês e um código de um produto retorna o número total de vendas em modo promoção desse produto em todas as filiais.
+ * @param mes
+ * @param produto
+ * @return
+ */
+int getTotalVendasMesP(int mes,char * produto){
+    infoP aux;
+    faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
+    if(nodo==NULL) return -1;
+    aux = nodo->produto;
+    return aux->qtdPromocao;
+
+}
+
+/**
+ * Dado um mês e um código de um produto retorna o número total de vendas em modo promoção desse produto
+ * numa determinada filial.
+ * @param mes
+ * @param produto
+ * @param filial
+ * @return
+ */
+int getTotalVendasMesP_filial(int mes,char * produto, int filial){
+    infoP aux;
+    faturacaoProduto nodo=searchProduto(tabela[filial-1][mes-1],produto);
+    if(nodo==NULL) return -1;
+    aux = nodo->produto;
+    return aux->qtdPromocao;
 }
 
 /**
@@ -219,6 +342,11 @@ int contaTotalVendas(int mesI, int mesF){
 return totVendas;
 }
 
+/**
+ * Conta o total de produtos não comprados numa árvore.
+ * @param raiz
+ * @return
+ */
 int contaNaoComprados(nodoFaturacaoProduto raiz){
     infoP aux;
     if(raiz==NULL)
@@ -229,17 +357,26 @@ int contaNaoComprados(nodoFaturacaoProduto raiz){
 }
 
 
-
+/**
+ * Conta o total de produtos não comprados numa filial.
+ * @param raiz
+ * @return
+ */
 int contaNaoCompradosFilial(int filial){
     int indice = filial-1;
     return contaNaoComprados(tabela[indice][12]);
 
 }
 
-
+/**
+ * Conta o total de produtos não comprados numa árvore.
+ * @param raiz
+ * @return
+ */
 nodo * naoComprados(nodo * nComprados, faturacaoProduto totais){
+    infoP produto;
     if(totais==NULL) return NULL;
-    infoP produto = totais->produto;
+        produto = totais->produto;
     if(produto->qtdPromocao==0 && produto->qtdNormal==0){
         if(nComprados==NULL){
             nComprados=criaNodo(produto->produto,NULL);
@@ -253,6 +390,11 @@ nodo * naoComprados(nodo * nComprados, faturacaoProduto totais){
     return nComprados;
 }
 
+/**
+ * Conta o total de produtos não comprados numa filial.
+ * @param raiz
+ * @return
+ */
 nodo * getNaoCompradosFilial(int filial){
     nodo * nComprados=naoComprados(NULL, tabela[filial-1][12]);
     return nComprados;
@@ -286,3 +428,10 @@ int contaNaoComprados(faturacaoProduto raiz){
         *totVendas=aux->qtdNormal+aux->qtdPromocao;
     }
 }*/
+
+
+
+
+
+
+

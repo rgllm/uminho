@@ -7,27 +7,11 @@
 #include "clientes.h"
 #include "produtos.h"
 #include "faturacao.h"
+#include "others.h"
 #define MAXBUFF 64
 #include <unistd.h>
 
-/**
- * Lê um ficheiro .txt que contem um TextArt
- * NOTA: o ficheiro já tem os \n
- * @param nome_ficheiro
- */
-void carregaArt(char *nome_ficheiro) {
-    char *lido;
-    char *linha = (char *) malloc(256);
-    FILE *ficheiro;
 
-    ficheiro = fopen(nome_ficheiro,"r");
-
-    while((lido = fgets(linha,256,ficheiro)) != NULL) {
-        printf("%s",linha);
-    }
-
-    fclose(ficheiro);
-}
 
 int validaVenda(CatClientes c,CatProdutos p,char * produto,double preco,int qtd,char np,char * cliente,int mes,int filial){
     int lC,lP;
@@ -70,6 +54,7 @@ void query1(CatClientes catClientes, CatProdutos catProd){
 
     c=0;
     initTabela();
+
     /*                 Leitura dos produtos                 */
     fp=fopen("files/Produtos.txt","r");
     while( fgets (buffer, MAXBUFF, fp)){
@@ -145,9 +130,9 @@ void query2(CatProdutos catProd){
 }
 
 void query3(){
-    int mes,totalVendas,status;
-    double totalFaturado;
-    char produto[10];
+    int mes,totalVendasN, totalVendasP, status, filial, totalVendasNF, totalVendasPF;
+    double totalFaturadoN,totalFaturadoP,totalFaturadoNF,totalFaturadoPF;
+    char produto[10],tipo;
     if(fork()==0)
         execlp("clear","clear",NULL);
     wait(&status);
@@ -164,20 +149,55 @@ void query3(){
     }
     printf("Produto: ");
     scanf("%s",produto);
+    printf("Apresentar resultados totais ou por filial? (T ou F): ");
+    scanf(" %c", &tipo);
+    if (tipo==84||tipo==116){
+        totalFaturadoN=getTotalFaturadoMesN(mes,produto);
+        totalFaturadoP=getTotalFaturadoMesP(mes,produto);
+        totalVendasN=getTotalVendasMesN(mes,produto);
+        totalVendasP=getTotalVendasMesP(mes,produto);
 
-    totalFaturado=getTotalFaturadoMes(mes,produto);
-    totalVendas=getTotalVendasMes(mes,produto);
-    if(totalFaturado==-1){
-        printf("Produto inválido!\n");
+        if(totalFaturadoN==-1 && totalFaturadoP==-1){
+            printf("Produto não encontrado!\n");
+            printf("(Prima ENTER para voltar ao menu)\n");
+            getchar();
+            getchar();
+            return;
+        }
+        printf("Total faturado modo Normal: %.2f\nTotal faturado modo Promoção: %.2f\n",totalFaturadoN,totalFaturadoP);
+        printf("Total de vendas em modo Normal: %d\nTotal de vendas em modo Promoção %d\n",totalVendasN,totalVendasP);
         printf("(Prima ENTER para voltar ao menu)\n");
         getchar();
         getchar();
         return;
     }
-    printf("Total faturado: %.2f\nTotal de vendas: %d\n",totalFaturado,totalVendas );
-    printf("(Prima ENTER para voltar ao menu)\n");
-    getchar();
-    getchar();
+     else if (tipo==70||tipo==102){
+        for(filial=1;filial<=3;filial++){
+            totalFaturadoNF=0;totalFaturadoPF=0;totalVendasNF=0;totalVendasPF=0;
+            totalFaturadoNF=getTotalFaturadoMesN_filial(mes,produto,filial);
+            totalFaturadoPF=getTotalFaturadoMesP_filial(mes,produto,filial);
+            totalVendasNF=getTotalVendasMesN_filial(mes,produto,filial);
+            totalVendasPF=getTotalVendasMesP_filial(mes,produto,filial);
+            printf("\nFilial %d\n", filial);
+            if(totalFaturadoNF==-1 && totalFaturadoPF==-1 && totalVendasNF==-1 &&  totalVendasPF==-1){
+                printf("Produto não comprado nesta filial neste mês;");
+                printf("\n\n");
+            }
+            else{
+            printf("Total faturado modo Normal: %.2f\nTotal faturado modo Promoção: %.2f\n",totalFaturadoNF,totalFaturadoPF);
+            printf("Total de vendas em modo Normal: %d\nTotal de vendas em modo Promoção %d\n",totalVendasNF,totalVendasPF);
+            printf("\n\n");
+            }
+        }
+        printf("(Prima ENTER para voltar ao menu)\n");
+        getchar();
+        getchar();
+        return;
+    }
+    else printf("informação inválida\n");
+         printf("(Prima ENTER para voltar ao menu)\n");
+         getchar();
+         getchar();
 }
 
 
@@ -215,8 +235,6 @@ void query4(){
          getchar();
          getchar();
 }
-
-
 
 
 void query6(){

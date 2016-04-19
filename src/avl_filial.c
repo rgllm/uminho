@@ -1,33 +1,28 @@
-   /*###################################################################*/
-/*##################################################################################*/
-/*                              ARVORES DE VENDAS                                     */
-/*##################################################################################*/
-    /*###################################################################*/
-#include "avl_vendas.h"
+/* #include "avl_filial.h"
 
-nodoFaturacaoProduto searchProduto(nodoFaturacaoProduto raiz, char * produto){
+nodoFilial procura(nodoFilial raiz, char * codigo){
     int cmp;
     if (raiz == NULL) return NULL;
-    cmp=strcmp(produto,raiz->produto->produto);
+    cmp=strcmp(codigo,raiz->key->codigo);
     if (cmp<0)
-        return searchProduto(raiz->esq, produto);
+        return procura(raiz->esq, codigo);
     else if (cmp > 0)
-        return searchProduto(raiz->dir, produto);
+        return procura(raiz->dir, codigo);
     else
         return raiz;
 }
 
-int alturaV(nodoFaturacaoProduto raiz){
+int alturaV(nodoFilial raiz){
     if(raiz) return raiz->altura;
     return 0;
 }
 
-void ajustaAlturaV(nodoFaturacaoProduto raiz){
+void ajustaAlturaV(nodoFilial raiz){
     raiz->altura = 1 + max(alturaV(raiz->esq), alturaV(raiz->dir));
 }
 
-nodoFaturacaoProduto rodaDirV(nodoFaturacaoProduto raiz){
-    nodoFaturacaoProduto new = raiz->esq;
+nodoFilial rodaDirV(nodoFilial raiz){
+    nodoFilial new = raiz->esq;
     if (raiz->pai){
         if (raiz->pai->esq == raiz) raiz->pai->esq = new;
         else raiz->pai->dir = new;
@@ -42,9 +37,9 @@ nodoFaturacaoProduto rodaDirV(nodoFaturacaoProduto raiz){
     return new;
 }
 
-nodoFaturacaoProduto rodaEsqV(nodoFaturacaoProduto raiz){
+nodoFilial rodaEsqV(nodoFilial raiz){
 
-    nodoFaturacaoProduto new = raiz->dir;
+    nodoFilial new = raiz->dir;
     if (raiz->pai){
         if (raiz->pai->dir == raiz) raiz->pai->dir = new;
         else raiz->pai->esq = new;
@@ -59,19 +54,12 @@ nodoFaturacaoProduto rodaEsqV(nodoFaturacaoProduto raiz){
     return new;
 }
 
+void infoProdutoCopy(estruturaFilial p1,estruturaFilial p2){
 
-/*TESTADA*/
-void infoProdutoCopy(infoP p1,infoP p2){
-    p1->qtdNormal=p2->qtdNormal;
-    p1->qtdPromocao=p2->qtdPromocao;
-    p1->totalNormal=p2->totalNormal;
-    p1->totalPromocao=p2->totalPromocao;
-    p1->produto=strdup(p2->produto);
 }
 
-/*TESTADA*/
-nodoFaturacaoProduto criaNodoFat(infoP produto, nodoFaturacaoProduto pai){
-    struct nodoFaturacaoProduto *n = malloc(sizeof(struct nodoFaturacaoProduto));
+nodoFilial criaNodoFat(infoP produto, nodoFilial pai){
+    struct nodoFilial *n = malloc(sizeof(struct nodoFilial));
     n->produto=malloc(sizeof(struct infoProduto));
     infoProdutoCopy(n->produto,produto);
     n->pai = pai;
@@ -81,7 +69,7 @@ nodoFaturacaoProduto criaNodoFat(infoP produto, nodoFaturacaoProduto pai){
     return n;
 }
 
-nodoFaturacaoProduto balanceV(nodoFaturacaoProduto raiz){
+nodoFilial balanceV(nodoFilial raiz){
     if (alturaV(raiz->esq) - alturaV(raiz->dir) > 1)
     {
         if (alturaV(raiz->esq->esq) > alturaV(raiz->esq->dir)){
@@ -104,8 +92,8 @@ nodoFaturacaoProduto balanceV(nodoFaturacaoProduto raiz){
     return raiz;
 }
 
-nodoFaturacaoProduto insertNodoFat(infoP produto,nodoFaturacaoProduto raiz){
-    nodoFaturacaoProduto aux = raiz;
+nodoFilial insertNodoFat(infoP produto,nodoFilial raiz){
+    nodoFilial aux = raiz;
     while (strcmp(produto->produto,aux->produto->produto)){
         if (strcmp(produto->produto,aux->produto->produto)<0){
             if (aux->esq) aux = aux->esq;
@@ -135,5 +123,5 @@ nodoFaturacaoProduto insertNodoFat(infoP produto,nodoFaturacaoProduto raiz){
     return aux;
 }
 
-
+*/
 

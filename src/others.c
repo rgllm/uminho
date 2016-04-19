@@ -1,8 +1,8 @@
 
 #include "others.h"
 
-char getch(){
 
+char getch(){
 char c = 0;
    struct termios old = {0};
    fflush(stdout);
@@ -18,3 +18,22 @@ char c = 0;
     tcsetattr(0, TCSADRAIN, &old);
     return c;
  }
+
+/**
+ * Lê um ficheiro .txt que contem um TextArt
+ * NOTA: o ficheiro já tem os \n
+ * @param nome_ficheiro
+ */
+void carregaArt(char *nome_ficheiro) {
+    char *lido;
+    char *linha = (char *) malloc(256);
+    FILE *ficheiro;
+
+    ficheiro = fopen(nome_ficheiro,"r");
+
+    while((lido = fgets(linha,256,ficheiro)) != NULL) {
+        printf("%s",linha);
+    }
+
+    fclose(ficheiro);
+}

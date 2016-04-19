@@ -33,6 +33,8 @@ int contaTotalVendas(int mesI, int mesF);
 double contaTotalFaturado(int mesI, int mesF);
 int getTotalVendasMes(int mes,char * produto);
 double getTotalFaturadoMes(int mes,char * produto);
+int contaNaoCompradosFilial(int filial);
+
 
 
 

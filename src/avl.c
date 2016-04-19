@@ -145,6 +145,9 @@ void printInOrder(nodo * raiz){
         printInOrder(raiz->dir);
     }
 }
+
+
+
 /*
 void printInOrderProd(nodoFaturacaoProduto raiz){
     if(raiz!=NULL){

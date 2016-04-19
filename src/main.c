@@ -49,7 +49,7 @@ void query2(CatProdutos catProd){
     }
     indice=letra-65;
     printInOrder(getAVLProd(catProd,indice));
-    printf("Total de produtos: %d\n",totalProdutosLetra(catProd,letra));
+    printf("\n\nTotal de produtos: %d\n",totalProdutosLetra(catProd,letra));
     printf("(Prima ENTER para voltar ao menu)\n");
     getchar();
     getchar();
@@ -94,7 +94,6 @@ void query3(){
 
 void query4(){
     int filial, status;
-    int totalNaocomprado1 = 0, totalNaocomprado2 = 0, totalNaocomprado3 = 0;
     char tipo;
     if(fork()==0)
         execlp("clear","clear",NULL);
@@ -102,7 +101,7 @@ void query4(){
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 4--------------------------------------------|\n\n");
     printf("Apresentar resultado total ou por filial? (T ou F): ");
-    
+
     scanf(" %c", &tipo);
     if (tipo==84||tipo==116){
         printf("Total: %d\n", contaNaoCompradosFilial(4));
@@ -114,6 +113,7 @@ void query4(){
     else if (tipo==70||tipo==102){
         printf("\nIndique a filial pretendida (1, 2 ou 3): ");
         scanf(" %d", &filial);
+        if(filial<1 || filial>3){printf("Filial inválida!\n");printf("(Prima ENTER para voltar ao menu)\n");getchar();getchar();return;}
         printf("Total filial %d: %d\n", filial, contaNaoCompradosFilial(filial));
         printf("(Prima ENTER para voltar ao menu)\n");
         getchar();
@@ -259,6 +259,7 @@ int main(){
         wait(&status);
         carregaArt("LOGO.txt");
         printf("|--------------------------------------MENU----------------------------------------------|\n\n");
+        printf("1- Ler ficheiros para memória\n");
         printf("2- Determinar a lista e o total de produtos cujo código se inicia por uma dada letra\n");
         printf("3- Dado um mês e um código de produto determinar e apresentar o número total de vendas e o total faturado com esse produto\n");
         printf("4- Determinar a lista ordenada dos códigos dos produtos que ninguém comprou\n");
@@ -286,8 +287,6 @@ int main(){
 /*
 
 
-    printf("1- Ler ficheiros para memória\n");
-    printf("2- Determinar a lista e o total de produtos cujo código se inicia por uma dada letra\n");
     printf("4- Determinar a lista ordenada dos códigos dos produtos que ninguém comprou\n");
     printf("5- Dado um código de cliente criar uma tabela com o número total de produtos comprados mês a mês\n");
     printf("7- Determinar a lista ordenada de códigos de clientes que realizaram compras em todas a filiais\n");

@@ -18,8 +18,6 @@ typedef struct infoProduto{
 
 typedef nodoFaturacaoProduto faturacaoProduto;
 
-faturacaoProduto naoComprados;
-
 
 void initTabela();
 faturacaoProduto initNComprados();

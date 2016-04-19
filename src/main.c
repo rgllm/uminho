@@ -29,9 +29,98 @@ void carregaArt(char *nome_ficheiro) {
     fclose(ficheiro);
 }
 
+int validaVenda(CatClientes c,CatProdutos p,char * produto,double preco,int qtd,char np,char * cliente,int mes,int filial){
+    int lC,lP;
+    lP=produto[0]-65;
+    lC=cliente[0]-65;
+    if(search(getAVLProd(p,lP),produto)!=NULL){
+        if(search(getAVLCli(c,lC),cliente)!=NULL){
+            if(qtd>0 &&
+                preco>=0 &&
+                mes>=1 && mes <=12 &&
+                (np=='N' || np=='P') &&
+                filial>=1 && filial<=3 )
+                return 0;
+        }
+    }
+    return 1;
+}
+
+void query1(CatClientes catClientes, CatProdutos catProd){
+    int c,qtd,mes,fil;
+    char cod[10],linha[MAXBUFF], buffer[MAXBUFF],*produto,np,*cli,*precAux;
+    double prec;
+    infoP aux;
+    FILE *fp;
+    Produto prod;
+    Cliente cliente;
+
+
+    /*                 Leitura dos clientes                 */
+    fp=fopen("files/Clientes.txt","r");
+    while( fgets (buffer, MAXBUFF, fp)){
+       strcpy(cod,buffer);
+       strtok(cod,"\r\n");
+       cliente = criaCliente(cod);
+       if(!existeCliente(catClientes,cliente)){
+            catClientes=insereCliente(catClientes,cliente);
+        }
+    }
+    fclose(fp);
+
+    c=0;
+    initTabela();
+    /*                 Leitura dos produtos                 */
+    fp=fopen("files/Produtos.txt","r");
+    while( fgets (buffer, MAXBUFF, fp)){
+        strcpy(cod,buffer);
+        strtok(cod,"\r\n");
+        prod=criaProduto(cod);
+        if(!existeProduto(catProd,prod)){
+            catProd=insereProduto(catProd,prod);
+            carregaProduto(criaInfoProduto(cod,0,0,0,0));
+        }
+    }
+    fclose(fp);
+
+    /*                 Leitura das vendas    */
+
+    fp = fopen( "files/Vendas1.txt", "r" );
+    while (fgets(buffer, MAXBUFF,fp)!=NULL){
+        strcpy(linha,buffer);
+        produto=strtok(buffer," ");
+        prec=strtod(strtok(NULL," "),&precAux);
+        qtd=atoi(strtok(NULL," "));
+        np=strtok(NULL," ")[0];
+        cli=strtok(NULL," ");
+        mes=atoi(strtok(NULL," "));
+        fil=atoi(strtok(NULL," "));
+
+        if(validaVenda(catClientes,catProd,produto,prec,qtd,np,cli,mes,fil)==0){
+            prec=qtd*prec;
+            if(np=='N'){
+                aux=(infoP)criaInfoProduto(produto,qtd,0,prec,0);
+                registaFaturacaoProduto(aux, fil , mes );
+            }
+            else {
+                aux=(infoP)criaInfoProduto(produto,0,qtd,0,prec);
+                registaFaturacaoProduto(aux , fil , mes);
+            }
+        }
+    }
+
+    fclose(fp);
+
+printf("Vendas carregadas!\n");
+printf("(Prima ENTER para voltar ao menu)\n");
+getchar();
+getchar();
+
+}
+
 void query2(CatProdutos catProd){
     char letra;
-    int indice,status;
+    int indice,status,count;
     if(fork()==0)
         execlp("clear","clear",NULL);
     wait(&status);
@@ -48,9 +137,9 @@ void query2(CatProdutos catProd){
         return;
     }
     indice=letra-65;
-    printInOrder(getAVLProd(catProd,indice));
     printf("\n\nTotal de produtos: %d\n",totalProdutosLetra(catProd,letra));
-    printf("(Prima ENTER para voltar ao menu)\n");
+    count=printInOrder(getAVLProd(catProd,indice),0);
+    sleep(2);
     getchar();
     getchar();
 }
@@ -165,94 +254,12 @@ void query4(){
 
 */
 
-
-int validaVenda(CatClientes c,CatProdutos p,char * produto,double preco,int qtd,char np,char * cliente,int mes,int filial){
-	int lC,lP;
-	lP=produto[0]-65;
-    lC=cliente[0]-65;
-	if(search(getAVLProd(p,lP),produto)!=NULL){
-		if(search(getAVLCli(c,lC),cliente)!=NULL){
-			if(qtd>0 &&
-				preco>=0 &&
-				mes>=1 && mes <=12 &&
-				(np=='N' || np=='P') &&
-				filial>=1 && filial<=3 )
-				return 0;
-		}
-	}
-	return 1;
-}
-
 int main(){
-	CatClientes catClientes;
-	CatProdutos catProd;
-	int c,qtd,mes,fil,op=1,status;
-	char cod[10],linha[MAXBUFF], buffer[MAXBUFF],*produto,np,*cli,*precAux;
-	double prec;
-	infoP aux;
-	FILE *fp;
-    Produto prod;
-    Cliente cliente;
-
-
-	/*                 Leitura dos clientes                 */
-
-	catClientes=initCatClientes();
-	fp=fopen("files/Clientes.txt","r");
-	while( fgets (buffer, MAXBUFF, fp)){
-       strcpy(cod,buffer);
-       strtok(cod,"\r\n");
-       cliente = criaCliente(cod);
-       if(!existeCliente(catClientes,cliente)){
-            catClientes=insereCliente(catClientes,cliente);
-        }
-    }
-    fclose(fp);
-
-    c=0;
-    initTabela();
-    /*                 Leitura dos produtos                 */
+    CatClientes catClientes;
+    CatProdutos catProd;
+    int op=-1,status,carregado=0;
+    catClientes=initCatClientes();
     catProd=initCatProdutos();
-    fp=fopen("files/Produtos.txt","r");
-    while( fgets (buffer, MAXBUFF, fp)){
-        strcpy(cod,buffer);
-        strtok(cod,"\r\n");
-        prod=criaProduto(cod);
-        if(!existeProduto(catProd,prod)){
-            catProd=insereProduto(catProd,prod);
-            carregaProduto(criaInfoProduto(cod,0,0,0,0));
-        }
-    }
-    fclose(fp);
-
-    /*                 Leitura das vendas    */
-
-    fp = fopen( "files/Vendas1.txt", "r" );
-    while (fgets(buffer, MAXBUFF,fp)!=NULL){
-        strcpy(linha,buffer);
-        produto=strtok(buffer," ");
-        prec=strtod(strtok(NULL," "),&precAux);
-        qtd=atoi(strtok(NULL," "));
-        np=strtok(NULL," ")[0];
-        cli=strtok(NULL," ");
-        mes=atoi(strtok(NULL," "));
-        fil=atoi(strtok(NULL," "));
-
-        if(validaVenda(catClientes,catProd,produto,prec,qtd,np,cli,mes,fil)==0){
-            prec=qtd*prec;
-            if(np=='N'){
-                aux=(infoP)criaInfoProduto(produto,qtd,0,prec,0);
-                registaFaturacaoProduto(aux, fil , mes );
-            }
-            else {
-                aux=(infoP)criaInfoProduto(produto,0,qtd,0,prec);
-                registaFaturacaoProduto(aux , fil , mes);
-            }
-        }
-    }
-
-    fclose(fp);
-
     while(op!=0){
         if(fork()==0)
             execlp("clear","clear",NULL);
@@ -266,10 +273,12 @@ int main(){
         printf("6- Dado um intervalo de meses determinar o total de vendas registadas e o total faturado\n");
         printf("\nEscolha uma query ou 0 para sair: ");
         scanf("%d",&op);
-        if (op==2) query2(catProd);
-        else if (op==3) query3();
-        else if (op==6) query6();
-        else if (op==4) query4();
+        if(op==1) {query1(catClientes, catProd);carregado=1;}
+        else if (op==2 && carregado) query2(catProd);
+        else if (op==3 && carregado) query3();
+        else if (op==4 && carregado) query4();
+        else if (op==6 && carregado) query6();
+        else if(!carregado && op) {printf("Precisa de carregar os ficheiros!\n"); getchar(); getchar();}
         else if(op!=0){
             printf("Ainda não está mas vai estar\n");
             getchar();
@@ -279,7 +288,7 @@ int main(){
     if(fork()==0)
             execlp("clear","clear",NULL);
     wait(&status);
-	return 1;
+    return 1;
 }
 
 

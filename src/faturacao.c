@@ -236,30 +236,30 @@ int contaNaoCompradosFilial(int filial){
 
 }
 
-/*
-nodo getNaoComprados(){
-    nodo NaoComprados;
-    return NaoComprados(NaoComprados, tabela[3][12]);
+
+nodo * naoComprados(nodo * nComprados, faturacaoProduto totais){
+    if(totais==NULL) return NULL;
+    infoP produto = totais->produto;
+    if(produto->qtdPromocao==0 && produto->qtdNormal==0){
+        if(nComprados==NULL){
+            nComprados=criaNodo(produto->produto,NULL);
+        }
+        else{
+            nComprados=insert(produto->produto, nComprados);
+        }
+    }
+    nComprados=naoComprados(nComprados, totais->esq);
+    nComprados=naoComprados(nComprados, totais->dir);
+    return nComprados;
 }
 
-nodo NaoComprados(nodo NaoComprados, faturacaoProduto totais){
-if(raiz==NULL) return NULL;
-nodo pai = NaoComprados;
-infoP produto = totais->produto;
-if(produto->qtdPromocao==0 && produto->qtdNormal==0){
-    if(NaoComprados==NULL){
-        NaoComprados=criaNodo(produto->produto,NULL);
-    }
-    else{
-        NaoComprados=insert(produto->produto, NaoComprados);
-    }
-}
-NaoComprados=NaoComprados(NaoComprados, totais->esq);
-NaoComprados=NaoComprados(NaoComprados, totais->dir);
-return pai;
+nodo * getNaoCompradosFilial(int filial){
+    nodo * nComprados=naoComprados(NULL, tabela[filial-1][12]);
+    return nComprados;
 }
 
-*/
+
+
 
 /*
 int getNaoComprados(){

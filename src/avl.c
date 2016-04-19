@@ -8,7 +8,6 @@
  * @param codigo
  * @return
  */
-
 nodo *search(nodo *raiz, char codigo[]){
     int cmp;
     if (raiz == NULL) return NULL;
@@ -138,14 +137,19 @@ int conta(nodo * raiz){
     return 1+conta(raiz->esq)+conta(raiz->dir);
 }
 
-void printInOrder(nodo * raiz){
-    if(raiz!=NULL){
-        printInOrder(raiz->esq);
-        printf("%s\n",raiz->codigo);
-        printInOrder(raiz->dir);
-    }
-}
 
+int printInOrder(nodo *raiz, int count){
+    if(raiz!=NULL){
+        count=printInOrder(raiz->esq,count);
+        count++;
+        if(count%PRINT_COLS==0 && count!=0) printf("%s \n", raiz->codigo);
+        else printf("%s \t\t", raiz->codigo);
+        if(count%(2*10*PRINT_COLS)
+            ==0 && count!=0){getch();}
+        count=printInOrder(raiz->dir, count);
+    }
+    return count;
+}
 
 
 /*

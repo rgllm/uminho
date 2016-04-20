@@ -38,7 +38,11 @@ void query1(CatClientes catClientes, CatProdutos catProd){
     FILE *fp;
     Produto prod;
     Cliente cliente;
+    char ficheiro_vendas[100];
 
+    printf("\nEspecifique o diretório do ficheiro vendas: ");
+    scanf("%s", ficheiro_vendas);
+    printf("\n");
 
     /*                 Leitura dos clientes                 */
     fp=fopen("files/Clientes.txt","r");
@@ -70,7 +74,7 @@ void query1(CatClientes catClientes, CatProdutos catProd){
 
     /*                 Leitura das vendas    */
 
-    fp = fopen( "files/Vendas1.txt", "r" );
+    fp = fopen(ficheiro_vendas, "r" );
     while (fgets(buffer, MAXBUFF,fp)!=NULL){
         strcpy(linha,buffer);
         produto=strtok(buffer," ");

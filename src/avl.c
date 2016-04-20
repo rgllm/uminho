@@ -162,71 +162,38 @@ int printInOrder(nodo *raiz, int count){
     return count;
 }
 
-/*
-char * AVLtoArray(nodo *raiz, int i){
-if(raiz!=NULL){
-    int count=conta(&raiz);
-    char ** array =(char)malloc(count*sizeof(char *));
-    AVLtoArray(raiz->esq,i);
-    array[i] = (char *)malloc(strlen(raiz->codigo)+1);
-    strcpy(array[i],raiz->codigo);
+
+int AddToArray(nodo * raiz, char * arr[], int i){
+    if(raiz == NULL)
+        return i;
+     
+    if(raiz->esq != NULL)
+        i = AddToArray(raiz->esq, arr, i);
+
+    arr[i] = strdup(raiz->codigo);
     i++;
-    AVLtoArray(raiz->dir,i);
-return array;
+    if(raiz->dir != NULL)
+        i = AddToArray(raiz->dir, arr, i);
+
+    return i;
 }
+
+
+char * AVLtoArray(nodo *raiz){
+    char * * array=malloc(conta(raiz)*sizeof(char *));
+    AddToArray(raiz,array,0);
+    return array;
 }
 
 void printPages (nodo *raiz){
-    int i, index, h = 0, total = 0, nelem = conta(&raiz), nrpag = nelem/40;
+    int i, index, h = 0, total = 0, nelem = conta(raiz), nrpag = nelem/40;
     char key = 'n';
     char ** array;
-    array=AVLtoArray(&raiz,0);
+    array=AVLtoArray(raiz);
 
-    if((nelem%40)) nrpag++;
-
-    while(key != '0'){
-        if(key == 'p'){
-            for(i = 0; i < 40; i++){
-                printf("|  %s  |\n", array[index]);
-                total++;
-                index++;
-            }
-            index=39;
-            h++;
-            printf("Página: %d de %d | Lidos: %d de %d |\n",h, nrpag, total, nelem);
-            printf("\'p\' para próximo, \'a\' para anterior, \'0\' para sair\n");
-        }
-
-        else if(key == 'a'){
-            if(total > 40){
-                if(total >= 80){
-                    for(i = 0; i < 80; i++){
-                   index--;
-                }
-                }
-                for(i = 0; i < 40; i++){
-                    printf("|  %s  |\n", array[index]);
-                    if(total >1) total--;
-                    index++;
-                }
-                if(h > 1){
-                    h--;
-                }
-            else {
-                if(total == 40) index=0;
-                for(i = 0; i < 40; i++){
-                    printf("|  %s  |\n", array[i]);
-                    total++;
-                    index++;
-                }
-            }
-            }
-            printf("Página: %d de %d | Lidos: %d de %d |\n",h, nrpag, total, nelem);
-            printf("\'n\' para próximo, \'p\' para anterior, \'q\' para sair\n");
-        }
-        key = getchar();
-    }
+    key=getchar();
+    if(key==0) return;
+    if(key==)
 
 }
 
-*/

@@ -105,7 +105,7 @@ getchar();
 
 void query2(CatProdutos catProd){
     char letra;
-    int indice,status,count;
+    int indice,status,count,i;
     if(fork()==0)
         execlp("clear","clear",NULL);
     wait(&status);
@@ -123,7 +123,7 @@ void query2(CatProdutos catProd){
     }
     indice=letra-65;
     printf("\n\nTotal de produtos: %d\n",totalProdutosLetra(catProd,letra));
-    count=printInOrder(getAVLProd(catProd,indice),0);
+    printPages(getAVLProd(catProd,indice));
     sleep(2);
     getchar();
     getchar();

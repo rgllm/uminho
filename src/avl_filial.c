@@ -1,27 +1,27 @@
-/* #include "avl_filial.h"
+#include "avl_filial.h"
 
-nodoFilial procura(nodoFilial raiz, char * codigo){
+nodoFilial procuraPFilial(nodoFilial raiz, char * codigo){
     int cmp;
     if (raiz == NULL) return NULL;
-    cmp=strcmp(codigo,raiz->key->codigo);
+    cmp=strcmp(codigo,raiz->produto->produto);
     if (cmp<0)
-        return procura(raiz->esq, codigo);
+        return procuraPFilial(raiz->esq, codigo);
     else if (cmp > 0)
-        return procura(raiz->dir, codigo);
+        return procuraPFilial(raiz->dir, codigo);
     else
         return raiz;
 }
 
-int alturaV(nodoFilial raiz){
+int alturaVFilial(nodoFilial raiz){
     if(raiz) return raiz->altura;
     return 0;
 }
 
-void ajustaAlturaV(nodoFilial raiz){
-    raiz->altura = 1 + max(alturaV(raiz->esq), alturaV(raiz->dir));
+void ajustaAlturaVFilial(nodoFilial raiz){
+    raiz->altura = 1 + max(alturaVFilial(raiz->esq), alturaVFilial(raiz->dir));
 }
 
-nodoFilial rodaDirV(nodoFilial raiz){
+nodoFilial rodaDirVFilial(nodoFilial raiz){
     nodoFilial new = raiz->esq;
     if (raiz->pai){
         if (raiz->pai->esq == raiz) raiz->pai->esq = new;
@@ -32,12 +32,12 @@ nodoFilial rodaDirV(nodoFilial raiz){
     raiz->esq = new->dir;
     if (raiz->esq) raiz->esq->pai = raiz;
     new->dir = raiz;
-    ajustaAlturaV(raiz);
-    ajustaAlturaV(new);
+    ajustaAlturaVFilial(raiz);
+    ajustaAlturaVFilial(new);
     return new;
 }
 
-nodoFilial rodaEsqV(nodoFilial raiz){
+nodoFilial rodaEsqVFilial(nodoFilial raiz){
 
     nodoFilial new = raiz->dir;
     if (raiz->pai){
@@ -49,19 +49,29 @@ nodoFilial rodaEsqV(nodoFilial raiz){
     raiz->dir = new->esq;
     if (raiz->dir) raiz->dir->pai = raiz;
     new->esq = raiz;
-    ajustaAlturaV(raiz);
-    ajustaAlturaV(new);
+    ajustaAlturaVFilial(raiz);
+    ajustaAlturaVFilial(new);
     return new;
 }
 
-void infoProdutoCopy(estruturaFilial p1,estruturaFilial p2){
-
+void infoFcopy(infoF p1,infoF p2){
+    int i;
+    p1->produto=strdup(p2->produto);
+    p1->nVendas=p2->nVendas;
+    p1->vendas=malloc(p1->nVendas*sizeof(struct venda));
+    for(i=0;i<p1->nVendas;i++){
+        p1->vendas[i].cliente=strdup(p2->vendas[i].cliente);
+        p1->vendas[i].qtd=p2->vendas[i].qtd;
+        p1->vendas[i].preco=p2->vendas[i].preco;
+        p1->vendas[i].tipo=p2->vendas[i].tipo;
+        p1->vendas[i].mes=p2->vendas[i].mes;
+    }
 }
 
-nodoFilial criaNodoFat(infoP produto, nodoFilial pai){
+nodoFilial criaNodoFilial(infoF produto, nodoFilial pai){
     struct nodoFilial *n = malloc(sizeof(struct nodoFilial));
-    n->produto=malloc(sizeof(struct infoProduto));
-    infoProdutoCopy(n->produto,produto);
+    n->produto=malloc(sizeof(struct infoF));
+    infoFcopy(n->produto,produto);
     n->pai = pai;
     n->altura = 1;
     n->esq = NULL;
@@ -69,10 +79,10 @@ nodoFilial criaNodoFat(infoP produto, nodoFilial pai){
     return n;
 }
 
-nodoFilial balanceV(nodoFilial raiz){
-    if (alturaV(raiz->esq) - alturaV(raiz->dir) > 1)
+nodoFilial balanceVFilial(nodoFilial raiz){
+    if (alturaVFilial(raiz->esq) - alturaVFilial(raiz->dir) > 1)
     {
-        if (alturaV(raiz->esq->esq) > alturaV(raiz->esq->dir)){
+        if (alturaVFilial(raiz->esq->esq) > alturaVFilial(raiz->esq->dir)){
             raiz = rodaDirV(raiz);
         }
         else{
@@ -80,32 +90,32 @@ nodoFilial balanceV(nodoFilial raiz){
             raiz = rodaDirV(raiz);
         }
     }
-    else if (alturaV(raiz->dir) - alturaV(raiz->esq) > 1){
-        if (alturaV(raiz->dir->dir) > alturaV(raiz->dir->esq)){
-            raiz = rodaEsqV(raiz);
+    else if (alturaVFilial(raiz->dir) - alturaVFilial(raiz->esq) > 1){
+        if (alturaVFilial(raiz->dir->dir) > alturaVFilial(raiz->dir->esq)){
+            raiz = rodaEsqVFilial(raiz);
         }
         else{
-            rodaDirV(raiz->dir);
-            raiz = rodaEsqV(raiz);
+            rodaDirVFilial(raiz->dir);
+            raiz = rodaEsqVFilial(raiz);
         }
     }
     return raiz;
 }
 
-nodoFilial insertNodoFat(infoP produto,nodoFilial raiz){
+nodoFilial insertNodoFilial(infoF produto,nodoFilial raiz){
     nodoFilial aux = raiz;
     while (strcmp(produto->produto,aux->produto->produto)){
         if (strcmp(produto->produto,aux->produto->produto)<0){
             if (aux->esq) aux = aux->esq;
             else{
-                aux->esq = criaNodoFat(produto, aux);
+                aux->esq = criaNodoFilial(produto, aux);
                 aux = aux->esq;
             }
         }
         else if (strcmp(produto->produto,aux->produto->produto)>0){
             if (aux->dir) aux = aux->dir;
             else{
-                aux->dir = criaNodoFat(produto, aux);
+                aux->dir = criaNodoFilial(produto, aux);
                 aux = aux->dir;
             }
         }
@@ -116,12 +126,12 @@ nodoFilial insertNodoFat(infoP produto,nodoFilial raiz){
     do {
 
         aux  = aux->pai;
-        ajustaAlturaV(aux);
-        aux = balanceV(aux);
+        ajustaAlturaVFilial(aux);
+        aux = balanceVFilial(aux);
 
     } while (aux->pai);
     return aux;
 }
 
-*/
+
 

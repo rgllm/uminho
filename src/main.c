@@ -8,6 +8,7 @@
 #include "produtos.h"
 #include "faturacao.h"
 #include "others.h"
+#include "filiais.h"
 #define MAXBUFF 64
 #include <unistd.h>
 
@@ -40,7 +41,7 @@ void query1(CatClientes catClientes, CatProdutos catProd){
     Cliente cliente;
     char ficheiro_vendas[100];
 
-    printf("\nEspecifique o diretório do ficheiro vendas: ");
+    printf("\nDiretório do ficheiro vendas: ");
     scanf("%s", ficheiro_vendas);
     printf("\n");
 
@@ -87,6 +88,7 @@ void query1(CatClientes catClientes, CatProdutos catProd){
 
         if(validaVenda(catClientes,catProd,produto,prec,qtd,np,cli,mes,fil)==0){
             prec=qtd*prec;
+            carregaVenda(produto,cli,qtd,np,mes,prec,fil);
             if(np=='N'){
                 aux=(infoP)criaInfoProduto(produto,qtd,0,prec,0);
                 registaFaturacaoProduto(aux, fil , mes );
@@ -217,7 +219,7 @@ void query4(){
     if (tipo==84||tipo==116){
         printf("Total: %d\n", contaNaoCompradosFilial(4));
         printNaoComprados(getTotalFilial(4),0);
-        printf("\n(Prima ENTER para voltar ao menu)\n");
+        printf("(Prima ENTER para voltar ao menu)\n");
         getchar();
         getchar();
         return;
@@ -227,8 +229,7 @@ void query4(){
         scanf(" %d", &filial);
         if(filial<1 || filial>3){printf("Filial inválida!\n");printf("(Prima ENTER para voltar ao menu)\n");getchar();getchar();return;}
         printf("Total filial %d: %d\n", filial, contaNaoCompradosFilial(filial));
-        printNaoComprados(getTotalFilial(filial),0);
-        printf("\n(Prima ENTER para voltar ao menu)\n");
+        printf("(Prima ENTER para voltar ao menu)\n");
         getchar();
         getchar();
         return;
@@ -268,6 +269,55 @@ void query6(){
     getchar();
     getchar();
 }
+
+
+void query7(catClientes clientes){
+    int filial, i;
+    char cliente;
+    if(fork()==0)
+        execlp("clear","clear",NULL);
+    wait(&status);
+    carregaArt("LOGO.txt");
+    printf("|-------------------------------------Query 7--------------------------------------------|\n\n");
+    
+   
+    for (i=0; i<26; i++)
+        return percorreClientes (clientes[i]->clientes);
+
+    }
+        printf("(Prima ENTER para voltar ao menu)\n");
+        getchar();
+        getchar();
+        return;
+    }
+  
+
+    }
+ 
+int percorreClientes (nodoClientes){
+    
+
+    if (constaFilial (cliente, filial1) && constaFilial (cliente, filial2) && constaFilial (cliente, filial3)){
+        printf("%c\n", clientes);
+
+}
+
+
+int constaFilial (char cliente, nodoFilial raiz){
+    int r=i=0;
+    if (raiz==NULL) return r;
+    else 
+        for(i=0, i<raiz->produto->nVendas,i++)
+            if(strcmp (raiz->produto->vendas[i].produto, cliente)==0){
+                r=1;
+                return r;
+                }
+            else
+                return (constaFilial (cliente, raiz->esq) || constaFilial (cliente, raiz->dir));
+}
+
+
+
 
 /*
 void query4(){

@@ -16,6 +16,8 @@ typedef struct nodo{
 
 #define PRINT_COLS 6
 
+
+
 int max ( int a, int b );
 nodo *search(nodo *raiz, char codigo[]);
 int altura(nodo *raiz);

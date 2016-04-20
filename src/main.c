@@ -271,8 +271,8 @@ void query6(){
 }
 
 
-void query7(catClientes clientes){
-    int filial, i;
+void query7(CatClientes clientes){
+    int status, i,count=0;
     char cliente;
     if(fork()==0)
         execlp("clear","clear",NULL);
@@ -282,40 +282,13 @@ void query7(catClientes clientes){
     
    
     for (i=0; i<26; i++)
-        return percorreClientes (clientes[i]->clientes);
+        count+=percorreClientes(getAVLCli(clientes,i));
+    printf("%d\n",count);
 
-    }
-        printf("(Prima ENTER para voltar ao menu)\n");
-        getchar();
-        getchar();
-        return;
-    }
-  
-
-    }
- 
-int percorreClientes (nodoClientes){
-    
-
-    if (constaFilial (cliente, filial1) && constaFilial (cliente, filial2) && constaFilial (cliente, filial3)){
-        printf("%c\n", clientes);
-
+    printf("(Prima ENTER para voltar ao menu)\n");
+    getchar();
+    getchar();
 }
-
-
-int constaFilial (char cliente, nodoFilial raiz){
-    int r=i=0;
-    if (raiz==NULL) return r;
-    else 
-        for(i=0, i<raiz->produto->nVendas,i++)
-            if(strcmp (raiz->produto->vendas[i].produto, cliente)==0){
-                r=1;
-                return r;
-                }
-            else
-                return (constaFilial (cliente, raiz->esq) || constaFilial (cliente, raiz->dir));
-}
-
 
 
 
@@ -350,6 +323,7 @@ int main(){
         else if (op==3 && carregado) query3();
         else if (op==4 && carregado) query4();
         else if (op==6 && carregado) query6();
+        else if (op==7 && carregado) query7(catClientes);
         else if(!carregado && op) {printf("Precisa de carregar os ficheiros!\n"); getchar(); getchar();}
         else if(op!=0){
             printf("Ainda não está mas vai estar\n");

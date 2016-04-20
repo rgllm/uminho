@@ -208,7 +208,7 @@ void printPages(nodo * raiz){
         else if(key == 'p'){
             if(index > 30){ 
                 system("clear");
-                if(h==nrpag) index-=30+nelem%30;
+                if(h==nrpag && nelem%30!=0) index-=30+nelem%30;
                 else index-=60;
 
                 for(i = 0; i < 30 && index<nelem; i++){

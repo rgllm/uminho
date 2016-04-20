@@ -1,5 +1,12 @@
 #include "avl_produtos.h"
 
+/**
+ * Dado uma árvore do tipo FaturacaoProduto e um código procura esse código na árvore.
+ * Retorna o apontador para o nodo caso exista e NULL caso não exista.
+ * @param raiz
+ * @param codigo
+ * @return
+ */
 nodoFaturacaoProduto searchProduto(nodoFaturacaoProduto raiz, char * produto){
     int cmp;
     if (raiz == NULL) return NULL;
@@ -12,15 +19,35 @@ nodoFaturacaoProduto searchProduto(nodoFaturacaoProduto raiz, char * produto){
         return raiz;
 }
 
+/**
+ * Dado uma árvore calcula a altura da árvore.
+ * Retorna um inteiro com a altura.
+ * @param raiz
+ * @return
+ */
 int alturaV(nodoFaturacaoProduto raiz){
     if(raiz) return raiz->altura;
     return 0;
 }
 
+/**
+ * Dado uma árvore e um código procura esse código na árvore.
+ * Retorna o apontador para o nodo caso exista e NULL caso não exista.
+ * @param raiz
+ * @param codigo
+ * @return
+ */
 void ajustaAlturaV(nodoFaturacaoProduto raiz){
     raiz->altura = 1 + max(alturaV(raiz->esq), alturaV(raiz->dir));
 }
 
+/**
+ * Dado uma árvore e um código procura esse código na árvore.
+ * Retorna o apontador para o nodo caso exista e NULL caso não exista.
+ * @param raiz
+ * @param codigo
+ * @return
+ */
 nodoFaturacaoProduto rodaDirV(nodoFaturacaoProduto raiz){
     nodoFaturacaoProduto new = raiz->esq;
     if (raiz->pai){
@@ -37,6 +64,13 @@ nodoFaturacaoProduto rodaDirV(nodoFaturacaoProduto raiz){
     return new;
 }
 
+/**
+ * Dado uma árvore e um código procura esse código na árvore.
+ * Retorna o apontador para o nodo caso exista e NULL caso não exista.
+ * @param raiz
+ * @param codigo
+ * @return
+ */
 nodoFaturacaoProduto rodaEsqV(nodoFaturacaoProduto raiz){
 
     nodoFaturacaoProduto new = raiz->dir;
@@ -55,7 +89,13 @@ nodoFaturacaoProduto rodaEsqV(nodoFaturacaoProduto raiz){
 }
 
 
-/*TESTADA*/
+/**
+ * Dado uma árvore e um código procura esse código na árvore.
+ * Retorna o apontador para o nodo caso exista e NULL caso não exista.
+ * @param raiz
+ * @param codigo
+ * @return
+ */
 void infoProdutoCopy(infoP p1,infoP p2){
     p1->qtdNormal=p2->qtdNormal;
     p1->qtdPromocao=p2->qtdPromocao;
@@ -64,7 +104,13 @@ void infoProdutoCopy(infoP p1,infoP p2){
     p1->produto=strdup(p2->produto);
 }
 
-/*TESTADA*/
+/**
+ * Dado uma árvore e um código procura esse código na árvore.
+ * Retorna o apontador para o nodo caso exista e NULL caso não exista.
+ * @param raiz
+ * @param codigo
+ * @return
+ */
 nodoFaturacaoProduto criaNodoFat(infoP produto, nodoFaturacaoProduto pai){
     struct nodoFaturacaoProduto *n = malloc(sizeof(struct nodoFaturacaoProduto));
     n->produto=malloc(sizeof(struct infoProduto));
@@ -76,6 +122,13 @@ nodoFaturacaoProduto criaNodoFat(infoP produto, nodoFaturacaoProduto pai){
     return n;
 }
 
+/**
+ * Dado uma árvore e um código procura esse código na árvore.
+ * Retorna o apontador para o nodo caso exista e NULL caso não exista.
+ * @param raiz
+ * @param codigo
+ * @return
+ */
 nodoFaturacaoProduto balanceV(nodoFaturacaoProduto raiz){
     if (alturaV(raiz->esq) - alturaV(raiz->dir) > 1)
     {
@@ -99,6 +152,13 @@ nodoFaturacaoProduto balanceV(nodoFaturacaoProduto raiz){
     return raiz;
 }
 
+/**
+ * Dado uma árvore e um código procura esse código na árvore.
+ * Retorna o apontador para o nodo caso exista e NULL caso não exista.
+ * @param raiz
+ * @param codigo
+ * @return
+ */
 nodoFaturacaoProduto insertNodoFat(infoP produto,nodoFaturacaoProduto raiz){
     nodoFaturacaoProduto aux = raiz;
     while (strcmp(produto->produto,aux->produto->produto)){

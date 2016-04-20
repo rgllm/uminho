@@ -54,18 +54,16 @@ infoP criaInfoProduto(char * produto,int qtdNormal,int qtdPromocao,double totalN
  * @return
  */
 void registaFaturacaoProduto(infoP produto,int filial,int mes){
-
-    nodoFaturacaoProduto aux;
-    if(tabela[filial-1][mes-1]==NULL)
-        tabela[filial-1][mes-1]=criaNodoFat(produto,NULL);
+    nodoFaturacaoProduto nodoProduto;
+    if(tabela[filial-1][mes-1]==NULL) tabela[filial-1][mes-1]=criaNodoFat(produto,NULL);
     else{
         tabela[filial-1][mes-1]=insertNodoFat(produto,tabela[filial-1][mes-1]);
-        aux=searchProduto(tabela[filial-1][mes-1],produto->produto);
-        if(aux->produto->qtdNormal!=produto->qtdNormal || aux->produto->qtdPromocao!=produto->qtdPromocao){
-            aux->produto->qtdNormal+=produto->qtdNormal;
-            aux->produto->qtdPromocao+=produto->qtdPromocao;
-            aux->produto->totalNormal+=produto->totalNormal;
-            aux->produto->totalPromocao+=produto->totalPromocao;
+        nodoProduto=searchProduto(tabela[filial-1][mes-1],produto->produto);
+        if(nodoProduto->produto->qtdNormal!=produto->qtdNormal || nodoProduto->produto->qtdPromocao!=produto->qtdPromocao){
+            nodoProduto->produto->qtdNormal+=produto->qtdNormal;
+            nodoProduto->produto->qtdPromocao+=produto->qtdPromocao;
+            nodoProduto->produto->totalNormal+=produto->totalNormal;
+            nodoProduto->produto->totalPromocao+=produto->totalPromocao;
         }
     }
 
@@ -73,12 +71,12 @@ void registaFaturacaoProduto(infoP produto,int filial,int mes){
         tabela[3][mes-1]=criaNodoFat(produto,NULL);
     else{
         tabela[3][mes-1]=insertNodoFat(produto,tabela[3][mes-1]);
-        aux=searchProduto(tabela[3][mes-1],produto->produto);
-        if(aux->produto->totalNormal!=produto->totalNormal || aux->produto->totalPromocao!=produto->totalPromocao ){
-            aux->produto->qtdNormal+=produto->qtdNormal;
-            aux->produto->qtdPromocao+=produto->qtdPromocao;
-            aux->produto->totalNormal+=produto->totalNormal;
-            aux->produto->totalPromocao+=produto->totalPromocao;
+        nodoProduto=searchProduto(tabela[3][mes-1],produto->produto);
+        if(nodoProduto->produto->totalNormal!=produto->totalNormal || nodoProduto->produto->totalPromocao!=produto->totalPromocao ){
+            nodoProduto->produto->qtdNormal+=produto->qtdNormal;
+            nodoProduto->produto->qtdPromocao+=produto->qtdPromocao;
+            nodoProduto->produto->totalNormal+=produto->totalNormal;
+            nodoProduto->produto->totalPromocao+=produto->totalPromocao;
         }
     }
 
@@ -86,12 +84,12 @@ void registaFaturacaoProduto(infoP produto,int filial,int mes){
         tabela[filial-1][12]=criaNodoFat(produto,NULL);
     else{
         tabela[filial-1][12]=insertNodoFat(produto,tabela[filial-1][12]);
-        aux=searchProduto(tabela[filial-1][12],produto->produto);
-        if(aux->produto->qtdNormal!=produto->qtdNormal || aux->produto->qtdPromocao!=produto->qtdPromocao){
-            aux->produto->qtdNormal+=produto->qtdNormal;
-            aux->produto->qtdPromocao+=produto->qtdPromocao;
-            aux->produto->totalNormal+=produto->totalNormal;
-            aux->produto->totalPromocao+=produto->totalPromocao;
+        nodoProduto=searchProduto(tabela[filial-1][12],produto->produto);
+        if(nodoProduto->produto->qtdNormal!=produto->qtdNormal || nodoProduto->produto->qtdPromocao!=produto->qtdPromocao){
+            nodoProduto->produto->qtdNormal+=produto->qtdNormal;
+            nodoProduto->produto->qtdPromocao+=produto->qtdPromocao;
+            nodoProduto->produto->totalNormal+=produto->totalNormal;
+            nodoProduto->produto->totalPromocao+=produto->totalPromocao;
         }
     }
 
@@ -99,12 +97,12 @@ void registaFaturacaoProduto(infoP produto,int filial,int mes){
         tabela[3][12]=criaNodoFat(produto,NULL);
     else{
         tabela[3][12]=insertNodoFat(produto,tabela[3][12]);
-        aux=searchProduto(tabela[3][12],produto->produto);
-        if(aux->produto->qtdNormal!=produto->qtdNormal || aux->produto->qtdPromocao!=produto->qtdPromocao){
-            aux->produto->qtdNormal+=produto->qtdNormal;
-            aux->produto->qtdPromocao+=produto->qtdPromocao;
-            aux->produto->totalNormal+=produto->totalNormal;
-            aux->produto->totalPromocao+=produto->totalPromocao;
+        nodoProduto=searchProduto(tabela[3][12],produto->produto);
+        if(nodoProduto->produto->qtdNormal!=produto->qtdNormal || nodoProduto->produto->qtdPromocao!=produto->qtdPromocao){
+            nodoProduto->produto->qtdNormal+=produto->qtdNormal;
+            nodoProduto->produto->qtdPromocao+=produto->qtdPromocao;
+            nodoProduto->produto->totalNormal+=produto->totalNormal;
+            nodoProduto->produto->totalPromocao+=produto->totalPromocao;
         }
     }
 }
@@ -133,11 +131,11 @@ void carregaProduto(infoP produto){
  * @return
  */
 double getTotalFaturadoMes(int mes,char * produto){
-    infoP aux;
+    infoP nodoProduto;
     faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
     if(nodo==NULL) return -1;
-    aux= nodo->produto;
-    return aux->totalNormal + aux->totalPromocao;
+    nodoProduto= nodo->produto;
+    return nodoProduto->totalNormal + nodoProduto->totalPromocao;
 
 }
 
@@ -148,11 +146,11 @@ double getTotalFaturadoMes(int mes,char * produto){
  * @return
  */
 double getTotalFaturadoMesN(int mes,char * produto){
-    infoP aux;
+    infoP nodoProduto;
     faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
     if(nodo==NULL) return -1;
-    aux= nodo->produto;
-    return aux->totalNormal;
+    nodoProduto= nodo->produto;
+    return nodoProduto->totalNormal;
 }
 
 /**
@@ -164,11 +162,11 @@ double getTotalFaturadoMesN(int mes,char * produto){
  * @return
  */
 double getTotalFaturadoMesN_filial(int mes,char * produto,int filial){
-    infoP aux;
+    infoP nodoProduto;
     faturacaoProduto nodo=searchProduto(tabela[filial-1][mes-1],produto);
     if(nodo==NULL) return -1;
-    aux= nodo->produto;
-    return aux->totalNormal;
+    nodoProduto= nodo->produto;
+    return nodoProduto->totalNormal;
 }
 
 /**
@@ -178,11 +176,11 @@ double getTotalFaturadoMesN_filial(int mes,char * produto,int filial){
  * @return
  */
 double getTotalFaturadoMesP(int mes,char * produto){
-    infoP aux;
+    infoP nodoProduto;
     faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
     if(nodo==NULL) return -1;
-    aux= nodo->produto;
-    return aux->totalPromocao;
+    nodoProduto= nodo->produto;
+    return nodoProduto->totalPromocao;
 }
 
 /**
@@ -194,11 +192,11 @@ double getTotalFaturadoMesP(int mes,char * produto){
  * @return
  */
 double getTotalFaturadoMesP_filial(int mes,char * produto, int filial){
-    infoP aux;
+    infoP nodoProduto;
     faturacaoProduto nodo=searchProduto(tabela[filial-1][mes-1],produto);
     if(nodo==NULL) return -1;
-    aux= nodo->produto;
-    return aux->totalPromocao;
+    nodoProduto= nodo->produto;
+    return nodoProduto->totalPromocao;
 }
 
 /**
@@ -208,11 +206,11 @@ double getTotalFaturadoMesP_filial(int mes,char * produto, int filial){
  * @return
  */
 int getTotalVendasMes(int mes,char * produto){
-    infoP aux;
+    infoP nodoProduto;
     faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
     if(nodo==NULL) return -1;
-    aux = nodo->produto;
-    return aux->qtdNormal + aux->qtdPromocao;
+    nodoProduto = nodo->produto;
+    return nodoProduto->qtdNormal + nodoProduto->qtdPromocao;
 
 }
 
@@ -223,11 +221,11 @@ int getTotalVendasMes(int mes,char * produto){
  * @return
  */
 int getTotalVendasMesN(int mes,char * produto){
-    infoP aux;
+    infoP nodoProduto;
     faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
     if(nodo==NULL) return -1;
-    aux = nodo->produto;
-    return aux->qtdNormal;
+    nodoProduto = nodo->produto;
+    return nodoProduto->qtdNormal;
 
 }
 
@@ -240,11 +238,11 @@ int getTotalVendasMesN(int mes,char * produto){
  * @return
  */
 int getTotalVendasMesN_filial(int mes,char * produto, int filial){
-    infoP aux;
+    infoP nodoProduto;
     faturacaoProduto nodo=searchProduto(tabela[filial-1][mes-1],produto);
     if(nodo==NULL) return -1;
-    aux = nodo->produto;
-    return aux->qtdNormal;
+    nodoProduto = nodo->produto;
+    return nodoProduto->qtdNormal;
 
 }
 
@@ -255,11 +253,11 @@ int getTotalVendasMesN_filial(int mes,char * produto, int filial){
  * @return
  */
 int getTotalVendasMesP(int mes,char * produto){
-    infoP aux;
+    infoP nodoProduto;
     faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
     if(nodo==NULL) return -1;
-    aux = nodo->produto;
-    return aux->qtdPromocao;
+    nodoProduto = nodo->produto;
+    return nodoProduto->qtdPromocao;
 
 }
 
@@ -272,16 +270,16 @@ int getTotalVendasMesP(int mes,char * produto){
  * @return
  */
 int getTotalVendasMesP_filial(int mes,char * produto, int filial){
-    infoP aux;
+    infoP nodoProduto;
     faturacaoProduto nodo=searchProduto(tabela[filial-1][mes-1],produto);
     if(nodo==NULL) return -1;
-    aux = nodo->produto;
-    return aux->qtdPromocao;
+    nodoProduto = nodo->produto;
+    return nodoProduto->qtdPromocao;
 }
 
 /**
  * Dado a árvore do respetivo mes/total e respetiva filial/total retorna o total faturado em todos os produtos.
- * Função auxiliar da função contaTotalFaturado.
+ * Função nodoProdutoiliar da função contaTotalFaturado.
  * @param raiz
  * @return
  */
@@ -313,7 +311,7 @@ return totFat;
 
 /**
  * Dado a árvore do respetivo mes/total e respetiva filial/total retorna o total de vendas em todas as filiais.
- * Função auxiliar da função contaTotalVendas.
+ * Função nodoProdutoiliar da função contaTotalVendas.
  * @param raiz
  * @return
  */
@@ -348,11 +346,11 @@ return totVendas;
  * @return
  */
 int contaNaoComprados(nodoFaturacaoProduto raiz){
-    infoP aux;
+    infoP nodoProduto;
     if(raiz==NULL)
         return 0;
-    aux = raiz->produto;
-    if(aux->qtdNormal == 0 && aux->qtdPromocao == 0)return 1+contaNaoComprados(raiz->esq)+contaNaoComprados(raiz->dir);
+    nodoProduto = raiz->produto;
+    if(nodoProduto->qtdNormal == 0 && nodoProduto->qtdPromocao == 0)return 1+contaNaoComprados(raiz->esq)+contaNaoComprados(raiz->dir);
     else return contaNaoComprados(raiz->esq)+contaNaoComprados(raiz->dir);
 }
 
@@ -402,7 +400,6 @@ nodo * getNaoCompradosFilial(int filial){
 
 
 
-
 /*
 int getNaoComprados(){
     return contaNaoComprados(tabela[3][12]);
@@ -428,9 +425,6 @@ int contaNaoComprados(faturacaoProduto raiz){
         *totVendas=aux->qtdNormal+aux->qtdPromocao;
     }
 }*/
-
-
-
 
 
 

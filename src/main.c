@@ -213,7 +213,7 @@ void query4(){
     if (tipo==84||tipo==116){
         printf("Total: %d\n", contaNaoCompradosFilial(4));
         printNaoComprados(getTotalFilial(4),0);
-        printf("(Prima ENTER para voltar ao menu)\n");
+        printf("\n(Prima ENTER para voltar ao menu)\n");
         getchar();
         getchar();
         return;
@@ -223,7 +223,8 @@ void query4(){
         scanf(" %d", &filial);
         if(filial<1 || filial>3){printf("Filial inválida!\n");printf("(Prima ENTER para voltar ao menu)\n");getchar();getchar();return;}
         printf("Total filial %d: %d\n", filial, contaNaoCompradosFilial(filial));
-        printf("(Prima ENTER para voltar ao menu)\n");
+        printNaoComprados(getTotalFilial(filial),0);
+        printf("\n(Prima ENTER para voltar ao menu)\n");
         getchar();
         getchar();
         return;

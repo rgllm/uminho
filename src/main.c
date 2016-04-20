@@ -100,7 +100,6 @@ printf("Vendas carregadas!\n");
 printf("(Prima ENTER para voltar ao menu)\n");
 getchar();
 getchar();
-
 }
 
 void query2(CatProdutos catProd){
@@ -124,7 +123,6 @@ void query2(CatProdutos catProd){
     indice=letra-65;
     printf("\n\nTotal de produtos: %d\n",totalProdutosLetra(catProd,letra));
     printPages(getAVLProd(catProd,indice));
-    sleep(2);
     getchar();
     getchar();
 }
@@ -214,6 +212,7 @@ void query4(){
     scanf(" %c", &tipo);
     if (tipo==84||tipo==116){
         printf("Total: %d\n", contaNaoCompradosFilial(4));
+        printNaoComprados(getTotalFilial(4),0);
         printf("(Prima ENTER para voltar ao menu)\n");
         getchar();
         getchar();

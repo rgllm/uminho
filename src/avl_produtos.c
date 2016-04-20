@@ -190,5 +190,19 @@ nodoFaturacaoProduto insertNodoFat(infoP produto,nodoFaturacaoProduto raiz){
     return aux;
 }
 
+int printNaoComprados(nodoFaturacaoProduto raiz, int count){
+    if(raiz!=NULL && raiz->produto->qtdNormal==0 && raiz->produto->qtdPromocao==0){
+        count=printInOrder(raiz->esq,count);
+        count++;
+        if(count%PRINT_COLS==0 && count!=0) printf("%s \n", raiz->produto->produto);
+        else printf("%s \t\t", raiz->produto->produto);
+        if(count%(2*10*PRINT_COLS)
+            ==0 && count!=0){getch();}
+        count=printInOrder(raiz->dir, count);
+    }
+    return count;
+}
+
+
 
 

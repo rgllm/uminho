@@ -163,6 +163,7 @@ int printInOrder(nodo *raiz, int count){
 }
 
 
+
 int AddToArray(nodo * raiz, char * arr[], int i){
     if(raiz == NULL)
         return i;
@@ -185,15 +186,42 @@ char * AVLtoArray(nodo *raiz){
     return array;
 }
 
-void printPages (nodo *raiz){
-    int i, index, h = 0, total = 0, nelem = conta(raiz), nrpag = nelem/40;
+void printPages(nodo * raiz){
+    int i,index=0, h = 0, nelem = conta(raiz), nrpag = nelem/30;
     char key = 'n';
-    char ** array;
-    array=AVLtoArray(raiz);
+    char * * lista=AVLtoArray(raiz);
 
-    key=getchar();
-    if(key==0) return;
-    if(key==)
+    if((nelem%30)) nrpag++;
+    
+    while(key != 'q'){
+        if(key == 'n'){
+            system("clear");
+            for(i = 0; i < 30 && index<nelem; i++){
+                printf("|  %s  |\n", lista[index]);
+                index++;
+
+            }
+            h++;
+            printf("Página: %d de %d | Lidos: %d de %d |\n",h, nrpag, index, nelem);
+            printf("\'n\' para próximo, \'p\' para anterior, \'q\' para sair\n");
+        }
+        else if(key == 'p'){
+            if(index > 30){ 
+                system("clear");
+                if(h==nrpag) index-=30+nelem%30;
+                else index-=60;
+
+                for(i = 0; i < 30 && index<nelem; i++){
+                    printf("|  %s  |\n", lista[index]);
+                    index++;
+                }
+                h--;   
+            }
+            printf("Página: %d de %d | Lidos: %d de %d |\n",h, nrpag, index, nelem);
+            printf("\'n\' para próximo, \'p\' para anterior, \'q\' para sair\n");
+        }
+        key = getchar();
+        if(key=='n' && h==nrpag) return;
+    }
 
 }
-

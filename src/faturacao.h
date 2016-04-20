@@ -40,4 +40,6 @@ int getTotalVendasMesN_filial(int mes,char * produto, int filial);
 int getTotalVendasMesP_filial(int mes,char * produto, int filial);
 double getTotalFaturadoMesP(int mes,char * produto);
 int contaNaoCompradosFilial(int filial);
+faturacaoProduto getTotalFilial(int filial);
+
 

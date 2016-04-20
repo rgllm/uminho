@@ -398,7 +398,9 @@ nodo * getNaoCompradosFilial(int filial){
     return nComprados;
 }
 
-
+faturacaoProduto getTotalFilial(int filial){
+    return tabela[filial-1][12];
+}
 
 /*
 int getNaoComprados(){

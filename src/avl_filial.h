@@ -7,7 +7,7 @@
 #endif
 #ifndef INFOF
 typedef struct venda{
-    char * cliente;
+    char * produto;
     int qtd;
     double preco;
     char tipo;
@@ -15,7 +15,7 @@ typedef struct venda{
 }venda;
 
 typedef struct infoF{
-    char * produto;
+    char * cliente;
     venda * vendas;
     int nVendas;
 }* infoF;
@@ -26,7 +26,7 @@ typedef struct infoF{
 
 
 typedef struct nodoFilial{
-    infoF produto;
+    infoF cliente;
     struct nodoFilial *esq;
     struct nodoFilial *dir;
     struct nodoFilial *pai;

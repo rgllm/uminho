@@ -3,7 +3,7 @@
 nodoFilial procuraPFilial(nodoFilial raiz, char * codigo){
     int cmp;
     if (raiz == NULL) return NULL;
-    cmp=strcmp(codigo,raiz->produto->produto);
+    cmp=strcmp(codigo,raiz->cliente->cliente);
     if (cmp<0)
         return procuraPFilial(raiz->esq, codigo);
     else if (cmp > 0)
@@ -56,11 +56,11 @@ nodoFilial rodaEsqVFilial(nodoFilial raiz){
 
 void infoFcopy(infoF p1,infoF p2){
     int i;
-    p1->produto=strdup(p2->produto);
+    p1->cliente=strdup(p2->cliente);
     p1->nVendas=p2->nVendas;
     p1->vendas=malloc(p1->nVendas*sizeof(struct venda));
     for(i=0;i<p1->nVendas;i++){
-        p1->vendas[i].cliente=strdup(p2->vendas[i].cliente);
+        p1->vendas[i].produto=strdup(p2->vendas[i].produto);
         p1->vendas[i].qtd=p2->vendas[i].qtd;
         p1->vendas[i].preco=p2->vendas[i].preco;
         p1->vendas[i].tipo=p2->vendas[i].tipo;
@@ -68,10 +68,10 @@ void infoFcopy(infoF p1,infoF p2){
     }
 }
 
-nodoFilial criaNodoFilial(infoF produto, nodoFilial pai){
+nodoFilial criaNodoFilial(infoF cliente, nodoFilial pai){
     struct nodoFilial *n = malloc(sizeof(struct nodoFilial));
-    n->produto=malloc(sizeof(struct infoF));
-    infoFcopy(n->produto,produto);
+    n->cliente=malloc(sizeof(struct infoF));
+    infoFcopy(n->cliente,cliente);
     n->pai = pai;
     n->altura = 1;
     n->esq = NULL;
@@ -102,26 +102,26 @@ nodoFilial balanceVFilial(nodoFilial raiz){
     return raiz;
 }
 
-nodoFilial insertNodoFilial(infoF produto,nodoFilial raiz){
+nodoFilial insertNodoFilial(infoF cliente,nodoFilial raiz){
     nodoFilial aux = raiz;
-    while (strcmp(produto->produto,aux->produto->produto)){
-        if (strcmp(produto->produto,aux->produto->produto)<0){
+    while (strcmp(cliente->cliente,aux->cliente->cliente)){
+        if (strcmp(cliente->cliente,aux->cliente->cliente)<0){
             if (aux->esq) aux = aux->esq;
             else{
-                aux->esq = criaNodoFilial(produto, aux);
+                aux->esq = criaNodoFilial(cliente, aux);
                 aux = aux->esq;
             }
         }
-        else if (strcmp(produto->produto,aux->produto->produto)>0){
+        else if (strcmp(cliente->cliente,aux->cliente->cliente)>0){
             if (aux->dir) aux = aux->dir;
             else{
-                aux->dir = criaNodoFilial(produto, aux);
+                aux->dir = criaNodoFilial(cliente, aux);
                 aux = aux->dir;
             }
         }
         else return raiz;
     }
-    if(strcmp(produto->produto,aux->produto->produto)==0)
+    if(strcmp(cliente->cliente,aux->cliente->cliente)==0)
         return raiz;
     do {
 
@@ -132,6 +132,4 @@ nodoFilial insertNodoFilial(infoF produto,nodoFilial raiz){
     } while (aux->pai);
     return aux;
 }
-
-
 

@@ -1,0 +1,69 @@
+
+
+1 - forks na main
+2 - query4
+3 - variável global faturacao
+4 - verificação query 2 (maiuscula ou minuscula)
+5-  carregamento
+
+
+6 - documentação produto
+7 - documentação avl
+8 - documentação cliente
+
+
+
+void query9(char cliente, int mes){
+    int i, j;
+    if(fork()==0)
+        execlp("clear","clear",NULL);
+    wait(&status);
+    carregaArt("LOGO.txt");
+    printf("|-------------------------------------Query 9--------------------------------------------|\n\n");
+    
+
+    char * produto[];
+    int * qtd[];
+    int t=0;
+        
+    t=carregaCompra (1, cliente, mes, produto, quant, t);
+    t=carregaCompra (2, cliente, mes, produto, quant, t);
+    t=carregaCompra (3, cliente, mes, produto, quant, t);
+
+    for (i=0; i<t; i++)
+        printf("%s\n", produto[i]);
+        printf("(Prima ENTER para voltar ao menu)\n");
+        getchar();
+        getchar();
+        return;
+    }
+  
+
+int carregaCompra (int filial, char * cliente, int mes, char * produto, int quant, int t){
+    int i;
+
+    if (filial ==1) nodo=filial1;
+    if (filial ==2) nodo=filial2;
+    if (filial ==3) nodo=filial3;
+
+    if (nodo==NULL) return;
+    if (procuraPFilial(nodo, cliente)!=NULL)
+        for (i=0; i<nodo->cliente->nVendas; i++)
+            if (nodo->cliente->vendas[i].mes==mes)
+                t=carregaProduto (nodo->cliente->vendas[i].produto, nodo->cliente->vendas[i].qtd, produto, quant, t);
+}
+
+
+int carregaProduto (char * prod, int qtd, char * produto, int * quant, int t){
+    int i;
+
+    for (i=0, i<t, i++)
+        if (strcmp(produto[i], produto)==0)
+            quant[i]+=qtd;
+
+        if (i==t) {
+            quant[i]=qtd;
+            produto[i]=strdup(prod);
+            t++;
+        }
+}

@@ -1,8 +1,13 @@
 #include "avl_filial.h"
+#ifndef AVL
+#include "avl.h"
+#define AVL
+#endif
+
 
 #ifndef INFOF
 typedef struct venda{
-    char * cliente;
+    char * produto;
     int qtd;
     double preco;
     char tipo;
@@ -10,7 +15,7 @@ typedef struct venda{
 }venda;
 
 typedef struct infoF{
-    char * produto;
+    char * cliente;
     venda * vendas;
     int nVendas;
 }* infoF;
@@ -21,4 +26,5 @@ typedef struct infoF{
 
 
 void initfiliais();
-void carregaVenda(char * produto, char * cliente, int qtd, char tipo, int mes, double preco,int filial);
+void carregaVenda(char * cliente, char * produto, int qtd, char tipo, int mes, double preco,int filial);
+int percorreClientes();

@@ -33,12 +33,13 @@ typedef struct nodoFilial{
     int altura;
 } *nodoFilial;
 
+
 nodoFilial procuraPFilial(nodoFilial raiz, char * codigo);
 int alturaVFilial(nodoFilial raiz);
 void ajustaAlturaVFilial(nodoFilial raiz);
 nodoFilial rodaDirVFilial(nodoFilial raiz);
 nodoFilial rodaEsqVFilial(nodoFilial raiz);
 void infoFcopy(infoF p1,infoF p2);
-nodoFilial criaNodoFilial(infoF produto, nodoFilial pai);
+nodoFilial criaNodoFilial(infoF cliente, nodoFilial pai);
 nodoFilial balanceVFilial(nodoFilial raiz);
-nodoFilial insertNodoFilial(infoF produto,nodoFilial raiz);
+nodoFilial insertNodoFilial(infoF cliente,nodoFilial raiz);

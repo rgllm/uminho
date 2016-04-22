@@ -7,7 +7,7 @@
  * @param codigo
  * @return
  */
-nodo *search(nodo *raiz, char codigo[]){
+nodo * search(nodo *raiz, char codigo[]){
     int cmp;
     if (raiz == NULL) return NULL;
     cmp=strcmp(codigo,raiz->codigo);
@@ -19,7 +19,7 @@ nodo *search(nodo *raiz, char codigo[]){
         return raiz;
 }
 
-int max ( int a, int b ){
+int max( int a, int b ){
     return a > b ? a : b;
 }
 
@@ -32,7 +32,7 @@ void ajustaAltura(nodo *raiz){
     raiz->altura = 1 + max(altura(raiz->esq), altura(raiz->dir));
 }
 
-nodo *rodaDir(nodo *raiz){
+nodo * rodaDir(nodo *raiz){
     nodo *new = raiz->esq;
     if (raiz->pai)
     {
@@ -50,7 +50,7 @@ nodo *rodaDir(nodo *raiz){
     return new;
 }
 
-nodo *rodaEsq(nodo *raiz){
+nodo * rodaEsq(nodo *raiz){
 
     nodo *new = raiz->dir;
     if (raiz->pai)
@@ -69,7 +69,7 @@ nodo *rodaEsq(nodo *raiz){
     return new;
 }
 
-nodo *criaNodo(char codigo[], nodo *pai){
+nodo * criaNodo(char codigo[], nodo *pai){
     nodo *n = malloc(sizeof(nodo));
     n->codigo = strdup(codigo);
     n->pai = pai;
@@ -79,7 +79,7 @@ nodo *criaNodo(char codigo[], nodo *pai){
     return n;
 }
 
-nodo *balance(nodo *raiz){
+nodo * balance(nodo *raiz){
     if (altura(raiz->esq) - altura(raiz->dir) > 1){
         if (altura(raiz->esq->esq) > altura(raiz->esq->dir)){
             raiz = rodaDir(raiz);
@@ -101,7 +101,7 @@ nodo *balance(nodo *raiz){
     return raiz;
 }
 
-nodo *insert(char codigo[],nodo *raiz){
+nodo * insert(char codigo[],nodo *raiz){
     nodo *aux = raiz;
     while (strcmp(codigo,aux->codigo)){
         if (strcmp(codigo,aux->codigo)<0){
@@ -180,7 +180,7 @@ int AddToArray(nodo * raiz, char * arr[], int i){
 }
 
 
-char * AVLtoArray(nodo *raiz){
+char * * AVLtoArray(nodo *raiz){
     char * * array=malloc(conta(raiz)*sizeof(char *));
     AddToArray(raiz,array,0);
     return array;
@@ -188,13 +188,13 @@ char * AVLtoArray(nodo *raiz){
 
 void printPages(nodo * raiz){
     int i,index=0, h = 0, nelem = conta(raiz), nrpag = nelem/30;
-    char key = 'n';
+    char key = '+';
     char * * lista=AVLtoArray(raiz);
 
     if((nelem%30)) nrpag++;
 
     while(key != 'q'){
-        if(key == 'n'){
+        if(key == '+'){
             system("clear");
             for(i = 0; i < 30 && index<nelem; i++){
                 printf("|  %s  |\n", lista[index]);
@@ -203,9 +203,9 @@ void printPages(nodo * raiz){
             }
             h++;
             printf("Página: %d de %d | Lidos: %d de %d |\n",h, nrpag, index, nelem);
-            printf("\'n\' para próximo, \'p\' para anterior, \'q\' para sair\n");
+            printf("\'+\' para próximo, \'-\' para anterior, \'q\' para sair\n");
         }
-        else if(key == 'p'){
+        else if(key == '-'){
             if(index > 30){
                 system("clear");
                 if(h==nrpag && nelem%30!=0) index-=30+nelem%30;
@@ -218,10 +218,15 @@ void printPages(nodo * raiz){
                 h--;
             }
             printf("Página: %d de %d | Lidos: %d de %d |\n",h, nrpag, index, nelem);
-            printf("\'n\' para próximo, \'p\' para anterior, \'q\' para sair\n");
+            printf("\'+\' para próximo, \'-\' para anterior, \'q\' para sair\n");
         }
         key = getchar();
-        if(key=='n' && h==nrpag) return;
+        if(key=='+' && h==nrpag){sleep(1);return;}
     }
 
+}
+
+int size(nodo * raiz){
+    if(raiz==NULL) return 0;
+    else return (1 + size(raiz->esq) + size(raiz->dir));
 }

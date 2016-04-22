@@ -93,11 +93,11 @@ void query1(CatClientes catClientes, CatProdutos catProd){
             carregaVenda(cli,produto,qtd,np,mes,prec,fil);
             prec=qtd*prec;
             if(np=='N'){
-                aux=(infoF)criaInfoProduto(produto,qtd,0,prec,0);
+                aux=(infoP)criaInfoProduto(produto,qtd,0,prec,0);
                 registaFaturacaoProduto(aux, fil , mes );
             }
             else {
-                aux=(infoF)criaInfoProduto(produto,0,qtd,0,prec);
+                aux=(infoP)criaInfoProduto(produto,0,qtd,0,prec);
                 registaFaturacaoProduto(aux , fil , mes);
             }
         }
@@ -113,10 +113,8 @@ getchar();
 
 void query2(CatProdutos catProd){
     char letra;
-    int indice,status;
-    if(fork()==0)
-        execlp("clear","clear",NULL);
-    wait(&status);
+    int indice;
+    system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 2--------------------------------------------|\n\n");
     printf("Letra: ");
@@ -137,12 +135,10 @@ void query2(CatProdutos catProd){
 }
 
 void query3(){
-    int mes,totalVendasN, totalVendasP, status, filial, totalVendasNF, totalVendasPF;
+    int mes,totalVendasN, totalVendasP, filial, totalVendasNF, totalVendasPF;
     double totalFaturadoN,totalFaturadoP,totalFaturadoNF,totalFaturadoPF;
     char produto[10],tipo;
-    if(fork()==0)
-        execlp("clear","clear",NULL);
-    wait(&status);
+    system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 3--------------------------------------------|\n\n");
     printf("Mês: ");
@@ -209,11 +205,9 @@ void query3(){
 
 
 void query4(){
-    int filial, status;
+    int filial;
     char tipo;
-    if(fork()==0)
-        execlp("clear","clear",NULL);
-    wait(&status);
+    system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 4--------------------------------------------|\n\n");
     printf("Apresentar resultado total ou por filial? (T ou F): ");
@@ -245,11 +239,9 @@ void query4(){
 }
 
 void query5(){
-    int i, j,status;
+    int i, j;
     char cliente[10];
-    if(fork()==0)
-      execlp("clear","clear",NULL);
-    wait(&status);
+    system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 5--------------------------------------------|\n\n");
 
@@ -281,11 +273,9 @@ void query5(){
 
 
 void query6(){
-    int mesI, mesF,totalVendas=0,status;
+    int mesI, mesF,totalVendas=0;
     double totalFaturado=0;
-    if(fork()==0)
-        execlp("clear","clear",NULL);
-    wait(&status);
+    system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 6--------------------------------------------|\n\n");
     printf("Mês inicial: ");
@@ -309,31 +299,63 @@ void query6(){
 }
 
 
-/*void query7(){
-    int status, i,count=0;
-    nodo *clientesFiliais;
-    char cliente;
-    if(fork()==0)
-        execlp("clear","clear",NULL);
-    wait(&status);
+void query7(){
+    int i,count=0;
+    system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 7--------------------------------------------|\n\n");
-    printf("TOTAL: %d\n", existeCliente(clientesFiliais),0);
-    printInOrder(clientesFiliais, 0);
+
+    printPages(compraramTodasFiliais());
+    
     printf("(Prima ENTER para voltar ao menu)\n");
     getchar();
     getchar();
-} */
+} 
+
+
+
+void query8(){
+int i,t,filial;
+char prod[10];
+char * * clientes;
+char * tipo;
+system("clear");
+carregaArt("LOGO.txt");
+printf("|-------------------------------------Query 8--------------------------------------------|\n\n");
+
+
+printf("Produto: ");
+scanf("%s",prod);
+
+printf("Filial: ");
+scanf("%d",&filial);
+if(filial<1 || filial >3){
+    printf("Filial inválida!\n");
+    printf("(Prima ENTER para voltar ao menu)\n");
+    getchar();
+    getchar();
+    return;
+}    
+    
+t=determinaClientes(getFilial(filial), prod, &clientes, &tipo, 0);
+
+for (i=0; i<t; i++)
+    printf("%s %c\n", clientes[i],tipo[i]);
+printf("(Prima ENTER para voltar ao menu)\n");
+getchar();
+getchar();
+return;
+}
+
+
 
 
 
 
 void query9(){
-    int i,mes,* qtd,t=0,status;
+    int i,mes,* qtd,t=0;
     char * * produtos,cliente[10];
-    if(fork()==0)
-        execlp("clear","clear",NULL);
-    wait(&status);
+    system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 9--------------------------------------------|\n\n");
 
@@ -361,14 +383,12 @@ void query9(){
     getchar();
     return;
 }
-
+/*
 void query12(CatClientes catClientes){
 
-if(fork()==0)
-        execlp("clear","clear",NULL);
-wait(&status);
+system("clear");
 carregaArt("LOGO.txt");
-printf("|-------------------------------------Query 9--------------------------------------------|\n\n");
+printf("|-------------------------------------Query 12--------------------------------------------|\n\n");
 
 printf("Total de clientes que não fizeram compras: %d\n", totalClientesNCompraram(catClientes));
 printf("Total de produtos não comprados: %d\n", contaNaoCompradosFilial(4));
@@ -376,20 +396,18 @@ printf("(Prima ENTER para voltar ao menu)\n");
 getchar();
 getchar();
 return;
-
 }
+*/
 
 
 int main(){
     CatClientes catClientes;
     CatProdutos catProd;
-    int op=-1,status,carregado=0;
+    int op=-1,carregado=0;
     catClientes=initCatClientes();
     catProd=initCatProdutos();
     while(op!=0){
-        if(fork()==0)
-            execlp("clear","clear",NULL);
-        wait(&status);
+        system("clear");
         carregaArt("LOGO.txt");
         printf("|--------------------------------------MENU----------------------------------------------|\n\n");
         printf("1- Ler ficheiros para memória\n");
@@ -398,6 +416,8 @@ int main(){
         printf("4- Determinar a lista ordenada dos códigos dos produtos que ninguém comprou\n");
         printf("5- Dado um código de cliente criar uma tabela com o número total de produtos comprados mês a mês\n");
         printf("6- Dado um intervalo de meses determinar o total de vendas registadas e o total faturado\n");
+        printf("7- Determinar a lista ordenada de códigos de clientes que realizaram compras em todas a filiais\n");
+        printf("8- Dado um código de produto e uma filial determinar os códigos dos clientes que o compraram\n");
         printf("9- Dado um código de cliente e um mês determinar a lista de códigos de produtos que mais comprou por quantidade\n");
         printf("\nEscolha uma query ou 0 para sair: ");
         scanf("%d",&op);
@@ -407,6 +427,8 @@ int main(){
         else if(op==4 && carregado) query4();
         else if(op==5 && carregado) query5();
         else if(op==6 && carregado) query6();
+        else if(op==7 && carregado) query7();
+        else if(op==8 && carregado) query8();
         else if(op==9 && carregado) query9();
         else if(!carregado && op) {printf("Precisa de carregar os ficheiros!\n"); getchar(); getchar();}
         else if(op!=0){
@@ -415,9 +437,7 @@ int main(){
             getchar();
         }
     }
-    if(fork()==0)
-        execlp("clear","clear",NULL);
-    wait(&status);
+    system("clear");
     return 1;
 }
 
@@ -426,8 +446,6 @@ int main(){
 /*
 
 
-    printf("7- Determinar a lista ordenada de códigos de clientes que realizaram compras em todas a filiais\n");
-    printf("8- Dado um código de produto e uma filial determinar os códigos dos clientes que o compraram\n");
     printf("10- Criar uma lista nos N produtos mais vendidos em todo o ano\n");
     printf("11- Dado um código de cliente determinar quais os códigos dos 3 produtos em que gastou mais dinheiro durante o ano\n");
     printf("12- Determinar o número de clientes registados que não realizaram compras e o número de produtos que ninguém comprou\n");

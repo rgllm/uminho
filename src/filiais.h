@@ -27,6 +27,6 @@ typedef struct infoF{
 
 void initfiliais();
 void carregaVenda(char * cliente, char * produto, int qtd, char tipo, int mes, double preco,int filial);
-int percorreClientes();
 int carregaCompra(int filial, char * cliente, int mes, char * * * produtos, int * * quant, int t);
 void carregaQtd(int filial, char * cliente, int tabela[12][3]);
+int determinaClientes(nodoFilial nodo, char * prod, char * * * clientes, char * * tipo, int t);

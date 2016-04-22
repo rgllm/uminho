@@ -6,47 +6,6 @@ void initfiliais(){
    filial1=filial2=filial3=NULL;
 }
 
-/*int constaFilial(char * cliente, nodoFilial raiz){
-    int i;
-    if (raiz==NULL) return 0;
-    for(i=0; i<raiz->produto->nVendas;i++)
-        if(strcmp(raiz->produto->vendas[i].cliente, cliente)==0)
-            return 1;
-    return (constaFilial (cliente, raiz->esq) || constaFilial (cliente, raiz->dir));
-} */
-
-/*
-void compraramFilial1(nodoFilial raiz,nodo * ret){
-    int i;
-    if(raiz==NULL) return;
-    for(i=0;i<raiz->cliente->nVendas;i++){
-        if(ret==NULL)
-            ret=criaNodo(raiz->cliente->vendas[i].produto,NULL);
-        else if(search(ret,raiz->cliente->vendas[i].produto)==NULL)
-            ret=insert(raiz->cliente->vendas[i].produto,ret);
-    }
-    compraramFilial1(raiz->esq,ret);
-    compraramFilial1(raiz->dir,ret);
-
-}
-
-nodo * compraramFilial(nodoFilial raiz, nodo * fil){
-    int i;
-    nodo * ret;
-    if(raiz==NULL) return NULL;
-    for(i=0;i<raiz->cliente->nVendas;i++){
-        if(ret==NULL && search(fil,raiz->cliente->vendas[i].produto))
-            ret=criaNodo(raiz->cliente->vendas[i].produto,NULL);
-        else if(search(ret,raiz->cliente->vendas[i].produto)==NULL && search(fil,raiz->cliente->vendas[i].produto))
-            ret=insert(raiz->cliente->vendas[i].produto,ret);
-    }
-    ret=compraramFilial(raiz->esq,fil);
-    ret=compraramFilial(raiz->dir,fil);
-
-   return ret;
-}
-
-*/
 
 int existeClienteF(nodo *clientesFiliais){
     int count=0;
@@ -65,7 +24,7 @@ count+=procuraClientes(clientesFiliais->dir, count);
 return count;
 
 }
-
+/*
 int totalClientesNCompraram(CatClientes catClientes){
 int count;
 if(catClientes==NULL) return 0;
@@ -74,6 +33,7 @@ count+=totalClientesNCompraram(catClientes->esq);
 count+=totalClientesNCompraram(catClientes->dir);
 return count;
 }
+*/
 
 void carregaVenda(char * cliente, char * produto, int qtd, char tipo, int mes, double preco,int filial){
     infoF aux;
@@ -135,6 +95,22 @@ void carregaQtd(int filial, char * cliente, int tabela[12][3]){
 }
 
 
+int addProduto(char * prod, int qtd, char * * * produtos, int * * quant, int t){
+    int i;
+    for(i=0; i<t; i++)
+        if(strcmp((*produtos)[i], prod)==0)
+            (*quant)[i]+=qtd;
+
+    if(i==t){
+        *produtos=realloc(*produtos,(t+1)*sizeof(char*));
+        *quant=realloc(*quant,(t+1)*sizeof(int));
+        (*quant)[t]=qtd;
+        (*produtos)[t]=strdup(prod);
+        t++;
+    }
+    return t;
+}
+
 int carregaCompra(int filial, char * cliente, int mes, char * * * produtos, int * * quant, int t){
     int i;
     nodoFilial nodo;
@@ -153,19 +129,62 @@ int carregaCompra(int filial, char * cliente, int mes, char * * * produtos, int 
 
 
 
-int addProduto(char * prod, int qtd, char * * * produtos, int * * quant, int t){
-    int i;
-    for(i=0; i<t; i++)
-        if(strcmp((*produtos)[i], prod)==0)
-            (*quant)[i]+=qtd;
 
-    if(i==t){
-        *produtos=realloc(*produtos,(t+1)*sizeof(char*));
-        (*quant)=realloc(*quant,(t+1)*sizeof(int));
-        (*quant)[t]=qtd;
-        (*produtos)[t]=strdup(prod);
-        t++;
-    }
+
+nodoFilial getFilial(int filial){
+    if(filial ==1) return filial1;
+    if(filial ==2) return filial2;
+    return filial3;
+}
+
+int determinaClientes(nodoFilial nodo, char * prod, char * * * clientes, char * * tipo, int t){
+    int i;
+    if(nodo==NULL) return t;
+    for(i=0; i<nodo->cliente->nVendas; i++)
+        if(strcmp(nodo->cliente->vendas[i].produto,prod)==0){
+            *clientes=realloc(*clientes,(t+1)*sizeof(char*));
+            *tipo=realloc(*tipo,(t+1)*sizeof(char));
+            (*clientes)[t]=(char*)strdup(nodo->cliente->cliente);
+            (*tipo)[t]=nodo->cliente->vendas[i].tipo;
+            t++;
+            break;
+        }
+    t=determinaClientes(nodo->esq, prod, clientes, tipo, t);
+    t=determinaClientes(nodo->dir, prod, clientes, tipo, t);
     return t;
+}
+
+
+nodo * comparaAnterior(nodoFilial anterior,nodoFilial atual,nodo * ret){
+    if(atual==NULL) return ret;
+    if(procuraPFilial(anterior,atual->cliente->cliente)!=NULL)
+        if(ret==NULL)
+            ret=criaNodo(atual->cliente->cliente,NULL);
+        else
+            ret=insert(atual->cliente->cliente,ret);
+    ret=comparaAnterior(anterior,atual->esq,ret);
+    ret=comparaAnterior(anterior,atual->dir,ret);
+    return ret;
+}
+
+nodo * comparaAnterior2(nodo * anterior,nodoFilial atual,nodo * ret){
+    if(atual==NULL) return ret;
+    if(search(anterior,atual->cliente->cliente)!=NULL)
+        if(ret==NULL)
+            ret=criaNodo(atual->cliente->cliente,NULL);
+        else
+            ret=insert(atual->cliente->cliente,ret);
+    ret=comparaAnterior2(anterior,atual->esq,ret);
+    ret=comparaAnterior2(anterior,atual->dir,ret);
+    return ret;
+}
+
+nodo * compraramTodasFiliais(){
+    nodo * fil2=NULL;
+    nodo * fil3=NULL;
+    fil2=comparaAnterior(filial1,filial2,fil2);
+    fil3=comparaAnterior2(fil2,filial3,fil3);
+    return fil3;
+
 }
 

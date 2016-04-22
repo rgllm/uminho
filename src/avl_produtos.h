@@ -28,7 +28,7 @@ typedef struct nodoFaturacaoProduto{
     int altura;
 } *nodoFaturacaoProduto;
 
-void printInOrderProd(nodoFaturacaoProduto raiz);
+
 nodoFaturacaoProduto searchProduto(nodoFaturacaoProduto raiz, char * produto);
 int alturaV(nodoFaturacaoProduto raiz);
 void ajustaAlturaV(nodoFaturacaoProduto raiz);

@@ -252,12 +252,12 @@ void query5(){
     wait(&status);
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 5--------------------------------------------|\n\n");
-    
+
     printf("Cliente: ");
     scanf("%s",cliente);
     int tabela[12][3];
 
-    
+
 
     for(i=0;i<12;i++)
         for(j=0;j<3;j++)
@@ -310,27 +310,23 @@ void query6(){
     getchar();
 }
 
-/*
-void query7(CatClientes clientes){
+
+void query7(){
     int status, i,count=0;
+    nodo *clientesFiliais;
     char cliente;
     if(fork()==0)
         execlp("clear","clear",NULL);
     wait(&status);
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 7--------------------------------------------|\n\n");
-
-
-
-
-    printf("%d\n",percorreClientes());
-
+    printf("TOTAL: %d\n", existeCliente(clientesFiliais));
+    printInOrder(clientesFiliais, 0);
     printf("(Prima ENTER para voltar ao menu)\n");
     getchar();
     getchar();
 }
 
-*/
 
 
 
@@ -354,7 +350,7 @@ void query9(){
     }
     printf("Cliente: ");
     scanf("%s",cliente);
-        
+
     t=carregaCompra (1, cliente, mes, &produtos, &qtd, t);
     t=carregaCompra (2, cliente, mes, &produtos, &qtd, t);
     t=carregaCompra (3, cliente, mes, &produtos, &qtd, t);

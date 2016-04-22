@@ -47,20 +47,24 @@ nodo * compraramFilial(nodoFilial raiz, nodo * fil){
 }
 
 */
-/*
-int percorreClientes(){
-    nodo * fil1,*fil2,*fil3;
-    compraramFilial1(filial1,fil1);
-    printf("asdf\n");
-    printf("%s\n",fil1->codigo);
-    fil2=compraramFilial(filial2,fil1);
-    printf("%s\n",fil2->codigo);
-    fil3=compraramFilial(filial3,fil2);
-    printf("asdf\n");
-    return altura(fil3);
+
+int existeCliente(nodo *clientesFiliais){
+    int count=0;
+    count=procuraClientes(clientesFiliais,count);
+    return count;
 }
 
-*/
+int procuraClientes(nodo *clientesFiliais, int count){
+
+if( (procuraPFilial(filial2,filial1->cliente)!=NULL) && (procuraPFilial(filial3,filial1->cliente)!=NULL){
+        insert(filial1->cliente, clientesFiliais);
+        count++;
+}
+count+=procuraClientes(clientesFiliais->esq, count);
+count+=procuraClientes(clientesFiliais->dir, count);
+return count;
+
+}
 
 void carregaVenda(char * cliente, char * produto, int qtd, char tipo, int mes, double preco,int filial){
     infoF aux;

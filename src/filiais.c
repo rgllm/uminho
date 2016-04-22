@@ -56,7 +56,7 @@ int existeCliente(nodo *clientesFiliais){
 
 int procuraClientes(nodo *clientesFiliais, int count){
 
-if( (procuraPFilial(filial2,filial1->cliente)!=NULL) && (procuraPFilial(filial3,filial1->cliente)!=NULL){
+if( (procuraPFilial(filial2,filial1->cliente)!=NULL) && (procuraPFilial(filial3,filial1->cliente)!=NULL)){
         insert(filial1->cliente, clientesFiliais);
         count++;
 }

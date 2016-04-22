@@ -38,3 +38,4 @@ void infoProdutoCopy(infoP p1,infoP p2);
 nodoFaturacaoProduto criaNodoFat(infoP produto, nodoFaturacaoProduto pai);
 nodoFaturacaoProduto balanceV(nodoFaturacaoProduto raiz);
 nodoFaturacaoProduto insertNodoFat(infoP produto,nodoFaturacaoProduto raiz);
+int printNaoComprados(nodoFaturacaoProduto raiz, int count);

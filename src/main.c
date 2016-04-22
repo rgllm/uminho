@@ -113,7 +113,7 @@ getchar();
 
 void query2(CatProdutos catProd){
     char letra;
-    int indice,status,count,i;
+    int indice,status;
     if(fork()==0)
         execlp("clear","clear",NULL);
     wait(&status);
@@ -257,8 +257,6 @@ void query5(){
     scanf("%s",cliente);
     int tabela[12][3];
 
-
-
     for(i=0;i<12;i++)
         for(j=0;j<3;j++)
             tabela[i][j]=0;
@@ -311,7 +309,7 @@ void query6(){
 }
 
 
-void query7(){
+/*void query7(){
     int status, i,count=0;
     nodo *clientesFiliais;
     char cliente;
@@ -320,18 +318,18 @@ void query7(){
     wait(&status);
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 7--------------------------------------------|\n\n");
-    printf("TOTAL: %d\n", existeCliente(clientesFiliais));
+    printf("TOTAL: %d\n", existeCliente(clientesFiliais),0);
     printInOrder(clientesFiliais, 0);
     printf("(Prima ENTER para voltar ao menu)\n");
     getchar();
     getchar();
-}
+} */
 
 
 
 
 void query9(){
-    int i, j,mes,* qtd,t=0,status;
+    int i,mes,* qtd,t=0,status;
     char * * produtos,cliente[10];
     if(fork()==0)
         execlp("clear","clear",NULL);

@@ -30,7 +30,7 @@ nodo *insert(char codigo[],nodo *raiz);
 int conta(nodo * raiz);
 int printInOrder(nodo * raiz, int count);
 void freeTree(nodo * raiz);
-
+void printPages(nodo * raiz);
 
 
 

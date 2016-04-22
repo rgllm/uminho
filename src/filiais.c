@@ -48,7 +48,7 @@ nodo * compraramFilial(nodoFilial raiz, nodo * fil){
 
 */
 
-int existeCliente(nodo *clientesFiliais){
+int existeClienteF(nodo *clientesFiliais){
     int count=0;
     count=procuraClientes(clientesFiliais,count);
     return count;

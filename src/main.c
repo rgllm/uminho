@@ -362,6 +362,23 @@ void query9(){
     return;
 }
 
+void query12(CatClientes catClientes){
+
+if(fork()==0)
+        execlp("clear","clear",NULL);
+wait(&status);
+carregaArt("LOGO.txt");
+printf("|-------------------------------------Query 9--------------------------------------------|\n\n");
+
+printf("Total de clientes que não fizeram compras: %d\n", totalClientesNCompraram(catClientes));
+printf("Total de produtos não comprados: %d\n", contaNaoCompradosFilial(4));
+printf("(Prima ENTER para voltar ao menu)\n");
+getchar();
+getchar();
+return;
+
+}
+
 
 int main(){
     CatClientes catClientes;

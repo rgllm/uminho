@@ -66,6 +66,15 @@ return count;
 
 }
 
+int totalClientesNCompraram(CatClientes catClientes){
+int count;
+if(catClientes==NULL) return 0;
+if(search(catClientes->clientes, filial1)==NULL && search(catClientes->clientes, filial2)==NULL && search(catClientes->clientes, filial3==NULL)) count++;
+count+=totalClientesNCompraram(catClientes->esq);
+count+=totalClientesNCompraram(catClientes->dir);
+return count;
+}
+
 void carregaVenda(char * cliente, char * produto, int qtd, char tipo, int mes, double preco,int filial){
     infoF aux;
     nodoFilial fil;

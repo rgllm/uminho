@@ -32,7 +32,7 @@ int validaVenda(CatClientes c,CatProdutos p,char * produto,double preco,int qtd,
 }
 
 void query1(CatClientes catClientes, CatProdutos catProd){
-    int c,qtd,mes,fil;
+    int c,qtd,mes,fil,sys;
     char cod[10],linha[MAXBUFF], buffer[MAXBUFF],*produto,np,*cli,*precAux;
     double prec;
     infoP aux;
@@ -40,13 +40,13 @@ void query1(CatClientes catClientes, CatProdutos catProd){
     Produto prod;
     Cliente cliente;
     char ficheiro_vendas[100];
-/*
+
     printf("\nDiretório do ficheiro vendas: ");
-    scanf("%s", ficheiro_vendas);
+    sys=scanf("%s", ficheiro_vendas);
     printf("\n");
-*/
+
     /*                 Leitura dos clientes                 */
-    fp=fopen("files/Clientes.txt","r");
+    fp=fopen("Clientes.txt","r");
     while( fgets (buffer, MAXBUFF, fp)){
        strcpy(cod,buffer);
        strtok(cod,"\r\n");
@@ -61,7 +61,7 @@ void query1(CatClientes catClientes, CatProdutos catProd){
     initTabela();
 
     /*                 Leitura dos produtos                 */
-    fp=fopen("files/Produtos.txt","r");
+    fp=fopen("Produtos.txt","r");
     while( fgets (buffer, MAXBUFF, fp)){
         strcpy(cod,buffer);
         strtok(cod,"\r\n");
@@ -76,9 +76,8 @@ void query1(CatClientes catClientes, CatProdutos catProd){
     /*                 Leitura das vendas    */
     initfiliais();
 
-    /*fp = fopen(ficheiro_vendas, "r" );*/
+    fp = fopen(ficheiro_vendas, "r" );
 
-    fp = fopen("files/Vendas1.txt", "r" );
     while (fgets(buffer, MAXBUFF,fp)!=NULL){
         strcpy(linha,buffer);
         produto=strtok(buffer," ");
@@ -113,12 +112,12 @@ getchar();
 
 void query2(CatProdutos catProd){
     char letra;
-    int indice;
-    system("clear");
+    int indice,sys;
+    sys=system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 2--------------------------------------------|\n\n");
     printf("Letra: ");
-    scanf(" %c",&letra);
+    sys=scanf(" %c",&letra);
     if(letra >=97 && letra <= 122) letra-=32; /*Caso em que a letra inserida é minúscula */
     else if(letra < 65 || letra > 90){ /*Caso em que o caracter introduzido não é uma letra minúscula nem maiúscula */
         printf("Letra inválida!\n");
@@ -130,19 +129,20 @@ void query2(CatProdutos catProd){
     indice=letra-65;
     printf("\n\nTotal de produtos: %d\n",totalProdutosLetra(catProd,letra));
     printPages(getAVLProd(catProd,indice));
+    printf("\n(Prima ENTER para voltar ao menu)\n");
     getchar();
     getchar();
 }
 
 void query3(){
-    int mes,totalVendasN, totalVendasP, filial, totalVendasNF, totalVendasPF;
+    int mes,totalVendasN, totalVendasP, filial, totalVendasNF, totalVendasPF,sys;
     double totalFaturadoN,totalFaturadoP,totalFaturadoNF,totalFaturadoPF;
     char produto[10],tipo;
-    system("clear");
+    sys=system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 3--------------------------------------------|\n\n");
     printf("Mês: ");
-    scanf("%d",&mes);
+    sys=scanf("%d",&mes);
     if(mes<1 || mes >12){
         printf("Mês inválido!\n");
         printf("(Prima ENTER para voltar ao menu)\n");
@@ -151,9 +151,9 @@ void query3(){
         return;
     }
     printf("Produto: ");
-    scanf("%s",produto);
+    sys=scanf("%s",produto);
     printf("Apresentar resultados totais ou por filial? (T ou F): ");
-    scanf(" %c", &tipo);
+    sys=scanf(" %c", &tipo);
     if (tipo==84||tipo==116){
         totalFaturadoN=getTotalFaturadoMesN(mes,produto);
         totalFaturadoP=getTotalFaturadoMesP(mes,produto);
@@ -205,17 +205,17 @@ void query3(){
 
 
 void query4(){
-    int filial;
+    int filial,sys;
     char tipo;
-    system("clear");
+    sys=system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 4--------------------------------------------|\n\n");
     printf("Apresentar resultado total ou por filial? (T ou F): ");
 
-    scanf(" %c", &tipo);
-    if (tipo==84||tipo==116){
+    sys=scanf(" %c", &tipo);
+    if (tipo==84||tipo==116){ /* 84=='T'   116=='t'  */
         printf("Total: %d\n", contaNaoCompradosFilial(4));
-        printNaoComprados(getTotalFilial(4),0);
+        printNaoComprados(4);
         printf("(Prima ENTER para voltar ao menu)\n");
         getchar();
         getchar();
@@ -223,9 +223,10 @@ void query4(){
     }
     else if (tipo==70||tipo==102){
         printf("\nIndique a filial pretendida (1, 2 ou 3): ");
-        scanf(" %d", &filial);
+        sys=scanf(" %d", &filial);
         if(filial<1 || filial>3){printf("Filial inválida!\n");printf("(Prima ENTER para voltar ao menu)\n");getchar();getchar();return;}
         printf("Total filial %d: %d\n", filial, contaNaoCompradosFilial(filial));
+        printNaoComprados(filial);
         printf("(Prima ENTER para voltar ao menu)\n");
         getchar();
         getchar();
@@ -239,14 +240,14 @@ void query4(){
 }
 
 void query5(CatClientes catClientes){
-    int i, j;
+    int i, j,sys;
     char cliente[10];
-    system("clear");
+    sys=system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 5--------------------------------------------|\n\n");
 
     printf("Cliente: ");
-    scanf("%s",cliente);
+    sys=scanf("%s",cliente);
 
     if(cliente[0] >=97 && cliente[0] <= 122) cliente[0]-=32; /*Caso em que a primeira letra inserida é minúscula*/
     if(existeCliente(catClientes, criaCliente(cliente))==0){
@@ -283,15 +284,15 @@ void query5(CatClientes catClientes){
 
 
 void query6(){
-    int mesI, mesF,totalVendas=0;
+    int mesI, mesF,totalVendas=0,sys;
     double totalFaturado=0;
-    system("clear");
+    sys=system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 6--------------------------------------------|\n\n");
     printf("Mês inicial: ");
-    scanf("%d",&mesI);
+    sys=scanf("%d",&mesI);
     printf("Mês Final: ");
-    scanf("%d",&mesF);
+    sys=scanf("%d",&mesF);
     if((mesI<1 || mesI >12) || (mesF<1 || mesF >12) || (mesF-mesI<0)){
         printf("Mês inválido!\n");
         printf("(Prima ENTER para voltar ao menu)\n");
@@ -310,8 +311,8 @@ void query6(){
 
 
 void query7(){
-    int i,count=0;
-    system("clear");
+    int count=0,sys;
+    sys=system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 7--------------------------------------------|\n\n");
 
@@ -322,56 +323,49 @@ void query7(){
     getchar();
 }
 
-
-
 void query8(){
-int i,t,filial;
-char prod[10];
-char * * clientes;
-char * tipo;
-system("clear");
-carregaArt("LOGO.txt");
-printf("|-------------------------------------Query 8--------------------------------------------|\n\n");
+    int i,t,filial,sys;
+    char prod[10];
+    char * * clientes;
+    char * tipo;
+    sys=system("clear");
+    carregaArt("LOGO.txt");
+    printf("|-------------------------------------Query 8--------------------------------------------|\n\n");
 
 
-printf("Produto: ");
-scanf("%s",prod);
+    printf("Produto: ");
+    sys=scanf("%s",prod);
 
-printf("Filial: ");
-scanf("%d",&filial);
-if(filial<1 || filial >3){
-    printf("Filial inválida!\n");
+    printf("Filial: ");
+    sys=scanf("%d",&filial);
+    if(filial<1 || filial >3){
+        printf("Filial inválida!\n");
+        printf("(Prima ENTER para voltar ao menu)\n");
+        getchar();
+        getchar();
+        return;
+    }
+
+    t=determinaClientes(getFilial(filial), prod, &clientes, &tipo, 0);
+
+    for (i=0; i<t; i++)
+        printf("%s %c\n", clientes[i],tipo[i]);
     printf("(Prima ENTER para voltar ao menu)\n");
     getchar();
     getchar();
     return;
 }
 
-t=determinaClientes(getFilial(filial), prod, &clientes, &tipo, 0);
-
-for (i=0; i<t; i++)
-    printf("%s %c\n", clientes[i],tipo[i]);
-printf("(Prima ENTER para voltar ao menu)\n");
-getchar();
-getchar();
-return;
-}
-
-
-
-
-
-
 void query9(CatClientes catClientes){
-    int i, j, mes,* qtd,t=0 , qtd_temp ;
+    int i, j, mes,* qtd,t=0 , qtd_temp,sys ;
     char * * produtos,cliente[10];
     char * produto_temp;
-    system("clear");
+    sys=system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 9--------------------------------------------|\n\n");
 
     printf("Mês: ");
-    scanf("%d",&mes);
+    sys=scanf("%d",&mes);
     if(mes<1 || mes >12){
         printf("Mês inválido!\n");
         printf("(Prima ENTER para voltar ao menu)\n");
@@ -380,7 +374,7 @@ void query9(CatClientes catClientes){
         return;
     }
     printf("Cliente: ");
-    scanf("%s",cliente);
+    sys=scanf("%s",cliente);
 
     if(cliente[0] >=97 && cliente[0] <= 122) cliente[0]-=32; /*Caso em que a primeira letra inserida é minúscula*/
     if(existeCliente(catClientes, criaCliente(cliente))==0){
@@ -411,7 +405,7 @@ void query9(CatClientes catClientes){
 
 
     for (i=t-1; i>=0; i--)
-        printf("%s -> %d \n", produtos[i],qtd[i]);
+        printf("Produto: %s - Quantidade: %d \n", produtos[i],qtd[i]);
 
     printf("(Prima ENTER para voltar ao menu)\n");
     getchar();
@@ -421,12 +415,12 @@ void query9(CatClientes catClientes){
 
 
 void query10(){
-    int i, t=0,n;
-    system("clear");
+    int i,n,sys;
+    sys=system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 10--------------------------------------------|\n\n");
-    printf("N: ");
-    scanf("%d",&n);
+    printf("Número de produtos pretendidos: ");
+    sys=scanf("%d",&n);
     char * produtos[n];
     int qtd[n];
     int * informacao[n][6];
@@ -454,11 +448,11 @@ void query10(){
     }
 
 void query11(){
-    int i;
+    int i,sys;
     char cliente[10];
     char * produtos[3];
     double valor[3];
-    system("clear");
+    sys=system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 11--------------------------------------------|\n\n");
     for(i=0;i<3;i++){
@@ -466,13 +460,12 @@ void query11(){
         produtos[i]=NULL;
     }
     printf("Cliente: ");
-    scanf("%s",cliente);
+    sys=scanf("%s",cliente);
 
     carregaMaxValor(cliente, produtos, valor);
 
-    printf("-----\n");
     for (i=0; i<3; i++)
-        printf("%s -> %.2f\n", produtos[i],valor[i]);
+        printf("Produto: %s - Valor: %.2f\n", produtos[i],valor[i]);
 
     printf("(Prima ENTER para voltar ao menu)\n");
     getchar();
@@ -482,8 +475,8 @@ void query11(){
 
 
 void query12(CatClientes catClientes){
-    int count=0,i;
-    system("clear");
+    int count=0,i,sys;
+    sys=system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 12--------------------------------------------|\n\n");
 
@@ -504,11 +497,11 @@ void query12(CatClientes catClientes){
 int main(){
     CatClientes catClientes;
     CatProdutos catProd;
-    int op=-1,carregado=0;
+    int op=-1,carregado=0,sys;
     catClientes=initCatClientes();
     catProd=initCatProdutos();
     while(op!=0){
-        system("clear");
+        sys=system("clear");
         carregaArt("LOGO.txt");
         printf("|--------------------------------------MENU----------------------------------------------|\n\n");
         printf("1- Ler ficheiros para memória\n");
@@ -524,7 +517,7 @@ int main(){
         printf("11- Dado um código de cliente determinar quais os códigos dos 3 produtos em que gastou mais dinheiro durante o ano\n");
         printf("12- Determinar o número de clientes registados que não realizaram compras e o número de produtos que ninguém comprou\n");
         printf("\nEscolha uma query ou 0 para sair: ");
-        scanf("%d",&op);
+        sys=scanf("%d",&op);
         if(op==1) {query1(catClientes, catProd);carregado=1;}
         else if(op==2 && carregado) query2(catProd);
         else if(op==3 && carregado) query3();
@@ -540,11 +533,11 @@ int main(){
 
         else if(!carregado && op) {printf("Precisa de carregar os ficheiros!\n"); getchar(); getchar();}
         else if(op!=0){
-            printf("Ainda não está mas vai estar\n");
+            printf("Não disponível!\n");
             getchar();
             getchar();
         }
     }
-    system("clear");
+    sys=system("clear");
     return 1;
 }

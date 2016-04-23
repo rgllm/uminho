@@ -2,6 +2,10 @@
 #include "avl.h"
 #define AVL
 #endif
+#ifndef DUP
+#include "others.h"
+#define strdup(x) my_strdup(x)
+#endif
 
 /*
  * Definição das estruturas

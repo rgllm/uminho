@@ -83,11 +83,11 @@ nodoFilial balanceVFilial(nodoFilial raiz){
     if (alturaVFilial(raiz->esq) - alturaVFilial(raiz->dir) > 1)
     {
         if (alturaVFilial(raiz->esq->esq) > alturaVFilial(raiz->esq->dir)){
-            raiz = rodaDirV(raiz);
+            raiz = rodaDirVFilial(raiz);
         }
         else{
-            rodaEsqV(raiz->esq);
-            raiz = rodaDirV(raiz);
+            rodaEsqVFilial(raiz->esq);
+            raiz = rodaDirVFilial(raiz);
         }
     }
     else if (alturaVFilial(raiz->dir) - alturaVFilial(raiz->esq) > 1){
@@ -132,4 +132,3 @@ nodoFilial insertNodoFilial(infoF cliente,nodoFilial raiz){
     } while (aux->pai);
     return aux;
 }
-

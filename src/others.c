@@ -1,6 +1,10 @@
 
 #include "others.h"
 
+int max( int a, int b ){
+    return a > b ? a : b;
+}
+
 
 char getch(){
 char c = 0;
@@ -38,16 +42,9 @@ void carregaArt(char *nome_ficheiro) {
     fclose(ficheiro);
 }
 
-/*
 
 char *my_strdup(const char *s) {
     char *p = malloc(strlen(s) + 1);
     if(p) { strcpy(p, s); }
     return p;
 }
-
-this goes in whatever header defines my_strdup
-char *my_strdup(const char *s);
-#define strdup(x) my_strdup(x)
-
-*/

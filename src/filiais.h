@@ -4,6 +4,11 @@
 #define AVL
 #endif
 
+#ifndef DUP
+#include "others.h"
+#define strdup(x) my_strdup(x)
+#endif
+
 
 #ifndef INFOF
 typedef struct venda{

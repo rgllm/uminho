@@ -1,9 +1,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
 #ifndef AVL
 #include "avl.h"
 #define AVL
+#endif
+
+#ifndef DUP
+#include "others.h"
+#define strdup(x) my_strdup(x)
 #endif
 
 
@@ -38,4 +44,4 @@ void infoProdutoCopy(infoP p1,infoP p2);
 nodoFaturacaoProduto criaNodoFat(infoP produto, nodoFaturacaoProduto pai);
 nodoFaturacaoProduto balanceV(nodoFaturacaoProduto raiz);
 nodoFaturacaoProduto insertNodoFat(infoP produto,nodoFaturacaoProduto raiz);
-int printNaoComprados(nodoFaturacaoProduto raiz, int count);
+void printNaoCompradosAVL(nodoFaturacaoProduto raiz,int nelem);

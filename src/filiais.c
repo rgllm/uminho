@@ -261,9 +261,6 @@ void carregaMaxValor(char * cliente, char * * produtos, double * valor){
             }
     }
     
-    for(i=0;i<p;i++)
-        printf("%s  - %.2f\n",produtosAux[i],valoresAux[i] );
-
     for (i = 0; i < p; i++){
         if (valoresAux[i]>valor[2]){
             valor[2]=valoresAux[i];

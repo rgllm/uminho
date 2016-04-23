@@ -1,12 +1,5 @@
 #include "avl.h"
 
-/**
- * Dado uma árvore e um código procura esse código na árvore.
- * Retorna o apontador para o nodo caso exista e NULL caso não exista.
- * @param raiz
- * @param codigo
- * @return
- */
 nodo * search(nodo *raiz, char codigo[]){
     int cmp;
     if (raiz == NULL) return NULL;
@@ -19,9 +12,6 @@ nodo * search(nodo *raiz, char codigo[]){
         return raiz;
 }
 
-int max( int a, int b ){
-    return a > b ? a : b;
-}
 
 int altura(nodo *raiz){
     if(raiz) return raiz->altura;
@@ -155,8 +145,7 @@ int printInOrder(nodo *raiz, int count){
         count++;
         if(count%PRINT_COLS==0 && count!=0) printf("%s \n", raiz->codigo);
         else printf("%s \t\t", raiz->codigo);
-        if(count%(2*10*PRINT_COLS)
-            ==0 && count!=0){getch();}
+        if(count%(2*10*PRINT_COLS)==0 && count!=0){getch();}
         count=printInOrder(raiz->dir, count);
     }
     return count;
@@ -187,7 +176,7 @@ char * * AVLtoArray(nodo *raiz){
 }
 
 void printPages(nodo * raiz){
-    int i,index=0, h = 0, nelem = conta(raiz), nrpag = nelem/30;
+    int i,index=0, h = 0, nelem = conta(raiz), nrpag = nelem/30,sys;
     char key = '+';
     char * * lista=AVLtoArray(raiz);
 
@@ -195,7 +184,7 @@ void printPages(nodo * raiz){
 
     while(key != 'q'){
         if(key == '+'){
-            system("clear");
+            sys=system("clear");
             for(i = 0; i < 30 && index<nelem; i++){
                 printf("|  %s  |\n", lista[index]);
                 index++;
@@ -207,7 +196,7 @@ void printPages(nodo * raiz){
         }
         else if(key == '-'){
             if(index > 30){
-                system("clear");
+                sys=system("clear");
                 if(h==nrpag && nelem%30!=0) index-=30+nelem%30;
                 else index-=60;
 
@@ -224,9 +213,4 @@ void printPages(nodo * raiz){
         if(key=='+' && h==nrpag){sleep(1);return;}
     }
 
-}
-
-int size(nodo * raiz){
-    if(raiz==NULL) return 0;
-    else return (1 + size(raiz->esq) + size(raiz->dir));
 }

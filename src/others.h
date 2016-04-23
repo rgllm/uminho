@@ -6,4 +6,6 @@
 
 char getch();
 void carregaArt(char *nome_ficheiro);
+char *my_strdup(const char *s);
+int max( int a, int b);
 

@@ -1,4 +1,4 @@
-#include "avl_produtos.h"
+#include "avl_faturacao.h"
 
 /**
  * Dado uma árvore do tipo FaturacaoProduto e um código procura esse código na árvore.
@@ -190,19 +190,84 @@ nodoFaturacaoProduto insertNodoFat(infoP produto,nodoFaturacaoProduto raiz){
     return aux;
 }
 
-int printNaoComprados(nodoFaturacaoProduto raiz, int count){
-    if(raiz!=NULL && raiz->produto->qtdNormal==0 && raiz->produto->qtdPromocao==0){
-        count=printInOrder(raiz->esq,count);
-        count++;
-        if(count%PRINT_COLS==0 && count!=0) printf("%s \n", raiz->produto->produto);
-        else printf("%s \t\t", raiz->produto->produto);
-        if(count%(2*10*PRINT_COLS)
-            ==0 && count!=0){getch();}
-        count=printInOrder(raiz->dir, count);
+/**
+ * Adiciona um produto a um array caso este não tenha sido comprado.
+ * @param raiz
+ * @param arr
+ * @param i
+ * @return
+ */
+int AddToArrayNComprados(nodoFaturacaoProduto raiz, char * arr[], int i){
+    if(raiz == NULL)
+        return i;
+
+    if(raiz->esq != NULL)
+        i = AddToArrayNComprados(raiz->esq, arr, i);
+    if(raiz->produto->qtdNormal==0 && raiz->produto->qtdPromocao==0){
+        arr[i] = strdup(raiz->produto->produto);
+        i++;
     }
-    return count;
+    
+    if(raiz->dir != NULL)
+        i = AddToArrayNComprados(raiz->dir, arr, i);
+
+    return i;
 }
 
+/**
+ * Converte uma AVL num array.
+ * @param raiz
+ * @param nelem
+ * @return
+ */
+char * * AVLtoArrayNComprados(nodoFaturacaoProduto raiz,int nelem){
+    char * * array=malloc(nelem*sizeof(char *));
+    AddToArrayNComprados(raiz,array,0);
+    return array;
+}
 
+/**
+ * Imprime no ecrã página a página os elementos não comprados.
+ * @param raiz
+ * @param nelem
+ * @return
+ */
+void printNaoCompradosAVL(nodoFaturacaoProduto raiz,int nelem){
+    int i,index=0, h = 0, nrpag = nelem/30,sys;
+    char key = '+';
+    char * * lista=AVLtoArrayNComprados(raiz,nelem);
 
+    if((nelem%30)) nrpag++;
 
+    while(key != 'q'){
+        if(key == '+'){
+            sys=system("clear");
+            for(i = 0; i < 30 && index<nelem; i++){
+                printf("|  %s  |\n", lista[index]);
+                index++;
+
+            }
+            h++;
+            printf("Página: %d de %d | Lidos: %d de %d |\n",h, nrpag, index, nelem);
+            printf("\'+\' para próximo, \'-\' para anterior, \'q\' para sair\n");
+        }
+        else if(key == '-'){
+            if(index > 30){
+                sys=system("clear");
+                if(h==nrpag && nelem%30!=0) index-=30+nelem%30;
+                else index-=60;
+
+                for(i = 0; i < 30 && index<nelem; i++){
+                    printf("|  %s  |\n", lista[index]);
+                    index++;
+                }
+                h--;
+            }
+            printf("Página: %d de %d | Lidos: %d de %d |\n",h, nrpag, index, nelem);
+            printf("\'+\' para próximo, \'-\' para anterior, \'q\' para sair\n");
+        }
+        key = getchar();
+        if(key=='+' && h==nrpag){sleep(1);return;}
+    }
+
+}

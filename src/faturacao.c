@@ -452,3 +452,13 @@ int totalVendasPFilial(char * produto, int filial){
     return nodoProduto->qtdPromocao+nodoProduto->qtdNormal;
 
 }
+
+
+void printNaoComprados(int filial){
+    nodoFaturacaoProduto raiz;
+    if(filial==1) raiz=tabela[0][12];
+    if(filial==2) raiz=tabela[1][12];
+    if(filial==3) raiz=tabela[2][12];
+    if(filial==4) raiz=tabela[3][12];
+    printNaoCompradosAVL(raiz,contaNaoCompradosFilial(filial));
+}

@@ -2,8 +2,12 @@
 #include "avl.h"
 #define AVL
 #endif
-#include "avl_produtos.h"
+#include "avl_faturacao.h"
 
+#ifndef DUP
+#include "others.h"
+#define strdup(x) my_strdup(x)
+#endif
 
 #ifndef INFOPROD
 typedef struct infoProduto{
@@ -43,7 +47,6 @@ int contaNaoCompradosFilial(int filial);
 nodo * naoComprados(nodo * nComprados, faturacaoProduto totais);
 nodo * getNaoCompradosFilial(int filial);
 faturacaoProduto getTotalFilial(int filial);
-void swapString(char * * x, char * * y) ;
-void swapInt(int * x, int * y) ;
+void printNaoComprados(int filial);
 void preencheProdutos(char * * produtos, int * qtd, int n, nodoFaturacaoProduto nodo);
 int TotalVendasPFilial(int filial,char * produto);

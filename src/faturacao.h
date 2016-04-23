@@ -49,4 +49,4 @@ nodo * getNaoCompradosFilial(int filial);
 faturacaoProduto getTotalFilial(int filial);
 void printNaoComprados(int filial);
 void preencheProdutos(char * * produtos, int * qtd, int n, nodoFaturacaoProduto nodo);
-int TotalVendasPFilial(int filial,char * produto);
+int totalVendasPFilial(char * produto, int filial);

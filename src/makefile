@@ -2,7 +2,7 @@
 #	Makefile Code
 #
 
-CFLAGS= -Wall -ansi -pedantic -O2
+CFLAGS= -ansi -pedantic -O2
 
 OBJS=$(patsubst %.c,%.o,$(wildcard *.c))
 

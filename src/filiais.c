@@ -34,8 +34,8 @@ int existeClienteF(nodo *clientesFiliais){
 
 int procuraClientes(nodo *clientesFiliais, int count){
 
-if( (procuraPFilial(filial2,filial1->cliente)!=NULL) && (procuraPFilial(filial3,filial1->cliente)!=NULL)){
-        insert(filial1->cliente, clientesFiliais);
+if( (procuraPFilial(filial2,filial1->cliente->cliente)!=NULL) && (procuraPFilial(filial3,filial1->cliente->cliente)!=NULL)){
+        insert(filial1->cliente->cliente, clientesFiliais);
         count++;
 }
 count+=procuraClientes(clientesFiliais->esq, count);
@@ -46,7 +46,7 @@ return count;
 
 
 int totalClientesNCompraram(nodo * clientes){
-    int count=0,i;
+    int count=0;
     if(clientes==NULL) return 0;
     if(procuraPFilial(filial1,clientes->codigo )==NULL && procuraPFilial(filial2,clientes->codigo )==NULL && procuraPFilial(filial3,clientes->codigo) ==NULL)
         count++;
@@ -176,11 +176,12 @@ int determinaClientes(nodoFilial nodo, char * prod, char * * * clientes, char * 
 
 nodo * comparaAnterior(nodoFilial anterior,nodoFilial atual,nodo * ret){
     if(atual==NULL) return ret;
-    if(procuraPFilial(anterior,atual->cliente->cliente)!=NULL)
+    if(procuraPFilial(anterior,atual->cliente->cliente)!=NULL){
         if(ret==NULL)
             ret=criaNodo(atual->cliente->cliente,NULL);
         else
             ret=insert(atual->cliente->cliente,ret);
+    }
     ret=comparaAnterior(anterior,atual->esq,ret);
     ret=comparaAnterior(anterior,atual->dir,ret);
     return ret;
@@ -188,11 +189,12 @@ nodo * comparaAnterior(nodoFilial anterior,nodoFilial atual,nodo * ret){
 
 nodo * comparaAnterior2(nodo * anterior,nodoFilial atual,nodo * ret){
     if(atual==NULL) return ret;
-    if(search(anterior,atual->cliente->cliente)!=NULL)
+    if(search(anterior,atual->cliente->cliente)!=NULL){
         if(ret==NULL)
             ret=criaNodo(atual->cliente->cliente,NULL);
         else
             ret=insert(atual->cliente->cliente,ret);
+    }
     ret=comparaAnterior2(anterior,atual->esq,ret);
     ret=comparaAnterior2(anterior,atual->dir,ret);
     return ret;
@@ -224,6 +226,7 @@ void swapDouble(double *x,double *y){
 void carregaMaxValor(char * cliente, char * * produtos, double * valor){
     int i, k, p, j, t;
     double aux;
+    
     nodoFilial nodo1=procuraPFilial(filial1, cliente);
     nodoFilial nodo2=procuraPFilial(filial2, cliente);
     nodoFilial nodo3=procuraPFilial(filial3, cliente);
@@ -232,6 +235,7 @@ void carregaMaxValor(char * cliente, char * * produtos, double * valor){
 
     char * produtosAux[k];
     double valoresAux[k];
+    
     p=0;
 
 

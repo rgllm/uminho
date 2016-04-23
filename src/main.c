@@ -242,6 +242,7 @@ void query4(){
 void query5(CatClientes catClientes){
     int i, j,sys;
     char cliente[10];
+    int tabela[12][3];
     sys=system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 5--------------------------------------------|\n\n");
@@ -258,15 +259,13 @@ void query5(CatClientes catClientes){
         return;
     }
 
-    int tabela[12][3];
-
     for(i=0;i<12;i++)
         for(j=0;j<3;j++)
             tabela[i][j]=0;
 
     carregaQtd (1, cliente, tabela);
-    carregaQtd (2, cliente, &tabela);
-    carregaQtd (3, cliente, &tabela);
+    carregaQtd (2, cliente, tabela);
+    carregaQtd (3, cliente, tabela);
     printf("\n________________________________________\n");
     printf("       |                               |\n");
     printf("       | Filial1    Filial2   Filial3  |\n");
@@ -302,7 +301,7 @@ void query6(){
     }
     totalVendas=contaTotalVendas(mesI,mesF);
     totalFaturado=contaTotalFaturado(mesI,mesF);
-    printf("Total de vendas registadas entre o mês %d e o mês %d é: %d\n", mesI,mesF,totalVendas);
+    printf("Total de unidades vendidas entre o mês %d e o mês %d é: %d\n", mesI,mesF,totalVendas);
     printf("Total faturado entre o mês %d e o mês %d é: %.2f\n", mesI,mesF,totalFaturado);
     printf("(Prima ENTER para voltar ao menu)\n");
     getchar();
@@ -311,7 +310,7 @@ void query6(){
 
 
 void query7(){
-    int count=0,sys;
+    int sys;
     sys=system("clear");
     carregaArt("LOGO.txt");
     printf("|-------------------------------------Query 7--------------------------------------------|\n\n");
@@ -347,7 +346,7 @@ void query8(){
     }
 
     t=determinaClientes(getFilial(filial), prod, &clientes, &tipo, 0);
-
+    printf("\nTotal: t\n");
     for (i=0; i<t; i++)
         printf("%s %c\n", clientes[i],tipo[i]);
     printf("(Prima ENTER para voltar ao menu)\n");
@@ -421,15 +420,15 @@ void query10(){
     printf("|-------------------------------------Query 10--------------------------------------------|\n\n");
     printf("Número de produtos pretendidos: ");
     sys=scanf("%d",&n);
+    
     char * produtos[n];
     int qtd[n];
-    int * informacao[n][6];
 
     for (i = 0; i < n; i++){
         qtd[i]=0;
     }
 
-    preencheProdutos (produtos, qtd, n, getTotalFilial(4));
+    preencheProdutos(produtos, qtd, n, getTotalFilial(4));
     printf("\n__________________________________________________\n");
     printf("            |                                       |\n");
     printf("            | Filial1    Filial2   Filial3   Total  |\n");
@@ -447,7 +446,7 @@ void query10(){
     return;
     }
 
-void query11(){
+void query11(CatClientes catClientes){
     int i,sys;
     char cliente[10];
     char * produtos[3];
@@ -461,7 +460,14 @@ void query11(){
     }
     printf("Cliente: ");
     sys=scanf("%s",cliente);
-
+    if(cliente[0] >=97 && cliente[0] <= 122) cliente[0]-=32; /*Caso em que a primeira letra inserida é minúscula*/
+    if(existeCliente(catClientes, criaCliente(cliente))==0){
+        printf("O cliente não existe\n");
+        printf("(Prima ENTER para voltar ao menu)\n");
+        getchar();
+        getchar();
+        return;
+    }
     carregaMaxValor(cliente, produtos, valor);
 
     for (i=0; i<3; i++)
@@ -528,7 +534,7 @@ int main(){
         else if(op==8 && carregado) query8();
         else if(op==9 && carregado) query9(catClientes);
         else if(op==10 && carregado) query10();
-        else if(op==11 && carregado) query11();
+        else if(op==11 && carregado) query11(catClientes);
         else if(op==12 && carregado) query12(catClientes);
 
         else if(!carregado && op) {printf("Precisa de carregar os ficheiros!\n"); getchar(); getchar();}

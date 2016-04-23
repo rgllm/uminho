@@ -45,3 +45,4 @@ void swapString2(char * * x, char * * y);
 void swapDouble(double *x,double *y);
 void carregaMaxValor(char * cliente, char * * produtos, double * valor);
 int totalClientesFilial(char * produto, int filial);
+int totalClientesNCompraram(nodo * clientes);

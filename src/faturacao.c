@@ -417,7 +417,6 @@ void swapInt(int * x, int * y) {
 
 void preencheProdutos(char * * produtos, int * qtd, int n, nodoFaturacaoProduto nodo){
     int i, aux;
-
     if(nodo==NULL) return;
     aux=nodo->produto->qtdNormal+nodo->produto->qtdPromocao;
     if(nodo==tabela[3][12])

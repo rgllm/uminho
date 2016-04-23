@@ -78,6 +78,51 @@ void query11(char cliente){
 
 
 
+    void query8(char prod, int filial){
+    int i, t=0;
+    system("clear");
+    carregaArt("LOGO.txt");
+    printf("|-------------------------------------Query 8--------------------------------------------|\n\n");
+    
+
+    char * cliente[];
+    char * tipo[];
+
+    nodoFilial nodo;
+    if(filial ==1) nodo=filial1;
+    if(filial ==2) nodo=filial2;
+    if(filial ==3) nodo=filial3;
+    
+    t=determinaClientes (nodo, prod, &cliente, &tipo, t);
+    
+    printf("%d\n", t);
+    for (i=0; i<t; i++)
+        printf("%s\n", cliente[i]);
+
+        printf("(Prima ENTER para voltar ao menu)\n");
+        getchar();
+        getchar();
+        return;
+    }
+
+
+int determinaClientes (nodoFilial nodo, char * prod, char * * * cliente, char * * * tipo, int t){
+    int i;
+
+    if(nodo==NULL) return t;
+    else
+        for(i=0; i<nodo->cliente->nVendas; i++)
+            if(nodo->cliente->vendas[i].produto==prod){
+                cliente[t]=nodo->cliente->cliente;
+                tipo[t]=nodo->cliente->vendas[i].tipo;
+                t++;
+            }
+    t=determinaClientes (nodo->esq, prod, &cliente, &tipo, t);
+    t=determinaClientes (nodo->dir, prod, &cliente, &tipo, t);
+    return t;
+
+}
+
 
 void query12(){
     int i, tot, t=0;
@@ -110,7 +155,7 @@ void query12(){
     int i, t=0;
     system("clear");
     carregaArt("LOGO.txt");
-    printf("|-------------------------------------Query 10--------------------------------------------|\n\n");
+    printf("|-------------------------------------Query 8--------------------------------------------|\n\n");
     
 
 
@@ -187,3 +232,58 @@ void preencheInformaQtd (int filial, char * * * produtos, char * * * informacao,
             informacao[i][filial*2-1]=nodo->produto->qtdNormal+nodo->produto->qtdNormal;
         }   
 } 
+
+
+
+
+
+void preencheInformaQtd (int filial, char * * * produtos, char * * * informacao, n){
+    int i;
+    nodoFaturacaoProduto nodo;
+    nodo=tabela[filial-1][12];
+    for (i = 0; i < n; ++i)
+        {
+            nodo=searchProduto(nodo,produtos->produto);
+            informacao[i][filial*2-1]=nodo->produto->qtdNormal+nodo->produto->qtdNormal;
+        }   
+} 
+
+
+
+void preencheInformaClientes (nodoFilial nodo, char * * * produtos, char * * * informacao, int n, int filial){
+    int i;
+
+    if (nodo==NULL) return;
+
+            for (i=0; i<nodo->cliente->nVendas; i++)
+                for (j = 0; j < n; j++)
+                {
+                    if (nodo->cliente->vendas[i].produto==produtos[j])
+                    informacao[filial*2-2][j]++;
+                }
+    preencheInformaClientes (nodo->esq, &produtos, &informacao, n, filial);
+    preencheInformaClientes (nodo->dir, &produtos, &informacao, n, filial);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

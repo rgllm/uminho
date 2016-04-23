@@ -383,6 +383,65 @@ void query9(){
     getchar();
     return;
 }
+
+
+void query10(){
+    int i, t=0,n;
+    system("clear");
+    carregaArt("LOGO.txt");
+    printf("|-------------------------------------Query 10--------------------------------------------|\n\n");
+    printf("N: ");
+    scanf("%d",&n);
+    char * produtos[n];
+    int qtd[n];
+    int * informacao[n][6];
+
+/*
+1- calcular com o módulo faturação os N mais vendidos
+2- fazer uma arvore da filial 1 com produto, nº clientes e qtd
+3- para cada mais vendido consultar a arvore criada
+4-repetir passo 2 e 3 para as restantes filiais.
+*/
+    
+    /*
+    cada indice da linha refere-se ao produto com o mm indice em "produtos"
+    coluna 1 - qtd vendida filial1
+    coluna 2 - nº clientes que compraram o prod na filial1
+    colunas 3 a 6 - o mm que 1 e 2 para as filiais 2 e 3
+    */
+
+    for (i = 0; i < n; i++){
+        qtd[i]=0;
+    }
+
+    preencheProdutos (produtos, qtd, n, getTotalFilial(4)); 
+
+    for (i = 0; i < n; i++){
+        printf("%s -> %d\n",produtos[i],qtd[i] );
+    }
+/*
+    preencheInformaQtdFilial (1, &produtos, &informacao, n);
+    preencheInformaQtdFilial (2, &produtos, &informacao, n);
+    preencheInformaQtdFilial (3, &produtos, &informacao, n);
+    preencheInformaClientes (filial1, &produtos, &informacao, n, 1);
+    preencheInformaClientes (filial2, &produtos, &informacao, n, 2);
+    preencheInformaClientes (filial3, &produtos, &informacao, n, 3);
+
+
+    printf("\n________________________________________\n");
+    printf("       |                               |\n");
+    printf("       | Filial1    Filial2   Filial3  |\n");
+    printf("_______|_______________________________|\n");
+   
+    for(i=0;i<n;i++)
+        printf("Produto %2s | %7d%11d%10d%7d%11d%10d  |\n", produtos[i], informacao[i][0], informacao[i][1], informacao[i][2], informacao[i][3],informacao[i][4],informacao[i][5],);
+*/
+    printf("(Prima ENTER para voltar ao menu)\n");
+    getchar();
+    getchar();
+    return;
+    }
+
 /*
 void query12(CatClientes catClientes){
 
@@ -419,6 +478,7 @@ int main(){
         printf("7- Determinar a lista ordenada de códigos de clientes que realizaram compras em todas a filiais\n");
         printf("8- Dado um código de produto e uma filial determinar os códigos dos clientes que o compraram\n");
         printf("9- Dado um código de cliente e um mês determinar a lista de códigos de produtos que mais comprou por quantidade\n");
+        printf("10- Criar uma lista nos N produtos mais vendidos em todo o ano\n");
         printf("\nEscolha uma query ou 0 para sair: ");
         scanf("%d",&op);
         if(op==1) {query1(catClientes, catProd);carregado=1;}
@@ -430,6 +490,7 @@ int main(){
         else if(op==7 && carregado) query7();
         else if(op==8 && carregado) query8();
         else if(op==9 && carregado) query9();
+        else if(op==10 && carregado) query10();
         else if(!carregado && op) {printf("Precisa de carregar os ficheiros!\n"); getchar(); getchar();}
         else if(op!=0){
             printf("Ainda não está mas vai estar\n");
@@ -446,7 +507,6 @@ int main(){
 /*
 
 
-    printf("10- Criar uma lista nos N produtos mais vendidos em todo o ano\n");
     printf("11- Dado um código de cliente determinar quais os códigos dos 3 produtos em que gastou mais dinheiro durante o ano\n");
     printf("12- Determinar o número de clientes registados que não realizaram compras e o número de produtos que ninguém comprou\n");
 

@@ -402,32 +402,39 @@ faturacaoProduto getTotalFilial(int filial){
     return tabela[filial-1][12];
 }
 
-/*
-int getNaoComprados(){
-    return contaNaoComprados(tabela[3][12]);
+void swapString(char * * x, char * * y) {
+    char *t = *y;
+    *y = *x;
+    *x = t;
 }
 
-int contaNaoComprados(faturacaoProduto raiz){
-    if(raiz==NULL)
-        return 0;
-    infoP aux=raiz->produto;
-    if(aux->qtdPromocao==0 && aux->qtdNormal==0)
-        return (1 + contaNaoComprados(raiz->esq) + contaNaoComprados(raiz->dir));
-    return contaNaoComprados(raiz->esq) + contaNaoComprados(raiz->dir);
+void swapInt(int * x, int * y) {
+    *x ^= *y;
+    *y ^= *x;
+    *x ^= *y;
 }
-*/
 
-/*void getQuery3(int mes,char * produto,double * totFat,int * totVendas){
-    infoP aux;
-    faturacaoProduto nodo=searchProduto(tabela[3][mes-1],produto);
-    if(nodo==NULL) *totFat=-1;
-    else{
-        aux= nodo->produto;
-        *totFat=aux->totalNormal+aux->totalPromocao;
-        *totVendas=aux->qtdNormal+aux->qtdPromocao;
+
+void preencheProdutos (char * * produtos, int * qtd, int n, nodoFaturacaoProduto nodo){
+    int i, aux;
+
+    if(nodo==NULL) return;
+    aux=nodo->produto->qtdNormal+nodo->produto->qtdPromocao;
+    if(nodo==tabela[3][12])
+        for(i=0;i<n;i++){
+            produtos[i]=strdup(nodo->produto->produto);
+            qtd[i]=aux;
+        }
+    if(aux>qtd[n-1]){
+        free(produtos[n-1]);
+        produtos[n-1]=strdup(nodo->produto->produto);
+        qtd[n-1]=aux;
+        for (i = n-2; i >= 0 && qtd[i]<qtd[i+1]; i--){
+            swapString(&produtos[i], &produtos[i+1]);
+            swapInt(&qtd[i], &qtd[i+1]);
+        }
     }
-}*/
-
-
-
+    preencheProdutos(produtos, qtd, n, nodo->esq);
+    preencheProdutos(produtos, qtd, n, nodo->dir);
+}
 

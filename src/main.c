@@ -362,7 +362,7 @@ return;
 
 
 
-void query9(){
+void query9(CatClientes catClientes){
     int i, j, mes,* qtd,t=0 , qtd_temp ;
     char * * produtos,cliente[10];
     char * produto_temp;
@@ -381,6 +381,15 @@ void query9(){
     }
     printf("Cliente: ");
     scanf("%s",cliente);
+
+    if(cliente[0] >=97 && cliente[0] <= 122) cliente[0]-=32; /*Caso em que a primeira letra inserida é minúscula*/
+    if(existeCliente(catClientes, criaCliente(cliente))==0){
+        printf("O cliente não existe\n");
+        printf("(Prima ENTER para voltar ao menu)\n");
+        getchar();
+        getchar();
+        return;
+    }
 
     t=carregaCompra (1, cliente, mes, &produtos, &qtd, t);
     t=carregaCompra (2, cliente, mes, &produtos, &qtd, t);
@@ -524,7 +533,7 @@ int main(){
         else if(op==6 && carregado) query6();
         else if(op==7 && carregado) query7();
         else if(op==8 && carregado) query8();
-        else if(op==9 && carregado) query9();
+        else if(op==9 && carregado) query9(catClientes);
         else if(op==10 && carregado) query10();
         else if(op==11 && carregado) query11();
         else if(op==12 && carregado) query12(catClientes);

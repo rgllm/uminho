@@ -26,7 +26,17 @@ typedef struct infoF{
 
 
 void initfiliais();
+int existeClienteF(nodo *clientesFiliais);
+int procuraClientes(nodo *clientesFiliais, int count);
 void carregaVenda(char * cliente, char * produto, int qtd, char tipo, int mes, double preco,int filial);
-int carregaCompra(int filial, char * cliente, int mes, char * * * produtos, int * * quant, int t);
 void carregaQtd(int filial, char * cliente, int tabela[12][3]);
+int addProduto(char * prod, int qtd, char * * * produtos, int * * quant, int t);
+int carregaCompra(int filial, char * cliente, int mes, char * * * produtos, int * * quant, int t);
 int determinaClientes(nodoFilial nodo, char * prod, char * * * clientes, char * * tipo, int t);
+nodo * comparaAnterior(nodoFilial anterior,nodoFilial atual,nodo * ret);
+nodo * comparaAnterior2(nodo * anterior,nodoFilial atual,nodo * ret);
+nodo * compraramTodasFiliais();
+void swapString2(char * * x, char * * y);
+void swapDouble(double *x,double *y);
+void carregaMaxValor(char * cliente, char * * produtos, double * valor);
+int totalClientesFilial(char * produto, int filial);

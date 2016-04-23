@@ -415,7 +415,7 @@ void swapInt(int * x, int * y) {
 }
 
 
-void preencheProdutos (char * * produtos, int * qtd, int n, nodoFaturacaoProduto nodo){
+void preencheProdutos(char * * produtos, int * qtd, int n, nodoFaturacaoProduto nodo){
     int i, aux;
 
     if(nodo==NULL) return;
@@ -429,7 +429,7 @@ void preencheProdutos (char * * produtos, int * qtd, int n, nodoFaturacaoProduto
         free(produtos[n-1]);
         produtos[n-1]=strdup(nodo->produto->produto);
         qtd[n-1]=aux;
-        for (i = n-2; i >= 0 && qtd[i]<qtd[i+1]; i--){
+        for(i = n-2; i >= 0 && qtd[i]<qtd[i+1]; i--){
             swapString(&produtos[i], &produtos[i+1]);
             swapInt(&qtd[i], &qtd[i+1]);
         }
@@ -438,3 +438,17 @@ void preencheProdutos (char * * produtos, int * qtd, int n, nodoFaturacaoProduto
     preencheProdutos(produtos, qtd, n, nodo->dir);
 }
 
+/**
+ *
+ * @param mes
+ * @param produto
+ * @return
+ */
+int totalVendasPFilial(char * produto, int filial){
+    infoP nodoProduto;
+    faturacaoProduto nodo=searchProduto(tabela[filial-1][12],produto);
+    if(nodo==NULL) return 0;
+    nodoProduto = nodo->produto;
+    return nodoProduto->qtdPromocao+nodoProduto->qtdNormal;
+
+}

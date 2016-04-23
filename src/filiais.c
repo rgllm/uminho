@@ -6,6 +6,25 @@ void initfiliais(){
    filial1=filial2=filial3=NULL;
 }
 
+int totalClientesFil(nodoFilial filial, char * produto){
+    int count=0,i;
+    if(filial==NULL) return 0;
+    for(i=0;i<filial->cliente->nVendas;i++)
+        if(strcmp(filial->cliente->vendas[i].produto, produto)==0) {count++;break;}
+    count+=totalClientesFil(filial->esq,produto);
+    count+=totalClientesFil(filial->dir,produto);
+    return count;
+}
+
+
+int totalClientesFilial(char * produto, int filial){
+    nodoFilial fil;
+    if(filial ==1) fil=filial1;
+    if(filial ==2) fil=filial2;
+    if(filial ==3) fil=filial3;
+    return(totalClientesFil(fil,produto));
+}
+
 
 int existeClienteF(nodo *clientesFiliais){
     int count=0;
@@ -24,16 +43,18 @@ count+=procuraClientes(clientesFiliais->dir, count);
 return count;
 
 }
-/*
-int totalClientesNCompraram(CatClientes catClientes){
-int count;
-if(catClientes==NULL) return 0;
-if(search(catClientes->clientes, filial1)==NULL && search(catClientes->clientes, filial2)==NULL && search(catClientes->clientes, filial3==NULL)) count++;
-count+=totalClientesNCompraram(catClientes->esq);
-count+=totalClientesNCompraram(catClientes->dir);
-return count;
+
+
+int totalClientesNCompraram(nodo * clientes){
+    int count=0,i;
+    if(clientes==NULL) return 0;
+    if(procuraPFilial(filial1,clientes->codigo )==NULL && procuraPFilial(filial2,clientes->codigo )==NULL && procuraPFilial(filial3,clientes->codigo) ==NULL)
+        count++;
+    count+=totalClientesNCompraram(clientes->esq);
+    count+=totalClientesNCompraram(clientes->dir);
+    return count;
 }
-*/
+
 
 void carregaVenda(char * cliente, char * produto, int qtd, char tipo, int mes, double preco,int filial){
     infoF aux;
@@ -129,8 +150,6 @@ int carregaCompra(int filial, char * cliente, int mes, char * * * produtos, int 
 
 
 
-
-
 nodoFilial getFilial(int filial){
     if(filial ==1) return filial1;
     if(filial ==2) return filial2;
@@ -187,4 +206,74 @@ nodo * compraramTodasFiliais(){
     return fil3;
 
 }
+
+
+void swapString2(char * * x, char * * y){
+    char *t = *y;
+    *y = *x;
+    *x = t;
+}
+
+void swapDouble(double *x,double *y){
+   double temp = *x;
+   *x = *y;
+   *y = temp;
+   }
+
+
+void carregaMaxValor(char * cliente, char * * produtos, double * valor){
+    int i, k, p, j, t;
+    double aux;
+    nodoFilial nodo1=procuraPFilial(filial1, cliente);
+    nodoFilial nodo2=procuraPFilial(filial2, cliente);
+    nodoFilial nodo3=procuraPFilial(filial3, cliente);
+
+    k=nodo1->cliente->nVendas + nodo2->cliente->nVendas + nodo3->cliente->nVendas;
+
+    char * produtosAux[k];
+    double valoresAux[k];
+    p=0;
+
+
+    for (i = 0; i < nodo1->cliente->nVendas; i++){
+        produtosAux[p]=strdup(nodo1->cliente->vendas[i].produto);
+        valoresAux[p]=nodo1->cliente->vendas[i].qtd*nodo1->cliente->vendas[i].preco;
+        p++;
+    }
+    for (i = 0; i < nodo2->cliente->nVendas; i++){
+        produtosAux[p]=strdup(nodo2->cliente->vendas[i].produto);
+        valoresAux[p]=nodo2->cliente->vendas[i].qtd*nodo2->cliente->vendas[i].preco;
+        p++;
+    }
+
+    for (i = 0; i < nodo3->cliente->nVendas; i++){
+        produtosAux[p]=strdup(nodo3->cliente->vendas[i].produto);
+        valoresAux[p]=nodo3->cliente->vendas[i].qtd*nodo3->cliente->vendas[i].preco;
+        p++;
+    }
+
+
+    for (i = 0; i < p; i++){
+        for (j = i+1; j < p; j++)
+            if (strcmp(produtosAux[j],produtosAux[i])==0) {
+                valoresAux[i]+=valoresAux[j];
+                valoresAux[j]=0;
+            }
+    }
+    
+    for(i=0;i<p;i++)
+        printf("%s  - %.2f\n",produtosAux[i],valoresAux[i] );
+
+    for (i = 0; i < p; i++){
+        if (valoresAux[i]>valor[2]){
+            valor[2]=valoresAux[i];
+            produtos[2]=strdup(produtosAux[i]);
+            for(t=1;t>=0 && valor[t]<valor[t+1];t--){
+                swapDouble(&valor[t],&valor[t+1]);
+                swapString2(&produtos[t], &produtos[t+1]);
+            }
+        }
+    }
+}
+
 

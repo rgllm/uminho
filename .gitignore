@@ -13,3 +13,5 @@ hs_err_pid*
 
 #OSX Files
 .DS_STORE
+/code/nbproject/private/
+/src/GereVenda/nbproject/private/

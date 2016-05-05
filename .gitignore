@@ -15,3 +15,5 @@ hs_err_pid*
 .DS_STORE
 /code/nbproject/private/
 /src/GereVenda/nbproject/private/
+/src/GereVenda/build/
+/src/AnagramGame/nbproject/private/

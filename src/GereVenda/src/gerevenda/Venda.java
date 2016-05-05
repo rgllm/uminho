@@ -1,51 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author 
- */
-
-public static void main(String [] args){
-    crono.start();
-    ArrayList<String> linhas = readLinesArrayWithScanner;
-    crono.stop();
-    System.out.println("Tempo: " + Crono.print);
-}
-
-public static ArrayList<String> readLinesArrayWithScanner(String ficheiro) {
-        ArrayList<String> linhas = new ArrayList<>();
-        Scanner scanFile = null;
-        try {
-            scanFile = new Scanner(new FileReader(ficheiro));
-            scanFile.useDelimiter("\n\r");
-            while(scanFile.hasNext())
-                linhas.add(scanFile.nextLine());
-        }
-        catch(IOException ioExc){ 
-            out.println(ioExc.getMessage()); 
-            return null; 
-        } 
-    finally { 
-            if(scanFile != null) scanFile.close(); 
-     } 
-return linhas;
-}
+package gerevenda;
 
 
-public class Venda Serializable {
+import gerevenda.Serializable;
+import java.lang.*;
+import java.util.Objects;
 
-    private String produto;
-    private double preco;
-    private int unidades;
-    private char modo;
-    private String cliente;
-    private int filial;
+public class Venda implements Serializable {
 
+    private final String produto;
+    private final double preco;
+    private final int unidades;
+    private final char modo;
+    private final String cliente;
+    private final int filial;
 
+    
     public Venda(String po, double pr, int u, char m, String c, int f){
         produto=po;
         preco=pr;
@@ -74,40 +43,63 @@ public class Venda Serializable {
 
 
     public Venda clone(){
-       return new Venda(this);
+       return new  Venda(this);
     }
 
     public String toString(){
         StringBuilder venda = new StringBuilder();
-
-        venda.append=("Produto ");
-        venda.append=(this.produto+" ");
-        venda.append=("Preco ");
-        venda.append=(this.preco+" ");
-        venda.append=("Unidades ");
-        venda.append=(this.unidades+" ");
-        venda.append=("Modo ");
-        venda.append=(this.modo+" ");
-        venda.append=("Cliente ");
-        venda.append=(this.cliente+" ");
-        venda.append=("Filial ");
-        venda.append=(this.filial+"\n");
+        
+        venda.append("Produto ");
+        venda.append(produto);
+        venda.append(" Preco ");
+        venda.append(preco);
+        venda.append(" Unidades ");
+        venda.append(unidades);
+        venda.append(" Modo ");
+        venda.append(modo);
+        venda.append(" Cliente ");
+        venda.append(cliente);
+        venda.append(" Filial ");
+        venda.append(filial+"\n");
   
         return venda.toString();
-}
-    
-    public boolean equals(Object o){
-        if(o==null) return false;
-        if (o==this) return true;
-        if (this.getClass()!=o.getClass()) return false;
-        Venda obj = (Venda) o;
-        if( produto.equals(o.getProduto())==true &&
-            preco==o.getPreco() &&
-            unidades=o.getUnidades() &&
-            modo=o.getModo() &&
-            cliente.equals(o.getCliente())==true &&
-            filial=o.getFilial()) return true;
-       else return false;
     }
+
+
+    
+    
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Venda other = (Venda) obj;
+        if (Double.doubleToLongBits(this.preco) != Double.doubleToLongBits(other.preco)) {
+            return false;
+        }
+        if (this.unidades != other.unidades) {
+            return false;
+        }
+        if (this.modo != other.modo) {
+            return false;
+        }
+        if (this.filial != other.filial) {
+            return false;
+        }
+        if (!Objects.equals(this.produto, other.produto)) {
+            return false;
+        }
+        if (!Objects.equals(this.cliente, other.cliente)) {
+            return false;
+        }
+        return true;
+    }
+    
+  
 
 }

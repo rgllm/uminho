@@ -1,5 +1,9 @@
-package gerevenda;
+/**
+ *
+ * @author rgllm
+ */
 
+package gerevenda;
 
 import gerevenda.Serializable;
 import java.lang.*;
@@ -12,15 +16,17 @@ public class Venda implements Serializable {
     private final int unidades;
     private final char modo;
     private final String cliente;
+    private final int mes;
     private final int filial;
 
     
-    public Venda(String po, double pr, int u, char m, String c, int f){
+    public Venda(String po, double pr, int u, char m, String c, int me, int f){
         produto=po;
         preco=pr;
         unidades=u;
         modo=m;
         cliente=c;
+        mes=me;
         filial=f;
     }
     
@@ -30,6 +36,7 @@ public class Venda implements Serializable {
         unidades=v.getUnidades();
         modo=v.getModo();
         cliente=v.getCliente();
+        mes=v.getMes();
         filial=v.getFilial();
     }
 
@@ -39,6 +46,7 @@ public class Venda implements Serializable {
     public int getUnidades(){return unidades;}
     public char getModo(){return modo;}
     public String getCliente(){return cliente;}
+    public int getMes(){return mes;}
     public int getFilial(){return filial;}
 
 
@@ -59,6 +67,8 @@ public class Venda implements Serializable {
         venda.append(modo);
         venda.append(" Cliente ");
         venda.append(cliente);
+        venda.append(" Mes ");
+        venda.append(mes);
         venda.append(" Filial ");
         venda.append(filial+"\n");
   
@@ -86,6 +96,9 @@ public class Venda implements Serializable {
             return false;
         }
         if (this.modo != other.modo) {
+            return false;
+        }
+        if(this.mes != other.mes){
             return false;
         }
         if (this.filial != other.filial) {

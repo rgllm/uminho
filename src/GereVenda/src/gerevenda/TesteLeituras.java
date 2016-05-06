@@ -43,7 +43,7 @@ public static Venda parseLinhaVenda(String linha) {
        produto=campos[0];
        preco=Double.parseDouble(campos[1]);
        unidades=Integer.parseInt(campos[2]);
-       modo=campos.charAt(3); //TODO
+       modo=campos[3].charAt(0);
        cliente=campos[4];
        mes=Integer.parseInt(campos[5]);
        filial=Integer.parseInt(campos[6]);
@@ -74,10 +74,15 @@ public static ArrayList<Venda> parseAllLinhas(ArrayList<String> linhas) {
 
 public static void main(String [] args){
     Crono.start();
+    try{
     ArrayList<String> linhas = readLinesArrayWithScanner("Vendas_3M.txt");
     ArrayList<Venda> vendas = parseAllLinhas(linhas);
     Crono.stop();
     System.out.println("Tempo: " + Crono.print());
+    }
+    catch(NullPointerException){
+        System.out.println("You have to have a file.\n");
+    }
 }
 
 

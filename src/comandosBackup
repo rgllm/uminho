@@ -1,0 +1,4 @@
+openssl dgst "ficheiro" | cut -d " " -f2 > aux
+(converter aux para string "digest")
+gzip -k -c "ficheiro" > ~/.backup/data/"digest.gz"
+ln -s  ~/.backup/data/"digest.gz" ~/.backup/metadata/"ficheiro" 

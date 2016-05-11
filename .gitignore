@@ -4,6 +4,9 @@
 *.obj
 *.elf
 
+# Binary files
+!/*.*
+
 # Precompiled Headers
 *.gch
 *.pch

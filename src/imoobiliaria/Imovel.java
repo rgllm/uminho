@@ -61,6 +61,4 @@ public class Imovel{
         return "Imovel{" + "id=" + id + ", rua=" + rua + ", preco=" + preco + ", precoMinimo=" + precoMinimo + '}';
     }
 
-
-
 }

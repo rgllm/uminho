@@ -9,8 +9,8 @@ public class Utilizador{
     private String password;
     private String morada;
     private String data_nascimento;
-    
-    /*           Construtores         */    
+
+    /*           Construtores         */
     public Utilizador(){
         email=new String("");
         nome=new String("");
@@ -18,7 +18,7 @@ public class Utilizador{
         morada=new String("");
         data_nascimento=new String("");
     }
-    
+
     public Utilizador(String email,String nome,String password,String morada,String data_nascimento){
         this.email=new String(email);
         this.nome=new String(nome);
@@ -26,7 +26,7 @@ public class Utilizador{
         this.morada=new String(morada);
         this.data_nascimento=new String(data_nascimento);
     }
-    
+
     public Utilizador (Utilizador x){
         email=new String(x.getEmail());
         nome=new String(x.getNome());
@@ -34,75 +34,43 @@ public class Utilizador{
         morada=new String(x.getMorada());
         data_nascimento=new String(x.getDataNasc());
     }
-      
+
     /*      Métodos de instância    */
-    
+
     public String getEmail(){return email;}
     public String getNome(){return nome;}
     public String getPassword(){return password;}
     public String getMorada(){return morada;}
     public String getDataNasc(){return data_nascimento;}
-    
+
     public void setEmail(String email){this.email=new String(email);}
     public void setNome(String nome){this.nome=new String(nome);}
     public void setPassword(String password){this.password=new String(password);}
     public void setMorada(String morada){this.morada=new String(morada);}
     public void setDataNasc(String data_nascimento){this.data_nascimento=new String(data_nascimento);}
-    
+
     public boolean equals(Object obj) {
         if (this == obj) {return true;}
         if (obj == null) {return false;}
         if (getClass() != obj.getClass()) {return false;}
         final Utilizador other = (Utilizador) obj;
-        if (Objects.equals(this.email, other.email) && 
-            Objects.equals(this.nome, other.nome) && 
-            Objects.equals(this.password, other.password) && 
-            Objects.equals(this.morada, other.morada) && 
+        if (Objects.equals(this.email, other.email) &&
+            Objects.equals(this.nome, other.nome) &&
+            Objects.equals(this.password, other.password) &&
+            Objects.equals(this.morada, other.morada) &&
             Objects.equals(this.data_nascimento, other.data_nascimento)) {
             return true;
         }
         return false;
     }
-    
+
     public String toString() {
         return "Utilizador{" +
                 "email=" + email +
                 ", nome=" + nome +
                 ", password=" +password +
                 ", morada=" + morada +
-                ", data_nascimento=" + data_nascimento + '}';
+                ", data_nascimento=" + data_nascimento + '}'; //Append?
     }
-    
-    
-    
-    
-    /* Outros Métodos */
-    
-    /*
-    
-    /**
-    * Consultar a lista de todos os imóveis de um dado tipo (Terreno, Moradia, etc.) e até um certo preço.
-    */
-    /*
-    public List<Imovel> getImovel(String classe, int preco){
-    
-    }
-    */
-    /**
-    * Consultar a lista de todos os imóveis habitáveis (até um certo preço).
-    */
-    /*
-    public List<Habitavel> getHabitaveis(int preco){
-    
-    }
-    */
-    /**
-    * Obter um mapeamento entre todos os imóveis e respectivos vendedores.
-    */
-    /*
-    public Map<Imovel, Vendedor> getMapeamentoImoveis(){
-    
-    }
-    */
 
 }

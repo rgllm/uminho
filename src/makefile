@@ -1,15 +1,9 @@
-#
-#	Makefile Code
-#
+SRCS = $(wildcard *.c)
 
-CFLAGS= -Wall -O2
-all: sobusrv sobucli init
+PROGS = $(patsubst %.c,%,$(SRCS))
 
-sobusrv:
-	$(CC) sobusrv.c -o sobusrv $(OBJS)
+all: $(PROGS)
 
-sobucli:
-	$(CC) sobucli.c -o sobucli $(OBJS)
+%: %.c
 
-init:
-	$(CC) init.c -o init $(OBJS)
+	$(CC) $(CFLAGS)  -o $@ $<

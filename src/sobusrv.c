@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#define MAXBUFF 128
+#define MAXBUFF 256
 
 ssize_t readln(int fildes, void *buf){
     int i=0,aux;
@@ -33,13 +33,15 @@ int temBackup(char* digest){
     return ret;
 }
 
-
-int main(){
-    char  buf[MAXBUFF], *dir,digest[MAXBUFF],op,*nome;
+int main(int argc, char *argv[], char *envp[]){
+    char  buf[MAXBUFF], *dir,digest[MAXBUFF],op,*nome,*home=getenv("HOME");
     int n,pid,aux;
     int fd,fd1;
-    char *pipedir ="/home/munybt/.backup/pipe";
-    fd=open(pipedir,O_RDONLY);
+    char *pipe_dir=strdup(home) , *data_dir= strdup(home) , *metadata_dir=strdup(home);
+    strcat(pipe_dir,"/.backup/pipe");
+    strcat(data_dir,"/.backup/data/");
+    strcat(metadata_dir,"/.backup/metadata/");
+    fd=open(pipe_dir,O_RDONLY);
     while(1){
         while((n=readln(fd,buf))>0){
             dir=strdup(strtok(buf," "));
@@ -49,9 +51,9 @@ int main(){
                                            /*    BACKUP      */
             if(op=='B'){
                 /*FALTA: testar se existe algum ficheiro com o mesmo nome    */
-                strcpy(buf,"openssl dgst ");
+                strcpy(buf,"sha1sum ");
                 strcat(buf,dir);
-                strcat(buf," | cut -d ' ' -f2 > aux.txt");
+                strcat(buf," | cut -d ' ' -f1 > aux.txt");
                 system(buf);     // openssl dgst "dirFicheiro" | cut -d ' ' -f2 > aux.txt
                 fd1=open("aux.txt",O_RDONLY);
                 readln(fd1,digest);
@@ -60,19 +62,24 @@ int main(){
                 if(!temBackup(digest)){
                     strcpy(buf,"gzip -k -c ");
                     strcat(buf,dir);
-                    strcat(buf," > /home/munybt/.backup/data/");
+                    strcat(buf," > ");
+                    strcat(buf,data_dir);
                     strcat(buf,digest);
                     strcat(buf,".gz");
                     system(buf);     // gzip -k -c "dirFicheiro" > /home/munybt/.backup/data/"digestFicheiro".gz
                 }
-                strcpy(buf,"ln -s /home/munybt/.backup/data/");
+
+                strcpy(buf,"ln -s ");
+                strcat(buf,data_dir);
                 strcat(buf,digest);
                 strcat(buf,".gz ");
-                strcat(buf,"/home/munybt/.backup/metadata/");
+                strcat(buf,metadata_dir);
+                printf("meta -> %s\n",metadata_dir );
                 nome=strrchr(dir, '/')+1;
                 if(nome==NULL)
                     nome=dir;
                 strcat(buf,nome);
+                printf("%s\n",buf );
                 system(buf); // ln -s /home/munybt/.backup/data/"digestFicheiro".gz /home/munybt/.backup/metadata/"nomeFicheiro"
 
                 kill(pid,SIGUSR1);

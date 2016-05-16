@@ -23,8 +23,8 @@ void hand(int s){}
 void hand2(int s){ printf("Ficheiro não encontrado\n");}
 
 int main(int argc,char * argv[]){
-    int i,nFiles,fp;
-    char buf[MAXBUFF],* * commands,aux,spid[8];
+    int i,nFiles;
+    char buf[MAXBUFF],aux,spid[8];
     int pipe=open("/home/munybt/.backup/pipe",O_WRONLY);
     int pid=getpid();
 
@@ -37,44 +37,32 @@ int main(int argc,char * argv[]){
 
     signal(SIGUSR1,hand);
     signal(SIGUSR2,hand2);
+
     sprintf(spid, "%d", pid);
                                                /*    BACKUP      */
-    if(strcmp(argv[1],"backup")==0){ 
-        strcpy(buf,"ls ");
-        strcat(buf,argv[2]);
-        strcat(buf," > aux");
-        system(buf);     // ls "dirFicheiro" > aux
-        system("wc -l aux > nLines");
-
-        fp=open("nLines",O_RDONLY);
-        readln(fp,buf);
-        close(fp);
-        system("rm nLines");
-        nFiles=atoi(buf);
-        commands=malloc(nFiles*sizeof(char*));
-        fp=open("aux",O_RDONLY);
-        for(i=0;i<nFiles;i++){
-            readln(fp,buf);
+    if(strcmp(argv[1],"backup")==0){         
+        for(i=0;i<argc-2;i++){
+            strcpy(buf,argv[i+2]);
             strcat(buf," B ");
             strcat(buf,spid);
             strcat(buf,"\n");     // "dirFicheiro" B "myPID" 
             write(pipe,buf,strlen(buf));
             pause();
-            printf("%s : copiado\n",strtok(buf," "));
+            printf("%s : copiado\n",strtok(buf," ")); // verificar sucesso ou insucesso antes do print
         }
-        close(fp);
-        system("rm aux");
 
     } 
                                                 /*    RESTORE      */
     else if(strcmp(argv[1],"restore")==0){
-        strcpy(buf,argv[2]);
-        strcat(buf," R ");
-        strcat(buf,spid);
-        strcat(buf,"\n");
-        write(pipe,buf,strlen(buf));     // "dirFicheiro" R "myPID" 
-        pause();
-        printf("%s : restaurado\n",argv[2] );
+        for(i=0;i<argc-2;i++){
+            strcpy(buf,argv[i+2]);
+            strcat(buf," R ");
+            strcat(buf,spid);
+            strcat(buf,"\n");
+            write(pipe,buf,strlen(buf));     // "dirFicheiro" R "myPID" 
+            pause(); 
+            printf("%s : restaurado\n",argv[2] ); // verificar sucesso ou insucesso antes do print
+        }
     }
     else{
         printf("Comando inválido\n");

@@ -2,52 +2,62 @@
 import java.util.Objects;
 
 public class Apartamento extends Imovel{
-    private String tipo;
+    private Tipo_Apartamento tipo;
     private double area;
     private int nQuartos;
     private int nWCs;
     private boolean garagem;
+    private int nPorta;
+    private int andar;
 
     /*           Construtores         */
     public Apartamento(){
-        super("","",0.0,0.0);
-        tipo="";
+        tipo=Tipo_Apartamento.Outro;
         area=0.0;
         nQuartos=0;
         nWCs=0;
         garagem=false;
+        nPorta=0;
+        andar=0;
     }
 
-    public Apartamento(String id,String rua,double preco,double precoMinimo,String tipo,double area,int nQuartos,int nWCs,boolean garagem){
-        super(id,rua,preco,precoMinimo);
-        this.tipo=new String(tipo);
+    public Apartamento(String id,String rua,double preco,double precoMinimo,Tipo_Apartamento tipo,double area,int nQuartos,int nWCs,boolean garagem, int nPorta, int andar,Estado_Imovel estado){
+        super(rua,preco,precoMinimo,estado);
+        this.tipo=tipo;
         this.area=area;
         this.nQuartos=nQuartos;
         this.nWCs=nWCs;
         this.garagem=garagem;
+        this.nPorta=nPorta;
+        this.andar=andar;
     }
 
     public Apartamento(Apartamento x){
-        super(x.getId(),x.getRua(),x.getPreco(),x.getPrecoMinimo());
-        this.tipo=new String(x.getTipo());
+        this.tipo=x.getTipo();
         this.area=x.getArea();
         this.nQuartos=x.getNQuartos();
         this.nWCs=x.getNWCs();
         this.garagem=x.isGaragem();
+        this.nPorta=x.getnPorta();
+        this.andar=x.getAndar();
     }
 
     /*      Métodos de instância    */
-    public String getTipo() {return tipo;}
+    public Tipo_Apartamento getTipo() {return tipo;}
     public double getArea() {return area;}
     public int getNQuartos() {return nQuartos;}
     public int getNWCs() {return nWCs;}
     public boolean isGaragem() {return garagem;}
+    public int getnPorta(){return nPorta;}
+    public int getAndar(){return andar;}
 
-    public void setTipo(String tipo) {this.tipo = tipo;}
+    public void setTipo(Tipo_Apartamento tipo) {this.tipo = tipo;}
     public void setArea(double area) {this.area = area;}
     public void setNQuartos(int nQuartos) {this.nQuartos = nQuartos;}
     public void setNWCs(int nWCs) {this.nWCs = nWCs;}
     public void setGaragem(boolean garagem) {this.garagem = garagem;}
+    public void setnPorta(int nPorta){this.nPorta=nPorta;}
+    public void setAndar(int andar){this.andar=andar;}
 
     public boolean equals(Object obj) {
         if (this == obj) {return true;}
@@ -58,14 +68,16 @@ public class Apartamento extends Imovel{
             this.nQuartos == other.nQuartos &&
             this.nWCs == other.nWCs &&
             this.garagem == other.garagem &&
-            Objects.equals(this.tipo, other.tipo)){
+            this.tipo == other.tipo &&
+            this.andar==other.andar &&
+            this.nPorta==other.nPorta){
             return true;
         }
         return false;
     }
 
     public String toString() {
-        return "Apartamento{" + "tipo=" + tipo + ", area=" + area + ", nQuartos=" + nQuartos + ", nWCs=" + nWCs + ", garagem=" + garagem + '}';
+        return "Apartamento{" + "tipo=" + tipo + ", area=" + area + ", nQuartos=" + nQuartos + ", nWCs=" + nWCs + ", garagem=" + garagem + ", Andar" + andar + ", Porta" + nPorta + '}';
     }
 
 

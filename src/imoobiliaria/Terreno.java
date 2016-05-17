@@ -1,4 +1,5 @@
 public class Terreno extends Imovel{
+
     private double areaConstrucao;
     private boolean habitacao;
     private boolean armazem;
@@ -9,18 +10,17 @@ public class Terreno extends Imovel{
 
     /*           Construtores         */
     public Terreno(){
-        super("","",0.0,0.0);
         areaConstrucao=0.0;
         habitacao=false;
         armazem=false;
         diamCanalizacoes=0.0;
         eletricidade=false;
         potenciaEletrica=0.0;
-        esgotos=false;       
+        esgotos=false;
     }
 
-    public Terreno(String id,String rua,double preco,double precoMinimo,double areaConstrucao,boolean habitacao,boolean armazem,double diamCanalizacoes,boolean eletricidade,double potenciaEletrica,boolean esgotos){
-        super(id,rua,preco,precoMinimo);
+    public Terreno(String id,String rua,double preco,double precoMinimo,double areaConstrucao,boolean habitacao,boolean armazem,double diamCanalizacoes,boolean eletricidade,double potenciaEletrica,boolean esgotos,Estado_Imovel estado){
+        super(rua,preco,precoMinimo,estado);
         this.areaConstrucao=areaConstrucao;
         this.habitacao=habitacao;
         this.armazem=armazem;
@@ -31,7 +31,7 @@ public class Terreno extends Imovel{
     }
 
     public Terreno(Terreno x){
-        super(x.getId(),x.getRua(),x.getPreco(),x.getPrecoMinimo());
+        super(x.getRua(),x.getPreco(),x.getPrecoMinimo(),x.getEstado());
         this.areaConstrucao=x.getAreaConstrucao();
         this.habitacao=x.isHabitacao();
         this.armazem=x.isArmazem();
@@ -78,6 +78,8 @@ public class Terreno extends Imovel{
         return "Terreno{" + "areaConstrucao=" + areaConstrucao + ", habitacao=" + habitacao + ", armazem=" + armazem + ", diamCanalizacoes=" + diamCanalizacoes + ", eletricidade=" + eletricidade + ", potenciaEletrica=" + potenciaEletrica + ", esgotos=" + esgotos + '}';
     }
 
-
+    public Terreno clone(){
+        return new Terreno(this);
+    }
 
 }

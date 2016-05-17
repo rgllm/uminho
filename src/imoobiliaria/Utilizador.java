@@ -2,7 +2,7 @@
 import java.util.Objects;
 import java.util.List;
 
-public class Utilizador{
+public class Utilizador implements Comparable<Utilizador>{
 
     private String email;
     private String nome;
@@ -71,6 +71,14 @@ public class Utilizador{
                 ", password=" +password +
                 ", morada=" + morada +
                 ", data_nascimento=" + data_nascimento + '}'; //Append?
+    }
+
+    public Utilizador clone(){
+        return new Utilizador(this);
+    }
+
+    public int compareTo(Utilizador u){
+        return this.getEmail().compareTo(u.getEmail());
     }
 
 }

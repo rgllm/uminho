@@ -1,4 +1,3 @@
-
 import java.util.Objects;
 
 public class Loja extends Imovel{
@@ -6,19 +5,18 @@ public class Loja extends Imovel{
     private boolean wc;
     private String tipoNegocio;
     private int nPorta;
-    /*parte habitacional */
 
     /*           Construtores         */
     public Loja(){
-        super("","",0.0,0.0);
+        super();
         area=0.0;
         wc=false;
         tipoNegocio=new String("");
-        nPorta=0;        
+        nPorta=0;
     }
 
-    public Loja(String id,String rua,double preco,double precoMinimo,double area,boolean wc,String tipoNegocio,int nPorta){
-        super(id,rua,preco,precoMinimo);
+    public Loja(String id,String rua,double preco,double precoMinimo,double area,boolean wc, Estado_Imovel estado, String tipoNegocio,int nPorta){
+        super(rua,preco,precoMinimo,estado);
         this.area=area;
         this.wc=wc;
         this.tipoNegocio=new String(tipoNegocio);
@@ -26,7 +24,6 @@ public class Loja extends Imovel{
     }
 
     public Loja(Loja x){
-        super(x.getId(),x.getRua(),x.getPreco(),x.getPrecoMinimo());
         this.area=x.getArea();
         this.wc=x.isWc();
         this.tipoNegocio=new String(x.getTipoNegocio());
@@ -49,9 +46,9 @@ public class Loja extends Imovel{
         if (obj == null) {return false;}
         if (getClass() != obj.getClass()) {return false;}
         final Loja other = (Loja) obj;
-        if (this.area == other.area && 
-            this.wc == other.wc && 
-            this.nPorta == other.nPorta && 
+        if (this.area == other.area &&
+            this.wc == other.wc &&
+            this.nPorta == other.nPorta &&
             Objects.equals(this.tipoNegocio, other.tipoNegocio)){
             return true;}
         return false;
@@ -61,6 +58,9 @@ public class Loja extends Imovel{
         return "Loja{" + "area=" + area + ", wc=" + wc + ", tipoNegocio=" + tipoNegocio + ", nPorta=" + nPorta + '}';
     }
 
+   public Loja clone(){
+        return new Loja(this);
+    }
 
 
 }

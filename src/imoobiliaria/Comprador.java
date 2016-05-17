@@ -2,31 +2,50 @@ import java.util.*;
 
 public class Comprador extends Utilizador{
 
-    private ArrayList<Imovel> favoritos;
+    private Map<String,Imovel> favoritos;
 
     /*           Construtores         */
     public Comprador(){
         super("","","","","");
-        favoritos=new ArrayList<>();
+        favoritos=new TreeMap<>();
     }
 
-    public Comprador(String email,String nome,String password,String morada,String data_nascimento,ArrayList<Imovel> favoritos){
+    public Comprador(String email,String nome,String password,String morada,String data_nascimento){
         super(email,nome,password,morada,data_nascimento);
-        this.favoritos=new ArrayList<>(favoritos);
+        this.favoritos=new TreeMap<>();
     }
 
     public Comprador(Comprador x){
         super(x.getEmail() , x.getNome() , x.getPassword() , x.getMorada() , x.getDataNasc() );
-        this.favoritos=new ArrayList<Imovel>(x.getFavoritos());
+        this.favoritos=new TreeMap<>(x.getFavoritos());
     }
 
-/*
-          Métodos de instância
-    public List<Imovel> getFavoritos(){return favoritos;}
-
-    public void setFavoritos(ArrayList<Imovel> favoritos){
-        this.favoritos=(ArrayList<Imovel>)favoritos.clone();
+    public Map<String,Imovel> getFavoritos(){
+        Map<String,Imovel> res = new TreeMap<>();
+        for(Imovel i:favoritos.values()){
+            res.put(i.getId(),i.clone());
+        }
+        return res;
     }
 
-*/
+    public void setFavoritos(Map<String,Imovel> s){
+        favoritos.clear();
+        for(Imovel i:s.values()){
+            favoritos.put(i.getId(),i.clone());
+        }
+    }
+
+    public void AddFavorito(Imovel i) throws ImovelFavoritoException{
+        if(favoritos.containsKey(i.getId())){
+            throw new ImovelFavoritoException("Este imóvel já é favorito.");
+        }
+        else{
+            favoritos.put(i.getId(),i.clone());
+        }
+    }
+
+    public Comprador clone(){
+        return new Comprador(this);
+    }
+
 }

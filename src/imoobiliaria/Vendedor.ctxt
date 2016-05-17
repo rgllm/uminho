@@ -1,0 +1,26 @@
+#BlueJ class context
+comment0.params=
+comment0.target=Vendedor()
+comment0.text=Construtores
+comment1.params=email\ nome\ password\ morada\ data_nascimento
+comment1.target=Vendedor(java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String)
+comment10.params=
+comment10.target=Vendedor\ clone()
+comment2.params=x
+comment2.target=Vendedor(Vendedor)
+comment3.params=portfolio\ historico
+comment3.target=Vendedor(java.util.Set,\ java.util.Set)
+comment4.params=
+comment4.target=java.util.Set\ getPortfolio()
+comment4.text=M\u00E9todos\ de\ inst\u00E2ncia
+comment5.params=
+comment5.target=java.util.Set\ getHistorico()
+comment6.params=portfolio
+comment6.target=void\ setPortfolio(java.util.Set)
+comment7.params=historico
+comment7.target=void\ setHistorico(java.util.Set)
+comment8.params=i
+comment8.target=void\ paraVenda(Imovel)
+comment9.params=obj
+comment9.target=boolean\ equals(java.lang.Object)
+numComments=11

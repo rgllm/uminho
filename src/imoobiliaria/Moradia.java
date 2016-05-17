@@ -1,8 +1,8 @@
 
 import java.util.Objects;
 
-public class Moradia extends Imovel{
-    private String tipo;
+public class Moradia extends Imovel implements Habitavel{
+    private Tipo_Moradia tipo;
     private double areaImplantacao;
     private double areaCoberta;
     private double areaTerreno;
@@ -12,19 +12,19 @@ public class Moradia extends Imovel{
 
     /*           Construtores         */
     public Moradia(){
-        super("","",0.0,0.0);
-        tipo=new String("");
+        super();
+        tipo=Tipo_Moradia.Outro;
         areaImplantacao=0.0;
         areaCoberta=0.0;
         areaTerreno=0.0;
         nQuartos=0;
         nWCs=0;
-        nPorta=0;       
+        nPorta=0;
     }
 
-    public Moradia(String id,String rua,double preco,double precoMinimo,String tipo,double areaImplantacao,double areaCoberta,double areaTerreno,int nQuartos,int nWCs,int nPorta){
-        super(id,rua,preco,precoMinimo);
-        this.tipo=new String(tipo);
+    public Moradia(String rua,double preco,double precoMinimo,Tipo_Moradia tipo,double areaImplantacao,double areaCoberta,double areaTerreno,int nQuartos,int nWCs,int nPorta,Estado_Imovel estado){
+        super(rua,preco,precoMinimo,estado);
+        this.tipo=tipo;
         this.areaImplantacao=areaImplantacao;
         this.areaCoberta=areaCoberta;
         this.areaTerreno=areaTerreno;
@@ -34,8 +34,7 @@ public class Moradia extends Imovel{
     }
 
     public Moradia(Moradia x){
-        super(x.getId(),x.getRua(),x.getPreco(),x.getPrecoMinimo());
-        this.tipo=new String(x.getTipo());
+        this.tipo=x.getTipo();
         this.areaImplantacao=x.getAreaImplantacao();
         this.areaCoberta=x.getAreaCoberta();
         this.areaTerreno=x.getAreaTerreno();
@@ -45,7 +44,7 @@ public class Moradia extends Imovel{
     }
 
     /*      Métodos de instância    */
-    public String getTipo() {return tipo;}
+    public Tipo_Moradia getTipo() {return tipo;}
     public double getAreaImplantacao() {return areaImplantacao;}
     public double getAreaCoberta() {return areaCoberta;}
     public double getAreaTerreno() {return areaTerreno;}
@@ -53,7 +52,7 @@ public class Moradia extends Imovel{
     public int getNWCs() {return nWCs;}
     public int getNPorta() {return nPorta;}
 
-    public void setTipo(String tipo) {this.tipo = tipo;}
+    public void setTipo(Tipo_Moradia tipo) {this.tipo = tipo;}
     public void setAreaImplantacao(double areaImplantacao) {this.areaImplantacao = areaImplantacao;}
     public void setAreaCoberta(double areaCoberta) {this.areaCoberta = areaCoberta;}
     public void setAreaTerreno(double areaTerreno) {this.areaTerreno = areaTerreno;}
@@ -72,7 +71,7 @@ public class Moradia extends Imovel{
             this.nQuartos == other.nQuartos &&
             this.nWCs == other.nWCs &&
             this.nPorta == other.nPorta &&
-            Objects.equals(this.tipo, other.tipo) ) {
+            this.tipo == other.tipo ) {
             return true;
         }
         return false;

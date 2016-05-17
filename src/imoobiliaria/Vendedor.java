@@ -1,37 +1,73 @@
 
-import java.util.Objects;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
+
 public class Vendedor extends Utilizador{
 
-    private ArrayList<Imovel> portfolio;
-    private ArrayList<Imovel> historico;
+    private Set<Imovel> portfolio;
+    private Set<Imovel> historico;
 
     /*           Construtores         */
     public Vendedor(){
-        super("","","","","");
-        portfolio=null;
-        historico=null;
+        super();
+        portfolio=new TreeSet<Imovel>();
+        historico=new TreeSet<Imovel>();
     }
 
-    public Vendedor(String email,String nome,String password,String morada,String data_nascimento,ArrayList<Imovel> portfolio,ArrayList<Imovel> historico){
+    public Vendedor(String email,String nome,String password,String morada,String data_nascimento){
         super(email,nome,password,morada,data_nascimento);
-        this.portfolio=new ArrayList<Imovel>(portfolio);
-        this.historico=new ArrayList<Imovel>(historico);
+        this.portfolio=new TreeSet<>();
+        this.historico=new TreeSet<>();
     }
 
     public Vendedor(Vendedor x){
         super(x.getEmail() , x.getNome() , x.getPassword() , x.getMorada() , x.getDataNasc() );
-        this.portfolio=new ArrayList<Imovel>(x.getPortfolio());
-        this.historico=new ArrayList<Imovel>(x.getHistorico());
+        this.portfolio=x.getPortfolio();
+        this.historico=x.getHistorico();
+    }
+
+     public Vendedor(Set<Imovel>portfolio , Set<Imovel> historico){
+        this();
+        setPortfolio(portfolio);
+        setHistorico(historico);
     }
 
     /*      Métodos de instância    */
-    public ArrayList<Imovel> getPortfolio() {return portfolio;}
-    public ArrayList<Imovel> getHistorico() {return historico;}
 
-    public void setPortfolio(ArrayList<Imovel> portfolio){this.portfolio = (ArrayList<Imovel>)portfolio.clone();}
-    public void setHistorico(ArrayList<Imovel> historico){this.historico = (ArrayList<Imovel>)historico.clone();}
+    public Set<Imovel> getPortfolio(){
+        Set<Imovel> res = new TreeSet<Imovel>();
+        for(Imovel i: portfolio){
+            res.add(i.clone());
+        }
+
+        return res;
+    }
+
+    public Set<Imovel> getHistorico(){
+        Set<Imovel> res = new TreeSet<Imovel>();
+        for(Imovel i: historico){
+            res.add(i.clone());
+        }
+
+        return res;
+    }
+
+    public void setPortfolio(Set<Imovel> portfolio){
+        this.portfolio.clear();
+        for(Imovel i: portfolio){
+            this.portfolio.add(i.clone());
+        }
+    }
+
+    public void setHistorico(Set<Imovel> historico){
+        this.historico.clear();
+        for(Imovel i: historico){
+            this.historico.add(i.clone());
+        }
+    }
+
+    public void paraVenda(Imovel i){
+        portfolio.add(i.clone());
+    }
 
     public boolean equals(Object obj) {
         if (this == obj) {return true;}
@@ -45,6 +81,10 @@ public class Vendedor extends Utilizador{
             return true;
         }
         return false;
+    }
+
+    public Vendedor clone(){
+          return new Vendedor(this);
     }
 }
 

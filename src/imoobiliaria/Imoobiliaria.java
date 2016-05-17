@@ -117,16 +117,30 @@ public class Imoobiliaria{
     * Consultar a lista de todos os imóveis de um dado tipo (Terreno, Moradia, etc.) e até um certo preço.
     */
     public List<Imovel> getImovel(String classe, int preco){
-        return null; //TODO
+        List<Imovel> res = new ArrayList<>();
+        for(Imovel i:imoveis.values()){
+            if(i.getClass().getSimpleName().equals(classe))
+                if(i.getPreco()<=preco)
+                    res.add(im.clone());
+        }
+        return res;
     }
 
     /**
     * Consultar a lista de todos os imóveis habitáveis (até um certo preço).
     */
 
-   /*public List<Habitavel> getHabitaveis(int preco){
-        return null;
-    } */
+    public List<Habitavel> getHabitaveis(int preco){
+        List<Habitavel> res = new ArrayList<>();
+
+        for(Imovel i:imoveis.values()){
+            if(i instanceof Habitavel)
+                if(i.getPreco() <= preco){
+                    res.add((Habitavel) im.clone());
+            }
+        }
+        return res;
+    }
 
     /**
     * Obter um mapeamento entre todos os imóveis e respectivos vendedores.
@@ -139,17 +153,20 @@ public class Imoobiliaria{
     * Verifica dado um id se esse imóvel existe
     **/
     public boolean existeImovel(String idImovel){
-        if(imoveis.containsKey(idImovel) return true;
+        if(imoveis.containsKey(idImovel)) return true;
         else return false;
     }
 
     /**
     * Marcar um imóvel como favorito.
     **/
-    public void setFavorito(String idImovel) SemAutorizacaoException {
+    public void setFavorito(String idImovel) throws SemAutorizacaoException {
 
-           if(logado==false){ //Falta diferenciar comprador de vendedor
+           if(logado==false){
                 throw new SemAutorizacaoException("Não tem permissões para marcar um imóvel como favorito.");
+           }
+           if(userAtual instanceof Vendedor){
+                throw new SemAutorizacaoException("Só os compradores podem marcar um imóvel como favorito!");
            }
            else{
                     if(existeImovel(idImovel) == false){
@@ -168,7 +185,20 @@ public class Imoobiliaria{
     * Consultar imóveis favoritos ordenados por preço
     **/
     public TreeSet<Imovel> getFavoritos() throws SemAutorizacaoException{
-        return null;
+        TreeSet<Imovel> f = new TreeSet<>();
+        Comprador c = (Comprador) userAtual;
+        if(logado==false){
+            throw new SemAutorizacaoException("Tem que iniciar a sessão para marcar um imóvel como favorito.");
+        }
+        if(userAtual instanceof Vendedor){
+            throw new SemAutorizacaoException("Só os compradores podem marcar um imóvel como favorito!");
+        }
+        else{
+            for(Imovel i: c.getFavorito().values()){
+                f.add(i.clone());
+            }
+        }
+        return f;
     }
 
     /**

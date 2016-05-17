@@ -9,7 +9,7 @@
 #include <unistd.h>
 #define MAXBUFF 256
 
-ssize_t readln(int fildes, char *buf){
+int readln(int fildes, char *buf){
     int i=0,aux;
     for(i=0;i<MAXBUFF;i++){
         aux=read(fildes,buf+i,1);
@@ -28,14 +28,14 @@ int temBackup(char* digest){
     strcpy(data_dir,home);
     strcat(data_dir,"/.backup/data/");
 
-    strcpy(buf,"find ");
-    strcat(buf,data_dir);
-    strcat(buf," -name ");
-    //strcpy(buf,"find /home/munybt/.backup/data -name ");
-    strcat(buf,digest);
-    strcat(buf,".gz > aux.txt");
-    system(buf);
-    fd=open("aux.txt",O_RDONLY);
+    strcat(digest,".gz");    /*  find ".backup/data" -name "digest".gz   */
+    fd=open("aux.txt",O_CREAT | O_TRUNC | O_RDONLY,0666);
+    if(fork()==0){
+        dup2(fd,1);
+        dup2(fd,2);
+        execlp("find","find",data_dir,"-name",digest,NULL);
+    }
+    
     ret=readln(fd,buf);
     close(fd);
     return ret;
@@ -43,7 +43,7 @@ int temBackup(char* digest){
 
 int main(){
     char  buf[MAXBUFF], *dir,digest[MAXBUFF],op,*nome,*home=getenv("HOME");
-    int n,pid,aux;
+    int n,pid,aux,unPipe[2],status;
     int fd,fd1;
     char *pipe_dir, *data_dir, *metadata_dir;
 
@@ -58,7 +58,6 @@ int main(){
     strcat(metadata_dir,"/.backup/metadata/");
 
     fd=open(pipe_dir,O_RDONLY);
-
     while(1){
         while((n=readln(fd,buf))>0){
             dir=strdup(strtok(buf," "));
@@ -66,13 +65,28 @@ int main(){
             pid=atoi(strtok(NULL,"\0"));
 
                                            /*    BACKUP      */
+            fd1=open("aux.txt", O_CREAT | O_TRUNC,0666);
+
             if(op=='B'){
                 strcpy(buf,"sha1sum ");
                 strcat(buf,dir);
                 strcat(buf," | cut -d ' ' -f1 > aux.txt");
                 system(buf);     /* sha1sum "dirFicheiro" | cut -d ' ' -f1 > aux.txt*/
 
-                fd1=open("aux.txt",O_RDONLY);
+                if(fork()==0){
+                    pipe(unPipe);
+                    if(fork()==0){
+                        close(unPipe[0]);
+                        dup2(unPipe[1],1);
+                        execlp("sha1sum","sha1sum",dir,NULL);
+                    }
+                    close(unPipe[1]);
+                    dup2(unPipe[0],0);
+                    dup2(fd1,1);
+                    dup2(fd1,2);                    
+                    execlp("cut","cut","-d","' '","-f1",NULL);
+                }
+                wait(&status);
                 readln(fd1,digest);
                 close(fd1);
 
@@ -100,20 +114,17 @@ int main(){
                         strcat(buf," > ");
                         strcat(buf,data_dir);
                         strcat(buf,digest);
-                        strcat(buf,".gz");
                         system(buf);     /* gzip -k -c "dirFicheiro" > /home/munybt/.backup/data/"digestFicheiro".gz*/
                     }
 
                     strcpy(buf,"ln -s ");
                     strcat(buf,data_dir);
                     strcat(buf,digest);
-                    strcat(buf,".gz ");
+                    strcat(buf,"  ");
                     strcat(buf,metadata_dir);
                     strcat(buf,nome);
                     system(buf); /* ln -s /home/munybt/.backup/data/"digestFicheiro".gz /home/munybt/.backup/metadata/"nomeFicheiro"*/
-
                     kill(pid,30);
-                    system("rm aux.txt");
                 }
                 close(fd1);
             }
@@ -170,12 +181,13 @@ int main(){
                         system(buf); /* rm /home/munybt/.backup/metadata/"nome"*/
 
                     kill(pid,30);
-                    system("rm aux.txt");
                 }
                 else kill(pid,10);
 
             }
         }
     }
+    system("rm aux.txt");
     close(fd);
+    return 0;
 }

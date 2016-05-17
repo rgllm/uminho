@@ -16,10 +16,13 @@ void hand(int s){
 
 int main(int argc,char * argv[]){
     int i;
-    char buf[MAXBUFF],spid[8];
-    int pipe=open("/home/munybt/.backup/pipe",O_WRONLY);
+    char buf[MAXBUFF],spid[8],*home=getenv("HOME"),*pipe_dir;
+    pipe_dir=malloc((strlen(home)+14)*sizeof(char));
+    strcpy(pipe_dir,home);
+    strcat(pipe_dir,"/.backup/pipe");
+    int pipe=open(pipe_dir,O_WRONLY);
     int pid=getpid();
-
+    printf("1");
     if(argc<3){
         printf("Precisa de argumentos!\n");
         printf("./sobucli backup <dir>  -> criar backup de um ficheiro\n");
@@ -32,19 +35,24 @@ int main(int argc,char * argv[]){
     signal(6,hand);
     sprintf(spid, "%d", pid);
                                                /*    BACKUP      */
-    if(strcmp(argv[1],"backup")==0){         
+    if(strcmp(argv[1],"backup")==0){
+            printf("2");
         for(i=0;i<argc-2;i++){
+                printf("3");
             strcpy(buf,argv[i+2]);
+                printf("4");
             strcat(buf," B ");
             strcat(buf,spid);
+                printf("5");
             strcat(buf,"\n");     /* "dirFicheiro" B "myPID" */
             write(pipe,buf,strlen(buf));
+                printf("6");
             printf("> %s : ",strtok(buf," "));
             pause();
-            
+
         }
 
-    } 
+    }
                                                 /*    RESTORE      */
     else if(strcmp(argv[1],"restore")==0){
         for(i=0;i<argc-2;i++){
@@ -53,9 +61,9 @@ int main(int argc,char * argv[]){
             strcat(buf,spid);
             strcat(buf,"\n");
             write(pipe,buf,strlen(buf));     /* "dirFicheiro" R "myPID" */
-            printf("> %s : ",argv[i+2] ); 
-            pause(); 
-            
+            printf("> %s : ",argv[i+2] );
+            pause();
+
         }
     }
     else{

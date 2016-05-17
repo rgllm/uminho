@@ -1,4 +1,5 @@
 #include <sys/signal.h>
+#include <signal.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdio.h>
@@ -21,9 +22,16 @@ ssize_t readln(int fildes, char *buf){
 
 
 int temBackup(char* digest){
-    char buf[MAXBUFF];
+    char buf[MAXBUFF],*home=getenv("HOME"),*data_dir;
     int fd,ret;
-    strcpy(buf,"find /home/munybt/.backup/data -name ");
+    data_dir=malloc((strlen(home)+15)*sizeof(char));
+    strcpy(data_dir,home);
+    strcat(data_dir,"/.backup/data/");
+
+    strcpy(buf,"find ");
+    strcat(buf,data_dir);
+    strcat(buf," -name ");
+    //strcpy(buf,"find /home/munybt/.backup/data -name ");
     strcat(buf,digest);
     strcat(buf,".gz > aux.txt");
     system(buf);
@@ -68,7 +76,7 @@ int main(){
                 nome=strrchr(dir, '/')+1;
                 if(nome==NULL)
                     nome=dir;
- 
+
               /*testar se existe algum ficheiro com o mesmo nome    */
 
                 strcpy(buf,"find ");
@@ -156,7 +164,7 @@ int main(){
                         strcat(buf,metadata_dir);
                         strcat(buf,dir);
                         system(buf); /* rm /home/munybt/.backup/metadata/"nome"*/
-                    
+
                     kill(pid,30);
                 }
                 else kill(pid,10);

@@ -22,6 +22,7 @@ int main(int argc,char * argv[]){
     strcat(pipe_dir,"/.backup/pipe");
     int pipe=open(pipe_dir,O_WRONLY);
     int pid=getpid();
+
     if(argc<3){
         printf("Precisa de argumentos!\n");
         printf("./sobucli backup <dir>  -> criar backup de um ficheiro\n");
@@ -32,6 +33,7 @@ int main(int argc,char * argv[]){
     signal(30,hand);
     signal(10,hand);
     signal(6,hand);
+
     sprintf(spid, "%d", pid);
                                                /*    BACKUP      */
     if(strcmp(argv[1],"backup")==0){
@@ -39,11 +41,11 @@ int main(int argc,char * argv[]){
             strcpy(buf,argv[i+2]);
             strcat(buf," B ");
             strcat(buf,spid);
+            /* verificar se o ficheiro existe */
             strcat(buf,"\n");     /* "dirFicheiro" B "myPID" */
             write(pipe,buf,strlen(buf));
             printf("> %s : ",strtok(buf," "));
             pause();
-
         }
 
     }

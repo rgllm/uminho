@@ -36,7 +36,7 @@ int temBackup(char* digest){
     strcat(buf,".gz > aux.txt");
     system(buf);
     fd=open("aux.txt",O_RDONLY);
-    ret= readln(fd,buf);
+    ret=readln(fd,buf);
     close(fd);
     return ret;
 }
@@ -46,6 +46,7 @@ int main(){
     int n,pid,aux;
     int fd,fd1;
     char *pipe_dir, *data_dir, *metadata_dir;
+
     pipe_dir=malloc((strlen(home)+14)*sizeof(char));
     data_dir=malloc((strlen(home)+15)*sizeof(char));
     metadata_dir=malloc((strlen(home)+19)*sizeof(char));
@@ -55,7 +56,9 @@ int main(){
     strcat(pipe_dir,"/.backup/pipe");
     strcat(data_dir,"/.backup/data/");
     strcat(metadata_dir,"/.backup/metadata/");
+
     fd=open(pipe_dir,O_RDONLY);
+
     while(1){
         while((n=readln(fd,buf))>0){
             dir=strdup(strtok(buf," "));
@@ -67,7 +70,7 @@ int main(){
                 strcpy(buf,"sha1sum ");
                 strcat(buf,dir);
                 strcat(buf," | cut -d ' ' -f1 > aux.txt");
-                system(buf);     /* sha1sum "dirFicheiro" | cut -d ' ' -f2 > aux.txt*/
+                system(buf);     /* sha1sum "dirFicheiro" | cut -d ' ' -f1 > aux.txt*/
 
                 fd1=open("aux.txt",O_RDONLY);
                 readln(fd1,digest);
@@ -85,13 +88,12 @@ int main(){
                 strcat(buf,nome);
                 strcat(buf," > aux.txt");
                 system(buf);
-                fd1=open("aux.txt",O_RDONLY);
+                fd1=open("aux.txt",O_RDONLY);  /* find "metadata" -name "nomeFicheiro" > aux.txt */
 
-                if(readln(fd1,buf)){
+                if(readln(fd1,buf)!=0){
                     kill(pid,6); /* ja existe um backup com o nome fornecido */
                 }
                 else{
-                    close(fd1);
                     if(!temBackup(digest)){
                         strcpy(buf,"gzip -k -c ");
                         strcat(buf,dir);
@@ -111,7 +113,9 @@ int main(){
                     system(buf); /* ln -s /home/munybt/.backup/data/"digestFicheiro".gz /home/munybt/.backup/metadata/"nomeFicheiro"*/
 
                     kill(pid,30);
+                    system("rm aux.txt");
                 }
+                close(fd1);
             }
 
                                             /*    RESTORE      */
@@ -125,7 +129,7 @@ int main(){
                 fd1=open("aux.txt",O_RDONLY);
                 aux=readln(fd1,buf);
                 close(fd1);
-                if(aux){
+                if(aux){  /* se o nome existir */
                     strcpy(buf,"ls -l ");
                     strcat(buf,metadata_dir);
                     strcat(buf," | grep ");
@@ -166,12 +170,12 @@ int main(){
                         system(buf); /* rm /home/munybt/.backup/metadata/"nome"*/
 
                     kill(pid,30);
+                    system("rm aux.txt");
                 }
                 else kill(pid,10);
 
             }
         }
     }
-    system("rm aux.txt");
     close(fd);
 }

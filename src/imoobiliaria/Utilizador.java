@@ -1,8 +1,9 @@
 
 import java.util.Objects;
 import java.util.List;
+import java.io.*;
 
-public class Utilizador implements Comparable<Utilizador>{
+public class Utilizador implements Comparable<Utilizador>, Serializable{
 
     private String email;
     private String nome;

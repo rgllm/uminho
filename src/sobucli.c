@@ -51,7 +51,7 @@ int main(int argc,char * argv[]){
         for(i=0;i<argc-2;i++){
             pipe(fd);
             if(fork()==0){
-                close(fd[0]);
+            
                 dup2(fd[1],1);
                 dup2(fd[1],2);
                 execlp("ls","ls",argv[i+2],NULL);
@@ -59,13 +59,13 @@ int main(int argc,char * argv[]){
 
             close(*fd);
             wait(&status);
-            /* printf("ls exit status: %d\n",aux=WEXITSTATUS(status));*/
-            aux=WEXITSTATUS(status);
+            printf("ls exit status: %d\n",aux=WEXITSTATUS(status));
             if(!aux){
                 strcpy(buf,argv[i+2]);
                 strcat(buf," B ");
                 strcat(buf,spid);
                 strcat(buf,"\n");     /* "dirFicheiro" B "myPID" */
+                printf("%s\n",buf);
                 write(fdPipe,buf,strlen(buf));
                 printf("> %s : ",strtok(buf," "));
                 pause();

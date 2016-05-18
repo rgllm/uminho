@@ -44,7 +44,7 @@ int temBackup(char* digest){
 
 int main(){
     char  buf[MAXBUFF], *dir,digest[MAXBUFF],op,*nome,*home=getenv("HOME");
-    int n,pid,aux,unPipe[2],status;
+    int n,pid,aux,unPipe[2],status,i;
     int fd,fd1;
     char *pipe_dir, *data_dir, *metadata_dir;
 
@@ -57,13 +57,13 @@ int main(){
     strcat(pipe_dir,"/.backup/pipe");
     strcat(data_dir,"/.backup/data/");
     strcat(metadata_dir,"/.backup/metadata/");
-
     fd=open(pipe_dir,O_RDONLY);
     while(1){
         while((n=readln(fd,buf))>0){
             dir=strdup(strtok(buf," "));
             op=strtok(NULL," ")[0];
             pid=atoi(strtok(NULL,"\0"));
+
 
                                            /*    BACKUP      */
             fd1=open("aux.txt", O_CREAT | O_TRUNC,0666);
@@ -87,16 +87,21 @@ int main(){
                     dup2(fd1,2);
                     execlp("cut","cut","-d","' '","-f1",NULL);
                 }
+
                 wait(&status);
                 readln(fd1,digest);
                 close(fd1);
 
-                nome=strrchr(dir, '/')+1;
-                if(nome==NULL)
+                aux=0;
+                for(i=0;i<strlen(nome);i++){
+                    if(nome[i]=='/') aux=1;
+                }
+
+                if(aux==0)
                     nome=dir;
+                else nome=strrchr(dir, '/')+1;
 
               /*testar se existe algum ficheiro com o mesmo nome    */
-
                 strcpy(buf,"find ");
                 strcat(buf,metadata_dir);
                 strcat(buf," -name ");

@@ -35,7 +35,7 @@ int temBackup(char* digest){
         dup2(fd,2);
         execlp("find","find",data_dir,"-name",digest,NULL);
     }
-    
+
     ret=readln(fd,buf);
     close(fd);
     return ret;
@@ -83,7 +83,7 @@ int main(){
                     close(unPipe[1]);
                     dup2(unPipe[0],0);
                     dup2(fd1,1);
-                    dup2(fd1,2);                    
+                    dup2(fd1,2);
                     execlp("cut","cut","-d","' '","-f1",NULL);
                 }
                 wait(&status);

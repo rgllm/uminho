@@ -58,7 +58,7 @@ int main(int argc,char * argv[]){
                 execlp("ls","ls",argv[i+2],NULL);
             }
 
-            close(fd);
+            close(*fd);
             wait(&status);
             //printf("ls exit status: %d\n",aux=WEXITSTATUS(status));
             aux=WEXITSTATUS(status);
@@ -97,6 +97,6 @@ int main(int argc,char * argv[]){
     }
     close(fdPipe);
 
-    
+
     return 0;
 }

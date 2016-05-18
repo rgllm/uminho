@@ -59,13 +59,12 @@ int main(int argc,char * argv[]){
 
             close(*fd);
             wait(&status);
-            printf("ls exit status: %d\n",aux=WEXITSTATUS(status));
+            aux=WEXITSTATUS(status);
             if(!aux){
                 strcpy(buf,argv[i+2]);
                 strcat(buf," B ");
                 strcat(buf,spid);
                 strcat(buf,"\n");     /* "dirFicheiro" B "myPID" */
-                printf("%s\n",buf);
                 write(fdPipe,buf,strlen(buf));
                 printf("> %s : ",strtok(buf," "));
                 pause();

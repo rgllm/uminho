@@ -93,8 +93,8 @@ int main(){
                 close(fd1);
 
                 aux=0;
-                for(i=0;i<strlen(nome);i++){
-                    if(nome[i]=='/') aux=1;
+                for(i=0;i<strlen(dir);i++){
+                    if(dir[i]=='/') aux=1;
                 }
 
                 if(aux==0)

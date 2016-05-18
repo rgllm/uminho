@@ -1,4 +1,5 @@
 import java.util.Objects;
+import java.lang.*;
 
 public class Loja extends Imovel{
     private double area;
@@ -13,14 +14,16 @@ public class Loja extends Imovel{
         wc=false;
         tipoNegocio=new String("");
         nPorta=0;
+        gerarID();
     }
 
-    public Loja(String id,String rua,double preco,double precoMinimo,double area,boolean wc, Estado_Imovel estado, String tipoNegocio,int nPorta){
+    public Loja(String rua,double preco,double precoMinimo,double area,boolean wc, Estado_Imovel estado, String tipoNegocio,int nPorta){
         super(rua,preco,precoMinimo,estado);
         this.area=area;
         this.wc=wc;
         this.tipoNegocio=new String(tipoNegocio);
         this.nPorta=nPorta;
+        gerarID();
     }
 
     public Loja(Loja x){
@@ -60,6 +63,24 @@ public class Loja extends Imovel{
 
    public Loja clone(){
         return new Loja(this);
+    }
+
+    public void gerarID(){
+        int id=0;
+        long bits;
+        String stringID;
+
+        id=super.gerarIDImovel();
+        id+=this.getClass().getSimpleName().hashCode();
+        bits=Double.doubleToLongBits((double)area);
+        id+=(int)(bits ^ (bits >>> 32));
+        if(wc==true) id++;
+        id+=tipoNegocio.hashCode();
+        bits=Double.doubleToLongBits((double)nPorta);
+        id+=(int)(bits ^ (bits >>> 32));
+
+        stringID=id+"";
+        super.setId(stringID);
     }
 
 

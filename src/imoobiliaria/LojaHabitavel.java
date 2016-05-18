@@ -1,8 +1,11 @@
 
-import java.util.Objects;
-import java.lang.*;
-
-public class Apartamento extends Imovel implements Habitavel{
+/**
+ * Write a description of class LojaHabitavel here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
+public class LojaHabitavel extends Loja implements Habitavel{
     private Tipo_Apartamento tipo;
     private double area;
     private int nQuartos;
@@ -11,8 +14,7 @@ public class Apartamento extends Imovel implements Habitavel{
     private int nPorta;
     private int andar;
 
-    /*           Construtores         */
-    public Apartamento(){
+    public LojaHabitavel (){
         super();
         tipo=Tipo_Apartamento.Outro;
         area=0.0;
@@ -24,19 +26,19 @@ public class Apartamento extends Imovel implements Habitavel{
         gerarID();
     }
 
-    public Apartamento(String id,String rua,double preco,double precoMinimo,Tipo_Apartamento tipo,double area,int nQuartos,int nWCs,boolean garagem, int nPorta, int andar,Estado_Imovel estado){
-        super(rua,preco,precoMinimo,estado);
-        this.tipo=tipo;
-        this.area=area;
-        this.nQuartos=nQuartos;
-        this.nWCs=nWCs;
-        this.garagem=garagem;
-        this.nPorta=nPorta;
-        this.andar=andar;
+    public LojaHabitavel(String rua,double preco,double precoMinimo,double area,boolean wc, Estado_Imovel estado, String tipoNegocio,int nPorta,Tipo_Apartamento tipo, double areaAP, int nQuartos, int nWCs, boolean garagem,int andar) {
+        super(rua,preco,precoMinimo,area,wc,estado,tipoNegocio,nPorta);
+        this.tipo = tipo;
+        this.area = areaAP;
+        this.nQuartos = nQuartos;
+        this.nWCs = nWCs;
+        this.garagem = garagem;
+        this.nPorta = nPorta;
+        this.andar = andar;
         gerarID();
     }
 
-    public Apartamento(Apartamento x){
+     public LojaHabitavel(LojaHabitavel x){
         this.tipo=x.getTipo();
         this.area=x.getArea();
         this.nQuartos=x.getNQuartos();
@@ -46,43 +48,24 @@ public class Apartamento extends Imovel implements Habitavel{
         this.andar=x.getAndar();
     }
 
-    /*      Métodos de instância    */
+    //Gets e Sets
+
     public Tipo_Apartamento getTipo() {return tipo;}
     public double getArea() {return area;}
     public int getNQuartos() {return nQuartos;}
     public int getNWCs() {return nWCs;}
+    public int getnPorta() {return nPorta;}
+    public int getAndar() {return andar;}
     public boolean isGaragem() {return garagem;}
-    public int getnPorta(){return nPorta;}
-    public int getAndar(){return andar;}
 
     public void setTipo(Tipo_Apartamento tipo) {this.tipo = tipo;}
     public void setArea(double area) {this.area = area;}
     public void setNQuartos(int nQuartos) {this.nQuartos = nQuartos;}
     public void setNWCs(int nWCs) {this.nWCs = nWCs;}
+    public void setnPorta(int nPorta) {this.nPorta = nPorta;}
+    public void setAndar(int andar) {this.andar = andar;}
     public void setGaragem(boolean garagem) {this.garagem = garagem;}
-    public void setnPorta(int nPorta){this.nPorta=nPorta;}
-    public void setAndar(int andar){this.andar=andar;}
 
-    public boolean equals(Object obj) {
-        if (this == obj) {return true;}
-        if (obj == null) {return false;}
-        if (getClass() != obj.getClass()) {return false;}
-        final Apartamento other = (Apartamento) obj;
-        if (this.area ==other.area &&
-            this.nQuartos == other.nQuartos &&
-            this.nWCs == other.nWCs &&
-            this.garagem == other.garagem &&
-            this.tipo == other.tipo &&
-            this.andar==other.andar &&
-            this.nPorta==other.nPorta){
-            return true;
-        }
-        return false;
-    }
-
-    public String toString() {
-        return "Apartamento{" + "tipo=" + tipo + ", area=" + area + ", nQuartos=" + nQuartos + ", nWCs=" + nWCs + ", garagem=" + garagem + ", Andar" + andar + ", Porta" + nPorta + '}';
-    }
 
     public void gerarID(){
         int id=0;
@@ -110,6 +93,5 @@ public class Apartamento extends Imovel implements Habitavel{
         stringID=id+"";
         super.setId(stringID);
     }
-
 
 }

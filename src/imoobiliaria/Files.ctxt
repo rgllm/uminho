@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.params=email\ password
+comment0.target=void\ pass(java.lang.String,\ java.lang.String)
+comment1.params=
+comment1.target=ImoveisR\ carregaImoveis()
+comment1.text=\n\ Carregar\ imoveis\ existentes\ na\ pasta\ Imoveis\n
+comment2.params=s
+comment2.target=void\ exist(java.lang.String)
+numComments=3

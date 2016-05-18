@@ -1,3 +1,7 @@
+
+import java.util.Objects;
+import java.lang.*;
+
 public class Terreno extends Imovel{
 
     private double areaConstrucao;
@@ -17,6 +21,7 @@ public class Terreno extends Imovel{
         eletricidade=false;
         potenciaEletrica=0.0;
         esgotos=false;
+        gerarID();
     }
 
     public Terreno(String id,String rua,double preco,double precoMinimo,double areaConstrucao,boolean habitacao,boolean armazem,double diamCanalizacoes,boolean eletricidade,double potenciaEletrica,boolean esgotos,Estado_Imovel estado){
@@ -28,6 +33,7 @@ public class Terreno extends Imovel{
         this.eletricidade=eletricidade;
         this.potenciaEletrica=potenciaEletrica;
         this.esgotos=esgotos;
+        gerarID();
     }
 
     public Terreno(Terreno x){
@@ -80,6 +86,28 @@ public class Terreno extends Imovel{
 
     public Terreno clone(){
         return new Terreno(this);
+    }
+
+    public void gerarID(){
+        int id=0;
+        long bits;
+        String stringID;
+
+        id=super.gerarIDImovel();
+        id+=this.getClass().getSimpleName().hashCode();
+        bits=Double.doubleToLongBits(areaConstrucao);
+        id+=(int)(bits ^ (bits >>> 32));
+        if(habitacao==true) id++;
+        if(armazem==true) id++;
+        bits=Double.doubleToLongBits(diamCanalizacoes);
+        id+=(int)(bits ^ (bits >>> 32));
+        if(eletricidade==true) id++;
+        bits=Double.doubleToLongBits(potenciaEletrica);
+        id+=(int)(bits ^ (bits >>> 32));
+        if(esgotos==true) id++;
+
+        stringID=id+"";
+        super.setId(stringID);
     }
 
 }

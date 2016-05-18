@@ -1,7 +1,8 @@
 import java.util.Objects;
 import java.lang.Object;
+import java.lang.Double;
 
-public class Imovel implements Comparable<Imovel>{
+public class Imovel implements Comparable<Imovel>, Serializable{
     private String id;
     private String rua;
     private Double preco;
@@ -10,7 +11,6 @@ public class Imovel implements Comparable<Imovel>{
 
     /*           Construtores         */
     public Imovel(){
-        id=new String("");
         rua=new String("");
         preco=0.0;
         precoMinimo=0.0;
@@ -18,7 +18,6 @@ public class Imovel implements Comparable<Imovel>{
     }
 
     public Imovel(String rua,double preco,double precoMinimo,Estado_Imovel es){
-        this.id=new String(id);
         this.rua=new String(rua);
         this.preco=preco;
         this.precoMinimo=precoMinimo;
@@ -26,7 +25,7 @@ public class Imovel implements Comparable<Imovel>{
     }
 
     public Imovel(Imovel i){
-        this.id=new String(i.getId());
+
         this.rua=new String(i.getRua());
         this.preco=i.getPreco();
         this.precoMinimo=i.getPrecoMinimo();
@@ -53,8 +52,7 @@ public class Imovel implements Comparable<Imovel>{
             return false;
         }
         final Imovel other = (Imovel) obj;
-        if (Objects.equals(this.id, other.id) &&
-            Objects.equals(this.rua, other.rua) &&
+        if (Objects.equals(this.rua, other.rua) &&
             Objects.equals(this.preco, other.preco) &&
             Objects.equals(this.precoMinimo, other.precoMinimo) &&
             Objects.equals(this.estado, other.estado)) {
@@ -64,7 +62,7 @@ public class Imovel implements Comparable<Imovel>{
     }
 
     public String toString() {
-        return "Imovel{" + "id=" + id + ", rua=" + rua + ", preco=" + preco + ", precoMinimo=" + precoMinimo + ", Estado=" + estado + '}';
+        return "Imovel{"+ " rua=" + rua + ", preco=" + preco + ", precoMinimo=" + precoMinimo + ", Estado=" + estado + '}';
     }
 
     public Imovel clone(){
@@ -78,5 +76,21 @@ public class Imovel implements Comparable<Imovel>{
             return 1;
         return 0;
     }
+
+    public int gerarIDImovel(){
+        int id=0;
+        long bits;
+
+        id+=rua.hashCode();
+        bits=Double.doubleToLongBits(preco);
+        id+=(int)(bits ^ (bits >>> 32));
+        bits=Double.doubleToLongBits(precoMinimo);
+        id+=(int)(bits ^ (bits >>> 32));
+        return id;
+        //Não pode ter o estado do imóvel porque se o estado mudar o ID de determinado imóvel tem que se manter.
+        //https://stackoverflow.com/questions/9650798/hash-a-double-in-java
+  }
+
+
 
 }

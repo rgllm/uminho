@@ -1,5 +1,6 @@
 
 import java.util.Objects;
+import java.lang.*;
 
 public class Moradia extends Imovel implements Habitavel{
     private Tipo_Moradia tipo;
@@ -20,6 +21,7 @@ public class Moradia extends Imovel implements Habitavel{
         nQuartos=0;
         nWCs=0;
         nPorta=0;
+        gerarID();
     }
 
     public Moradia(String rua,double preco,double precoMinimo,Tipo_Moradia tipo,double areaImplantacao,double areaCoberta,double areaTerreno,int nQuartos,int nWCs,int nPorta,Estado_Imovel estado){
@@ -31,6 +33,7 @@ public class Moradia extends Imovel implements Habitavel{
         this.nQuartos=nQuartos;
         this.nWCs=nWCs;
         this.nPorta=nPorta;
+        gerarID();
     }
 
     public Moradia(Moradia x){
@@ -81,6 +84,34 @@ public class Moradia extends Imovel implements Habitavel{
         return "Moradia{" + "tipo=" + tipo + ", areaImplantacao=" + areaImplantacao + ", areaCoberta=" + areaCoberta + ", areaTerreno=" + areaTerreno + ", nQuartos=" + nQuartos + ", nWCs=" + nWCs + ", nPorta=" + nPorta + '}';
     }
 
+     public void gerarID(){
+        int id=0;
+        long bits;
+        String stringID;
+
+        id=super.gerarIDImovel();
+        id+=this.getClass().getSimpleName().hashCode();
+        if(tipo==Tipo_Moradia.Isolada) id++;
+        else if(tipo==Tipo_Moradia.Germinada) id+=2;
+        else if(tipo==Tipo_Moradia.Banda) id+=3;
+        else if(tipo==Tipo_Moradia.Gaveto) id+=4;
+        else if(tipo==Tipo_Moradia.Outro) id+=5;
+        bits=Double.doubleToLongBits(areaImplantacao);
+        id+=(int)(bits ^ (bits >>> 32));
+        bits=Double.doubleToLongBits(areaCoberta);
+        id+=(int)(bits ^ (bits >>> 32));
+        bits=Double.doubleToLongBits(areaTerreno);
+        id+=(int)(bits ^ (bits >>> 32));
+        bits=Double.doubleToLongBits((double)nQuartos);
+        id+=(int)(bits ^ (bits >>> 32));
+        bits=Double.doubleToLongBits((double)nWCs);
+        id+=(int)(bits ^ (bits >>> 32));
+        bits=Double.doubleToLongBits((double)nPorta);
+        id+=(int)(bits ^ (bits >>> 32));
+
+        stringID=id+"";
+        super.setId(stringID);
+    }
 
 
 }

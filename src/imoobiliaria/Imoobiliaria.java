@@ -1,6 +1,7 @@
 import java.util.*;
 import java.io.*;
 
+@SuppressWarnings("unchecked")
 public class Imoobiliaria implements Serializable{
 
 
@@ -56,55 +57,18 @@ public class Imoobiliaria implements Serializable{
     * Outros métodos
     */
 
-    public void directory(String name){
-        File folder = new File(name);
-        if (!folder.exists()) {
-            try{
-               folder.mkdir();
-            }
-            catch(SecurityException e){
-                 System.err.println("SecurityException " +  e.getMessage());
-            }
-        }
-    }
-
-    public void carregarDados(Imoobiliaria imoobiliaria){
-        this.logado = false;
-        this.userAtual = null;
-        this.setImoveis(imoobiliaria.getImoveis());
-        this.setUsers(imoobiliaria.getUsers());
-    }
-
-    public Imoobiliaria leEstado(){
-        Imoobiliaria imoobiliaria = null;
-        try{
-            FileInputStream file = new FileInputStream("Imoobiliaria");
-            ObjectInputStream read = new ObjectInputStream(file);
-            imoobiliaria = (Imoobiliaria) read.readObject();
-            read.close();
-            file.close();
-        }catch(FileNotFoundException e){
-            System.err.println("FileNotFoundException " +  e.getMessage());
-        }catch(IOException e){
-             System.err.println("IOException " +  e.getMessage());
-        }catch(ClassNotFoundException e){
-            System.err.println("ClassNotFoundException " +  e.getMessage());
-        }
-
-        return imoobiliaria;
-    }
 
     /**
     * Aplicação deverá estar pré-populada com conjunto de dados
     * significativos, que permita testar toda a aplicação no dia da entrega
     */
-    public static Imoobiliaria initApp (){
-        Imoobiliaria imoobiliaria = new Imoobiliaria();
-        imoobiliaria.directory("Data");
-        Imoobiliaria res = imoobiliaria.leEstado();
-        imoobiliaria.carregarDados(res);
-        return imoobiliaria;
-
+    public static Imoobiliaria leObj(String fich) throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fich));
+      
+        Imoobiliaria te= (Imoobiliaria) ois.readObject();
+        
+        ois.close();
+        return te;
     }
 
     /**
@@ -121,11 +85,11 @@ public class Imoobiliaria implements Serializable{
     */
     public void registarUtilizador (Utilizador u) throws UtilizadorExistenteException{
 
-        if(existeUtilizador(u)==false){
+        if(existeUtilizador(u)==true){
             throw new UtilizadorExistenteException("O utilizador já existe.");
         }
         else{
-            users.put(u.getEmail(),u.clone()); //clone?
+            users.put(u.getEmail(),u.clone());
         }
     }
 
@@ -149,13 +113,13 @@ public class Imoobiliaria implements Serializable{
     /**
     * Guarda o estado atual do programa num ficheiro.
     */
-    public void guardaEstado() throws IOException{
-
-       ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("Imoobiliaria"));
-       objectOutputStream.writeObject(this);
-       objectOutputStream.flush();
-       objectOutputStream.close();
-    }
+    public void gravaObj(String fich) throws IOException { 
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fich)); 
+        oos.writeObject(this); 
+        
+        oos.flush(); 
+        oos.close(); 
+    } 
 
     /**
     * Fechar a sessão do utilizador e guarda o estado atual do programa.
@@ -163,12 +127,6 @@ public class Imoobiliaria implements Serializable{
     public void fechaSessao (){
         logado=false;
         userAtual=null;
-        try{
-            guardaEstado();
-        }
-        catch(IOException e){
-            System.err.println("IOException: " +  e.getMessage());
-        }
     }
 
     /**
@@ -204,7 +162,7 @@ public class Imoobiliaria implements Serializable{
         else{
             return null;
          }
-    } 
+    }
 
      /**
     * Verifica se um determinado imóvel já existe a partir do seu ID.
@@ -241,9 +199,9 @@ public class Imoobiliaria implements Serializable{
     * Obter um conjunto com os códigos dos imóveis
     * mais consultados (ou seja, com mais de N consultas)
     */
-    public Set<String> getTopImoveis(int n){
+    /*public Set<String> getTopImoveis(int n){
         return null;
-    }
+    } */
 
     /**
     * Consultar a lista de todos os imóveis de um dado tipo (Terreno, Moradia, etc.) e até um certo preço.
@@ -304,7 +262,7 @@ public class Imoobiliaria implements Serializable{
                     if(existeImovel(idImovel) == false){
                          throw new ImovelInexistenteException("O imóvel não existe");
                     }
-                  else{ 
+                  else{
                         Comprador c = (Comprador) userAtual;
                         try{
                             c.favorito(imoveis.get(idImovel));
@@ -341,4 +299,12 @@ public class Imoobiliaria implements Serializable{
         return new Imoobiliaria(this);
     }
 
+       /*public String toString() {
+        StringBuilder sb = new StringBuilder("--- Imoobiliaria ---\n");
+        for(Utilizador u : this.users.values())
+        sb.append(u.toString() + "\n");
+        for(Imovel i : this.imoveis.values())
+        sb.append(i.toString() + "\n");
+        return sb.toString();
+    } */
 }

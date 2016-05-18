@@ -1,6 +1,7 @@
 import java.util.Objects;
 import java.lang.Object;
 import java.lang.Double;
+import java.io.*;
 
 public class Imovel implements Comparable<Imovel>, Serializable{
     private String id;

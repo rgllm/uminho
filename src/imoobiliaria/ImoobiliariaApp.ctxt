@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.params=
+comment0.target=ImoobiliariaApp()
+comment1.params=args
+comment1.target=void\ main(java.lang.String[])
+comment2.params=
+comment2.target=void\ carregarMenus()
+comment3.params=
+comment3.target=void\ initApp()
+comment3.text=private\ static\ void\ carregarDados()\ {\n\ \ \ \ \ \ \ \ try\ {\n\ \ \ \ \ \ \ \ \ \ \ \ tab\ \=\ Imoobiliaria.initApp("estado.tabemp");\n\ \ \ \ \ \ \ \ }\n\ \ \ \ \ \ \ \ catch\ (IOException\ e)\ {\n\ \ \ \ \ \ \ \ \ \ \ \ tab\ \=\ new\ Imoobiliaria();\n\ \ \ \ \ \ \ \ \ \ \ \ System.out.println("N\u00E3o\ consegui\ ler\ os\ dados\!\\nErro\ de\ leitura.");\n\ \ \ \ \ \ \ \ }\n\ \ \ \ \ \ \ \ catch\ (ClassNotFoundException\ e)\ {\n\ \ \ \ \ \ \ \ \ \ \ \ tab\ \=\ new\ Imoobiliaria();\n\ \ \ \ \ \ \ \ \ \ \ \ System.out.println("N\u00E3o\ consegui\ ler\ os\ dados\!\\nFicheiro\ com\ formato\ desconhecido.");\n\ \ \ \ \ \ \ \ }\n\ \ \ \ \ \ \ \ catch\ (ClassCastException\ e)\ {\n\ \ \ \ \ \ \ \ \ \ \ \ tab\ \=\ new\ Imoobiliaria();\n\ \ \ \ \ \ \ \ \ \ \ \ System.out.println("N\u00E3o\ consegui\ ler\ os\ dados\!\\nErro\ de\ formato.");\n\ \ \ \ \ \ \ \ }\n}
+comment4.params=
+comment4.target=void\ carregarDados()
+comment5.params=
+comment5.target=void\ inserirUser()
+comment6.params=
+comment6.target=void\ stall()
+numComments=7

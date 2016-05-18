@@ -64,7 +64,6 @@ int main(){
             op=strtok(NULL," ")[0];
             pid=atoi(strtok(NULL,"\0"));
 
-
                                            /*    BACKUP      */
             fd1=open("aux.txt", O_CREAT | O_TRUNC,0666);
 

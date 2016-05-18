@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <errno.h>
 #define MAXBUFF 128
 
 int readln(int fildes, char *buf){
@@ -29,6 +30,7 @@ void hand(int s){
 int main(int argc,char * argv[]){
     int i,fd[2],aux,status,pid=getpid(),fdPipe;
     char buf[MAXBUFF],spid[8],*home=getenv("HOME"),*pipe_dir;
+    struct stat st_buf;
     pipe_dir=malloc((strlen(home)+14)*sizeof(char));
     strcpy(pipe_dir,home);
     strcat(pipe_dir,"/.backup/pipe");
@@ -48,40 +50,37 @@ int main(int argc,char * argv[]){
     sprintf(spid, "%d", pid);
                                                /*    BACKUP      */
     if(strcmp(argv[1],"backup")==0){
-        for(i=0;i<argc-2;i++){
-            pipe(fd);
-            if(fork()==0){
-            
-                dup2(fd[1],1);
-                dup2(fd[1],2);
-                execlp("ls","ls",argv[i+2],NULL);
-            }
+        for(i=2;i<argc;i++){
+            status = stat (argv[i],&st_buf);
 
-            close(*fd);
-            wait(&status);
-            aux=WEXITSTATUS(status);
-            if(!aux){
-                strcpy(buf,argv[i+2]);
-                strcat(buf," B ");
-                strcat(buf,spid);
-                strcat(buf,"\n");     /* "dirFicheiro" B "myPID" */
-                write(fdPipe,buf,strlen(buf));
-                printf("> %s : ",strtok(buf," "));
-                pause();
+            if ((aux=S_ISDIR (st_buf.st_mode))) {
+                printf("%s é um diretório.\n", argv[i]);
             }
-            else printf("Ficheiro não existe!\n");
+            else{
+   
+             
+                if(!status){
+                   strcpy(buf,argv[i]);
+                    strcat(buf," B ");
+                    strcat(buf,spid);
+                    strcat(buf,"\n");     /* "dirFicheiro" B "myPID" */
+                    write(fdPipe,buf,strlen(buf));
+                    printf("> %s : ",strtok(buf," "));
+                    pause();
+                }
+                else printf("Ficheiro não existe!\n");
+            }
         }
-
-    }
+}
                                                 /*    RESTORE      */
     else if(strcmp(argv[1],"restore")==0){
-        for(i=0;i<argc-2;i++){
-            strcpy(buf,argv[i+2]);
+        for(i=2;i<argc;i++){
+            strcpy(buf,argv[i]);
             strcat(buf," R ");
             strcat(buf,spid);
             strcat(buf,"\n");
             write(fdPipe,buf,strlen(buf));     /* "dirFicheiro" R "myPID" */
-            printf("> %s : ",argv[i+2] );
+            printf("> %s : ",argv[i] );
             pause();
 
         }

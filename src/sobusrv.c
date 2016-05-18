@@ -1,7 +1,8 @@
 #include <sys/signal.h>
-#include <signal.h>
+#include <sys/wait.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <signal.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <string.h>

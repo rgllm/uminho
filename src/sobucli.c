@@ -27,13 +27,12 @@ void hand(int s){
 }
 
 int main(int argc,char * argv[]){
-    int i,fd[2],aux,status;
+    int i,fd[2],aux,status,pid=getpid(),fdPipe;
     char buf[MAXBUFF],spid[8],*home=getenv("HOME"),*pipe_dir;
     pipe_dir=malloc((strlen(home)+14)*sizeof(char));
     strcpy(pipe_dir,home);
     strcat(pipe_dir,"/.backup/pipe");
-    int fdPipe=open(pipe_dir,O_WRONLY);
-    int pid=getpid();
+    fdPipe=open(pipe_dir,O_WRONLY);
 
     if(argc<3){
         printf("Precisa de argumentos!\n");
@@ -60,7 +59,7 @@ int main(int argc,char * argv[]){
 
             close(*fd);
             wait(&status);
-            //printf("ls exit status: %d\n",aux=WEXITSTATUS(status));
+            /* printf("ls exit status: %d\n",aux=WEXITSTATUS(status));*/
             aux=WEXITSTATUS(status);
             if(!aux){
                 strcpy(buf,argv[i+2]);

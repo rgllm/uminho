@@ -28,7 +28,7 @@ void hand(int s){
 }
 
 int main(int argc,char * argv[]){
-    int i,fd[2],aux,status,pid=getpid(),fdPipe;
+    int i,aux,status,pid=getpid(),fdPipe;
     char buf[MAXBUFF],spid[8],*home=getenv("HOME"),*pipe_dir;
     struct stat st_buf;
     pipe_dir=malloc((strlen(home)+14)*sizeof(char));
@@ -57,8 +57,8 @@ int main(int argc,char * argv[]){
                 printf("%s é um diretório.\n", argv[i]);
             }
             else{
-   
-             
+
+
                 if(!status){
                    strcpy(buf,argv[i]);
                     strcat(buf," B ");

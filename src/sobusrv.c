@@ -34,6 +34,7 @@ int temBackup(char* digest){
     if(fork()==0){
         close(fd[0]);
         dup2(fd[1],1);
+        close(2);
         execlp("find","find",data_dir,"-name",digest,NULL);
     }
     close(fd[1]);
@@ -103,6 +104,7 @@ int main(){
                 if(fork()==0){
                     close(unPipe[0]);
                     dup2(unPipe[1],1);
+                    close(2);
                     execlp("find","find",metadata_dir,"-name",nome,NULL);  /* find "metadata" -name "nomeFicheiro" */
                 }
                 wait(NULL);
@@ -141,6 +143,7 @@ int main(){
                 if(fork()==0){
                     close(unPipe[0]);
                     dup2(unPipe[1],1);
+                    close(2);
                     execlp("find","find",metadata_dir,"-name",dir,NULL);
                 }              /*  find /home/<user>/.backup/metadata -name "nomeFicheiro"  */
                 close(unPipe[1]);
@@ -205,6 +208,7 @@ int main(){
                                 pipe(unPipe);
                                 if(fork()==0){
                                     close(unPipe[0]);
+                                    close(2);
                                     dup2(unPipe[1],1);
                                     execlp("ls","ls","-l",metadata_dir,NULL);
                                 }                           /*    ls -l /home/<user>/.backup/metadata/ | grep "digest".gz | wc -l   */

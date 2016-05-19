@@ -153,13 +153,6 @@ int main(){
                 close(unPipe[0]);
 
                 if(aux){  /* se o nome existir */
-                    /*strcpy(buf,"ls -l ");
-                    strcat(buf,metadata_dir);
-                    strcat(buf," | grep ");
-                    strcat(buf,dir);
-                    strcat(buf," | cut -d ' ' -f11 > aux.txt");
-                    system(buf);  */   /* ls -l /home/munybt/.backup/metadata | grep "nomeFicheiro"  | cut -d ' ' -f11 > aux.txt*/
-
                     pipe(up3);
                     if(fork()==0){
                         close(up3[0]);
@@ -174,6 +167,7 @@ int main(){
                                 close(unPipe[0]);
                                 dup2(unPipe[1],1);
                                 execlp("ls","ls","-l",metadata_dir,NULL);
+                        /* ls -l /home/munybt/.backup/metadata | grep "nomeFicheiro"  | cut -d ' ' -f11 > aux.txt*/
                             }
 
                             close(unPipe[1]);

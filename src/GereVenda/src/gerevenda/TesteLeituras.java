@@ -4,6 +4,7 @@
  */
 
 import gerevenda.Venda;
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import static java.lang.System.out;
@@ -24,11 +25,25 @@ public class TesteLeituras {
             out.println(ioExc.getMessage()); 
             return null; 
         } 
-    finally { 
+        finally { 
             if(scanFile != null) scanFile.close(); 
-     } 
-return linhas;
-}
+        } 
+        return linhas;
+    }
+    
+    public static ArrayList<String> readLinesWithBuff(String fich) {
+        ArrayList<String> linhas = new ArrayList<>();
+        BufferedReader inStream = null;
+        String linha = null;
+        try {
+            inStream = new BufferedReader(new FileReader(fich));
+        while( (linha = inStream.readLine()) != null )
+            linhas.add(linha);
+        }
+        catch(IOException e)
+        { out.println(e.getMessage()); return null; };
+            return linhas;
+        }
 
 public static Venda parseLinhaVenda(String linha) {
     
@@ -57,30 +72,72 @@ public static Venda parseLinhaVenda(String linha) {
 }
 
 public static ArrayList<Venda> parseAllLinhas(ArrayList<String> linhas) {
-    
-    Iterator<String> it = linhas.iterator();
-    String s;
     ArrayList<Venda> res = new ArrayList<>();
     
     
-    while(it.hasNext()){
-        s=it.next();
+    for(String s : linhas){
         res.add(parseLinhaVenda(s));
     }
-   
+    
     return res;
 
 }
 
-public static void main(String [] args){
-    Crono.start();
-    try{
-    ArrayList<String> linhas = readLinesArrayWithScanner("Vendas_3M.txt");
-    ArrayList<Venda> vendas = parseAllLinhas(linhas);
-    Crono.stop();
-    System.out.println("Tempo: " + Crono.print());
+public static HashSet<Venda> parseAllLinhasToSet(ArrayList<String> linhas) {
+    HashSet<Venda> res = new HashSet<>();
+    Venda aux;
+    int count=0;
+    
+    for(String s : linhas){
+        aux= new Venda(parseLinhaVenda(s));
+        if(!res.contains(aux))
+            res.add(aux);
+        else count++;
     }
-    catch(NullPointerException){
+    System.out.println("linhas repetidas : "+count);
+    
+    return res;
+
+}
+
+public static ArrayList<Venda> readVendasWithBuff(String fich) throws NullPointerException {
+    int count=0;
+    ArrayList<String> linhas = readLinesWithBuff(fich);
+    ArrayList<Venda> vendas = parseAllLinhas(linhas);
+    /*HashSet<Venda> vendas = parseAllLinhasToSet(linhas);*/
+    return vendas;
+}
+
+public static int nVendasPorFilial(int filial,ArrayList<Venda> vendas){
+    int count=0;
+    for(Venda v : vendas){
+        if(v.getFilial()==filial)
+            count++;
+    }
+    return count;
+}
+
+public static int nVendasPrecoZero(ArrayList<Venda> vendas){
+    int count=0;
+    for(Venda v : vendas){
+        if(v.getPreco()==0.0)
+            count++;
+    }
+    return count;
+}
+
+public static void main(String [] args){
+    ArrayList<Venda> vendas=new ArrayList<>();
+    try{
+        Crono.start();
+        vendas=readVendasWithBuff("Vendas_5M.txt");
+        Crono.stop();
+        System.out.println("Compras da filial 1: "+nVendasPorFilial(3,vendas));
+        System.out.println("Compras preco 0: "+nVendasPrecoZero(vendas));
+        System.out.println("Tempo: " + Crono.print());
+        System.out.println("Linhas lidas: "+vendas.size());
+    }
+    catch(NullPointerException e){
         System.out.println("You have to have a file.\n");
     }
 }

@@ -23,7 +23,7 @@ int readln(int fildes, char *buf){
 
 void hand(int s){
     if(s==30) printf("Sucesso!\n");
-    if(s==10) printf("Ficheiro não encontrado!\n");
+    if(s==10) printf("Ficheiro não existe!\n");
     if(s==6) printf("Já existe backup de um ficheiro com o mesmo nome!\n");
 }
 
@@ -38,8 +38,9 @@ int main(int argc,char * argv[]){
 
     if(argc<3){
         printf("Precisa de argumentos!\n");
-        printf("./sobucli backup <dir>  -> criar backup de um ficheiro\n");
-        printf("./sobucli restore <dir> -> restaurar um ficheiro\n");
+        printf("./sobucli backup <dir> ... -> criar backup de um ficheiro\n");
+        printf("./sobucli restore <nome> ... -> restaurar um ficheiro\n");
+        printf("./sobucli delete <nome> ... -> eliminar um ficheiro\n");
         exit(1);
     }
 
@@ -54,7 +55,7 @@ int main(int argc,char * argv[]){
             status = stat (argv[i],&st_buf);
 
             if ((aux=S_ISDIR (st_buf.st_mode))) {
-                printf("%s é um diretório.\n", argv[i]);
+                printf("> %s é um diretório.\n", argv[i]);
             }
             else{
 
@@ -68,29 +69,49 @@ int main(int argc,char * argv[]){
                     printf("> %s : ",strtok(buf," "));
                     pause();
                 }
-                else printf("Ficheiro não existe!\n");
+                else printf("> %s : Ficheiro não existe!\n",argv[i]);
             }
         }
-}
+    }
                                                 /*    RESTORE      */
     else if(strcmp(argv[1],"restore")==0){
         for(i=2;i<argc;i++){
-            strcpy(buf,argv[i]);
-            strcat(buf," R ");
-            strcat(buf,spid);
-            strcat(buf,"\n");
-            write(fdPipe,buf,strlen(buf));     /* "dirFicheiro" R "myPID" */
-            printf("> %s : ",argv[i] );
-            pause();
-
+            if(argv[i][strlen(argv[i])-1]=='/'){
+                printf("> %s é um diretório\n",argv[i] );
+            }
+            else{
+                strcpy(buf,argv[i]);
+                strcat(buf," R ");
+                strcat(buf,spid);
+                strcat(buf,"\n");
+                write(fdPipe,buf,strlen(buf));     /* "dirFicheiro" R "myPID" */
+                printf("> %s : ",argv[i] );
+                pause();
+            }
         }
+    }
+    else if(strcmp(argv[1],"delete")==0){
+        for(i=2;i<argc;i++){
+            if(argv[i][strlen(argv[i])-1]=='/'){
+                printf("> %s é um diretório\n",argv[i] );
+            }
+            else{
+                strcpy(buf,argv[i]);
+                strcat(buf," D ");
+                strcat(buf,spid);
+                strcat(buf,"\n");
+                write(fdPipe,buf,strlen(buf));     /* "dirFicheiro" D "myPID" */
+                printf("> %s : ",argv[i] );
+                pause();
+            }
+        }
+
     }
     else{
         printf("Comando inválido\n");
-        printf("./sobucli backup <dir>  -> criar backup de um ficheiro\n");
-        printf("./sobucli restore <dir> -> restaurar um ficheiro\n");
-        close(fdPipe);
-        exit(1);
+        printf("./sobucli backup <dir> ... -> criar backup de um ficheiro\n");
+        printf("./sobucli restore <nome> ... -> restaurar um ficheiro\n");
+        printf("./sobucli delete <nome> ... -> eliminar um ficheiro\n");
     }
     close(fdPipe);
 

@@ -24,27 +24,28 @@ int readln(int fildes, char *buf){
 
 int temBackup(char* digest){
     char buf[MAXBUFF],*home=getenv("HOME"),*data_dir;
-    int fd,ret;
+    int fd[2],ret;
     data_dir=malloc((strlen(home)+15)*sizeof(char));
     strcpy(data_dir,home);
     strcat(data_dir,"/.backup/data/");
 
     strcat(digest,".gz");    /*  find ".backup/data" -name "digest".gz   */
-    fd=open("aux.txt",O_CREAT | O_TRUNC | O_RDONLY,0666);
+    pipe(fd);
     if(fork()==0){
-        dup2(fd,1);
-        dup2(fd,2);
+        close(fd[0]);
+        dup2(fd[1],1);
         execlp("find","find",data_dir,"-name",digest,NULL);
     }
-
-    ret=readln(fd,buf);
-    close(fd);
+    close(fd[1]);
+    wait(NULL);
+    ret=readln(fd[0],buf);
+    close(fd[0]);
     return ret;
 }
 
 int main(){
     char  buf[MAXBUFF], *dir,digest[MAXBUFF],op,*nome,*home=getenv("HOME");
-    int n,pid,aux,unPipe[2],up2[2],up3[2],status,i;
+    int n,pid,aux,unPipe[2],up2[2],up3[2],i;
     int fd,fd1;
     char *pipe_dir, *data_dir, *metadata_dir;
 
@@ -65,9 +66,7 @@ int main(){
             pid=atoi(strtok(NULL,"\0"));
 
                                            /*    BACKUP      */
-
             if(op=='B'){
-                   
                 pipe(up2);
                 if(fork()==0){
                     close(up2[0]);
@@ -80,12 +79,12 @@ int main(){
                         execlp("sha1sum","sha1sum",dir,NULL);    /* sha1sum "dirFicheiro" | cut -d ' ' -f1   */
                     }                                            /**/
                     close(unPipe[1]);
-                    wait(&status);
+                    wait(NULL);
                     dup2(unPipe[0],0);
                     execlp("cut","cut","-d"," ","-f1",NULL);
                 }
                 close(up2[1]);
-                wait(&status);
+                wait(NULL);
                 readln(up2[0],digest);
                 close(up2[0]);
 
@@ -106,7 +105,7 @@ int main(){
                     dup2(unPipe[1],1);
                     execlp("find","find",metadata_dir,"-name",nome,NULL);  /* find "metadata" -name "nomeFicheiro" */
                 }
-                wait(&status);
+                wait(NULL);
                 close(unPipe[1]);
                 aux=readln(unPipe[0],buf);
                 close(unPipe[0]);
@@ -120,7 +119,7 @@ int main(){
                         if(fork()==0){
                             strcpy(buf,data_dir);
                             strcat(buf,digest);
-                            fd1=open(buf,O_CREAT | O_WRONLY | O_TRUNC,0666); /* gzip -k -c "dirFicheiro" > /home/munybt/.backup/data/"digestFicheiro".gz*/
+                            fd1=open(buf,O_CREAT | O_WRONLY | O_TRUNC,0666); /* gzip -k -c "dirFicheiro" > /home/<user>/.backup/data/"digestFicheiro".gz*/
                             dup2(fd1,1);
                             execlp("gzip","gzip","-k","-c",dir,NULL);
                         }
@@ -132,28 +131,25 @@ int main(){
                         strcpy(buf2,metadata_dir);
                         strcat(buf2,nome);
                         execlp("ln","ln","-s",buf,buf2,NULL);
-                        /* ln -s /home/munybt/.backup/data/"digestFicheiro".gz /home/munybt/.backup/metadata/"nomeFicheiro"*/
+                        /* ln -s /home/<user>/.backup/data/"digestFicheiro".gz /home/<user>/.backup/metadata/"nomeFicheiro"*/
                     }
-                    kill(pid,30);
+                    kill(pid,30);      /*  sucesso   */
                 }
             }
-
-                                            /*    RESTORE      */
-            else {
-                
-                pipe(unPipe);
+            else { 
+                pipe(unPipe);            /*   procurar pelo nome em metadata */ 
                 if(fork()==0){
                     close(unPipe[0]);
                     dup2(unPipe[1],1);
                     execlp("find","find",metadata_dir,"-name",dir,NULL);
-                }  /*  find /home/munybt/.backup/metadata -name "nomeFicheiro" > aux.txt*/
+                }              /*  find /home/<user>/.backup/metadata -name "nomeFicheiro"  */
                 close(unPipe[1]);
-                wait(&status);
+                wait(NULL);
                 aux=readln(unPipe[0],buf);
                 close(unPipe[0]);
 
-                if(aux){  /* se o nome existir */
-                    pipe(up3);
+                if(aux){     /* se o nome existir */
+                    pipe(up3);                  /* encontrar o digest    */
                     if(fork()==0){
                         close(up3[0]);
                         dup2(up3[1],1);
@@ -167,11 +163,11 @@ int main(){
                                 close(unPipe[0]);
                                 dup2(unPipe[1],1);
                                 execlp("ls","ls","-l",metadata_dir,NULL);
-                        /* ls -l /home/munybt/.backup/metadata | grep "nomeFicheiro"  | cut -d ' ' -f11 > aux.txt*/
+                        /* ls -l /home/<user>/.backup/metadata | grep "nomeFicheiro"  | cut -d ' ' -f11 */
                             }
 
                             close(unPipe[1]);
-                            wait(&status);
+                            wait(NULL);
                             dup2(unPipe[0],0);
                             execlp("grep","grep",dir,NULL);
                         }
@@ -182,49 +178,70 @@ int main(){
                     close(up3[1]);
                     readln(up3[0],digest);
                     close(up3[0]);
-
-                    strcpy(buf,"gunzip < ");
-                    strcat(buf,digest);
-                    strcat(buf,"> ./");
-                    strcat(buf,dir); /* restaura o ficheiro para o diretorio do servidor*/
-                    system(buf);     /* gunzip < /home/munybt/.backup/metadata/"digestFicheiro" > ./"nomeFicheiro"*/
-
-                    strcpy(digest,strrchr(digest, '/')+1);
-
-                    strcpy(buf,"ls -l ");
-                    strcat(buf,metadata_dir);
-                    strcat(buf," | grep ");
-                    strcat(buf,digest);
-                    strcat(buf," | wc -l > aux.txt");
-                    system(buf); /* ls -l /home/munybt/.backup/metadata/ | grep "digest".gz | wc -l > aux.txt */
-
-                    fd1=open("aux.txt",O_RDONLY);
-                    readln(fd1,buf);
-                    close(fd1);
-                    aux=atoi(buf);
-
-                    if(aux==1){
+                                         /*    RESTORE      */
+                    if (op=='R'){
+                        /* restaura o ficheiro para o diretorio do servidor*/
                         if(fork()==0){
-                            strcpy(buf,data_dir);
-                            strcat(buf,digest);
-                            execlp("rm","rm",buf,NULL);  /* rm /home/munybt/.backup/data/"digest".gz */
+                            unPipe[0]=open(digest,O_RDONLY,0666);
+                            unPipe[1]=open(dir,O_CREAT | O_WRONLY | O_TRUNC,0666); 
+                            dup2(unPipe[0],0);
+                            dup2(unPipe[1],1);   /* gunzip < /home/<user>/.backup/metadata/"digestFicheiro" > ./"nomeFicheiro" */
+                            execlp("gunzip","gunzip",NULL);
                         }
+                        kill(pid,30);
                     }
+                    else{
+                        /*  neste momento digest="/home/<user>/.backup/metadata/"digestFicheiro.gz"   */
+                        strcpy(digest,strrchr(digest, '/')+1); 
+                        /*  neste momento digest="digestFicheiro.gz"   */
+                        pipe(up3);
+                        if(fork()==0){
+                            close(up3[0]);
+                            dup2(up3[1],1);         /*calcular quantas ligaçoes existem para o ficheiro */
+                            pipe(up2);
+                            if(fork()==0){ 
+                                close(up2[0]);
+                                dup2(up2[1],1);
+                                pipe(unPipe);
+                                if(fork()==0){
+                                    close(unPipe[0]);
+                                    dup2(unPipe[1],1);
+                                    execlp("ls","ls","-l",metadata_dir,NULL);
+                                }                           /*    ls -l /home/<user>/.backup/metadata/ | grep "digest".gz | wc -l   */
+                                close(unPipe[1]);
+                                wait(NULL);
+                                dup2(unPipe[0],0);
+                                execlp("grep","grep",digest,NULL);
+                            }
+                            close(up2[1]);
+                            dup2(up2[0],0);
+                            execlp("wc","wc","-l",NULL);
+                        }
+                        close(up3[1]);
+                        wait(NULL);
+                        readln(up3[0],buf);
+                        close(up3[0]);
+                        aux=atoi(buf);  /*  aux = numero de ligaçoes para o ficheiro  */
 
-                    if(fork()==0){
-                        strcpy(buf,metadata_dir);
-                        strcat(buf,dir);
-                        execlp("rm","rm",buf,NULL);  /* rm /home/munybt/.backup/metadata/"nome"  */
+                        if(aux==1){
+                            if(fork()==0){
+                                strcpy(buf,data_dir);
+                                strcat(buf,digest);
+                                execlp("rm","rm",buf,NULL);  /* rm /home/<user>/.backup/data/"digest".gz */
+                            }
+                        }
+                        if(fork()==0){
+                            strcpy(buf,metadata_dir);
+                            strcat(buf,dir);
+                            execlp("rm","rm",buf,NULL);  /* rm /home/<user>/.backup/metadata/"nome"  */
+                        }
+                        kill(pid,30);   /* sucesso */
                     }
-
-                    kill(pid,30);
                 }
-                else kill(pid,10);
-
+                else kill(pid,10);    /* o nome não existe em metadata   */
             }
         }
     }
-    system("rm aux.txt");
     close(fd);
     return 0;
 }

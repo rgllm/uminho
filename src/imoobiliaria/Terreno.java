@@ -24,7 +24,7 @@ public class Terreno extends Imovel{
         gerarID();
     }
 
-    public Terreno(String id,String rua,double preco,double precoMinimo,double areaConstrucao,boolean habitacao,boolean armazem,double diamCanalizacoes,boolean eletricidade,double potenciaEletrica,boolean esgotos,Estado_Imovel estado){
+    public Terreno(String rua,double preco,double precoMinimo,double areaConstrucao,boolean habitacao,boolean armazem,double diamCanalizacoes,boolean eletricidade,double potenciaEletrica,boolean esgotos,Estado_Imovel estado){
         super(rua,preco,precoMinimo,estado);
         this.areaConstrucao=areaConstrucao;
         this.habitacao=habitacao;

@@ -2,8 +2,8 @@
 comment0.params=
 comment0.target=Terreno()
 comment0.text=Construtores
-comment1.params=id\ rua\ preco\ precoMinimo\ areaConstrucao\ habitacao\ armazem\ diamCanalizacoes\ eletricidade\ potenciaEletrica\ esgotos\ estado
-comment1.target=Terreno(java.lang.String,\ java.lang.String,\ double,\ double,\ double,\ boolean,\ boolean,\ double,\ boolean,\ double,\ boolean,\ Estado_Imovel)
+comment1.params=rua\ preco\ precoMinimo\ areaConstrucao\ habitacao\ armazem\ diamCanalizacoes\ eletricidade\ potenciaEletrica\ esgotos\ estado
+comment1.target=Terreno(java.lang.String,\ double,\ double,\ double,\ boolean,\ boolean,\ double,\ boolean,\ double,\ boolean,\ Estado_Imovel)
 comment10.params=areaConstrucao
 comment10.target=void\ setAreaConstrucao(double)
 comment11.params=habitacao

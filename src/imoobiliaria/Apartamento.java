@@ -24,8 +24,8 @@ public class Apartamento extends Imovel implements Habitavel{
         gerarID();
     }
 
-    public Apartamento(String rua,double preco,double precoMinimo,Tipo_Apartamento tipo,double area,int nQuartos,int nWCs,boolean garagem, int nPorta, int andar,Estado_Imovel estado){
-        super(rua,preco,precoMinimo,estado);
+    public Apartamento(int consultas, String rua,double preco,double precoMinimo,Tipo_Apartamento tipo,double area,int nQuartos,int nWCs,boolean garagem, int nPorta, int andar,Estado_Imovel estado){
+        super(0,rua,preco,precoMinimo,estado);
         this.tipo=tipo;
         this.area=area;
         this.nQuartos=nQuartos;

@@ -4,6 +4,7 @@ import java.lang.Double;
 import java.io.*;
 
 public class Imovel implements Comparable<Imovel>, Serializable{
+    private int consultas;
     private String id;
     private String rua;
     private Double preco;
@@ -12,13 +13,15 @@ public class Imovel implements Comparable<Imovel>, Serializable{
 
     /*           Construtores         */
     public Imovel(){
+        consultas=0;
         rua=new String("");
         preco=0.0;
         precoMinimo=0.0;
         estado=Estado_Imovel.Outro;
     }
 
-    public Imovel(String rua,double preco,double precoMinimo,Estado_Imovel es){
+    public Imovel(int consultas, String rua,double preco,double precoMinimo,Estado_Imovel es){
+        this.consultas=consultas;
         this.rua=new String(rua);
         this.preco=preco;
         this.precoMinimo=precoMinimo;
@@ -26,7 +29,7 @@ public class Imovel implements Comparable<Imovel>, Serializable{
     }
 
     public Imovel(Imovel i){
-
+        this.consultas=i.getConsultas();
         this.rua=new String(i.getRua());
         this.preco=i.getPreco();
         this.precoMinimo=i.getPrecoMinimo();
@@ -34,12 +37,14 @@ public class Imovel implements Comparable<Imovel>, Serializable{
     }
 
     /*      Métodos de instância    */
+    public int getConsultas(){return consultas;}
     public String getId() {return new String(id);}
     public String getRua() {return new String(rua);}
     public Double getPreco() {return preco;}
     public Double getPrecoMinimo() {return precoMinimo;}
     public Estado_Imovel getEstado(){return estado;}
 
+    public void setConsultas(int consultas){this.consultas=consultas;}
     public void setId(String id) {this.id = id;}
     public void setRua(String rua) {this.rua = rua;}
     public void setPreco(Double preco) {this.preco = preco;}
@@ -53,7 +58,8 @@ public class Imovel implements Comparable<Imovel>, Serializable{
             return false;
         }
         final Imovel other = (Imovel) obj;
-        if (Objects.equals(this.rua, other.rua) &&
+        if (Objects.equals(this.consultas, other.consultas) &&
+            Objects.equals(this.rua, other.rua) &&
             Objects.equals(this.preco, other.preco) &&
             Objects.equals(this.precoMinimo, other.precoMinimo) &&
             Objects.equals(this.estado, other.estado)) {
@@ -63,7 +69,7 @@ public class Imovel implements Comparable<Imovel>, Serializable{
     }
 
     public String toString() {
-        return "Imovel{"+ " rua=" + rua + ", preco=" + preco + ", precoMinimo=" + precoMinimo + ", Estado=" + estado + '}';
+        return "Imovel{"+ "consultas=" + consultas + ", rua=" + rua + ", preco=" + preco + ", precoMinimo=" + precoMinimo + ", Estado=" + estado + '}';
     }
 
     public Imovel clone(){
@@ -92,6 +98,12 @@ public class Imovel implements Comparable<Imovel>, Serializable{
         //https://stackoverflow.com/questions/9650798/hash-a-double-in-java
   }
 
+   public void incrementaConsultas(){
+       int p=this.getConsultas();
+       p++;
+       System.out.println(p);
+       this.setConsultas(p);
+    }
 
 
 }

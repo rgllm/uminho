@@ -2,8 +2,8 @@
 comment0.params=
 comment0.target=Moradia()
 comment0.text=Construtores
-comment1.params=rua\ preco\ precoMinimo\ tipo\ areaImplantacao\ areaCoberta\ areaTerreno\ nQuartos\ nWCs\ nPorta\ estado
-comment1.target=Moradia(java.lang.String,\ double,\ double,\ Tipo_Moradia,\ double,\ double,\ double,\ int,\ int,\ int,\ Estado_Imovel)
+comment1.params=consultas\ rua\ preco\ precoMinimo\ tipo\ areaImplantacao\ areaCoberta\ areaTerreno\ nQuartos\ nWCs\ nPorta\ estado
+comment1.target=Moradia(int,\ java.lang.String,\ double,\ double,\ Tipo_Moradia,\ double,\ double,\ double,\ int,\ int,\ int,\ Estado_Imovel)
 comment10.params=tipo
 comment10.target=void\ setTipo(Tipo_Moradia)
 comment11.params=areaImplantacao

@@ -25,8 +25,8 @@ public class LojaHabitavel extends Loja implements Habitavel{
         gerarID();
     }
 
-    public LojaHabitavel(String rua,double preco,double precoMinimo,double area,boolean wc, Estado_Imovel estado, String tipoNegocio,int nPorta,Tipo_Apartamento tipo, double areaAP, int nQuartos, int nWCs, boolean garagem,int andar) {
-        super(rua,preco,precoMinimo,area,wc,estado,tipoNegocio,nPorta);
+    public LojaHabitavel(int consultas,String rua,double preco,double precoMinimo,double area,boolean wc, Estado_Imovel estado, String tipoNegocio,int nPorta,Tipo_Apartamento tipo, double areaAP, int nQuartos, int nWCs, boolean garagem,int andar) {
+        super(consultas,rua,preco,precoMinimo,area,wc,estado,tipoNegocio,nPorta);
         this.tipo = tipo;
         this.area = areaAP;
         this.nQuartos = nQuartos;

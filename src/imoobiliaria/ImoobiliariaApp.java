@@ -44,7 +44,7 @@ public class ImoobiliariaApp {
     private static void carregarMenus() {
         String[] ops={"Login","Registar Utilizador"};
         String [] opsUtilizador = {"Adicionar Vendedor","Adicionar Comprador"};
-        String [] vendedor={"Registar Imóvel","Imóveis para Venda","Alterar Estado de um Imóvel","Imóveis mais consultados","Lista de Imóveis por Tipo","Lista Imóveis Habitáveis","Consultar Mapeamento de Imóveis"};
+        String [] vendedor={"Registar Imóvel","Top de imóveis mais consultados","Alterar Estado de um Imóvel","Lista de Imóveis por Tipo","Lista Imóveis Habitáveis","Mapeamento de Imóveis"};
         String [] registarloja={"Sem habitação","Com habitação"};
         String [] imoveis={"Moradia","Apartamento","Loja","Terreno"};
         String [] comprador={"Marcar imóvel como Favorito","Consultar imóveis Favoritos","Lista de Imóveis por Tipo","Lista Imóveis Habitáveis","Consultar Mapeamento de Imóveis"};
@@ -190,14 +190,14 @@ public class ImoobiliariaApp {
         nQuartos=scan.nextInt();
         System.out.print("\nNúmero de WCs: ");
         nWCs=scan.nextInt();
-        Moradia moradia= new Moradia(rua,preco,precoMinimo,Tipo_Moradia.valueOf(tipo),areaImplantacao,areaCoberta,areaTerreno,nQuartos,nWCs,nPorta,Estado_Imovel.valueOf("Para_Venda"));
+        Moradia moradia= new Moradia(0,rua,preco,precoMinimo,Tipo_Moradia.valueOf(tipo),areaImplantacao,areaCoberta,areaTerreno,nQuartos,nWCs,nPorta,Estado_Imovel.valueOf("Para_Venda"));
         try{
             tab.registaImovel(moradia);
         }
         catch(ImovelExisteException | SemAutorizacaoException e){
             System.out.println(e.getMessage());
         }
-        System.out.println("\n A Moradia foi registada com Sucesso!");
+        System.out.println("\n A Moradia com o ID (" + String.valueOf(moradia.gerarIDImovel())+") foi registada com Sucesso!");
    }
 
      /**
@@ -230,14 +230,14 @@ public class ImoobiliariaApp {
         nWCs=scan.nextInt();
         System.out.print("\nTem garagem? (true or false): "); // ver como fazer melhor isto
         garagem=scan.next();
-        Apartamento apartamento= new Apartamento(rua,preco,precoMinimo,Tipo_Apartamento.valueOf(tipo),area,nQuartos,nWCs,Boolean.valueOf(garagem),nPorta,andar,Estado_Imovel.valueOf("Para_Venda"));
+        Apartamento apartamento= new Apartamento(0,rua,preco,precoMinimo,Tipo_Apartamento.valueOf(tipo),area,nQuartos,nWCs,Boolean.valueOf(garagem),nPorta,andar,Estado_Imovel.valueOf("Para_Venda"));
         try{
             tab.registaImovel(apartamento);
         }
         catch(ImovelExisteException | SemAutorizacaoException e){
                 System.out.println(e.getMessage());
         }
-        System.out.println("\n O Apartamento foi registado com Sucesso!");
+        System.out.println("\n O Apartamento com o ID (" + String.valueOf(apartamento.gerarIDImovel())+") foi registado com Sucesso!");
    }
 
     /**
@@ -264,14 +264,14 @@ public class ImoobiliariaApp {
         nPorta=scan.nextInt();
         System.out.print("\nTem WC? (true or false): ");
         wc=scan.next();
-        Loja loja= new Loja(rua,preco,precoMinimo,area,Boolean.valueOf(wc),Estado_Imovel.valueOf("Para_Venda"),tipoNegocio,nPorta);
+        Loja loja= new Loja(0,rua,preco,precoMinimo,area,Boolean.valueOf(wc),Estado_Imovel.valueOf("Para_Venda"),tipoNegocio,nPorta);
         try{
             tab.registaImovel(loja);
         }
         catch(ImovelExisteException | SemAutorizacaoException e){
             System.out.println(e.getMessage());
         }
-        System.out.println("\n A Loja foi registada com Sucesso!");
+        System.out.println("\n A Loja com o ID (" + String.valueOf(loja.gerarIDImovel())+") foi registada com Sucesso!");
     }
 
     /**
@@ -296,7 +296,7 @@ public class ImoobiliariaApp {
         tipoNegocio=scan.next();
         System.out.print("\nÁrea Total da Loja: ");
         area=scan.nextDouble();
-        System.out.print("em WC? (true ou false): ");
+        System.out.print("\nTem WC? (true ou false): ");
         wc=scan.next();
         System.out.print("\nÁrea Total do Apartamento: ");
         areaAP=scan.nextDouble();
@@ -310,14 +310,14 @@ public class ImoobiliariaApp {
         andar=scan.nextInt();
         System.out.print("\nTem garagem? (true or false): "); // ver como fazer melhor isto
         garagem=scan.next();
-        LojaHabitavel loja= new LojaHabitavel(rua,preco,precoMinimo,area,Boolean.valueOf(wc),Estado_Imovel.valueOf("Para_Venda"),tipoNegocio,nPorta,Tipo_Apartamento.valueOf(tipo),areaAP,nQuartos,nWCs,Boolean.valueOf(garagem),andar);
+        LojaHabitavel loja= new LojaHabitavel(0,rua,preco,precoMinimo,area,Boolean.valueOf(wc),Estado_Imovel.valueOf("Para_Venda"),tipoNegocio,nPorta,Tipo_Apartamento.valueOf(tipo),areaAP,nQuartos,nWCs,Boolean.valueOf(garagem),andar);
         try{
             tab.registaImovel(loja);
         }
         catch(ImovelExisteException | SemAutorizacaoException e){
             System.out.println(e.getMessage());
         }
-        System.out.println("\n A Loja com Habitação foi registada com Sucesso!");
+        System.out.println("\n A loja com habitação com o ID (" + String.valueOf(loja.gerarIDImovel())+") foi registada com Sucesso!");
    }
 
     /**
@@ -349,14 +349,14 @@ public class ImoobiliariaApp {
         potenciaEletrica=scan.nextDouble();
         System.out.print("\nTem esgotos? (true ou false): ");
         esgotos=scan.next();
-        Terreno terreno = new Terreno(rua,preco,precoMinimo,areaConstrucao,Boolean.valueOf(habitacao),Boolean.valueOf(armazem),diamCanalizacoes,Boolean.valueOf(eletricidade),potenciaEletrica,Boolean.valueOf(esgotos),Estado_Imovel.valueOf("Para_Venda"));
+        Terreno terreno = new Terreno(0,rua,preco,precoMinimo,areaConstrucao,Boolean.valueOf(habitacao),Boolean.valueOf(armazem),diamCanalizacoes,Boolean.valueOf(eletricidade),potenciaEletrica,Boolean.valueOf(esgotos),Estado_Imovel.valueOf("Para_Venda"));
         try{
             tab.registaImovel(terreno);
         }
         catch(ImovelExisteException | SemAutorizacaoException e){
             System.out.println(e.getMessage());
         }
-        System.out.println("\n O Terreno foi registado com Sucesso!");
+        System.out.println("\n O Terreno com o ID (" + String.valueOf(terreno.gerarIDImovel())+") foi registado com Sucesso!");
    }
 
     /**
@@ -422,19 +422,19 @@ public class ImoobiliariaApp {
                 System.out.println(g.getMessage());
                 return;
             }
-            System.out.println("\nEstado do imovel " + id + "alterado para " + estado);
+            System.out.println("\nEstado do imovel " + id + " alterado para " + estado);
        }
 
     /**
      * Método que imprime no ecrã, por páginas, os imóveis de um dado tipo (Moradia, Apartamento, Loja, Loja Habitável ou Terreno).
     */
-    public static void getImoveisTipo(){
+    public static void ImoveisTipo(){
            String classe;
            int preco,escolha=-1,i=0,pagina=1;
            Imovel imovel=null;
            Scanner scan= new Scanner(System.in);
            clearScreen();
-           System.out.print("Classe dos imóveis: ");
+           System.out.print("Classe dos imóveis (Moradia, Apartamento, Loja, LojaHabitavel ou Terreno) : ");
            classe=scan.next();
            System.out.print("\nPreço máximo dos imóveis: ");
            preco=scan.nextInt();
@@ -514,6 +514,57 @@ public class ImoobiliariaApp {
                 System.out.println("Preço Pedido: " + aux.getPreco());
                 System.out.println("Preço mínimo: " + aux.getPrecoMinimo());
                 System.out.println("Estado: " + aux.getEstado() + "\n\n");
+                i++;
+            }
+            System.out.println("\n1.Página Seguinte");
+            System.out.println("2.Página Anterior");
+            System.out.println("0.Sair");
+            System.out.print("Opção: ");
+            escolha=scan.nextInt();
+            if(escolha==1){
+                clearScreen();
+                if(i>=lista.size()){
+                    System.out.println("Não existe página seguinte");
+                    i=(pagina-1)*10;
+                }
+                else{
+                    pagina++;
+                }
+            }
+            if(escolha==2){
+                clearScreen();
+                if(i-10<0){
+                    System.out.println("Página Inválida");
+                    i=(pagina-1)*10;
+                }
+                else{
+                    pagina--;
+                    i=(pagina-1)*10;
+                }
+            }
+            if(escolha==0) return;
+           }
+       }
+   }
+
+     public static void TopImoveis(){
+        Scanner scan=new Scanner(System.in);
+        int consultas;
+        int escolha=-1;
+        int i=0,pagina=1;
+        clearScreen();
+        System.out.print("Insira o número de consultas máximo do imóvel: ");
+        consultas = scan.nextInt();
+        List<String> lista=tab.getTopImoveis(consultas);
+        if(lista.size()==0){
+           System.out.println("Não há imóveis com essas especificações");
+       }
+       else{
+            clearScreen();
+           while(i<10 && i<lista.size() && escolha!=0){
+            System.out.println("Página " + pagina);
+            while(i<10 && i<lista.size()){
+                System.out.println("ID: " + lista.get(i));
                 i++;
             }
             System.out.println("\n1.Página Seguinte");
@@ -647,6 +698,8 @@ public class ImoobiliariaApp {
     }
   }
 
+
+
     public static void comLogin(){
        Scanner scan=new Scanner(System.in);
        if(tab.getUserAtual() instanceof Vendedor){
@@ -656,22 +709,24 @@ public class ImoobiliariaApp {
                     case 1:
                         clearScreen();
                         RegistarImovel();
+                        break;
                     case 2:
                         clearScreen();
+                        //TopImoveis();
                         break;
                     case 3:
                         clearScreen();
                         AlterarEstado();
                         break;
-                    case 5:
+                    case 4:
                         clearScreen();
-                        getImoveisTipo();
+                        ImoveisTipo();
                         break;
-                    case 6:
+                    case 5:
                         clearScreen();
                         Habitaveis();
                         break;
-                    case 7:
+                    case 6:
                         clearScreen();
                         Mapeamento();
                         break;
@@ -694,7 +749,7 @@ public class ImoobiliariaApp {
                     break;
                 case 3:
                     clearScreen();
-                    getImoveisTipo();
+                    ImoveisTipo();
                     break;
                 case 4:
                     clearScreen();

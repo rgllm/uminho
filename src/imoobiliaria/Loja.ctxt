@@ -2,8 +2,8 @@
 comment0.params=
 comment0.target=Loja()
 comment0.text=Construtores
-comment1.params=rua\ preco\ precoMinimo\ area\ wc\ estado\ tipoNegocio\ nPorta
-comment1.target=Loja(java.lang.String,\ double,\ double,\ double,\ boolean,\ Estado_Imovel,\ java.lang.String,\ int)
+comment1.params=consultas\ rua\ preco\ precoMinimo\ area\ wc\ estado\ tipoNegocio\ nPorta
+comment1.target=Loja(int,\ java.lang.String,\ double,\ double,\ double,\ boolean,\ Estado_Imovel,\ java.lang.String,\ int)
 comment10.params=nPorta
 comment10.target=void\ setNPorta(int)
 comment11.params=obj

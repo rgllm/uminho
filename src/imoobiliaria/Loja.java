@@ -17,8 +17,8 @@ public class Loja extends Imovel{
         gerarID();
     }
 
-    public Loja(String rua,double preco,double precoMinimo,double area,boolean wc, Estado_Imovel estado, String tipoNegocio,int nPorta){
-        super(rua,preco,precoMinimo,estado);
+    public Loja(int consultas, String rua,double preco,double precoMinimo,double area,boolean wc, Estado_Imovel estado, String tipoNegocio,int nPorta){
+        super(consultas,rua,preco,precoMinimo,estado);
         this.area=area;
         this.wc=wc;
         this.tipoNegocio=new String(tipoNegocio);

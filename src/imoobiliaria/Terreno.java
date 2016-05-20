@@ -24,8 +24,8 @@ public class Terreno extends Imovel{
         gerarID();
     }
 
-    public Terreno(String rua,double preco,double precoMinimo,double areaConstrucao,boolean habitacao,boolean armazem,double diamCanalizacoes,boolean eletricidade,double potenciaEletrica,boolean esgotos,Estado_Imovel estado){
-        super(rua,preco,precoMinimo,estado);
+    public Terreno(int consultas,String rua,double preco,double precoMinimo,double areaConstrucao,boolean habitacao,boolean armazem,double diamCanalizacoes,boolean eletricidade,double potenciaEletrica,boolean esgotos,Estado_Imovel estado){
+        super(consultas,rua,preco,precoMinimo,estado);
         this.areaConstrucao=areaConstrucao;
         this.habitacao=habitacao;
         this.armazem=armazem;
@@ -37,7 +37,6 @@ public class Terreno extends Imovel{
     }
 
     public Terreno(Terreno x){
-        super(x.getRua(),x.getPreco(),x.getPrecoMinimo(),x.getEstado());
         this.areaConstrucao=x.getAreaConstrucao();
         this.habitacao=x.isHabitacao();
         this.armazem=x.isArmazem();

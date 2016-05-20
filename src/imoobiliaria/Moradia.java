@@ -24,8 +24,8 @@ public class Moradia extends Imovel implements Habitavel{
         gerarID();
     }
 
-    public Moradia(String rua,double preco,double precoMinimo,Tipo_Moradia tipo,double areaImplantacao,double areaCoberta,double areaTerreno,int nQuartos,int nWCs,int nPorta,Estado_Imovel estado){
-        super(rua,preco,precoMinimo,estado);
+    public Moradia(int consultas, String rua,double preco,double precoMinimo,Tipo_Moradia tipo,double areaImplantacao,double areaCoberta,double areaTerreno,int nQuartos,int nWCs,int nPorta,Estado_Imovel estado){
+        super(consultas,rua,preco,precoMinimo,estado);
         this.tipo=tipo;
         this.areaImplantacao=areaImplantacao;
         this.areaCoberta=areaCoberta;

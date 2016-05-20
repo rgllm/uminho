@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.params=
 comment0.target=LojaHabitavel()
-comment1.params=rua\ preco\ precoMinimo\ area\ wc\ estado\ tipoNegocio\ nPorta\ tipo\ areaAP\ nQuartos\ nWCs\ garagem\ andar
-comment1.target=LojaHabitavel(java.lang.String,\ double,\ double,\ double,\ boolean,\ Estado_Imovel,\ java.lang.String,\ int,\ Tipo_Apartamento,\ double,\ int,\ int,\ boolean,\ int)
+comment1.params=consultas\ rua\ preco\ precoMinimo\ area\ wc\ estado\ tipoNegocio\ nPorta\ tipo\ areaAP\ nQuartos\ nWCs\ garagem\ andar
+comment1.target=LojaHabitavel(int,\ java.lang.String,\ double,\ double,\ double,\ boolean,\ Estado_Imovel,\ java.lang.String,\ int,\ Tipo_Apartamento,\ double,\ int,\ int,\ boolean,\ int)
 comment10.params=tipo
 comment10.target=void\ setTipo(Tipo_Apartamento)
 comment11.params=area

@@ -198,9 +198,15 @@ public class Imoobiliaria implements Serializable{
     * Obter um conjunto com os códigos dos imóveis
     * mais consultados (ou seja, com mais de N consultas)
     */
-    /*public Set<String> getTopImoveis(int n){
-        return null;
-    } */
+    public List<String> getTopImoveis(int n){
+        ArrayList<String> lista = new ArrayList<>();
+        for(Imovel im:imoveis.values()){
+            if(im.getConsultas() > n){
+                lista.add(im.getId());
+            }
+        }
+        return lista;
+    }
 
     /**
     * Consultar a lista de todos os imóveis de um dado tipo (Terreno, Moradia, etc.) e até um certo preço.
@@ -209,8 +215,9 @@ public class Imoobiliaria implements Serializable{
         ArrayList<Imovel> lista=new ArrayList<> ();
         for(Imovel im:imoveis.values()){
             if(im.getPreco()<=preco){
-                if(classe.equals("Moradia")){if(im instanceof Moradia){ lista.add(im);}}
+                if(classe.equals("Moradia")){if(im instanceof Moradia){lista.add(im);}}
                 if(classe.equals("Loja")){if(im instanceof Loja){lista.add(im);}}
+                if(classe.equals("LojaHabitavel")){if(im instanceof LojaHabitavel){lista.add(im);}}
                 if(classe.equals("Terreno")){if(im instanceof Terreno){lista.add(im);}}
                 if(classe.equals("Apartamento")){if(im instanceof Apartamento){lista.add(im);}}
             }
@@ -230,6 +237,7 @@ public class Imoobiliaria implements Serializable{
                 if(im.getPreco() <= preco){
                     Habitavel imovel = (Habitavel) im;
                     res.add(imovel);
+                    im.incrementaConsultas();
             }
         }
         return res;
@@ -243,8 +251,10 @@ public class Imoobiliaria implements Serializable{
         for(Utilizador u: users.values()){
             if(u instanceof Vendedor){
             Vendedor v = (Vendedor) u;
-            for(Imovel im: v.getPortfolio())
+            for(Imovel im: v.getPortfolio()){
+                //im.incrementaConsultas();
                 res.put(im,v);
+            }
             }
        }
       return res;

@@ -2,8 +2,8 @@
 comment0.params=
 comment0.target=Apartamento()
 comment0.text=Construtores
-comment1.params=rua\ preco\ precoMinimo\ tipo\ area\ nQuartos\ nWCs\ garagem\ nPorta\ andar\ estado
-comment1.target=Apartamento(java.lang.String,\ double,\ double,\ Tipo_Apartamento,\ double,\ int,\ int,\ boolean,\ int,\ int,\ Estado_Imovel)
+comment1.params=consultas\ rua\ preco\ precoMinimo\ tipo\ area\ nQuartos\ nWCs\ garagem\ nPorta\ andar\ estado
+comment1.target=Apartamento(int,\ java.lang.String,\ double,\ double,\ Tipo_Apartamento,\ double,\ int,\ int,\ boolean,\ int,\ int,\ Estado_Imovel)
 comment10.params=tipo
 comment10.target=void\ setTipo(Tipo_Apartamento)
 comment11.params=area

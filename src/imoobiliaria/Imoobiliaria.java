@@ -208,7 +208,7 @@ public class Imoobiliaria implements Serializable{
             imoveis.get(id).setEstado(Estado_Imovel.valueOf(estado));
             v.addHistorico(imoveis.get(id));
             }
-        
+
         }
     }
 
@@ -228,7 +228,7 @@ public class Imoobiliaria implements Serializable{
         ArrayList<String> lista = new ArrayList<>();
         for(Imovel im:imoveis.values()){
             Vendedor v = (Vendedor) userAtual;
-            if((im.getConsultas() < n) && (v.pertencePortfolio(im)) ){
+            if((im.getConsultas() > n) && (v.pertencePortfolio(im)) ){
                 lista.add(im.getId());
             }
         }

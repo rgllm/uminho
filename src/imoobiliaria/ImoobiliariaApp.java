@@ -44,10 +44,10 @@ public class ImoobiliariaApp {
     private static void carregarMenus() {
         String[] ops={"Login","Registar Utilizador"};
         String [] opsUtilizador = {"Adicionar Vendedor","Adicionar Comprador"};
-        String [] vendedor={"Registar Imóvel","Top de imóveis mais consultados","Alterar Estado de um Imóvel","Lista de Imóveis por Tipo","Lista Imóveis Habitáveis","Mapeamento de Imóveis"};
+        String [] vendedor={"Registar Imóvel","Top de imóveis mais consultados","Alterar Estado de um Imóvel","Consultar Imóveis por Tipo","Consultar Imóveis Habitáveis","Consultar Mapeamento de Imóveis"};
         String [] registarloja={"Sem habitação","Com habitação"};
         String [] imoveis={"Moradia","Apartamento","Loja","Terreno"};
-        String [] comprador={"Marcar imóvel como Favorito","Consultar imóveis Favoritos","Lista de Imóveis por Tipo","Lista Imóveis Habitáveis","Consultar Mapeamento de Imóveis"};
+        String [] comprador={"Marcar um Imóvel como Favorito","Consultar os meus Imóveis Favoritos","Consultar Imóveis por Tipo","Consultar Imóveis Habitáveis","Consultar Mapeamento de Imóveis"};
 
         menumain = new Menu(ops);
         menuRU = new Menu(opsUtilizador);
@@ -489,7 +489,7 @@ public class ImoobiliariaApp {
         int consultas;
         int i;
         clearScreen();
-        System.out.print("Insira o número de consultas máximo do imóvel: ");
+        System.out.print("Número de consultas mínimo: ");
         consultas = scan.nextInt();
         try{
         List<String> lista=tab.getTopImoveis(consultas);

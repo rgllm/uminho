@@ -33,9 +33,9 @@ public class ImoobiliariaApp {
             tab.gravaObj("estado.im");
         }
         catch(IOException e){
-            System.out.println("Não consegui gravar os Dados");
+            System.out.println("Não consegui gravar os dados.");
         }
-        System.out.println("Até breve!....");
+        System.out.println("Até à próxima!");
     }
 
     /**
@@ -430,11 +430,11 @@ public class ImoobiliariaApp {
     */
     public static void ImoveisTipo(){
            String classe;
-           int preco,escolha=-1,i=0,pagina=1;
+           int preco,i;
            Imovel imovel=null;
            Scanner scan= new Scanner(System.in);
            clearScreen();
-           System.out.print("Classe dos imóveis (Moradia, Apartamento, Loja, LojaHabitavel ou Terreno) : ");
+           System.out.print("Classe dos imóveis \n (Moradia, Apartamento, Loja, LojaHabitavel ou Terreno) : ");
            classe=scan.next();
            System.out.print("\nPreço máximo dos imóveis: ");
            preco=scan.nextInt();
@@ -443,48 +443,17 @@ public class ImoobiliariaApp {
                System.out.println("Não há imóveis com estas especificações.");
            }
            else{
-              clearScreen();
-               while(i<10 && i<lista.size() && escolha!=0){
-                System.out.println("Página " + pagina);
-                while(i<10 && i<lista.size()){
-                    imovel=lista.get(i);
-                    System.out.println("Código: " + imovel.gerarIDImovel());
-                    System.out.println("Rua: " + imovel.getRua());
-                    System.out.println("Preço Pedido: " + imovel.getPreco());
-                    System.out.println("Preço Mínimo: " + imovel.getPrecoMinimo());
-                    System.out.println("Estado do Imóvel: " + imovel.getEstado() + "\n\n");
-                    i++;
-                }
-                System.out.println("\n1.Página Seguinte");
-                System.out.println("2.Página Anterior");
-                System.out.println("0.Sair");
-                System.out.print("Opção: ");
-                escolha=scan.nextInt();
-                if(escolha==1){
-                    clearScreen();
-                    if(i>=lista.size()){
-                        System.out.println("Não existe página seguinte");
-                        i=(pagina-1)*10;
-                    }
-                    else{
-                        pagina++;
-                    }
-                }
-                if(escolha==2){
-                  clearScreen();
-                    if(i-10<0){
-                        System.out.println("Página Inválida");
-                        i=(pagina-1)*10;
-                    }
-                    else{
-                        pagina--;
-                        i=(pagina-1)*10;
-                    }
-                }
-                if(escolha==0) return;
-               }
+            clearScreen();
+            for(i=0;i<lista.size();i++){
+                imovel=lista.get(i);
+                System.out.println("Código: " + imovel.gerarIDImovel());
+                System.out.println("Rua: " + imovel.getRua());
+                System.out.println("Preço Pedido: " + imovel.getPreco());
+                System.out.println("Preço Mínimo: " + imovel.getPrecoMinimo());
+                System.out.println("Estado do Imóvel: " + imovel.getEstado() + "\n\n");
+            }
            }
-           }
+        }
 
     /**
     * Método que imprime no ecrã, por páginas, todos os imóveis com habitação.
@@ -492,66 +461,33 @@ public class ImoobiliariaApp {
     public static void Habitaveis(){
         Scanner scan=new Scanner(System.in);
         int preco;
-        int escolha=-1;
-        int i=0,pagina=1;
+        int i;
         Habitavel imovel = null;
         clearScreen();
-        System.out.print("Insira o preço maximo do imovel: ");
+        System.out.print("Insira o preço máximo do imovel: ");
         preco = scan.nextInt();
         List<Habitavel> lista=tab.getHabitaveis(preco);
         if(lista.size()==0){
            System.out.println("Não há imóveis com essas especificações");
        }
        else{
-            clearScreen();
-           while(i<10 && i<lista.size() && escolha!=0){
-            System.out.println("Página " + pagina);
-            while(i<10 && i<lista.size()){
+           clearScreen();
+           for(i=0;i<lista.size();i++){
                 imovel=lista.get(i);
-                Imovel aux = (Imovel) imovel;
-                System.out.println("Código: " + aux.gerarIDImovel());
-                System.out.println("Rua: " + aux.getRua());
-                System.out.println("Preço Pedido: " + aux.getPreco());
-                System.out.println("Preço mínimo: " + aux.getPrecoMinimo());
-                System.out.println("Estado: " + aux.getEstado() + "\n\n");
-                i++;
+                Imovel habitavel = (Imovel) imovel;
+                System.out.println("Código: " + habitavel.gerarIDImovel());
+                System.out.println("Rua: " + habitavel.getRua());
+                System.out.println("Preço Pedido: " + habitavel.getPreco());
+                System.out.println("Preço mínimo: " + habitavel.getPrecoMinimo());
+                System.out.println("Estado: " + habitavel.getEstado() + "\n\n");
             }
-            System.out.println("\n1.Página Seguinte");
-            System.out.println("2.Página Anterior");
-            System.out.println("0.Sair");
-            System.out.print("Opção: ");
-            escolha=scan.nextInt();
-            if(escolha==1){
-                clearScreen();
-                if(i>=lista.size()){
-                    System.out.println("Não existe página seguinte");
-                    i=(pagina-1)*10;
-                }
-                else{
-                    pagina++;
-                }
-            }
-            if(escolha==2){
-                clearScreen();
-                if(i-10<0){
-                    System.out.println("Página Inválida");
-                    i=(pagina-1)*10;
-                }
-                else{
-                    pagina--;
-                    i=(pagina-1)*10;
-                }
-            }
-            if(escolha==0) return;
-           }
        }
    }
 
      public static void TopImoveis(){
         Scanner scan=new Scanner(System.in);
         int consultas;
-        int escolha=-1;
-        int i=0,pagina=1;
+        int i;
         clearScreen();
         System.out.print("Insira o número de consultas máximo do imóvel: ");
         consultas = scan.nextInt();
@@ -561,47 +497,17 @@ public class ImoobiliariaApp {
        }
        else{
             clearScreen();
-           while(i<10 && i<lista.size() && escolha!=0){
-            System.out.println("Página " + pagina);
-            while(i<10 && i<lista.size()){
-                System.out.println("ID: " + lista.get(i));
-                i++;
+            for(i=0;i<lista.size();i++){
+                 System.out.println("ID: " + lista.get(i));
             }
-            System.out.println("\n1.Página Seguinte");
-            System.out.println("2.Página Anterior");
-            System.out.println("0.Sair");
-            System.out.print("Opção: ");
-            escolha=scan.nextInt();
-            if(escolha==1){
-                clearScreen();
-                if(i>=lista.size()){
-                    System.out.println("Não existe página seguinte");
-                    i=(pagina-1)*10;
-                }
-                else{
-                    pagina++;
-                }
-            }
-            if(escolha==2){
-                clearScreen();
-                if(i-10<0){
-                    System.out.println("Página Inválida");
-                    i=(pagina-1)*10;
-                }
-                else{
-                    pagina--;
-                    i=(pagina-1)*10;
-                }
-            }
-            if(escolha==0) return;
-           }
        }
    }
-
+     /**
+     * Método que imprime o mapeamento dos imóveis, ou seja, imprime o vendedor e os imóveis correspondentes.
+     */
     public static void Mapeamento(){
         Scanner scan=new Scanner(System.in);
-        int escolha=-1;
-        int i=0,pagina=1;
+        int i;
         Habitavel imovel = null;
         clearScreen();
        Map<Imovel,Vendedor> lista=tab.getMapeamentoImoveis();
@@ -618,30 +524,39 @@ public class ImoobiliariaApp {
         }
     }
 
-   /* Métodos relativos ao comprador */
+   /*
+   *
+   * MÉTODOS RELATIVOS APENAS AO COMPRADOR
+   *
+   */
 
-  public static void MarcarFavorito() {
-    String id;
-    Scanner scan = new Scanner(System.in);
-    clearScreen();
-    System.out.print("Insira id do imovel: ");
-    id = scan.next();
-    try{
-       tab.setFavorito(id);
-       System.out.println("Imóvel marcado como favorito!");
-    }
-    catch(ImovelInexistenteException e){
-        System.out.println(e.getMessage());
-    }
-    catch(SemAutorizacaoException g){
-        System.out.println(g.getMessage());
-    }
-   }
+     /**
+     * Método que dado o ID de um imóvel adiciona aos favoritos do comprador esse imóvel.
+     */
+      public static void MarcarFavorito() {
+        String id;
+        Scanner scan = new Scanner(System.in);
+        clearScreen();
+        System.out.print("Insira id do imovel: ");
+        id = scan.next();
+        try{
+           tab.setFavorito(id);
+           System.out.println("Imóvel marcado como favorito!");
+        }
+        catch(ImovelInexistenteException e){
+            System.out.println(e.getMessage());
+        }
+        catch(SemAutorizacaoException g){
+            System.out.println(g.getMessage());
+        }
+       }
 
+    /**
+     * Método que imprime os favoritos do comprador com login feito.
+     */
     public static void ConsultarFavoritos(){
         Scanner scan=new Scanner(System.in);
-        int escolha=-1;
-        int i=0,pagina=1;
+        int i;
         Imovel imovel = null;
         clearScreen();
         try{
@@ -651,45 +566,14 @@ public class ImoobiliariaApp {
        }
        else{
            clearScreen();
-           while(i<10 && i<lista.size() && escolha!=0){
-            System.out.println("Página " + pagina);
-            while(i<10 && i<lista.size()){
+           for(i=0;i<lista.size();i++){
                 imovel=lista.get(i);
-                Imovel aux = (Imovel) imovel;
-                System.out.println("Código: " + aux.gerarIDImovel());
-                System.out.println("Rua: " + aux.getRua());
-                System.out.println("Preço Pedido: " + aux.getPreco());
-                System.out.println("Preço mínimo: " + aux.getPrecoMinimo());
-                System.out.println("Estado: " + aux.getEstado() + "\n\n");
-                i++;
-            }
-            System.out.println("\n1.Página Seguinte");
-            System.out.println("2.Página Anterior");
-            System.out.println("0.Sair");
-            System.out.print("Opção: ");
-            escolha=scan.nextInt();
-            if(escolha==1){
-                clearScreen();
-                if(i>=lista.size()){
-                    System.out.println("Não existe página seguinte");
-                    i=(pagina-1)*10;
-                }
-                else{
-                    pagina++;
-                }
-            }
-            if(escolha==2){
-                clearScreen();
-                if(i-10<0){
-                    System.out.println("Página Inválida");
-                    i=(pagina-1)*10;
-                }
-                else{
-                    pagina--;
-                    i=(pagina-1)*10;
-                }
-            }
-            if(escolha==0) return;
+                Imovel favorito = (Imovel) imovel;
+                System.out.println("Código: " + favorito.gerarIDImovel());
+                System.out.println("Rua: " + favorito.getRua());
+                System.out.println("Preço Pedido: " + favorito.getPreco());
+                System.out.println("Preço mínimo: " + favorito.getPrecoMinimo());
+                System.out.println("Estado: " + favorito.getEstado() + "\n\n");
            }
        }
     }
@@ -698,8 +582,10 @@ public class ImoobiliariaApp {
     }
   }
 
-
-
+     /**
+     * Menu principal da aplicação para utilizadores com login feito.
+     * O menu é diferente caso o utilizador seja um vendedor ou seja um comprador.
+     */
     public static void comLogin(){
        Scanner scan=new Scanner(System.in);
        if(tab.getUserAtual() instanceof Vendedor){

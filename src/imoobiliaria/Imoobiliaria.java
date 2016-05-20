@@ -1,15 +1,17 @@
 import java.util.*;
 import java.io.*;
 
-@SuppressWarnings("unchecked")
 public class Imoobiliaria implements Serializable{
 
+    //Variáveis de instância
+    private boolean logado = false; // Apenas diz que se há uma sessão ativa.
+    private Utilizador userAtual = null; // Todos os dados do utilizador que está logado.
+    private Map<String,Utilizador> users; // Todos os utilizadores da aplicação.
+    private Map<String,Imovel> imoveis; // Todos os imóveis da aplicação.
 
-    private boolean logado = false;
-    private Utilizador userAtual = null;
-    private Map<String,Utilizador> users;
-    private Map<String,Imovel> imoveis;
-
+    /**
+    * Construtores
+    */
     public Imoobiliaria(){
         users = new TreeMap<>();
         imoveis = new TreeMap<>();
@@ -22,7 +24,9 @@ public class Imoobiliaria implements Serializable{
         this.imoveis=imoobiliaria.getImoveis();
     }
 
-    //Gets e Sets
+    /**
+     * Gets e Sets da classe Imoobiliaria
+     */
     public boolean isLogado() {return logado;}
     public Utilizador getUserAtual() {return userAtual;}
     public Map<String,Utilizador> getUsers(){
@@ -54,12 +58,13 @@ public class Imoobiliaria implements Serializable{
 
 
     /**
-    * Outros métodos
+    * Outros métodos (incluindo os métodos referidos no enunciado do projeto)
     */
 
     /**
     * Aplicação deverá estar pré-populada com conjunto de dados
-    * significativos, que permita testar toda a aplicação no dia da entrega
+    * significativos, que permita testar toda a aplicação no dia da entrega.
+    * Este método lê um objeto e envia para o carregarDados();
     */
     public static Imoobiliaria leObj(String fich) throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fich));
@@ -85,7 +90,7 @@ public class Imoobiliaria implements Serializable{
     public void registarUtilizador (Utilizador u) throws UtilizadorExistenteException{
 
         if(existeUtilizador(u)==true){
-            throw new UtilizadorExistenteException("O utilizador já existe.");
+            throw new UtilizadorExistenteException("O email já está registado.");
         }
         else{
             users.put(u.getEmail(),u.clone());
@@ -135,6 +140,7 @@ public class Imoobiliaria implements Serializable{
 
         if(logado==false){
              throw new SemAutorizacaoException("Precisa de estar logado para registar um imóvel.");
+             //Nunca vai acontecer porque o menu não está disponível para utilizadores não logados
         }
         if(userAtual instanceof Comprador){
                 throw new SemAutorizacaoException("Só os vendedores podem colocar um imóvel à venda.");
@@ -166,16 +172,16 @@ public class Imoobiliaria implements Serializable{
      /**
     * Verifica se um determinado imóvel já existe a partir do seu ID.
     */
-    public boolean existeImovel (String idImovel){
+    public boolean existeImovel (String id){
 
-        if(imoveis.containsKey(idImovel)) return true;
+        if(imoveis.containsKey(id)) return true;
         else return false;
     }
 
     /**
     * Alterar o estado de um imóvel, de acordo com as acções feitas sobre ele
     */
-    public void setEstado(String idImovel , String estado) throws ImovelInexistenteException , SemAutorizacaoException , EstadoInvalidoException{
+    public void setEstado(String id , String estado) throws ImovelInexistenteException , SemAutorizacaoException , EstadoInvalidoException{
 
         if(logado==false){
             throw new SemAutorizacaoException("Precisa de estar logado.");
@@ -186,17 +192,18 @@ public class Imoobiliaria implements Serializable{
         if(!estado.equals("Para_Venda") && !estado.equals("Reservado") && !estado.equals("Vendido") && !estado.equals("Outro")){
             throw new EstadoInvalidoException("O estado pretendido é inválido.");
         }
-        if(existeImovel(idImovel)==false){
+        if(existeImovel(id)==false){
             throw new ImovelInexistenteException("O imóvel pretendido não existe.");
         }
         else{
-            imoveis.get(idImovel).setEstado(Estado_Imovel.valueOf(estado));
+            imoveis.get(id).setEstado(Estado_Imovel.valueOf(estado));
         }
     }
 
     /**
     * Obter um conjunto com os códigos dos imóveis
-    * mais consultados (ou seja, com mais de N consultas)
+    * mais consultados (ou seja, com mais de N consultas).
+    * TODO
     */
     public List<String> getTopImoveis(int n){
         ArrayList<String> lista = new ArrayList<>();
@@ -228,7 +235,6 @@ public class Imoobiliaria implements Serializable{
     /**
     * Consultar a lista de todos os imóveis habitáveis (até um certo preço).
     */
-
     public List<Habitavel> getHabitaveis(int preco){
         List<Habitavel> res = new ArrayList<>();
 
@@ -237,7 +243,6 @@ public class Imoobiliaria implements Serializable{
                 if(im.getPreco() <= preco){
                     Habitavel imovel = (Habitavel) im;
                     res.add(imovel);
-                    im.incrementaConsultas();
             }
         }
         return res;
@@ -247,12 +252,11 @@ public class Imoobiliaria implements Serializable{
     * Obter um mapeamento entre todos os imóveis e respectivos vendedores.
     */
     public Map<Imovel, Vendedor> getMapeamentoImoveis(){
-        Map<Imovel,Vendedor> res = new TreeMap();
+        Map<Imovel,Vendedor> res = new TreeMap<>();
         for(Utilizador u: users.values()){
             if(u instanceof Vendedor){
             Vendedor v = (Vendedor) u;
             for(Imovel im: v.getPortfolio()){
-                //im.incrementaConsultas();
                 res.put(im,v);
             }
             }
@@ -288,7 +292,7 @@ public class Imoobiliaria implements Serializable{
     }
 
     /**
-    * Consultar imóveis favoritos ordenados por preço
+    * Consultar imóveis favoritos ordenados por preço (só disponível para compradores).
     **/
     public List<Imovel> getFavoritos() throws SemAutorizacaoException{
         List<Imovel> f = new ArrayList<>();

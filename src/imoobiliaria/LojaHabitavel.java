@@ -1,9 +1,3 @@
-/**
- * Write a description of class LojaHabitavel here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
 public class LojaHabitavel extends Loja implements Habitavel{
     private Tipo_Apartamento tipo;
     private double area;

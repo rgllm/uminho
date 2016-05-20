@@ -57,16 +57,15 @@ public class Imoobiliaria implements Serializable{
     * Outros métodos
     */
 
-
     /**
     * Aplicação deverá estar pré-populada com conjunto de dados
     * significativos, que permita testar toda a aplicação no dia da entrega
     */
     public static Imoobiliaria leObj(String fich) throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fich));
-      
+
         Imoobiliaria te= (Imoobiliaria) ois.readObject();
-        
+
         ois.close();
         return te;
     }
@@ -113,13 +112,13 @@ public class Imoobiliaria implements Serializable{
     /**
     * Guarda o estado atual do programa num ficheiro.
     */
-    public void gravaObj(String fich) throws IOException { 
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fich)); 
-        oos.writeObject(this); 
-        
-        oos.flush(); 
-        oos.close(); 
-    } 
+    public void gravaObj(String fich) throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fich));
+        oos.writeObject(this);
+
+        oos.flush();
+        oos.close();
+    }
 
     /**
     * Fechar a sessão do utilizador e guarda o estado atual do programa.
@@ -144,7 +143,7 @@ public class Imoobiliaria implements Serializable{
              throw new ImovelExisteException("Este imóvel já se encontra à venda.");
         }
         else{
-            imoveis.put(im.getId(),im.clone());
+            this.imoveis.put(String.valueOf(im.gerarIDImovel()), im);
             Vendedor novo = (Vendedor) userAtual;
             novo.paraVenda(im);
         }
@@ -206,14 +205,17 @@ public class Imoobiliaria implements Serializable{
     /**
     * Consultar a lista de todos os imóveis de um dado tipo (Terreno, Moradia, etc.) e até um certo preço.
     */
-    public List<Imovel> getImovel(String classe, int preco){
-        List<Imovel> res = new ArrayList<>();
+       public List<Imovel> getImovel (String classe, int preco){
+        ArrayList<Imovel> lista=new ArrayList<> ();
         for(Imovel im:imoveis.values()){
-            if(im.getClass().getSimpleName().equals(classe))
-                if(im.getPreco()<=preco)
-                    res.add(im.clone());
+            if(im.getPreco()<=preco){
+                if(classe.equals("Moradia")){if(im instanceof Moradia){ lista.add(im);}}
+                if(classe.equals("Loja")){if(im instanceof Loja){lista.add(im);}}
+                if(classe.equals("Terreno")){if(im instanceof Terreno){lista.add(im);}}
+                if(classe.equals("Apartamento")){if(im instanceof Apartamento){lista.add(im);}}
+            }
         }
-        return res;
+        return lista;
     }
 
     /**
@@ -226,7 +228,8 @@ public class Imoobiliaria implements Serializable{
         for(Imovel im:imoveis.values()){
             if(im instanceof Habitavel)
                 if(im.getPreco() <= preco){
-                    res.add((Habitavel) im.clone());
+                    Habitavel imovel = (Habitavel) im;
+                    res.add(imovel);
             }
         }
         return res;
@@ -250,7 +253,7 @@ public class Imoobiliaria implements Serializable{
     /**
     * Marcar um imóvel como favorito (só disponível para compradores).
     **/
-    /*public void setFavorito(String idImovel) throws SemAutorizacaoException {
+    public void setFavorito(String idImovel) throws SemAutorizacaoException, ImovelInexistenteException {
 
            if(logado==false){
                 throw new SemAutorizacaoException("Não tem permissões para marcar um imóvel como favorito.");
@@ -265,21 +268,20 @@ public class Imoobiliaria implements Serializable{
                   else{
                         Comprador c = (Comprador) userAtual;
                         try{
-                            c.favorito(imoveis.get(idImovel));
+                            c.AddFavorito(imoveis.get(idImovel));
                         }
                         catch(ImovelFavoritoException exc){
                             throw new SemAutorizacaoException(exc.toString());
                         }
                   }
            }
-    }*/
-
+    }
 
     /**
     * Consultar imóveis favoritos ordenados por preço
     **/
-    public TreeSet<Imovel> getFavoritos() throws SemAutorizacaoException{
-        TreeSet<Imovel> f = new TreeSet<>();
+    public List<Imovel> getFavoritos() throws SemAutorizacaoException{
+        List<Imovel> f = new ArrayList<>();
         if(logado==false){
             throw new SemAutorizacaoException("Tem que iniciar a sessão para marcar um imóvel como favorito.");
         }
@@ -299,12 +301,4 @@ public class Imoobiliaria implements Serializable{
         return new Imoobiliaria(this);
     }
 
-       /*public String toString() {
-        StringBuilder sb = new StringBuilder("--- Imoobiliaria ---\n");
-        for(Utilizador u : this.users.values())
-        sb.append(u.toString() + "\n");
-        for(Imovel i : this.imoveis.values())
-        sb.append(i.toString() + "\n");
-        return sb.toString();
-    } */
 }

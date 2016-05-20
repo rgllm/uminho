@@ -23,7 +23,7 @@ public class Comprador extends Utilizador{
     public Map<String,Imovel> getFavoritos(){
         Map<String,Imovel> res = new TreeMap<>();
         for(Imovel i:favoritos.values()){
-            res.put(i.getId(),i.clone());
+            res.put(String.valueOf(i.gerarIDImovel()),i.clone());
         }
         return res;
     }

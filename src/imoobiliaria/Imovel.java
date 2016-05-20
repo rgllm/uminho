@@ -1,6 +1,5 @@
 import java.util.Objects;
-import java.lang.Object;
-import java.lang.Double;
+import java.lang.*;
 import java.io.*;
 
 public class Imovel implements Comparable<Imovel>, Serializable{
@@ -84,7 +83,7 @@ public class Imovel implements Comparable<Imovel>, Serializable{
         return 0;
     }
 
-    public int gerarIDImovel(){
+    public String gerarIDImovel(){
         int id=0;
         long bits;
 
@@ -93,16 +92,13 @@ public class Imovel implements Comparable<Imovel>, Serializable{
         id+=(int)(bits ^ (bits >>> 32));
         bits=Double.doubleToLongBits(precoMinimo);
         id+=(int)(bits ^ (bits >>> 32));
-        return id;
+        return (String.valueOf(Math.abs(id)));
         //Não pode ter o estado do imóvel porque se o estado mudar o ID de determinado imóvel tem que se manter.
         //https://stackoverflow.com/questions/9650798/hash-a-double-in-java
   }
 
-   public void incrementaConsultas(){
-       int p=this.getConsultas();
-       p++;
-       System.out.println(p);
-       this.setConsultas(p);
+   public void addConsulta(){
+       this.consultas++;
     }
 
 

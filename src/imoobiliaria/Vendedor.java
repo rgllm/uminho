@@ -85,5 +85,13 @@ public class Vendedor extends Utilizador{
     public Vendedor clone(){
           return new Vendedor(this);
     }
+
+    public boolean pertencePortfolio(Imovel i){
+        return (portfolio.contains(i));
+    }
+    
+    public void addHistorico(Imovel i){
+        historico.add(i.clone());
+    }
 }
 

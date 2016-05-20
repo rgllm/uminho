@@ -75,6 +75,18 @@ public class Imoobiliaria implements Serializable{
         return te;
     }
 
+
+    /**
+    * Guarda o estado atual do programa num ficheiro.
+    */
+    public void gravaObj(String fich) throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fich));
+        oos.writeObject(this);
+
+        oos.flush();
+        oos.close();
+    }
+
     /**
     * Verifica se um determinado utilizador já existe.
     */
@@ -112,17 +124,6 @@ public class Imoobiliaria implements Serializable{
             logado=true;
             userAtual=users.get(email);
         }
-    }
-
-    /**
-    * Guarda o estado atual do programa num ficheiro.
-    */
-    public void gravaObj(String fich) throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fich));
-        oos.writeObject(this);
-
-        oos.flush();
-        oos.close();
     }
 
     /**
@@ -195,8 +196,19 @@ public class Imoobiliaria implements Serializable{
         if(existeImovel(id)==false){
             throw new ImovelInexistenteException("O imóvel pretendido não existe.");
         }
+        Vendedor v = (Vendedor) userAtual;
+        if(!(v.pertencePortfolio(imoveis.get(id)))){
+         throw new SemAutorizacaoException("Este imóvel não pertence ao seu portfólio!");
+        }
         else{
+            if(!estado.equals("Vendido")){
             imoveis.get(id).setEstado(Estado_Imovel.valueOf(estado));
+            }
+            else{
+            imoveis.get(id).setEstado(Estado_Imovel.valueOf(estado));
+            v.addHistorico(imoveis.get(id));
+            }
+        
         }
     }
 
@@ -205,15 +217,25 @@ public class Imoobiliaria implements Serializable{
     * mais consultados (ou seja, com mais de N consultas).
     * TODO
     */
-    public List<String> getTopImoveis(int n){
+    public List<String> getTopImoveis(int n) throws SemAutorizacaoException{
+        if(logado==false){
+            throw new SemAutorizacaoException("Precisa de estar logado.");
+        }
+        if(userAtual instanceof Comprador){
+            throw new SemAutorizacaoException("Só os vendedores podem alterar o estado de um imóvel.");
+        }
+        else{
         ArrayList<String> lista = new ArrayList<>();
         for(Imovel im:imoveis.values()){
-            if(im.getConsultas() > n){
+            Vendedor v = (Vendedor) userAtual;
+            if((im.getConsultas() < n) && (v.pertencePortfolio(im)) ){
                 lista.add(im.getId());
             }
         }
-        return lista;
+       return lista;
     }
+    }
+
 
     /**
     * Consultar a lista de todos os imóveis de um dado tipo (Terreno, Moradia, etc.) e até um certo preço.
@@ -222,6 +244,7 @@ public class Imoobiliaria implements Serializable{
         ArrayList<Imovel> lista=new ArrayList<> ();
         for(Imovel im:imoveis.values()){
             if(im.getPreco()<=preco){
+                im.addConsulta();
                 if(classe.equals("Moradia")){if(im instanceof Moradia){lista.add(im);}}
                 if(classe.equals("Loja")){if(im instanceof Loja){lista.add(im);}}
                 if(classe.equals("LojaHabitavel")){if(im instanceof LojaHabitavel){lista.add(im);}}
@@ -241,6 +264,7 @@ public class Imoobiliaria implements Serializable{
         for(Imovel im:imoveis.values()){
             if(im instanceof Habitavel)
                 if(im.getPreco() <= preco){
+                    im.addConsulta();
                     Habitavel imovel = (Habitavel) im;
                     res.add(imovel);
             }
@@ -257,6 +281,7 @@ public class Imoobiliaria implements Serializable{
             if(u instanceof Vendedor){
             Vendedor v = (Vendedor) u;
             for(Imovel im: v.getPortfolio()){
+                im.addConsulta();
                 res.put(im,v);
             }
             }

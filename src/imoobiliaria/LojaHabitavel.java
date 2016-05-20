@@ -61,7 +61,10 @@ public class LojaHabitavel extends Loja implements Habitavel{
 
 
     public void gerarID(){
-        int id=0;
+        String id;
+        id=super.gerarIDImovel();
+        super.setId(id);
+        /*int id=0;
         long bits;
         String stringID;
 
@@ -84,7 +87,7 @@ public class LojaHabitavel extends Loja implements Habitavel{
         if(garagem==true) id++;
 
         stringID=id+"";
-        super.setId(stringID);
+        super.setId(stringID);*/
     }
 
 }

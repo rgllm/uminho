@@ -193,11 +193,11 @@ public class ImoobiliariaApp {
         Moradia moradia= new Moradia(0,rua,preco,precoMinimo,Tipo_Moradia.valueOf(tipo),areaImplantacao,areaCoberta,areaTerreno,nQuartos,nWCs,nPorta,Estado_Imovel.valueOf("Para_Venda"));
         try{
             tab.registaImovel(moradia);
+            System.out.println("\n A Moradia com o ID (" + String.valueOf(moradia.gerarIDImovel())+") foi registada com Sucesso!");
         }
         catch(ImovelExisteException | SemAutorizacaoException e){
             System.out.println(e.getMessage());
         }
-        System.out.println("\n A Moradia com o ID (" + String.valueOf(moradia.gerarIDImovel())+") foi registada com Sucesso!");
    }
 
      /**
@@ -233,11 +233,11 @@ public class ImoobiliariaApp {
         Apartamento apartamento= new Apartamento(0,rua,preco,precoMinimo,Tipo_Apartamento.valueOf(tipo),area,nQuartos,nWCs,Boolean.valueOf(garagem),nPorta,andar,Estado_Imovel.valueOf("Para_Venda"));
         try{
             tab.registaImovel(apartamento);
+            System.out.println("\n O Apartamento com o ID (" + String.valueOf(apartamento.gerarIDImovel())+") foi registado com Sucesso!");
         }
         catch(ImovelExisteException | SemAutorizacaoException e){
                 System.out.println(e.getMessage());
         }
-        System.out.println("\n O Apartamento com o ID (" + String.valueOf(apartamento.gerarIDImovel())+") foi registado com Sucesso!");
    }
 
     /**
@@ -267,11 +267,11 @@ public class ImoobiliariaApp {
         Loja loja= new Loja(0,rua,preco,precoMinimo,area,Boolean.valueOf(wc),Estado_Imovel.valueOf("Para_Venda"),tipoNegocio,nPorta);
         try{
             tab.registaImovel(loja);
+            System.out.println("\n A Loja com o ID (" + String.valueOf(loja.gerarIDImovel())+") foi registada com Sucesso!");
         }
         catch(ImovelExisteException | SemAutorizacaoException e){
             System.out.println(e.getMessage());
         }
-        System.out.println("\n A Loja com o ID (" + String.valueOf(loja.gerarIDImovel())+") foi registada com Sucesso!");
     }
 
     /**
@@ -313,11 +313,11 @@ public class ImoobiliariaApp {
         LojaHabitavel loja= new LojaHabitavel(0,rua,preco,precoMinimo,area,Boolean.valueOf(wc),Estado_Imovel.valueOf("Para_Venda"),tipoNegocio,nPorta,Tipo_Apartamento.valueOf(tipo),areaAP,nQuartos,nWCs,Boolean.valueOf(garagem),andar);
         try{
             tab.registaImovel(loja);
+            System.out.println("\n A loja com habitação com o ID (" + String.valueOf(loja.gerarIDImovel())+") foi registada com Sucesso!");
         }
         catch(ImovelExisteException | SemAutorizacaoException e){
             System.out.println(e.getMessage());
         }
-        System.out.println("\n A loja com habitação com o ID (" + String.valueOf(loja.gerarIDImovel())+") foi registada com Sucesso!");
    }
 
     /**
@@ -352,11 +352,11 @@ public class ImoobiliariaApp {
         Terreno terreno = new Terreno(0,rua,preco,precoMinimo,areaConstrucao,Boolean.valueOf(habitacao),Boolean.valueOf(armazem),diamCanalizacoes,Boolean.valueOf(eletricidade),potenciaEletrica,Boolean.valueOf(esgotos),Estado_Imovel.valueOf("Para_Venda"));
         try{
             tab.registaImovel(terreno);
+            System.out.println("\n O Terreno com o ID (" + String.valueOf(terreno.gerarIDImovel())+") foi registado com Sucesso!");
         }
         catch(ImovelExisteException | SemAutorizacaoException e){
             System.out.println(e.getMessage());
         }
-        System.out.println("\n O Terreno com o ID (" + String.valueOf(terreno.gerarIDImovel())+") foi registado com Sucesso!");
    }
 
     /**
@@ -491,6 +491,7 @@ public class ImoobiliariaApp {
         clearScreen();
         System.out.print("Insira o número de consultas máximo do imóvel: ");
         consultas = scan.nextInt();
+        try{
         List<String> lista=tab.getTopImoveis(consultas);
         if(lista.size()==0){
            System.out.println("Não há imóveis com essas especificações");
@@ -498,9 +499,13 @@ public class ImoobiliariaApp {
        else{
             clearScreen();
             for(i=0;i<lista.size();i++){
-                 System.out.println("ID: " + lista.get(i));
+                 System.out.println("ID do Imóvel: " + lista.get(i));
             }
        }
+    }
+    catch(SemAutorizacaoException g){
+            System.out.println(g.getMessage());
+    }
    }
      /**
      * Método que imprime o mapeamento dos imóveis, ou seja, imprime o vendedor e os imóveis correspondentes.
@@ -598,7 +603,7 @@ public class ImoobiliariaApp {
                         break;
                     case 2:
                         clearScreen();
-                        //TopImoveis();
+                        TopImoveis();
                         break;
                     case 3:
                         clearScreen();

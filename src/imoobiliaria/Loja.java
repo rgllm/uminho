@@ -66,7 +66,10 @@ public class Loja extends Imovel{
     }
 
     public void gerarID(){
-        int id=0;
+        String id;
+        id=super.gerarIDImovel();
+        super.setId(id);
+        /*int id=0;
         long bits;
         String stringID;
 
@@ -80,7 +83,7 @@ public class Loja extends Imovel{
         id+=(int)(bits ^ (bits >>> 32));
 
         stringID=id+"";
-        super.setId(stringID);
+        super.setId(stringID);*/
     }
 
 

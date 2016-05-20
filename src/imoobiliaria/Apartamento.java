@@ -84,7 +84,8 @@ public class Apartamento extends Imovel implements Habitavel{
     }
 
     public void gerarID(){
-        int id=0;
+        String id;
+        /*int id=0;
         long bits;
         String stringID;
 
@@ -107,8 +108,10 @@ public class Apartamento extends Imovel implements Habitavel{
         if(garagem==true) id++;
 
         stringID=id+"";
-        super.setId(stringID);
-    }
+        super.setId(stringID);*/
+        id=super.gerarIDImovel();
+        super.setId(id);
+    } 
 
 
 }

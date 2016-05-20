@@ -84,7 +84,10 @@ public class Moradia extends Imovel implements Habitavel{
     }
 
      public void gerarID(){
-        int id=0;
+        String id;
+        id=super.gerarIDImovel();
+        super.setId(id);
+        /*int id=0;
         long bits;
         String stringID;
 
@@ -109,7 +112,7 @@ public class Moradia extends Imovel implements Habitavel{
         id+=(int)(bits ^ (bits >>> 32));
 
         stringID=id+"";
-        super.setId(stringID);
+        super.setId(stringID);*/
     }
 
 

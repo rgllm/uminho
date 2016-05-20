@@ -126,14 +126,25 @@ public static int nVendasPrecoZero(ArrayList<Venda> vendas){
     return count;
 }
 
+public static int produtosLetra(char letra, ArrayList<Venda> vendas){
+   int count=0;
+   for(Venda v: vendas){
+       if(v.getProduto().charAt(0)==letra){
+           count++;
+       }
+   }
+    return count;
+}
+
 public static void main(String [] args){
     ArrayList<Venda> vendas=new ArrayList<>();
     try{
         Crono.start();
-        vendas=readVendasWithBuff("Vendas_5M.txt");
+        vendas=readVendasWithBuff("Vendas_3M.txt");
         Crono.stop();
         System.out.println("Compras da filial 1: "+nVendasPorFilial(3,vendas));
         System.out.println("Compras preco 0: "+nVendasPrecoZero(vendas));
+        System.out.println("Produtos por letra(Compras): "+produtosLetra('A',vendas));
         System.out.println("Tempo: " + Crono.print());
         System.out.println("Linhas lidas: "+vendas.size());
     }

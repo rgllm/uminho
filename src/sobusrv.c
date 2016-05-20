@@ -53,7 +53,6 @@ int main(){
     pipe_dir=malloc((strlen(home)+14)*sizeof(char));
     data_dir=malloc((strlen(home)+15)*sizeof(char));
     metadata_dir=malloc((strlen(home)+19)*sizeof(char));
-    printf("MYPID: %d\n",getpid() );
     strcpy(pipe_dir,home);
     strcpy(data_dir,home);
     strcpy(metadata_dir,home);
@@ -136,7 +135,7 @@ int main(){
 
                     if(aux!=0){
                         kill(pid,6); /* ja existe um backup com o nome fornecido */
-                        exit(1);
+                        _exit(1);
                     }
 
                     else{
@@ -145,6 +144,10 @@ int main(){
                                 strcpy(buf,data_dir);
                                 strcat(buf,digest);
                                 fd1=open(buf,O_CREAT | O_WRONLY | O_TRUNC,0666); /* gzip -k -c "dirFicheiro" > /home/<user>/.backup/data/"digestFicheiro".gz*/
+                                if (fd1==-1){
+                                    kill(pid,6); /*   erro ao abrir/criar o ficheiro ( está a ser usado por outro processo ) */
+                                    _exit(1);
+                                }
                                 dup2(fd1,1);
                                 execlp("gzip","gzip","-k","-c",dir,NULL);
                             }
@@ -155,11 +158,12 @@ int main(){
                             strcat(buf,digest); 
                             strcpy(buf2,metadata_dir);
                             strcat(buf2,nome);
+                            close(2);
                             execlp("ln","ln","-s",buf,buf2,NULL);
                             /* ln -s /home/<user>/.backup/data/"digestFicheiro".gz /home/<user>/.backup/metadata/"nomeFicheiro"*/
                         }
                         kill(pid,30);
-                        exit(1);      /*  sucesso   */
+                        _exit(1);      /*  sucesso   */
                     }
                 }
                 else { 
@@ -216,7 +220,7 @@ int main(){
                                 execlp("gunzip","gunzip",NULL);
                             }
                             kill(pid,30);
-                            exit(1);
+                            _exit(1);
                         }
                         else{
                             /*  neste momento digest="/home/<user>/.backup/metadata/"digestFicheiro.gz"   */
@@ -265,12 +269,12 @@ int main(){
                                 execlp("rm","rm",buf,NULL);  /* rm /home/<user>/.backup/metadata/"nome"  */
                             }
                             kill(pid,30);
-                            exit(1);  /* sucesso */
+                            _exit(1);  /* sucesso */
                         }
                     }
-                    else {kill(pid,10);exit(1);}    /* o nome não existe em metadata   */
+                    else {kill(pid,10);_exit(1);}    /* o nome não existe em metadata   */
                 }
-                exit(1);
+                _exit(1);
             }
         }
     }

@@ -1,6 +1,6 @@
 SRCS = $(wildcard *.c)
 
-CFLAGS= -Wall -pedantic
+CFLAGS= -Wall -pedantic 
 
 PROGS = $(patsubst %.c,%,$(SRCS))
 

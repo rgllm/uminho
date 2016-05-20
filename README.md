@@ -8,7 +8,7 @@ Authors
 
 * Rogério Moreira (74634)
 * Samuel Ferreira (76507)
-* Gustavo Andrez  (xxxxx)
+* Gustavo Andrez  (27748)
 
 General information
 ----------------

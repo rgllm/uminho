@@ -6,8 +6,8 @@ public class Imovel implements Comparable<Imovel>, Serializable{
     private int consultas;
     private String id;
     private String rua;
-    private Double preco;
-    private Double precoMinimo;
+    private double preco;
+    private double precoMinimo;
     private Estado_Imovel estado;
 
     /*           Construtores         */
@@ -39,15 +39,15 @@ public class Imovel implements Comparable<Imovel>, Serializable{
     public int getConsultas(){return consultas;}
     public String getId() {return new String(id);}
     public String getRua() {return new String(rua);}
-    public Double getPreco() {return preco;}
-    public Double getPrecoMinimo() {return precoMinimo;}
+    public double getPreco() {return preco;}
+    public double getPrecoMinimo() {return precoMinimo;}
     public Estado_Imovel getEstado(){return estado;}
 
     public void setConsultas(int consultas){this.consultas=consultas;}
     public void setId(String id) {this.id = id;}
     public void setRua(String rua) {this.rua = rua;}
-    public void setPreco(Double preco) {this.preco = preco;}
-    public void setPrecoMinimo(Double precoMinimo) {this.precoMinimo = precoMinimo;}
+    public void setPreco(double preco) {this.preco = preco;}
+    public void setPrecoMinimo(double precoMinimo) {this.precoMinimo = precoMinimo;}
     public void setEstado(Estado_Imovel estado) {this.estado=estado;}
 
     public boolean equals(Object obj) {
@@ -94,7 +94,6 @@ public class Imovel implements Comparable<Imovel>, Serializable{
         id+=(int)(bits ^ (bits >>> 32));
         return (String.valueOf(Math.abs(id)));
         //Não pode ter o estado do imóvel porque se o estado mudar o ID de determinado imóvel tem que se manter.
-        //https://stackoverflow.com/questions/9650798/hash-a-double-in-java
   }
 
    public void addConsulta(){

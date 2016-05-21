@@ -69,21 +69,6 @@ public class Loja extends Imovel{
         String id;
         id=super.gerarIDImovel();
         super.setId(id);
-        /*int id=0;
-        long bits;
-        String stringID;
-
-        id=super.gerarIDImovel();
-        id+=this.getClass().getSimpleName().hashCode();
-        bits=Double.doubleToLongBits((double)area);
-        id+=(int)(bits ^ (bits >>> 32));
-        if(wc==true) id++;
-        id+=tipoNegocio.hashCode();
-        bits=Double.doubleToLongBits((double)nPorta);
-        id+=(int)(bits ^ (bits >>> 32));
-
-        stringID=id+"";
-        super.setId(stringID);*/
     }
 
 

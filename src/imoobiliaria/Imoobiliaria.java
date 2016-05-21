@@ -141,7 +141,7 @@ public class Imoobiliaria implements Serializable{
 
         if(logado==false){
              throw new SemAutorizacaoException("Precisa de estar logado para registar um imóvel.");
-             //Nunca vai acontecer porque o menu não está disponível para utilizadores não logados
+             //Nunca vai acontecer porque o menu não está disponível para utilizadores não logados.
         }
         if(userAtual instanceof Comprador){
                 throw new SemAutorizacaoException("Só os vendedores podem colocar um imóvel à venda.");
@@ -170,7 +170,7 @@ public class Imoobiliaria implements Serializable{
          }
     }
 
-     /**
+    /**
     * Verifica se um determinado imóvel já existe a partir do seu ID.
     */
     public boolean existeImovel (String id){

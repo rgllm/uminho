@@ -64,30 +64,6 @@ public class LojaHabitavel extends Loja implements Habitavel{
         String id;
         id=super.gerarIDImovel();
         super.setId(id);
-        /*int id=0;
-        long bits;
-        String stringID;
-
-        id=super.gerarIDImovel();
-        id+=this.getClass().getSimpleName().hashCode();
-        if(tipo==Tipo_Apartamento.Simples) id++;
-        else if(tipo==Tipo_Apartamento.Duplex) id+=2;
-        else if(tipo==Tipo_Apartamento.Triplex) id+=3;
-        else if(tipo==Tipo_Apartamento.Outro) id+=4;
-        bits=Double.doubleToLongBits((double)area);
-        id+=(int)(bits ^ (bits >>> 32));
-        bits=Double.doubleToLongBits((double)nQuartos);
-        id+=(int)(bits ^ (bits >>> 32));
-        bits=Double.doubleToLongBits((double)nWCs);
-        id+=(int)(bits ^ (bits >>> 32));
-        bits=Double.doubleToLongBits((double)nPorta);
-        id+=(int)(bits ^ (bits >>> 32));
-        bits=Double.doubleToLongBits((double)andar);
-        id+=(int)(bits ^ (bits >>> 32));
-        if(garagem==true) id++;
-
-        stringID=id+"";
-        super.setId(stringID);*/
     }
 
 }

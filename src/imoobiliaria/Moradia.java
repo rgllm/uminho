@@ -87,32 +87,6 @@ public class Moradia extends Imovel implements Habitavel{
         String id;
         id=super.gerarIDImovel();
         super.setId(id);
-        /*int id=0;
-        long bits;
-        String stringID;
-
-        id=super.gerarIDImovel();
-        id+=this.getClass().getSimpleName().hashCode();
-        if(tipo==Tipo_Moradia.Isolada) id++;
-        else if(tipo==Tipo_Moradia.Germinada) id+=2;
-        else if(tipo==Tipo_Moradia.Banda) id+=3;
-        else if(tipo==Tipo_Moradia.Gaveto) id+=4;
-        else if(tipo==Tipo_Moradia.Outro) id+=5;
-        bits=Double.doubleToLongBits(areaImplantacao);
-        id+=(int)(bits ^ (bits >>> 32));
-        bits=Double.doubleToLongBits(areaCoberta);
-        id+=(int)(bits ^ (bits >>> 32));
-        bits=Double.doubleToLongBits(areaTerreno);
-        id+=(int)(bits ^ (bits >>> 32));
-        bits=Double.doubleToLongBits((double)nQuartos);
-        id+=(int)(bits ^ (bits >>> 32));
-        bits=Double.doubleToLongBits((double)nWCs);
-        id+=(int)(bits ^ (bits >>> 32));
-        bits=Double.doubleToLongBits((double)nPorta);
-        id+=(int)(bits ^ (bits >>> 32));
-
-        stringID=id+"";
-        super.setId(stringID);*/
     }
 
 

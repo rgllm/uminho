@@ -90,25 +90,6 @@ public class Terreno extends Imovel{
         String id;
         id=super.gerarIDImovel();
         super.setId(id);
-        /*int id=0;
-        long bits;
-        String stringID;
-
-        id=super.gerarIDImovel();
-        id+=this.getClass().getSimpleName().hashCode();
-        bits=Double.doubleToLongBits(areaConstrucao);
-        id+=(int)(bits ^ (bits >>> 32));
-        if(habitacao==true) id++;
-        if(armazem==true) id++;
-        bits=Double.doubleToLongBits(diamCanalizacoes);
-        id+=(int)(bits ^ (bits >>> 32));
-        if(eletricidade==true) id++;
-        bits=Double.doubleToLongBits(potenciaEletrica);
-        id+=(int)(bits ^ (bits >>> 32));
-        if(esgotos==true) id++;
-
-        stringID=id+"";
-        super.setId(stringID);*/
     }
 
 }

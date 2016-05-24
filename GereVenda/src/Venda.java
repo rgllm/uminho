@@ -3,9 +3,7 @@
  * @author rgllm
  */
 
-package gerevenda;
 
-import gerevenda.Serializable;
 import java.lang.*;
 import java.util.Objects;
 

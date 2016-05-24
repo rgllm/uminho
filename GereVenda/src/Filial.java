@@ -3,12 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gerevenda;
 
-/**
- *
- * @author munybt
- */
-public interface Serializable {
-    
+import java.util.TreeSet;
+
+public class Filial {
+    private TreeSet<Venda> vendas; //TODO
 }

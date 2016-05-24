@@ -3,7 +3,7 @@
  * @author munybt, rgllm
  */
 
-import gerevenda.Venda;
+/*
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -104,7 +104,7 @@ public static ArrayList<Venda> readVendasWithBuff(String fich) throws NullPointe
     int count=0;
     ArrayList<String> linhas = readLinesWithBuff(fich);
     ArrayList<Venda> vendas = parseAllLinhas(linhas);
-    /*HashSet<Venda> vendas = parseAllLinhasToSet(linhas);*/
+    //HashSet<Venda> vendas = parseAllLinhasToSet(linhas);
     return vendas;
 }
 
@@ -126,16 +126,6 @@ public static int nVendasPrecoZero(ArrayList<Venda> vendas){
     return count;
 }
 
-public static int produtosLetra(char letra, ArrayList<Venda> vendas){
-   int count=0;
-   for(Venda v: vendas){
-       if(v.getProduto().charAt(0)==letra){
-           count++;
-       }
-   }
-    return count;
-}
-
 public static void main(String [] args){
     ArrayList<Venda> vendas=new ArrayList<>();
     try{
@@ -144,7 +134,6 @@ public static void main(String [] args){
         Crono.stop();
         System.out.println("Compras da filial 1: "+nVendasPorFilial(3,vendas));
         System.out.println("Compras preco 0: "+nVendasPrecoZero(vendas));
-        System.out.println("Produtos por letra(Compras): "+produtosLetra('A',vendas));
         System.out.println("Tempo: " + Crono.print());
         System.out.println("Linhas lidas: "+vendas.size());
     }
@@ -155,3 +144,4 @@ public static void main(String [] args){
 
 
 }
+*/

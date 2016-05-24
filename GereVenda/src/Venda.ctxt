@@ -1,0 +1,26 @@
+#BlueJ class context
+comment0.params=po\ pr\ u\ m\ c\ me\ f
+comment0.target=Venda(java.lang.String,\ double,\ int,\ char,\ java.lang.String,\ int,\ int)
+comment1.params=v
+comment1.target=Venda(Venda)
+comment10.params=
+comment10.target=java.lang.String\ toString()
+comment11.params=obj
+comment11.target=boolean\ equals(java.lang.Object)
+comment2.params=
+comment2.target=java.lang.String\ getProduto()
+comment3.params=
+comment3.target=double\ getPreco()
+comment4.params=
+comment4.target=int\ getUnidades()
+comment5.params=
+comment5.target=char\ getModo()
+comment6.params=
+comment6.target=java.lang.String\ getCliente()
+comment7.params=
+comment7.target=int\ getMes()
+comment8.params=
+comment8.target=int\ getFilial()
+comment9.params=
+comment9.target=Venda\ clone()
+numComments=12

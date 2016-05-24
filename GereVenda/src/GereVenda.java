@@ -11,7 +11,7 @@ import java.io.*;
 
 public class GereVenda { 
     
-    private static CatalogoProdutos catalogoProdutos;
+    private static TreeSet<Produto> catalogoProdutos;
     private TreeSet<Cliente> catalogoClientes;
     private Faturacao faturacaoGlobal;
     private Faturacao faturacaoFilial1;
@@ -22,21 +22,43 @@ public class GereVenda {
     private Filial vendasFilial3;
 
     
-   
-    public static CatalogoProdutos lerProdutos(){
-        CatalogoProdutos prods=new CatalogoProdutos();
+    public static ArrayList<String> readLinesWithBuff(String fich) {
+        ArrayList<String> linhas = new ArrayList<>();
         BufferedReader inStream = null;
         String linha = null;
+        
         try {
-            inStream = new BufferedReader(new FileReader("Produtos.txt"));
-            while( (linha = inStream.readLine()) != null ){
-                System.out.println(linha);
-                prods.addProduto(new Produto(linha));
-            }
+            inStream = new BufferedReader(new FileReader(fich));
+        while( (linha = inStream.readLine()) != null )
+            linhas.add(linha);
         }
         catch(IOException e)
-        { System.out.println(e.getMessage());  };
-        return prods;
+        { System.out.println(e.getMessage()); return null; };
+        
+        return linhas;
+    }
+        
+    public static void parseAllProdutos(ArrayList<String> linhas) {
+       Produto lproduto;
+       
+        for(String s : linhas){
+            lproduto = new Produto(s);
+            catalogoProdutos.add(lproduto);
+        }
+
+    }
+    
+   
+    public static void lerProdutos(){
+      
+        try{
+            parseAllProdutos(readLinesWithBuff("Produtos.txt"));
+         
+        }
+        catch(NullPointerException e){
+            System.out.println("You have to have a file.\n");
+        }
+        
     }
 
     public static void main(String [] args){

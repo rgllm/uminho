@@ -1,8 +1,0 @@
-#BlueJ class context
-comment0.params=
-comment0.target=CatalogoProdutos()
-comment1.params=
-comment1.target=java.util.TreeSet\ getProdutos()
-comment2.params=produto
-comment2.target=void\ addProduto(Produto)
-numComments=3

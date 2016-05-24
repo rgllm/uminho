@@ -6,7 +6,7 @@
 
 import java.util.Objects;
 
-public class Produto implements Serializable {
+public class Produto implements Serializable,Comparable<Produto> {
     private String codigo;
 
     public Produto(String codigo) {
@@ -36,4 +36,9 @@ public class Produto implements Serializable {
         return "Produto{" + "codigo=" + codigo + '}';
     }
     
+    public int compareTo(Produto p){
+        return this.getCodigo().compareTo(p.getCodigo());
+    }
 }
+    
+

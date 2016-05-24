@@ -11,8 +11,8 @@ import java.io.*;
 
 public class GereVenda { 
     
-    private static TreeSet<Produto> catalogoProdutos;
-    private TreeSet<Cliente> catalogoClientes;
+    private static TreeSet<Produto> catalogoProdutos;   
+    private static TreeSet<Cliente> catalogoClientes;
     private Faturacao faturacaoGlobal;
     private Faturacao faturacaoFilial1;
     private Faturacao faturacaoFilial2;
@@ -29,8 +29,9 @@ public class GereVenda {
         
         try {
             inStream = new BufferedReader(new FileReader(fich));
-        while( (linha = inStream.readLine()) != null )
-            linhas.add(linha);
+            while( (linha = inStream.readLine()) != null ){
+                linhas.add(linha);
+            }
         }
         catch(IOException e)
         { System.out.println(e.getMessage()); return null; };
@@ -48,11 +49,35 @@ public class GereVenda {
 
     }
     
+    public static void parseAllClientes(ArrayList<String> linhas) {
+       Cliente lcliente;
+       
+        for(String s : linhas){
+            lcliente = new Cliente(s);
+            catalogoClientes.add(lcliente);
+        }
+
+    }
+    
    
     public static void lerProdutos(){
       
         try{
+            catalogoProdutos=new TreeSet<Produto>();
             parseAllProdutos(readLinesWithBuff("Produtos.txt"));
+         
+        }
+        catch(NullPointerException e){
+            System.out.println("You have to have a file.\n");
+        }
+        
+    }
+    
+    public static void lerClientes(){
+      
+        try{
+            catalogoClientes=new TreeSet<Cliente>();
+            parseAllClientes(readLinesWithBuff("Clientes.txt"));
          
         }
         catch(NullPointerException e){
@@ -64,9 +89,18 @@ public class GereVenda {
     public static void main(String [] args){
         ArrayList<Venda> vendas=new ArrayList<>();
 
-        try{
-            //catalogoProdutos= lerProdutos();
-            //CatalogoClientes=lerClientes();
+        try{Crono.start();
+            lerClientes();
+            Crono.stop();
+            System.out.println("Tempo leitura clientes: "+Crono.print());
+            System.out.println("Clientes lidos: "+catalogoClientes.size());
+            
+            Crono.start();
+            lerProdutos();
+            Crono.stop();
+            System.out.println("Tempo leitura Produtos: "+Crono.print());
+            System.out.println("Produtos lidos: "+catalogoProdutos.size());
+            
             Crono.start();
             vendas=LeituraVendas.leituraVendas("Vendas_1M.txt");
             Crono.stop();
@@ -75,7 +109,16 @@ public class GereVenda {
             //System.out.println("Produtos por letra(Compras): "+produtosLetra('A',vendas));
             System.out.println("Tempo leitura vendas: " + Crono.print());
             System.out.println("Linhas lidas: "+vendas.size());
-
+            /*
+            faturacaoGlobal=faturaGlobal(vendas);
+            
+            
+            for(Produto p : catalogoProdutos){
+                vendas.stream().filter(v -> v.getProduto().equals(p))
+            }
+            */
+            
+            
         }
         catch(NullPointerException e){
             System.out.println("You have to have a file.\n");

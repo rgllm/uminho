@@ -6,7 +6,7 @@
 
 import java.util.Objects;
 
-public class Cliente implements Serializable{
+public class Cliente implements Serializable,Comparable<Cliente>{
     private String codigo;
 
     public Cliente(String codigo) {
@@ -37,6 +37,11 @@ public class Cliente implements Serializable{
     @Override
     public String toString() {
         return "Cliente{" + "codigo=" + codigo + '}';
+    }
+    
+       
+    public int compareTo(Cliente p){
+        return this.getCodigo().compareTo(p.getCodigo());
     }
         
 }

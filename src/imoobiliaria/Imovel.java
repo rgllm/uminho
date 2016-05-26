@@ -78,7 +78,7 @@ public class Imovel implements Comparable<Imovel>, Serializable{
     public int compareTo(Imovel i){
         if(this.getPreco()<i.getPreco())
             return -1;
-        if(this.getPreco()<i.getPreco())
+        if(this.getPreco()>i.getPreco())
             return 1;
         return 0;
     }
@@ -99,6 +99,5 @@ public class Imovel implements Comparable<Imovel>, Serializable{
    public void addConsulta(){
        this.consultas++;
     }
-
 
 }

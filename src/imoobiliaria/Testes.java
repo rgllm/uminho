@@ -28,7 +28,7 @@ public class Testes
         imo = new Imoobiliaria();
         try {
             imo.iniciaSessao("",null);
-			fail();
+            fail();
         } catch(SemAutorizacaoException e) {
 
         } catch(Exception e) {
@@ -36,7 +36,7 @@ public class Testes
         }
 
         try {
-            v = new Vendedor();  // Preencher parâmetros do construtor
+            v = new Vendedor("rogerio","rogerio","rogerio","rogerio","rogerio");  // Preencher parâmetros do construtor
             imo.registarUtilizador(v);
         } catch(Exception e) {
             fail();
@@ -50,8 +50,7 @@ public class Testes
         } catch(Exception e) {
             fail();
         }
-
-        t = new Terreno();  // Preencher parâmetros do construtor
+        t = new Terreno(0,"rua",100000,80000,20,true,false,20,true,30,true,Estado_Imovel.valueOf("Para_Venda"));  // Preencher parâmetros do construtor
         try {
             imo.registaImovel(t);
         } catch (Exception e) {

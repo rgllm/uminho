@@ -12,6 +12,10 @@ public class Cliente implements Serializable,Comparable<Cliente>{
     public Cliente(String codigo) {
         this.codigo = codigo;
     }
+    
+    public Cliente(Cliente c) {
+        this.codigo = c.getCodigo();
+    }
 
     public String getCodigo() {return codigo;}
     public void setCodigo(String codigo) {this.codigo = codigo;}

@@ -7,13 +7,14 @@
 
 import java.util.*;
 import java.io.*;
+import java.util.stream.Collectors;
 
 
 public class GereVenda { 
     
     private static TreeSet<Produto> catalogoProdutos;   
     private static TreeSet<Cliente> catalogoClientes;
-    private Faturacao faturacaoGlobal;
+    private static Faturacao faturacaoGlobal;
     private Faturacao faturacaoFilial1;
     private Faturacao faturacaoFilial2;
     private Faturacao faturacaoFilial3;
@@ -85,6 +86,19 @@ public class GereVenda {
         }
         
     }
+    
+    public static void faturaGlobal(ArrayList<Venda> vendas){
+        faturacaoGlobal=new Faturacao();
+        catalogoProdutos.forEach( p ->{
+                System.out.println(p.getCodigo());
+                faturacaoGlobal.setFaturacaoProduto(p,vendas.
+                                                      stream().
+                                                      filter(v -> v.getProduto().equals(p)).
+                                                      collect(Collectors.toCollection(TreeSet::new)));
+                }
+        );
+     
+    }
 
     public static void main(String [] args){
         ArrayList<Venda> vendas=new ArrayList<>();
@@ -109,10 +123,12 @@ public class GereVenda {
             //System.out.println("Produtos por letra(Compras): "+produtosLetra('A',vendas));
             System.out.println("Tempo leitura vendas: " + Crono.print());
             System.out.println("Linhas lidas: "+vendas.size());
+            Crono.start();
+            faturaGlobal(vendas);
+            Crono.stop();
+            System.out.println("Tempo faturacao global: "+Crono.print());
+            
             /*
-            faturacaoGlobal=faturaGlobal(vendas);
-            
-            
             for(Produto p : catalogoProdutos){
                 vendas.stream().filter(v -> v.getProduto().equals(p))
             }

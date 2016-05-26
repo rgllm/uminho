@@ -12,6 +12,10 @@ public class Produto implements Serializable,Comparable<Produto> {
     public Produto(String codigo) {
         this.codigo = codigo;
     }
+    
+    public Produto(Produto p) {
+        this.codigo = p.getCodigo();
+    }
 
     public String getCodigo() {return codigo;}
     public void setCodigo(String codigo) {this.codigo = codigo;}

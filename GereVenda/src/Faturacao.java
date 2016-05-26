@@ -13,6 +13,17 @@ import java.util.*;
 public class Faturacao {
     
     private TreeMap<Produto,TreeSet<Venda>> faturacao;
+
+    public Faturacao(){
+        faturacao=new TreeMap<Produto,TreeSet<Venda>>();
+    }
     
+    public TreeSet<Venda> getFaturacaoProduto(Produto p){
+        return faturacao.get(p);
+    }
+    
+    public void setFaturacaoProduto(Produto p,TreeSet<Venda> vendas){
+        faturacao.put(new Produto(p),vendas);
+    }
     
 }

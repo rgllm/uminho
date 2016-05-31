@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 
 public class GereVenda { 
     
-    private static TreeSet<Produto> catalogoProdutos;   
-    private static TreeSet<Cliente> catalogoClientes;
+    private static CatalogoProdutos catalogoProdutos;   
+    private static CatalogoClientes catalogoClientes;
     private static Faturacao faturacaoGlobal;
     private Faturacao faturacaoFilial1;
     private Faturacao faturacaoFilial2;
@@ -23,74 +23,10 @@ public class GereVenda {
     private Filial vendasFilial3;
 
     
-    public static ArrayList<String> readLinesWithBuff(String fich) {
-        ArrayList<String> linhas = new ArrayList<>();
-        BufferedReader inStream = null;
-        String linha = null;
-        
-        try {
-            inStream = new BufferedReader(new FileReader(fich));
-            while( (linha = inStream.readLine()) != null ){
-                linhas.add(linha);
-            }
-        }
-        catch(IOException e)
-        { System.out.println(e.getMessage()); return null; };
-        
-        return linhas;
-    }
-        
-    public static void parseAllProdutos(ArrayList<String> linhas) {
-       Produto lproduto;
-       
-        for(String s : linhas){
-            lproduto = new Produto(s);
-            catalogoProdutos.add(lproduto);
-        }
-
-    }
-    
-    public static void parseAllClientes(ArrayList<String> linhas) {
-       Cliente lcliente;
-       
-        for(String s : linhas){
-            lcliente = new Cliente(s);
-            catalogoClientes.add(lcliente);
-        }
-
-    }
-    
-   
-    public static void lerProdutos(){
-      
-        try{
-            catalogoProdutos=new TreeSet<Produto>();
-            parseAllProdutos(readLinesWithBuff("Produtos.txt"));
-         
-        }
-        catch(NullPointerException e){
-            System.out.println("You have to have a file.\n");
-        }
-        
-    }
-    
-    public static void lerClientes(){
-      
-        try{
-            catalogoClientes=new TreeSet<Cliente>();
-            parseAllClientes(readLinesWithBuff("Clientes.txt"));
-         
-        }
-        catch(NullPointerException e){
-            System.out.println("You have to have a file.\n");
-        }
-        
-    }
     
     public static void faturaGlobal(ArrayList<Venda> vendas){
         faturacaoGlobal=new Faturacao();
         catalogoProdutos.forEach( p ->{
-                System.out.println(p.getCodigo());
                 faturacaoGlobal.setFaturacaoProduto(p,vendas.
                                                       stream().
                                                       filter(v -> v.getProduto().equals(p)).
@@ -104,19 +40,19 @@ public class GereVenda {
         ArrayList<Venda> vendas=new ArrayList<>();
 
         try{Crono.start();
-            lerClientes();
+            catalogoClientes=Leitura.leituraClientes();
             Crono.stop();
             System.out.println("Tempo leitura clientes: "+Crono.print());
-            System.out.println("Clientes lidos: "+catalogoClientes.size());
+            /*System.out.println("Clientes lidos: "+catalogoClientes.size());*/
             
             Crono.start();
-            lerProdutos();
+            catalogoProdutos=Leitura.leituraProdutos();
             Crono.stop();
             System.out.println("Tempo leitura Produtos: "+Crono.print());
-            System.out.println("Produtos lidos: "+catalogoProdutos.size());
+            /*System.out.println("Produtos lidos: "+catalogoProdutos.size());*/
             
             Crono.start();
-            vendas=LeituraVendas.leituraVendas("Vendas_1M.txt");
+            vendas=Leitura.leituraVendas("Vendas_1M.txt");
             Crono.stop();
             //System.out.println("Compras da filial 1: "+nVendasPorFilial(3,vendas));
             //System.out.println("Compras preco 0: "+nVendasPrecoZero(vendas));
@@ -124,7 +60,7 @@ public class GereVenda {
             System.out.println("Tempo leitura vendas: " + Crono.print());
             System.out.println("Linhas lidas: "+vendas.size());
             Crono.start();
-            faturaGlobal(vendas);
+            /*faturaGlobal(vendas);*/
             Crono.stop();
             System.out.println("Tempo faturacao global: "+Crono.print());
             

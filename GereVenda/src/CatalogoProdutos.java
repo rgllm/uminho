@@ -6,7 +6,7 @@ import java.util.TreeSet;
  *
  * @author munybt
  */
-public class CatalogoProdutos {
+public class CatalogoProdutos implements Serializable {
     
     private TreeSet<Produto> produtos;
 

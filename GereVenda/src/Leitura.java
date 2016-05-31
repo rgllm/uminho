@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 
+/**
+ *
+ * @author rgllm
+ */
+
 
 import java.util.*;
 import java.io.BufferedReader;
@@ -13,9 +18,10 @@ import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class LeituraVendas {
+
+public class Leitura {
     
-    public static ArrayList<String> readLinesWithBuff(String fich) {
+     public static ArrayList<String> readLinesWithBuff(String fich) {
         ArrayList<String> linhas = new ArrayList<>();
         BufferedReader inStream = null;
         String linha = null;
@@ -28,6 +34,8 @@ public class LeituraVendas {
         { System.out.println(e.getMessage()); return null; };
             return linhas;
     }
+    
+    /* Leitura Vendas */
     
     public static Venda parseLinhaVenda(String linha) {
     
@@ -56,7 +64,7 @@ public class LeituraVendas {
     }
 
 
-        public static ArrayList<Venda> parseAllLinhas(ArrayList<String> linhas) {
+    public static ArrayList<Venda> parseAllVendas(ArrayList<String> linhas) {
         ArrayList<Venda> res = new ArrayList<>();
 
         for(String s : linhas){
@@ -71,7 +79,7 @@ public class LeituraVendas {
        ArrayList<Venda> vendas = new ArrayList <>();
         
        try{
-           vendas=parseAllLinhas(readLinesWithBuff(fich));
+           vendas=parseAllVendas(readLinesWithBuff(fich));
         }
         catch(NullPointerException e){
             System.out.println("You have to have a file.\n");
@@ -79,4 +87,65 @@ public class LeituraVendas {
       
     return vendas;
     }
+    
+    /* Leitura Clientes */
+    
+    public static CatalogoClientes parseAllClientes(ArrayList<String> linhas) {
+       Cliente lcliente;
+       CatalogoClientes catalogoClientes = null;
+       
+        for(String s : linhas){
+            lcliente = new Cliente(s);
+            catalogoClientes.addCliente(lcliente);
+        }
+        
+        return catalogoClientes;
+
+    }
+    
+    public static CatalogoClientes leituraClientes(){
+      
+        try{
+            CatalogoClientes catalogoClientes=new CatalogoClientes();
+            catalogoClientes=parseAllClientes(readLinesWithBuff("Clientes.txt"));
+            return catalogoClientes;
+         
+        }
+        catch(NullPointerException e){
+            System.out.println("You have to have a file.\n");
+            return null;
+        }
+        
+    }
+    
+    /* Leitura dos Produtos */
+    
+     public static CatalogoProdutos parseAllProdutos(ArrayList<String> linhas) {
+       Produto lproduto;
+       CatalogoProdutos catalogoProdutos=null;
+       
+        for(String s : linhas){
+            lproduto = new Produto(s);
+            catalogoProdutos.addProduto(lproduto);
+        }
+        
+        return catalogoProdutos;
+    }
+        
+           
+    public static CatalogoProdutos leituraProdutos(){
+      
+        try{
+            CatalogoProdutos catalogoProdutos=new CatalogoProdutos();
+            catalogoProdutos=parseAllProdutos(readLinesWithBuff("Produtos.txt"));
+            return catalogoProdutos;
+         
+        }
+        catch(NullPointerException e){
+            System.out.println("You have to have a file.\n");
+            return null;
+        }
+        
+    }
+    
 }

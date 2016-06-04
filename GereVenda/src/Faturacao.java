@@ -39,7 +39,9 @@ public class Faturacao {
     }
     
      public void insereVendaFG(Venda venda){
-        TreeSet<Venda> cVendas = new TreeSet<> (faturacao.get(venda.getProduto()));
+        
+        TreeSet<Venda> cVendas = faturacao.get(venda.getProduto());
+        cVendas.add(venda);
         faturacao.put(venda.getProduto(),cVendas);
     }
 }

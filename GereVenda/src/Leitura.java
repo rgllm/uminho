@@ -67,7 +67,7 @@ public class Leitura {
             Venda venda = new Venda(parseLinhaVenda(s));
             if(verificaVenda(venda)){
                 res.add(venda); //TODO: clone?
-                //GereVenda.getFaturacaoGlobal().insereVendaFG(venda); //TODO: Pode-se fazer isto?
+                GereVenda.getFaturacaoGlobal().insereVendaFG(venda); //TODO: Pode-se fazer isto?
             }
         }
 

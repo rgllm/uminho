@@ -17,6 +17,10 @@ public class Faturacao {
     public Faturacao(){
         faturacao=new TreeMap<Produto,TreeSet<Venda>>();
     }
+
+    /*public Faturacao(Faturacao faturacaoGlobal) {
+        faturacao=new Fatu
+    }*/
     
     public TreeSet<Venda> getFaturacaoProduto(Produto p){
         return faturacao.get(p);
@@ -26,4 +30,16 @@ public class Faturacao {
         faturacao.put(new Produto(p),vendas);
     }
     
+    public TreeSet<Venda> get(Produto key){
+        return faturacao.get(key);
+    }
+            
+    public void put(Produto key, TreeSet<Venda> value){
+        faturacao.put(key,value);
+    }
+    
+     public void insereVendaFG(Venda venda){
+        TreeSet<Venda> cVendas = new TreeSet<> (faturacao.get(venda.getProduto()));
+        faturacao.put(venda.getProduto(),cVendas);
+    }
 }

@@ -20,5 +20,9 @@ public class CatalogoClientes implements Serializable {
     public int size(){
         return clientes.size();
     }
+    
+    public boolean existeCliente(Cliente c){
+        return clientes.contains(c);
+    }
 
 }

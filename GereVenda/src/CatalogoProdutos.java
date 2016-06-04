@@ -25,4 +25,8 @@ public class CatalogoProdutos implements Serializable {
     public int size(){
         return produtos.size();
     }
+    
+    public boolean existeProduto(Produto p){
+        return produtos.contains(p);
+    }
 }

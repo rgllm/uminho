@@ -1,15 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author rgllm
- */
-
-
 import java.util.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -62,17 +50,28 @@ public class Leitura {
 
         return lvenda;
     }
-
+    
+   public static boolean verificaVenda(Venda venda) {        
+        if(GereVenda.existeCliente(venda.getCliente())){ //TODO: Pode-se fazer isto?
+            if(GereVenda.existeProduto(venda.getProduto())){
+                if(venda.getPreco()>=0.0 && venda.getUnidades()>=0) return true;
+            }
+        }
+        return false;
+    }
 
     public static ArrayList<Venda> parseAllVendas(ArrayList<String> linhas) {
         ArrayList<Venda> res = new ArrayList<>();
 
         for(String s : linhas){
-            res.add(parseLinhaVenda(s));
+            Venda venda = new Venda(parseLinhaVenda(s));
+            if(verificaVenda(venda)){
+                res.add(venda); //TODO: clone?
+                //GereVenda.getFaturacaoGlobal().insereVendaFG(venda); //TODO: Pode-se fazer isto?
+            }
         }
 
         return res;
-
     }
     
     public static ArrayList<Venda> leituraVendas(String fich){

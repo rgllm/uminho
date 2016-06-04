@@ -35,6 +35,18 @@ public class GereVenda {
         );
      
     }*/
+    
+   public static Faturacao getFaturacaoGlobal() {
+    return faturacaoGlobal; 
+   }
+   
+    public static boolean existeCliente(Cliente cliente){
+        return catalogoClientes.existeCliente(cliente);
+    }
+    
+    public static boolean existeProduto(Produto produto){
+        return catalogoProdutos.existeProduto(produto);
+    }
 
     public static void main(String [] args){
         ArrayList<Venda> vendas=new ArrayList<>();
@@ -59,10 +71,10 @@ public class GereVenda {
             //System.out.println("Produtos por letra(Compras): "+produtosLetra('A',vendas));
             System.out.println("Tempo leitura vendas: " + Crono.print());
             System.out.println("Linhas lidas: "+vendas.size());
-            Crono.start();
-            /*faturaGlobal(vendas);*/
+            /*Crono.start();
+            faturaGlobal(vendas);
             Crono.stop();
-            System.out.println("Tempo faturacao global: "+Crono.print());
+            System.out.println("Tempo faturacao global: "+Crono.print()); */
             
             /*
             for(Produto p : catalogoProdutos){

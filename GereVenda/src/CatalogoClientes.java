@@ -16,5 +16,9 @@ public class CatalogoClientes implements Serializable {
     public void addCliente(Cliente cliente){
         clientes.add(cliente);
     }
+    
+    public int size(){
+        return clientes.size();
+    }
 
 }

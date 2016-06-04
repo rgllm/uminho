@@ -21,4 +21,8 @@ public class CatalogoProdutos implements Serializable {
     public void addProduto(Produto produto){
         produtos.add(produto);
     }
+
+    public int size(){
+        return produtos.size();
+    }
 }

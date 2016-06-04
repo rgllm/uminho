@@ -24,7 +24,7 @@ public class GereVenda {
 
     
     
-    public static void faturaGlobal(ArrayList<Venda> vendas){
+    /*public static void faturaGlobal(ArrayList<Venda> vendas){
         faturacaoGlobal=new Faturacao();
         catalogoProdutos.forEach( p ->{
                 faturacaoGlobal.setFaturacaoProduto(p,vendas.
@@ -34,7 +34,7 @@ public class GereVenda {
                 }
         );
      
-    }
+    }*/
 
     public static void main(String [] args){
         ArrayList<Venda> vendas=new ArrayList<>();
@@ -43,13 +43,13 @@ public class GereVenda {
             catalogoClientes=Leitura.leituraClientes();
             Crono.stop();
             System.out.println("Tempo leitura clientes: "+Crono.print());
-            /*System.out.println("Clientes lidos: "+catalogoClientes.size());*/
+            System.out.println("Clientes lidos: "+catalogoClientes.size());
             
             Crono.start();
             catalogoProdutos=Leitura.leituraProdutos();
             Crono.stop();
             System.out.println("Tempo leitura Produtos: "+Crono.print());
-            /*System.out.println("Produtos lidos: "+catalogoProdutos.size());*/
+            System.out.println("Produtos lidos: "+catalogoProdutos.size());
             
             Crono.start();
             vendas=Leitura.leituraVendas("Vendas_1M.txt");

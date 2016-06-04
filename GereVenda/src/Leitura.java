@@ -92,7 +92,7 @@ public class Leitura {
     
     public static CatalogoClientes parseAllClientes(ArrayList<String> linhas) {
        Cliente lcliente;
-       CatalogoClientes catalogoClientes = null;
+       CatalogoClientes catalogoClientes=new CatalogoClientes();
        
         for(String s : linhas){
             lcliente = new Cliente(s);
@@ -104,9 +104,9 @@ public class Leitura {
     }
     
     public static CatalogoClientes leituraClientes(){
-      
+        CatalogoClientes catalogoClientes=new CatalogoClientes();
+
         try{
-            CatalogoClientes catalogoClientes=new CatalogoClientes();
             catalogoClientes=parseAllClientes(readLinesWithBuff("Clientes.txt"));
             return catalogoClientes;
          
@@ -122,7 +122,7 @@ public class Leitura {
     
      public static CatalogoProdutos parseAllProdutos(ArrayList<String> linhas) {
        Produto lproduto;
-       CatalogoProdutos catalogoProdutos=null;
+       CatalogoProdutos catalogoProdutos=new CatalogoProdutos();
        
         for(String s : linhas){
             lproduto = new Produto(s);
@@ -134,9 +134,9 @@ public class Leitura {
         
            
     public static CatalogoProdutos leituraProdutos(){
+        CatalogoProdutos catalogoProdutos=new CatalogoProdutos();
       
         try{
-            CatalogoProdutos catalogoProdutos=new CatalogoProdutos();
             catalogoProdutos=parseAllProdutos(readLinesWithBuff("Produtos.txt"));
             return catalogoProdutos;
          

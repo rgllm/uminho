@@ -47,5 +47,12 @@ public class Cliente implements Serializable,Comparable<Cliente>{
     public int compareTo(Cliente p){
         return this.getCodigo().compareTo(p.getCodigo());
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.codigo);
+        return hash;
+    }
         
 }

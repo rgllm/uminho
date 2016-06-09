@@ -11,7 +11,11 @@ public class Produto implements Serializable,Comparable<Produto> {
     public Produto(Produto p) {
         this.codigo = p.getCodigo();
     }
-
+    
+    public Produto clone(){
+       return new Produto(this.getCodigo());
+    }
+   
     public String getCodigo() {return codigo;}
     public void setCodigo(String codigo) {this.codigo = codigo;}
 
@@ -37,6 +41,13 @@ public class Produto implements Serializable,Comparable<Produto> {
     
     public int compareTo(Produto p){
         return this.getCodigo().compareTo(p.getCodigo());
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.codigo);
+        return hash;
     }
 }
     

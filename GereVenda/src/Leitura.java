@@ -51,41 +51,6 @@ public class Leitura {
         return lvenda;
     }
     
-   public static boolean verificaVenda(Venda venda) {        
-        if(GereVenda.existeCliente(venda.getCliente())){ //TODO: Pode-se fazer isto?
-            if(GereVenda.existeProduto(venda.getProduto())){
-                if(venda.getPreco()>=0.0 && venda.getUnidades()>=0) return true;
-            }
-        }
-        return false;
-    }
-
-    public static ArrayList<Venda> parseAllVendas(ArrayList<String> linhas) {
-        ArrayList<Venda> res = new ArrayList<>();
-
-        for(String s : linhas){
-            Venda venda = new Venda(parseLinhaVenda(s));
-            if(verificaVenda(venda)){
-                res.add(venda); //TODO: clone?
-                GereVenda.getFaturacaoGlobal().insereVendaFG(venda); //TODO: Pode-se fazer isto?
-            }
-        }
-
-        return res;
-    }
-    
-    public static ArrayList<Venda> leituraVendas(String fich){
-       ArrayList<Venda> vendas = new ArrayList <>();
-        
-       try{
-           vendas=parseAllVendas(readLinesWithBuff(fich));
-        }
-        catch(NullPointerException e){
-            System.out.println("You have to have a file.\n");
-        }
-      
-    return vendas;
-    }
     
     /* Leitura Clientes */
     

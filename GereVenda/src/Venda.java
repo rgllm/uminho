@@ -1,8 +1,3 @@
-/**
- *
- * @author rgllm
- */
-
 
 import java.lang.*;
 import java.util.Objects;
@@ -47,7 +42,6 @@ public class Venda implements Serializable ,Comparable<Venda>{
     public int getMes(){return mes;}
     public int getFilial(){return filial;}
 
-
     public Venda clone(){
        return new Venda(this);
     }
@@ -73,8 +67,6 @@ public class Venda implements Serializable ,Comparable<Venda>{
         return venda.toString();
     }
 
-
-    
     
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -132,4 +124,16 @@ public class Venda implements Serializable ,Comparable<Venda>{
         return 0;
     }
 
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + Objects.hashCode(this.produto);
+        hash = 83 * hash + (int) (Double.doubleToLongBits(this.preco) ^ (Double.doubleToLongBits(this.preco) >>> 32));
+        hash = 83 * hash + this.unidades;
+        hash = 83 * hash + this.modo;
+        hash = 83 * hash + Objects.hashCode(this.cliente);
+        hash = 83 * hash + this.mes;
+        hash = 83 * hash + this.filial;
+        return hash;
+    }
+    
 }

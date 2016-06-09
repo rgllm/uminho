@@ -13,6 +13,10 @@ public class CatalogoClientes implements Serializable {
         return clientes;
     }
     
+    public void setClientes(TreeSet<Cliente> c){
+        this.clientes=c;
+    }
+    
     public void addCliente(Cliente cliente){
         clientes.add(cliente);
     }

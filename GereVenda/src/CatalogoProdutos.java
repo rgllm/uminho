@@ -18,10 +18,14 @@ public class CatalogoProdutos implements Serializable {
         return produtos;
     }
     
+    public void setProdutos(TreeSet<Produto> p){
+        this.produtos=p;
+    }
+    
     public void addProduto(Produto produto){
         produtos.add(produto);
     }
-
+    
     public int size(){
         return produtos.size();
     }

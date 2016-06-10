@@ -28,20 +28,9 @@ public class Leitura {
     public static Venda parseLinhaVenda(String linha) {
     
         Venda lvenda;
-        /*String produto,cliente;
-        double preco;
-        char modo;
-        int mes,filial,unidades;*/
 
         String[] campos = linha.split(" ");
         try{
-           /*produto=campos[0];
-           preco=Double.parseDouble(campos[1]);
-           unidades=Integer.parseInt(campos[2]);
-           modo=campos[3].charAt(0);
-           cliente=campos[4];
-           mes=Integer.parseInt(campos[5]);
-           filial=Integer.parseInt(campos[6]);*/
            lvenda=new Venda(campos[0],                     // produto
                             Double.parseDouble(campos[1]), // preco
                             Integer.parseInt(campos[2]),   // unidades

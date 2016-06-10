@@ -1,6 +1,7 @@
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class Hipermercado implements java.io.Serializable { 
@@ -96,7 +97,7 @@ public class Hipermercado implements java.io.Serializable {
          out.close(); 
     }
     
-    public Hipermercado lerEstado(String fich) throws IOException, ClassNotFoundException{
+    public static Hipermercado lerEstado(String fich) throws IOException, ClassNotFoundException{
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(fich));
         Hipermercado ret=(Hipermercado) in.readObject();
         in.close();
@@ -130,4 +131,81 @@ public class Hipermercado implements java.io.Serializable {
             System.out.println("Erro ao ler o ficheiro.\n");
         }
     }
+    
+    /*Querys*/
+    
+    public HashSet<Produto> query1(){
+        HashSet<Produto> lista = new HashSet<>(catalogoProdutos.getProdutos());
+        faturacao.getFaturacaoGlobal().getFaturacao().keySet().forEach(p->lista.remove(p));
+        return lista;       
+    }
+    
+    public ParFloat query2(int mes){
+        HashSet<Cliente> clientesMes = new HashSet<>();
+        int totalVendas=0;
+        
+        for(HashSet<Venda> vendas: faturacao.getFaturacaoGlobal().getFaturacao().values()){
+           Set<Venda> aux = vendas.stream().filter(x->x.getMes()==mes).collect(Collectors.toSet()); 
+           totalVendas+=aux.size();
+           for(Venda x : aux)
+                clientesMes.add(x.getCliente());
+       }
+       
+      return new ParFloat((float)clientesMes.size(),(float)totalVendas);
+    }
+   
+    public ArrayList<TripleFloat> query3(String codigoCliente){
+        ArrayList<TripleFloat> res = new ArrayList<>();
+        ArrayList<HashSet<Produto>> produtosMes = new ArrayList<>(); 
+        for(int i=0;i<12;i++){
+            res.add(new TripleFloat(new ParFloat(0,0),0));
+            produtosMes.add(new HashSet<Produto>());
+        }
+        try{
+        for(HashSet<Venda> vendasProd : faturacao.getFaturacaoGlobal().getFaturacao().values()){
+                for (Venda y : vendasProd)
+                    if(y.getCliente().getCodigo().equals(codigoCliente)){
+                        res.get(y.getMes()-1).getFirst().incFirst();
+                        res.get(y.getMes()-1).addSecond((float)(y.getUnidades()*y.getPreco()));
+                        produtosMes.get(y.getMes()-1).add(y.getProduto());
+                    }
+        }
+        for(int i=0;i<12;i++)
+            res.get(i).getFirst().addSecond((float)(produtosMes.get(i).size()));
+        
+        }
+        catch(NullPointerException e){
+            e.getStackTrace();
+        }
+            
+     return res;
+    }
+    
+    public ArrayList<TripleFloat> query4(String codigoProduto){
+        ArrayList<TripleFloat> res = new ArrayList<>();
+        ArrayList<HashSet<Cliente>> clientesMes = new ArrayList<>(); 
+        for(int i=0;i<12;i++){
+            res.add(new TripleFloat(new ParFloat(0,0),0));
+            clientesMes.add(new HashSet<Cliente>());
+        }
+        try{
+            Produto arg = new Produto(codigoProduto);
+                for (Venda y : faturacao.getFaturacaoGlobal().getFaturacao().get(arg)){                 
+                        res.get(y.getMes()-1).getFirst().addFirst((float)y.getUnidades());
+                        res.get(y.getMes()-1).addSecond((float)(y.getUnidades()*y.getPreco()));
+                        clientesMes.get(y.getMes()-1).add(y.getCliente());
+                    
+                }
+        for(int i=0;i<12;i++)
+            res.get(i).getFirst().addSecond((float)(clientesMes.get(i).size()));
+        
+        }
+        catch(NullPointerException e){
+            e.getStackTrace();
+        }
+            
+     return res;
+    } 
+    
+    
 }

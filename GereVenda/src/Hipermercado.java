@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 
 import java.io.*;
 import java.util.*;
@@ -133,7 +127,7 @@ public class Hipermercado implements java.io.Serializable {
             }
         }
         catch(NullPointerException e){
-            System.out.println("You have to have a file.\n");
+            System.out.println("Erro ao ler o ficheiro.\n");
         }
     }
 }

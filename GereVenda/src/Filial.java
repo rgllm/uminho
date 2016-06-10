@@ -4,34 +4,29 @@
  * and open the template in the editor.
  */
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.TreeSet;
 
-public class Filial {
-    private TreeSet<Venda> vendas;
+public class Filial implements java.io.Serializable {
+    private HashSet<Venda> vendas;
 
-    public Filial(TreeSet<Venda> vendas) {
+    public Filial(HashSet<Venda> vendas) {
         this.vendas = vendas;
     }
     
     public Filial(){
-        this.vendas = new TreeSet<>();
+        this.vendas = new HashSet<>();
     }
 
-    public TreeSet<Venda> getVendas() {
+    public HashSet<Venda> getVendas() {
         return vendas;
     }
 
-    public void setVendas(TreeSet<Venda> vendas) {
+    public void setVendas(HashSet<Venda> vendas) {
         this.vendas = vendas;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 79 * hash + Objects.hashCode(this.vendas);
-        return hash;
-    }
 
     @Override
     public boolean equals(Object obj) {

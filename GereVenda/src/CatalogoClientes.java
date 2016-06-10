@@ -1,7 +1,7 @@
 
 import java.util.TreeSet;
 
-public class CatalogoClientes implements Serializable {
+public class CatalogoClientes implements java.io.Serializable {
     
     private TreeSet<Cliente> clientes;
 

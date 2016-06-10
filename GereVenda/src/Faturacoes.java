@@ -1,5 +1,5 @@
 
-public class Faturacoes {
+public class Faturacoes implements java.io.Serializable {
     
     private Faturacao faturacaoGlobal;
     private Faturacao faturacaoFilial1;
@@ -52,9 +52,6 @@ public class Faturacoes {
     public void setFaturacaoFilial3(Faturacao faturacaoFilial3) {
         this.faturacaoFilial3 = faturacaoFilial3;
     }
-    
-    
-    
     
     
 }

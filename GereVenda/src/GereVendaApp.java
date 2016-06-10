@@ -1,3 +1,6 @@
+
+import java.io.*;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,7 +23,7 @@ public class GereVendaApp {
             hip.setCatalogoClientes(Leitura.leituraClientes());
             Crono.stop();
             System.out.println("Tempo leitura clientes: "+Crono.print());
-            /*System.out.println("Clientes lidos: "+catalogoClientes.size()); */
+            /*System.out.println("Clientes lidos: "+catalogoClientes.size());*/
             
             Crono.start();
             hip.setCatalogoProdutos(Leitura.leituraProdutos());
@@ -29,30 +32,32 @@ public class GereVendaApp {
             /*System.out.println("Produtos lidos: "+catalogoProdutos.size()); */
             
             Crono.start();
-            hip.leituraVendas("Vendas_5M.txt");
+            hip.leituraVendas("Vendas_1M.txt");
             Crono.stop();
-            System.out.println("Tempo leitura Faturação Global: "+Crono.print());
-            //System.out.println("Compras da filial 1: "+nVendasPorFilial(3,vendas));
-            //System.out.println("Compras preco 0: "+nVendasPrecoZero(vendas));
-            //System.out.println("Produtos por letra(Compras): "+produtosLetra('A',vendas));
-           /* System.out.println("Tempo leitura vendas: " + Crono.print());
-            System.out.println("Linhas lidas: "+vendas.size()); */
-            /*Crono.start();
-            faturaGlobal(vendas);
-            Crono.stop();
-            System.out.println("Tempo faturacao global: "+Crono.print()); */
+            System.out.println("Tempo leitura Vendas: "+Crono.print());
             
             /*
-            for(Produto p : catalogoProdutos){
-                vendas.stream().filter(v -> v.getProduto().equals(p))
-            }
-            */
+            Crono.start();
+            hip.lerEstado("hipermercado.1m");
+            Crono.stop();
+            System.out.println("Tempo leitura estado: "+Crono.print());
             
+
+            hip.gravarEstado("hipermercado.1m");
+            */
             
         }
         catch(NullPointerException e){
-            System.out.println("You have to have a file.\n");
+            System.out.println("Ficheiro não encontrado.\n");
         }
+        /*
+        catch( IOException | ClassNotFoundException e){
+            System.out.println("Erro na escrita/leitura do ficheiro.\n");
+            e.printStackTrace();
+        }
+        */
 
     }
+    
+    
 }

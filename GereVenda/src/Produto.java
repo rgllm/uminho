@@ -1,7 +1,7 @@
 
 import java.util.Objects;
 
-public class Produto implements Serializable,Comparable<Produto> {
+public class Produto implements java.io.Serializable,Comparable<Produto> {
     private String codigo;
 
     public Produto(String codigo) {
@@ -45,9 +45,7 @@ public class Produto implements Serializable,Comparable<Produto> {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.codigo);
-        return hash;
+        return codigo.hashCode();
     }
 }
     

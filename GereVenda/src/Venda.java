@@ -2,7 +2,7 @@
 import java.lang.*;
 import java.util.Objects;
 
-public class Venda implements Serializable ,Comparable<Venda>{
+public class Venda implements java.io.Serializable ,Comparable<Venda>{
 
     private final Produto produto;
     private final double preco;
@@ -123,7 +123,28 @@ public class Venda implements Serializable ,Comparable<Venda>{
             else return 1;
         return 0;
     }
+/*
+    public int compareTo(Venda v){
+        if(produto.compareTo(v.getProduto())!=0 ||
+                preco!=v.getPreco() ||
+                unidades!=(v.getUnidades()) ||
+                modo!=v.getModo() ||
+                cliente.compareTo(v.getCliente())!=0 ||
+                mes!=v.getMes() ||
+                filial!=v.getFilial())
+            if(preco<v.getPreco() ||
+                    unidades<(v.getUnidades()) ||
+                    modo<v.getModo() ||
+                    cliente.compareTo(v.getCliente())<0 ||
+                    mes<v.getMes() ||
+                    filial<v.getFilial())
+                return -1;
+            else return 1;
+        else return 0;
+    }*/
 
+            
+    
     public int hashCode() {
         int hash = 7;
         hash = 83 * hash + Objects.hashCode(this.produto);

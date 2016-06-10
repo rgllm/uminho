@@ -5,10 +5,11 @@
  */
 
 
+import java.io.*;
 import java.util.*;
 
 
-public class Hipermercado { 
+public class Hipermercado implements java.io.Serializable { 
     
     private CatalogoProdutos catalogoProdutos;   
     private CatalogoClientes catalogoClientes;
@@ -87,12 +88,25 @@ public class Hipermercado {
     /* Leitura das Vendas */
     
     public boolean verificaVenda(Venda venda) {        
-        if(this.getCatalogoClientes().existeCliente(venda.getCliente())){
-            if(this.getCatalogoProdutos().existeProduto(venda.getProduto())){
-                if(venda.getPreco()>=0.0 && venda.getUnidades()>=0) return true;
-            }
-        }
+        if(getCatalogoClientes().existeCliente(venda.getCliente()) &&
+            getCatalogoProdutos().existeProduto(venda.getProduto()) &&
+            venda.getPreco()>=0.0 && venda.getUnidades()>=0 )
+            return true;
         return false;
+    }
+    
+    public void gravarEstado(String fich) throws IOException{
+         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fich));
+         out.writeObject(this);
+         out.flush();
+         out.close(); 
+    }
+    
+    public Hipermercado lerEstado(String fich) throws IOException, ClassNotFoundException{
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(fich));
+        Hipermercado ret=(Hipermercado) in.readObject();
+        in.close();
+        return ret;
     }
    
     public void leituraVendas(String fich){  
@@ -103,67 +117,23 @@ public class Hipermercado {
             Venda venda = new Venda(Leitura.parseLinhaVenda(s));
             if(verificaVenda(venda)){
                faturacao.getFaturacaoGlobal().addVenda(venda);
-               if(venda.getFilial()==1) {faturacao.getFaturacaoFilial1().addVenda(venda);vendasFilial1.getVendas().add(venda);}
-               if(venda.getFilial()==2) {faturacao.getFaturacaoFilial2().addVenda(venda);vendasFilial2.getVendas().add(venda);}
-               if(venda.getFilial()==3) {faturacao.getFaturacaoFilial3().addVenda(venda);vendasFilial3.getVendas().add(venda);}
+               if(venda.getFilial()==1) {
+                   faturacao.getFaturacaoFilial1().addVenda(venda);
+                   vendasFilial1.getVendas().add(venda);
+               }
+               if(venda.getFilial()==2) {
+                   faturacao.getFaturacaoFilial2().addVenda(venda);
+                   vendasFilial2.getVendas().add(venda);
+               }
+               if(venda.getFilial()==3) {
+                   faturacao.getFaturacaoFilial3().addVenda(venda);
+                   vendasFilial3.getVendas().add(venda);
+               }
             }
-        }
+            }
         }
         catch(NullPointerException e){
             System.out.println("You have to have a file.\n");
         }
     }
-    
-    
-
 }
-
-
-
-
-/*
-
- public static int nVendasPorFilial(int filial,ArrayList<Venda> vendas){
-        int count=0;
-        for(Venda v : vendas){
-            if(v.getFilial()==filial)
-                count++;
-        }
-        return count;
-    }
-
-    public static int nVendasPrecoZero(ArrayList<Venda> vendas){
-        int count=0;
-        for(Venda v : vendas){
-            if(v.getPreco()==0.0)
-                count++;
-        }
-        return count;
-    }
-
-    public static int produtosLetra(char letra, ArrayList<Venda> vendas){
-       int count=0;
-       for(Venda v: vendas){
-           if(v.getProduto().charAt(0)==letra){
-               count++;
-           }
-       }
-        return count;
-    }
-    */
-
-    
-    
-    
-    
-    /*public static void faturaGlobal(ArrayList<Venda> vendas){
-        faturacaoGlobal=new Faturacao();
-        catalogoProdutos.forEach( p ->{
-                faturacaoGlobal.setFaturacaoProduto(p,vendas.
-                                                      stream().
-                                                      filter(v -> v.getProduto().equals(p)).
-                                                      collect(Collectors.toCollection(TreeSet::new)));
-                }
-        );
-     
-    }*/

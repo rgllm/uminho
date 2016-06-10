@@ -1,4 +1,6 @@
 
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.TreeSet;
 
 
@@ -6,19 +8,19 @@ import java.util.TreeSet;
  *
  * @author munybt
  */
-public class CatalogoProdutos implements Serializable {
+public class CatalogoProdutos implements java.io.Serializable {
     
-    private TreeSet<Produto> produtos;
+    private HashSet<Produto> produtos;
 
     public CatalogoProdutos(){
-        produtos= new TreeSet<Produto>();
+        produtos= new HashSet<Produto>();
     }
 
-    public TreeSet<Produto> getProdutos() {
+    public HashSet<Produto> getProdutos() {
         return produtos;
     }
     
-    public void setProdutos(TreeSet<Produto> p){
+    public void setProdutos(HashSet<Produto> p){
         this.produtos=p;
     }
     
@@ -33,4 +35,21 @@ public class CatalogoProdutos implements Serializable {
     public boolean existeProduto(Produto p){
         return produtos.contains(p);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CatalogoProdutos other = (CatalogoProdutos) obj;
+        return true;
+    }
+    
+    
 }

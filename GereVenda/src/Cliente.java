@@ -6,7 +6,7 @@
 
 import java.util.Objects;
 
-public class Cliente implements Serializable,Comparable<Cliente>{
+public class Cliente implements java.io.Serializable,Comparable<Cliente>{
     private String codigo;
 
     public Cliente(String codigo) {
@@ -50,9 +50,7 @@ public class Cliente implements Serializable,Comparable<Cliente>{
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.codigo);
-        return hash;
+        return codigo.hashCode();
     }
         
 }

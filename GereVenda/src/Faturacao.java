@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Faturacao {
+public class Faturacao implements java.io.Serializable {
     
     private HashMap<Produto,HashSet<Venda>> faturacao;
 
@@ -37,19 +37,20 @@ public class Faturacao {
     
     public Faturacao clone(){
         Faturacao ret = new Faturacao();
-        HashMap<Produto, HashSet<Venda>> faturacao = new HashMap<>();
+        HashMap<Produto, HashSet<Venda>> mapcopy = new HashMap<>();
         
-        this.faturacao.entrySet().forEach(x -> {
+        this.faturacao.forEach( (p,v) ->{
              HashSet<Venda> vendas = new HashSet<>();
-             for(Venda y : x.getValue()){
-                 vendas.add(y.clone());
+             for(Venda x : v){
+                 vendas.add(x.clone());
              }
-             faturacao.put(x.getKey().clone() ,vendas);
+             mapcopy.put(p.clone() ,vendas);
         }
              );
         ret.setFaturacao(faturacao);
         return ret;
     }    
+    
 
     @Override
     public String toString() {

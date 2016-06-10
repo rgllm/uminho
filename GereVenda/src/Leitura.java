@@ -42,7 +42,13 @@ public class Leitura {
            cliente=campos[4];
            mes=Integer.parseInt(campos[5]);
            filial=Integer.parseInt(campos[6]);
-           lvenda=new Venda(produto,preco,unidades,modo,cliente,mes,filial);
+           lvenda=new Venda(campos[0],                     // produto
+                            Double.parseDouble(campos[1]), // preco
+                            Integer.parseInt(campos[2]),   // unidades
+                            campos[3].charAt(0),           // modo
+                            campos[4],                     // cliente
+                            Integer.parseInt(campos[5]),   // mes
+                            Integer.parseInt(campos[6]));  // filial
         }
         catch(NumberFormatException | NullPointerException exc){
             return null;

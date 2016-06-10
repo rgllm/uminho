@@ -1,8 +1,6 @@
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.*;
 
 public class GereVendaApp {
     
@@ -11,7 +9,7 @@ public class GereVendaApp {
     
     
     private static void carregarMenus() {
-        String[] principal={"Ler os ficheiros com os dados","Gravar estado atual do programa","Query 1","Query 2","Query 3","Query 4"};
+        String[] principal={"Ler os ficheiros com os dados","Gravar estado atual do programa","Query 1","Query 2","Query 3","Query 4","Query 5"};
         menuPrincipal = new Menu(principal);
     }
     
@@ -20,17 +18,21 @@ public class GereVendaApp {
     }
 
     private static void leituraFicheiros(){
-        String ficheiroVendas;
+        String ficheiroVendas,ficheiroProdutos,ficheiroClientes;
         try{
             clearScreen();
-            System.out.print("\nInsira o nome do ficheiro de vendas: ");
+            System.out.print("\nInsira o nome do ficheiro de Produtos: ");
+            ficheiroProdutos=Input.lerString();
+            System.out.print("\nInsira o nome do ficheiro de Clientes: ");
+            ficheiroClientes=Input.lerString();
+            Crono.start();
+            System.out.print("\nInsira o nome do ficheiro de Vendas: ");
             ficheiroVendas=Input.lerString();
-            Crono.start();
-            hip.setCatalogoClientes(Leitura.leituraClientes());
+            hip.setCatalogoClientes(Leitura.leituraClientes(ficheiroClientes));
             Crono.stop();
-            System.out.println("Tempo leitura clientes: "+Crono.print());
+            System.out.println("\nTempo leitura Clientes: "+Crono.print());
             Crono.start();
-            hip.setCatalogoProdutos(Leitura.leituraProdutos());
+            hip.setCatalogoProdutos(Leitura.leituraProdutos(ficheiroProdutos));
             Crono.stop();
             System.out.println("Tempo leitura Produtos: "+Crono.print());
             Crono.start();
@@ -132,6 +134,17 @@ public class GereVendaApp {
                     resultado.get(i).getSecond());
         }
     }
+     
+     public static void query5Menu(){
+        String codigoCliente;
+        System.out.print("\nCliente: ");
+        codigoCliente=Input.lerString();
+        Crono.start();
+        hip.query5(codigoCliente);
+        Crono.stop();
+        System.out.println("Tempo: "+ Crono.print()+"s");
+         
+     }
  
     public static void main(String [] args){
         carregarMenus();
@@ -162,6 +175,10 @@ public class GereVendaApp {
               case 6:
                   clearScreen();
                   query4Menu();
+                  break;
+              case 7:
+                  clearScreen();
+                  query5Menu();
                   break;
            }
         } while (menuPrincipal.getOpcao()!=0);

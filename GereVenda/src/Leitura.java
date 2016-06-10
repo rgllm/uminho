@@ -62,11 +62,11 @@ public class Leitura {
 
     }
     
-    public static CatalogoClientes leituraClientes(){
+    public static CatalogoClientes leituraClientes(String ficheiroClientes){
         CatalogoClientes catalogoClientes=new CatalogoClientes();
 
         try{
-            catalogoClientes=parseAllClientes(readLinesWithBuff("Clientes.txt"));
+            catalogoClientes=parseAllClientes(readLinesWithBuff(ficheiroClientes));
             return catalogoClientes;
          
         }
@@ -92,11 +92,11 @@ public class Leitura {
     }
         
            
-    public static CatalogoProdutos leituraProdutos(){
+    public static CatalogoProdutos leituraProdutos(String ficheiroProdutos){
         CatalogoProdutos catalogoProdutos=new CatalogoProdutos();
       
         try{
-            catalogoProdutos=parseAllProdutos(readLinesWithBuff("Produtos.txt"));
+            catalogoProdutos=parseAllProdutos(readLinesWithBuff(ficheiroProdutos));
             return catalogoProdutos;
          
         }

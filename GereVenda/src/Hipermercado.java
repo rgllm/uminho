@@ -134,6 +134,7 @@ public class Hipermercado implements java.io.Serializable {
     
     /*Querys*/
     
+    //Falta a ordenação e a impressão em lista
     public HashSet<Produto> query1(){
         HashSet<Produto> lista = new HashSet<>(catalogoProdutos.getProdutos());
         faturacao.getFaturacaoGlobal().getFaturacao().keySet().forEach(p->lista.remove(p));
@@ -207,5 +208,18 @@ public class Hipermercado implements java.io.Serializable {
      return res;
     } 
     
+    public void query5(String codigoCliente){
+        TreeMap<Produto,Integer> res = new TreeMap<>();
+        
+        for(HashSet<Venda> lVendas : faturacao.getFaturacaoGlobal().getFaturacao().values() )
+            for(Venda v : lVendas)
+                if(v.getCliente().getCodigo().equals(codigoCliente))
+                    if(res.containsKey(v.getProduto()))
+                        res.replace(v.getProduto(),res.get(v.getProduto())+v.getUnidades());
+                    else res.put(v.getProduto(), v.getUnidades());
+        
+        System.out.println(res.toString());
+    }
+   
     
 }

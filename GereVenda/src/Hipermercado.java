@@ -22,13 +22,22 @@ public class Hipermercado implements java.io.Serializable {
         this.vendasFilial3 = new Filial();
     }
 
-    public Hipermercado(CatalogoProdutos catalogoProdutos, CatalogoClientes catalogoClientes, Faturacoes faturacao, Filial vendasFilial1, Filial vendasFilial2, Filial vendasFilial3) {
+    public Hipermercado(CatalogoProdutos catalogoProdutos, CatalogoClientes catalogoClientes, Faturacoes faturacao, Filial vendasFilial1, Filial vendasFilial2, Filial vendasFilial3, ArrayList<Integer> comprasMes) {
         this.catalogoProdutos = catalogoProdutos;
         this.catalogoClientes = catalogoClientes;
         this.faturacao = faturacao;
         this.vendasFilial1 = vendasFilial1;
         this.vendasFilial2 = vendasFilial2;
         this.vendasFilial3 = vendasFilial3;
+    }
+    
+    public Hipermercado(Hipermercado h){
+        this.catalogoProdutos = h.getCatalogoProdutos();
+        this.catalogoClientes = h.getCatalogoClientes();
+        this.faturacao = h.getFaturacao();
+        this.vendasFilial1 = h.getVendasFilial1();
+        this.vendasFilial2 = h.getVendasFilial2();
+        this.vendasFilial3 = h.getVendasFilial3();
     }
 
     public CatalogoProdutos getCatalogoProdutos() {
@@ -78,7 +87,7 @@ public class Hipermercado implements java.io.Serializable {
     public void setVendasFilial3(Filial vendasFilial3) {
         this.vendasFilial3 = vendasFilial3;
     }
-    
+
     
     /* Leitura das Vendas */
     
@@ -105,8 +114,7 @@ public class Hipermercado implements java.io.Serializable {
     }
    
     public void leituraVendas(String fich){  
-        ArrayList<String> linhasVendas = Leitura.readLinesWithBuff(fich);
-        
+        ArrayList<String> linhasVendas = Leitura.readLinesWithBuff(fich);     
        try{
            for(String s : linhasVendas){
             Venda venda = new Venda(Leitura.parseLinhaVenda(s));
@@ -141,55 +149,67 @@ public class Hipermercado implements java.io.Serializable {
         return lista;       
     }
     
-    public ParFloat query2(int mes){
+    public ParFloat query2(int mes) throws MesNaoExisteException{
         HashSet<Cliente> clientesMes = new HashSet<>();
         int totalVendas=0;
-        
-        for(HashSet<Venda> vendas: faturacao.getFaturacaoGlobal().getFaturacao().values()){
-           Set<Venda> aux = vendas.stream().filter(x->x.getMes()==mes).collect(Collectors.toSet()); 
-           totalVendas+=aux.size();
-           for(Venda x : aux)
-                clientesMes.add(x.getCliente());
-       }
+        if(mes<0 || mes >12){
+            throw new MesNaoExisteException("O mês está incorreto. O mês tem que estar entre 1 e 12.");
+        }
+        else{
+            for(HashSet<Venda> vendas: faturacao.getFaturacaoGlobal().getFaturacao().values()){
+               Set<Venda> aux = vendas.stream().filter(x->x.getMes()==mes).collect(Collectors.toSet()); 
+               totalVendas+=aux.size();
+               for(Venda x : aux)
+                    clientesMes.add(x.getCliente());
+           }
        
-      return new ParFloat((float)clientesMes.size(),(float)totalVendas);
+           return new ParFloat((float)clientesMes.size(),(float)totalVendas);
+       }
     }
    
-    public ArrayList<TripleFloat> query3(String codigoCliente){
+    public ArrayList<TripleFloat> query3(String codigoCliente) throws ClienteNaoExisteException{
         ArrayList<TripleFloat> res = new ArrayList<>();
-        ArrayList<HashSet<Produto>> produtosMes = new ArrayList<>(); 
-        for(int i=0;i<12;i++){
-            res.add(new TripleFloat(new ParFloat(0,0),0));
-            produtosMes.add(new HashSet<Produto>());
+        ArrayList<HashSet<Produto>> produtosMes = new ArrayList<>();
+        if(catalogoClientes.existeCliente(new Cliente(codigoCliente))==false){
+            throw new ClienteNaoExisteException("O cliente pedido não existe");
         }
-        try{
-        for(HashSet<Venda> vendasProd : faturacao.getFaturacaoGlobal().getFaturacao().values()){
-                for (Venda y : vendasProd)
-                    if(y.getCliente().getCodigo().equals(codigoCliente)){
-                        res.get(y.getMes()-1).getFirst().incFirst();
-                        res.get(y.getMes()-1).addSecond((float)(y.getUnidades()*y.getPreco()));
-                        produtosMes.get(y.getMes()-1).add(y.getProduto());
-                    }
+        else{
+            for(int i=0;i<12;i++){
+                res.add(new TripleFloat(new ParFloat(0,0),0));
+                produtosMes.add(new HashSet<Produto>());
+            }
+            try{
+            for(HashSet<Venda> vendasProd : faturacao.getFaturacaoGlobal().getFaturacao().values()){
+                    for (Venda y : vendasProd)
+                        if(y.getCliente().getCodigo().equals(codigoCliente)){
+                            res.get(y.getMes()-1).getFirst().incFirst();
+                            res.get(y.getMes()-1).addSecond((float)(y.getUnidades()*y.getPreco()));
+                            produtosMes.get(y.getMes()-1).add(y.getProduto());
+                        }
+            }
+            for(int i=0;i<12;i++)
+                res.get(i).getFirst().addSecond((float)(produtosMes.get(i).size()));
+
+            }
+            catch(NullPointerException e){
+                e.getStackTrace();
+            }
+
+            return res;
         }
-        for(int i=0;i<12;i++)
-            res.get(i).getFirst().addSecond((float)(produtosMes.get(i).size()));
-        
-        }
-        catch(NullPointerException e){
-            e.getStackTrace();
-        }
-            
-     return res;
     }
     
-    public ArrayList<TripleFloat> query4(String codigoProduto){
+    public ArrayList<TripleFloat> query4(String codigoProduto) throws ProdutoNaoExisteException{
         ArrayList<TripleFloat> res = new ArrayList<>();
         ArrayList<HashSet<Cliente>> clientesMes = new ArrayList<>(); 
         for(int i=0;i<12;i++){
             res.add(new TripleFloat(new ParFloat(0,0),0));
             clientesMes.add(new HashSet<Cliente>());
         }
-        try{
+        if(catalogoProdutos.existeProduto(new Produto(codigoProduto))==false){
+            throw new ProdutoNaoExisteException("O produto pedido não existe");
+        }
+        else{
             Produto arg = new Produto(codigoProduto);
                 for (Venda y : faturacao.getFaturacaoGlobal().getFaturacao().get(arg)){                 
                         res.get(y.getMes()-1).getFirst().addFirst((float)y.getUnidades());
@@ -197,31 +217,30 @@ public class Hipermercado implements java.io.Serializable {
                         clientesMes.get(y.getMes()-1).add(y.getCliente());
                     
                 }
-        for(int i=0;i<12;i++)
+            for(int i=0;i<12;i++)
             res.get(i).getFirst().addSecond((float)(clientesMes.get(i).size()));
-        
+            return res;
         }
-        catch(NullPointerException e){
-            e.getStackTrace();
-        }
-            
-     return res;
     } 
     
-    public TreeSet<ParProdutoInt> query5(String codigoCliente){
+    public TreeSet<ParProdutoInt> query5(String codigoCliente) throws ClienteNaoExisteException{
         TreeMap<Produto,Integer> res = new TreeMap<>();
         TreeSet<ParProdutoInt> ret= new TreeSet<>();
-        
-        for(HashSet<Venda> lVendas : faturacao.getFaturacaoGlobal().getFaturacao().values() )
-            for(Venda v : lVendas)
-                if(v.getCliente().getCodigo().equals(codigoCliente))
-                    if(res.containsKey(v.getProduto()))
-                        res.replace(v.getProduto(),res.get(v.getProduto())+v.getUnidades());
-                    else res.put(v.getProduto(), v.getUnidades());
-        
-       
-        res.forEach((k,v)-> ret.add(new ParProdutoInt(k,v)));
-        return ret;
+         if(catalogoClientes.existeCliente(new Cliente(codigoCliente))==false){
+            throw new ClienteNaoExisteException("O cliente pedido não existe");
+        }
+         else{
+            for(HashSet<Venda> lVendas : faturacao.getFaturacaoGlobal().getFaturacao().values() )
+                for(Venda v : lVendas)
+                    if(v.getCliente().getCodigo().equals(codigoCliente))
+                        if(res.containsKey(v.getProduto()))
+                            res.replace(v.getProduto(),res.get(v.getProduto())+v.getUnidades());
+                        else res.put(v.getProduto(), v.getUnidades());
+
+
+            res.forEach((k,v)-> ret.add(new ParProdutoInt(k,v)));
+            return ret;
+         }
     }
    
     public TreeSet<ParProdutoInt> query6(int x){
@@ -309,29 +328,33 @@ public class Hipermercado implements java.io.Serializable {
     
     }
 
-    public ArrayList<ParClienteFloat> query9(String codigoProduto, int x){
+    public ArrayList<ParClienteFloat> query9(String codigoProduto, int x) throws ProdutoNaoExisteException{
         TreeMap<Cliente,ParFloat> res = new TreeMap<>();
         TreeSet<ParClienteFloat> ret= new TreeSet<>();
         Iterator<ParClienteFloat> it=null;
         ArrayList<ParClienteFloat> resultado= new ArrayList<>();
-        
-        for(Venda v : faturacao.getFaturacaoGlobal().getFaturacaoProduto(new Produto(codigoProduto)))
-            if(res.containsKey(v.getCliente())){
-                res.get(v.getCliente()).addFirst((float)v.getUnidades());
-                res.get(v.getCliente()).addSecond((float)(v.getUnidades()*v.getPreco()));
-            }
-            else res.put(v.getCliente(),new ParFloat((float)v.getUnidades(),(float)(v.getUnidades()*v.getPreco())));
-        res.entrySet().forEach(entry -> ret.add(new ParClienteFloat(entry.getKey(),entry.getValue().getSecond())));
-        
-        it=ret.iterator();
-        int i=0;
-        while(i<x && it.hasNext()){
-            Cliente aux= it.next().getCliente();
-            resultado.add(new ParClienteFloat(aux,res.get(aux).getSecond()));
-            i++;
+        if(catalogoProdutos.existeProduto(new Produto(codigoProduto))==false){
+            throw new ProdutoNaoExisteException("O produto pedido não existe");
         }
-        return resultado;
- 
-    }    
-    
+        else{
+            for(Venda v : faturacao.getFaturacaoGlobal().getFaturacaoProduto(new Produto(codigoProduto)))
+                if(res.containsKey(v.getCliente())){
+                    res.get(v.getCliente()).addFirst((float)v.getUnidades());
+                    res.get(v.getCliente()).addSecond((float)(v.getUnidades()*v.getPreco()));
+                }
+                else res.put(v.getCliente(),new ParFloat((float)v.getUnidades(),(float)(v.getUnidades()*v.getPreco())));
+            res.entrySet().forEach(entry -> ret.add(new ParClienteFloat(entry.getKey(),entry.getValue().getSecond())));
+
+            it=ret.iterator();
+            int i=0;
+            while(i<x && it.hasNext()){
+                Cliente aux= it.next().getCliente();
+                resultado.add(new ParClienteFloat(aux,res.get(aux).getSecond()));
+                i++;
+            }
+            return resultado;
+
+        }
+       
+    }
 }

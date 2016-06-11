@@ -2,22 +2,25 @@
 import java.io.*;
 import java.util.*;
 
-public class GereVendaApp {
+public class GereVendaApp implements Serializable {
     
     private static Hipermercado hip;
     private static Menu menuPrincipal;
+    private static String ficheiroVendas;
     
     
     private static void carregarMenus() {
-        String[] principal={"Query 1",
-                            "Query 2",
-                            "Query 3",
-                            "Query 4",
-                            "Query 5",
-                            "Query 6",
-                            "Query 7",
-                            "Query 8",
-                            "Query 9",
+        String[] principal={"Lista com os códigos dos produtos nunca comprados e respectivo total.",
+                            "Determinar o número total global de vendas realizadas e o número total de clientes distintos que as fizeram.",
+                            "Determinar para um cliente, para cada mês, quantas compras fez, quantos produtos distintos comprou e quanto gastou no total.",
+                            "Determinar para um produto, mês a mês, quantas vezes foi comprado, por quantos clientes diferentes e o total facturado.",
+                            "Determinar para um cliente a lista de códigos de produtos que mais comprou.",
+                            "Determinar o conjunto dos X produtos mais vendidos em todo o ano indicando o número total de distintos clientes que o compraram.",
+                            "Determinar, para cada filial, a lista dos três maiores compradores em termos de dinheiro facturado.",
+                            "Determinar os códigos dos X clientes que compraram mais produtos diferentes.",
+                            "Determinar para um produto o conjunto dos X clientes que mais o compraram e o valor gasto.",
+                            "Dados do último ficheiro de Vendas",
+                            "Consultas Estatísticas",
                             "Ler os ficheiros com os dados",
                             "Gravar estado atual do programa"};
         menuPrincipal = new Menu(principal);
@@ -28,7 +31,12 @@ public class GereVendaApp {
     }
 
     private static void leituraFicheiros(){
-        String ficheiroVendas,ficheiroProdutos,ficheiroClientes;
+        String ficheiroProdutos,ficheiroClientes;
+        //Mimimum acceptable free memory you think your app needs
+        long minRunningMemory = (1024*1024);
+        Runtime runtime = Runtime.getRuntime();
+        if(runtime.freeMemory()<minRunningMemory)
+         System.gc();
         try{
             clearScreen();
             System.out.print("\nInsira o nome do ficheiro de Produtos: ");
@@ -101,12 +109,17 @@ public class GereVendaApp {
         int mes;
         System.out.print("\nInsira o mês: ");
         mes=Input.lerInt();
-        Crono.start();
-        resultado=hip.query2(mes);
-        Crono.stop();
-        System.out.println("Tempo: "+ Crono.print()+"s");
-        System.out.println("Total vendas realizadas no mês " + mes + " -> " + resultado.getSecond());
-        System.out.println("Total de clientes distintos que compraram no mês " + mes + " -> " + resultado.getFirst());    
+        try{
+            Crono.start();
+            resultado=hip.query2(mes);
+            Crono.stop();
+            System.out.println("Tempo: "+ Crono.print()+"s");
+            System.out.println("Total vendas realizadas no mês " + mes + " -> " + resultado.getSecond());
+            System.out.println("Total de clientes distintos que compraram no mês " + mes + " -> " + resultado.getFirst());    
+        }
+        catch(MesNaoExisteException e){
+            System.out.println(e.getMessage());
+        }
     }
     
     public static void query3Menu(){
@@ -114,16 +127,21 @@ public class GereVendaApp {
         String codigoCliente;
         System.out.print("\nCliente: ");
         codigoCliente=Input.lerString();
-        Crono.start();
-        resultado=hip.query3(codigoCliente);
-        Crono.stop();
-        System.out.println("Tempo: "+ Crono.print()+"s");
-        System.out.println("Mês -> Número compras -> Produtos Comprados -> Valor Total");
-        for(int i=0;i<12;i++){
-            System.out.println("Mês: "+ (i+1) + " -> " + 
-                    (int)resultado.get(i).getFirst().getFirst() + " -> " + 
-                    (int)resultado.get(i).getFirst().getSecond() + " -> " + 
-                    resultado.get(i).getSecond());
+        try{
+            Crono.start();
+            resultado=hip.query3(codigoCliente);
+            Crono.stop();
+            System.out.println("Tempo: "+ Crono.print()+"s");
+            System.out.println("Mês -> Número compras -> Produtos Comprados -> Valor Total");
+            for(int i=0;i<12;i++){
+                System.out.println("Mês: "+ (i+1) + " -> " + 
+                        (int)resultado.get(i).getFirst().getFirst() + " -> " + 
+                        (int)resultado.get(i).getFirst().getSecond() + " -> " + 
+                        resultado.get(i).getSecond());
+            }
+        }
+        catch(ClienteNaoExisteException e){
+            System.out.println(e.getMessage());
         }
     }
     
@@ -132,16 +150,21 @@ public class GereVendaApp {
         String codigoProduto;
         System.out.print("\nProduto: ");
         codigoProduto=Input.lerString();
-        Crono.start();
-        resultado=hip.query4(codigoProduto);
-        Crono.stop();
-        System.out.println("Tempo: "+ Crono.print()+"s");
-        System.out.println("Mês -> Número Unidades -> Número Clientes -> Valor Total");
-        for(int i=0;i<12;i++){
-            System.out.println("Mês: "+ (i+1) + " -> " + 
-                    (int)resultado.get(i).getFirst().getFirst() + " -> " + 
-                    (int)resultado.get(i).getFirst().getSecond() + " -> " + 
-                    resultado.get(i).getSecond());
+        try{
+            Crono.start();
+            resultado=hip.query4(codigoProduto);
+            Crono.stop();
+            System.out.println("Tempo: "+ Crono.print()+"s");
+            System.out.println("Mês -> Número Unidades -> Número Clientes -> Valor Total");
+            for(int i=0;i<12;i++){
+                System.out.println("Mês: "+ (i+1) + " -> " + 
+                        (int)resultado.get(i).getFirst().getFirst() + " -> " + 
+                        (int)resultado.get(i).getFirst().getSecond() + " -> " + 
+                        resultado.get(i).getSecond());
+            }
+        }
+        catch(ProdutoNaoExisteException e){
+            System.out.println(e.getMessage());
         }
     }
      
@@ -150,12 +173,17 @@ public class GereVendaApp {
         String codigoCliente;
         System.out.print("\nCliente: ");
         codigoCliente=Input.lerString();
-        Crono.start();
-        resultado=hip.query5(codigoCliente);
-        Crono.stop();
-        System.out.println("Tempo: "+ Crono.print()+"s");
-        System.out.println("Produto -> quantidade");
-        resultado.forEach(x -> System.out.println(x.getProduto().getCodigo() + " -> " + x.getInteiro() ));
+        try{
+            Crono.start();
+            resultado=hip.query5(codigoCliente);
+            Crono.stop();
+            System.out.println("Tempo: "+ Crono.print()+"s");
+            System.out.println("Produto -> quantidade");
+            resultado.forEach(x -> System.out.println(x.getProduto().getCodigo() + " -> " + x.getInteiro() ));
+        }
+        catch(ClienteNaoExisteException e){
+            System.out.println(e.getMessage());
+        }
      }
      
     
@@ -189,7 +217,7 @@ public class GereVendaApp {
      public static void query8Menu(){
        ArrayList<ParClienteFloat> resultado;
        int n;
-       System.out.print("Insira o numero de clientes: ");
+       System.out.print("Insira o número de clientes: ");
        n=Input.lerInt();
        Crono.start();
        resultado=hip.query8(n);
@@ -202,17 +230,29 @@ public class GereVendaApp {
      public static void query9Menu(){
        ArrayList<ParClienteFloat> resultado;
        int n;
-       System.out.print("Insira o numero de clientes: ");
+       System.out.print("Insira o número de clientes: ");
        n=Input.lerInt();
        String codigoProduto;
        System.out.print("\nProduto: ");
        codigoProduto=Input.lerString();
+       try{
        Crono.start();
        resultado=hip.query9(codigoProduto,n);
        Crono.stop();
        System.out.println("Tempo: "+ Crono.print()+"s");
        System.out.println("Cliente -> valor gasto");
        resultado.forEach(x -> System.out.println(x.getCliente().getCodigo() + " -> " + x.getValor() ));
+       }
+       catch(ProdutoNaoExisteException e){
+           System.out.println(e.getMessage());
+       }
+    }
+     
+    public static void estatisticas1(){
+        System.out.println("Nome do Ficheiro de Vendas -> " + ficheiroVendas);
+    }
+    public static void estatisticas2(){
+
     }
  
     public static void main(String [] args){
@@ -258,10 +298,18 @@ public class GereVendaApp {
                   query9Menu();
                   break;
               case 10:
+                  clearScreen();
+                  estatisticas1();
+                  break;
+              case 11:
+                  clearScreen();
+                  estatisticas2();
+                  break;
+              case 12:
                    clearScreen();
                    leituraFicheiros();
                    break;
-               case 11:
+               case 13:
                    clearScreen();
                    gravar();
                    break;

@@ -8,6 +8,11 @@ public class TripleFloat {
         this.first = first;
         this.second = second;
     }
+    
+    public TripleFloat(float first, float second,float third) {
+        this.first = new ParFloat(first,second);
+        this.second = third;
+    }
 
     public ParFloat getFirst() {
         return first;

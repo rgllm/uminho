@@ -43,7 +43,6 @@ public class Input {
      //input.close();
      return txt;
   } 
-
  
  public static int lerInt() {
      Scanner input = new Scanner(in);

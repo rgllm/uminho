@@ -7,6 +7,8 @@ public class GereVendaApp implements Serializable {
     private static Hipermercado hip;
     private static Menu menuPrincipal;
     private static String ficheiroVendas;
+    private static TripleFloat resultadoLeitura;
+    
     
     
     private static void carregarMenus() {
@@ -49,9 +51,10 @@ public class GereVendaApp implements Serializable {
             Crono.stop();
             System.out.println("Tempo leitura Produtos: "+Crono.print());
             Crono.start();
-            hip.leituraVendas(ficheiroVendas);
+            resultadoLeitura=hip.leituraVendas(ficheiroVendas);
             Crono.stop();
             System.out.println("Tempo leitura Vendas: "+Crono.print());
+            
         }
        catch(NullPointerException e){
             System.out.println("Um dos ficheiros não foi encontrado.\n");
@@ -90,13 +93,15 @@ public class GereVendaApp implements Serializable {
     }
     
     public static void query1Menu(){
-        HashSet<Produto> lista;
+        TreeSet<Produto> lista;
         Crono.start();
         lista=hip.query1();
         Crono.stop();
-        System.out.println("Resultado obtido em " + Crono.print()+"s");
-        System.out.println("Produtos não comprados:\nTotal: " + lista.size());
+        System.out.println("Produtos não comprados: ");
         lista.forEach(x -> System.out.println(x.getCodigo()));
+        System.out.println("Total : "+lista.size());
+        System.out.println("Resultado obtido em " + Crono.print()+"s");
+
     }
     
     public static void query2Menu(){
@@ -108,9 +113,8 @@ public class GereVendaApp implements Serializable {
             Crono.start();
             resultado=hip.query2(mes);
             Crono.stop();
-            System.out.println("Tempo: "+ Crono.print()+"s");
-            System.out.println("Total vendas realizadas no mês " + mes + " -> " + resultado.getSecond());
-            System.out.println("Total de clientes distintos que compraram no mês " + mes + " -> " + resultado.getFirst());    
+            System.out.println("Resultado obtido em " + Crono.print()+"s");            System.out.println("Total vendas realizadas no mês " + mes + " -> " + (int)resultado.getSecond());
+            System.out.println("Total de clientes distintos que compraram no mês " + mes + " -> " + (int)resultado.getFirst());    
         }
         catch(MesNaoExisteException e){
             System.out.println(e.getMessage());
@@ -126,7 +130,6 @@ public class GereVendaApp implements Serializable {
             Crono.start();
             resultado=hip.query3(codigoCliente);
             Crono.stop();
-            System.out.println("Tempo: "+ Crono.print()+"s");
             System.out.println("Mês -> Número compras -> Produtos Comprados -> Valor Total");
             for(int i=0;i<12;i++){
                 System.out.println("Mês: "+ (i+1) + " -> " + 
@@ -134,6 +137,8 @@ public class GereVendaApp implements Serializable {
                         (int)resultado.get(i).getFirst().getSecond() + " -> " + 
                         resultado.get(i).getSecond());
             }
+            System.out.println("Resultado obtido em " + Crono.print()+"s");
+
         }
         catch(ClienteNaoExisteException e){
             System.out.println(e.getMessage());
@@ -149,7 +154,6 @@ public class GereVendaApp implements Serializable {
             Crono.start();
             resultado=hip.query4(codigoProduto);
             Crono.stop();
-            System.out.println("Tempo: "+ Crono.print()+"s");
             System.out.println("Mês -> Número Unidades -> Número Clientes -> Valor Total");
             for(int i=0;i<12;i++){
                 System.out.println("Mês: "+ (i+1) + " -> " + 
@@ -157,6 +161,8 @@ public class GereVendaApp implements Serializable {
                         (int)resultado.get(i).getFirst().getSecond() + " -> " + 
                         resultado.get(i).getSecond());
             }
+            System.out.println("Resultado obtido em " + Crono.print()+"s");
+
         }
         catch(ProdutoNaoExisteException e){
             System.out.println(e.getMessage());
@@ -172,9 +178,9 @@ public class GereVendaApp implements Serializable {
             Crono.start();
             resultado=hip.query5(codigoCliente);
             Crono.stop();
-            System.out.println("Tempo: "+ Crono.print()+"s");
             System.out.println("Produto -> quantidade");
             resultado.forEach(x -> System.out.println(x.getProduto().getCodigo() + " -> " + x.getInteiro() ));
+            System.out.println("Resultado obtido em " + Crono.print()+"s");
         }
         catch(ClienteNaoExisteException e){
             System.out.println(e.getMessage());
@@ -183,16 +189,16 @@ public class GereVendaApp implements Serializable {
      
     
      public static void query6Menu(){
-       TreeSet<ParProdutoInt> resultado;
+       ArrayList<ParProdutoInt> resultado;
        int n;
        System.out.print("Insira o numero de produtos: ");
        n=Input.lerInt();
        Crono.start();
        resultado=hip.query6(n);
        Crono.stop();
-       System.out.println("Tempo: "+ Crono.print()+"s");
        System.out.println("Produto -> número de clientes");
        resultado.forEach(x -> System.out.println(x.getProduto().getCodigo() + " -> " + x.getInteiro() ));
+       System.out.println("Resultado obtido em " + Crono.print()+"s");
     }
      
     public static void query7Menu(){
@@ -200,13 +206,13 @@ public class GereVendaApp implements Serializable {
         Crono.start();
         resultado=hip.query7();
         Crono.stop();
-        System.out.println("Tempo: "+ Crono.print()+"s");
         System.out.println("Produto -> número de clientes");
         System.out.println("Filial 1 | Filial 2 | Filial 3");
         for(int i=0;i<3;i++)
             System.out.println(resultado.get(i).getCodigo()+"      "+
                                resultado.get(i+3).getCodigo()+"      "+
                                resultado.get(i+6).getCodigo());
+        System.out.println("Resultado obtido em " + Crono.print()+"s");
     }
     
      public static void query8Menu(){
@@ -217,9 +223,9 @@ public class GereVendaApp implements Serializable {
        Crono.start();
        resultado=hip.query8(n);
        Crono.stop();
-       System.out.println("Tempo: "+ Crono.print()+"s");
        System.out.println("Cliente -> número de produtos");
        resultado.forEach(x -> System.out.println(x.getCliente().getCodigo() + " -> " + (int)x.getValor() ));
+       System.out.println("Resultado obtido em " + Crono.print()+"s");
     }
      
      public static void query9Menu(){
@@ -234,9 +240,9 @@ public class GereVendaApp implements Serializable {
        Crono.start();
        resultado=hip.query9(codigoProduto,n);
        Crono.stop();
-       System.out.println("Tempo: "+ Crono.print()+"s");
        System.out.println("Cliente -> valor gasto");
        resultado.forEach(x -> System.out.println(x.getCliente().getCodigo() + " -> " + x.getValor() ));
+       System.out.println("Resultado obtido em " + Crono.print()+"s");
        }
        catch(ProdutoNaoExisteException e){
            System.out.println(e.getMessage());
@@ -244,19 +250,52 @@ public class GereVendaApp implements Serializable {
     }
      
     public static void estatisticas1(){
+        Crono.start();
+        int num= hip.nClientesCompraram();
         System.out.println("Nome do Ficheiro de Vendas -> " + ficheiroVendas);
-        System.out.println("Número de Vendas erradas -> " + hip.getVendasErradas());
+        System.out.println("Número de Vendas erradas -> " + ((int)resultadoLeitura.getFirst().getFirst() 
+                                                             - resultadoLeitura.getFirst().getSecond())   );
         System.out.println("Número total de Produtos -> " + hip.getCatalogoProdutos().getProdutos().size());
-        System.out.println("Número de diferentes produtos comprados");
-        System.out.println("Número de Produtos não comprados");
+        System.out.println("Número de diferentes produtos comprados ->" + hip.getFaturacao().getFaturacaoGlobal().getFaturacao().size());
+        System.out.println("Número de Produtos não comprados -> " + (hip.getCatalogoProdutos().getProdutos().size() - 
+                                                                    hip.getFaturacao().getFaturacaoGlobal().getFaturacao().size()));
         System.out.println("Número total de Clientes -> " + hip.getCatalogoClientes().getClientes().size());
-        System.out.println("Número de Clientes que realizaram compras");
-        System.out.println("Número de Clientes que não realizaram compras");
-        System.out.println("Número de Vendas de valor 0");
-        System.out.println("Faturação Total");
+        System.out.println("Número de Clientes que realizaram compras -> "+ num );
+        System.out.println("Número de Clientes que não realizaram compras -> " + (hip.getCatalogoClientes().getClientes().size()
+                                                                               - num ));
+        System.out.println("Número de Vendas de valor 0 -> " + (int)resultadoLeitura.getSecond() );
+        System.out.println("Faturação Total -> " + hip.totalFaturado());
+        Crono.stop();
+        System.out.println("Resultado obtido em " + Crono.print()+"s");
     }
     public static void estatisticas2(){
-
+        Crono.start();
+        ArrayList<ArrayList<Float>> res=hip.faturacaoMes();
+        System.out.println("Numero total de compras");
+        int i=0;
+        for(int x : hip.totalCompras()){
+            System.out.println("    Mês "+(i+1)+" -> "+x);
+            i++;
+        }
+        
+        System.out.println("\nFaturação total por mês");
+        System.out.println("Mes |  Global     |  Filial 1     |  Filial 2     |  Filial 3  ");
+        for(i=0;i<12;i++){
+            System.out.println((i+1) + "   " +
+                                res.get(0).get(i) + "   " + 
+                                res.get(1).get(i) + "   " + 
+                                res.get(2).get(i) + "   " + 
+                                res.get(3).get(i));
+        }
+        System.out.println("\nClientes por mês");
+        i=0;
+        for(int x : hip.clientesPorMes()){
+            System.out.println("    Mês "+(i+1)+" -> "+x);
+            i++;
+        }
+        Crono.stop();
+        System.out.println("Resultado obtido em " + Crono.print()+"s");
+        
     }
  
     public static void main(String [] args){

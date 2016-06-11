@@ -12,8 +12,6 @@ public class Hipermercado implements java.io.Serializable {
     private Filial vendasFilial1;
     private Filial vendasFilial2;
     private Filial vendasFilial3;
-    private int vendasErradas;
-    
     
     public Hipermercado(){
         this.catalogoProdutos = new CatalogoProdutos();
@@ -22,7 +20,6 @@ public class Hipermercado implements java.io.Serializable {
         this.vendasFilial1 = new Filial();
         this.vendasFilial2 = new Filial();
         this.vendasFilial3 = new Filial();
-        this.vendasErradas = 0;
     }
 
     public Hipermercado(CatalogoProdutos catalogoProdutos, CatalogoClientes catalogoClientes, Faturacoes faturacao, Filial vendasFilial1, Filial vendasFilial2, Filial vendasFilial3, ArrayList<Integer> comprasMes, int vendasErradas) {
@@ -32,7 +29,6 @@ public class Hipermercado implements java.io.Serializable {
         this.vendasFilial1 = vendasFilial1;
         this.vendasFilial2 = vendasFilial2;
         this.vendasFilial3 = vendasFilial3;
-        this.vendasErradas = vendasErradas;
     }
     
     public Hipermercado(Hipermercado h){
@@ -42,7 +38,6 @@ public class Hipermercado implements java.io.Serializable {
         this.vendasFilial1 = h.getVendasFilial1();
         this.vendasFilial2 = h.getVendasFilial2();
         this.vendasFilial3 = h.getVendasFilial3();
-        this.vendasErradas = h.getVendasErradas();
     }
 
     public CatalogoProdutos getCatalogoProdutos() {
@@ -93,13 +88,7 @@ public class Hipermercado implements java.io.Serializable {
         this.vendasFilial3 = vendasFilial3;
     }
 
-    public int getVendasErradas() {
-        return vendasErradas;
-    }
-
-    public void setVendasErradas(int vendasErradas) {
-        this.vendasErradas = vendasErradas;
-    }
+    
     
 
     
@@ -108,7 +97,7 @@ public class Hipermercado implements java.io.Serializable {
     public boolean verificaVenda(Venda venda) {        
         if(getCatalogoClientes().existeCliente(venda.getCliente()) &&
             getCatalogoProdutos().existeProduto(venda.getProduto()) &&
-            venda.getPreco()>=0.0 && venda.getUnidades()>=0 )
+            venda.getPreco()>=0.0 && venda.getUnidades()>0 )
             return true;
         return false;
     }
@@ -127,39 +116,43 @@ public class Hipermercado implements java.io.Serializable {
         return ret;
     }
    
-    public void leituraVendas(String fich){  
-        ArrayList<String> linhasVendas = Leitura.readLinesWithBuff(fich);     
+    public TripleFloat leituraVendas(String fich){  
+        ArrayList<String> linhasVendas = Leitura.readLinesWithBuff(fich);
+        int precoZero=0,lLidas=0,lValidas=0;
        try{
            for(String s : linhasVendas){
-            Venda venda = new Venda(Leitura.parseLinhaVenda(s));
-            if(verificaVenda(venda)){
-               faturacao.getFaturacaoGlobal().addVenda(venda);
-               if(venda.getFilial()==1) {
-                   faturacao.getFaturacaoFilial1().addVenda(venda);
-                   vendasFilial1.getVendas().add(venda);
-               }
-               if(venda.getFilial()==2) {
-                   faturacao.getFaturacaoFilial2().addVenda(venda);
-                   vendasFilial2.getVendas().add(venda);
-               }
-               if(venda.getFilial()==3) {
-                   faturacao.getFaturacaoFilial3().addVenda(venda);
-                   vendasFilial3.getVendas().add(venda);
-               }
-            }
-            else vendasErradas++;
+                lLidas++;
+                Venda venda = new Venda(Leitura.parseLinhaVenda(s));
+                if(verificaVenda(venda)){
+                    lValidas++;
+                    if(venda.getPreco()==0.0) precoZero++;
+                   faturacao.getFaturacaoGlobal().addVenda(venda);
+                   if(venda.getFilial()==1) {
+                       faturacao.getFaturacaoFilial1().addVenda(venda);
+                       vendasFilial1.getVendas().add(venda);
+                   }
+                   if(venda.getFilial()==2) {
+                       faturacao.getFaturacaoFilial2().addVenda(venda);
+                       vendasFilial2.getVendas().add(venda);
+                   }
+                   if(venda.getFilial()==3) {
+                       faturacao.getFaturacaoFilial3().addVenda(venda);
+                       vendasFilial3.getVendas().add(venda);
+                   }
+                }
             }
         }
         catch(NullPointerException e){
             System.out.println("Erro ao ler o ficheiro.\n");
         }
+       return new TripleFloat((float)lLidas,(float)lValidas,(float)precoZero);
     }
     
     /*Querys*/
     
     //Falta a ordenação e a impressão em lista
-    public HashSet<Produto> query1(){
-        HashSet<Produto> lista = new HashSet<>(catalogoProdutos.getProdutos());
+    public TreeSet<Produto> query1(){
+        TreeSet<Produto> lista = new TreeSet<>(catalogoProdutos.getProdutos());
         faturacao.getFaturacaoGlobal().getFaturacao().keySet().forEach(p->lista.remove(p));
         return lista;       
     }
@@ -258,9 +251,9 @@ public class Hipermercado implements java.io.Serializable {
          }
     }
    
-    public TreeSet<ParProdutoInt> query6(int x){
+    public ArrayList<ParProdutoInt> query6(int x){
         TreeSet<ParProdutoInt> ret= new TreeSet<>();
-        TreeSet<ParProdutoInt> res= new TreeSet<>();
+        ArrayList<ParProdutoInt> res= new ArrayList<>();
         Iterator<ParProdutoInt> it=null;
         int sum,i;
         for(HashSet<Venda> lVendas : faturacao.getFaturacaoGlobal().getFaturacao().values() ){
@@ -270,8 +263,8 @@ public class Hipermercado implements java.io.Serializable {
             for(Venda v : lVendas){
                 if(flag){aux=v.getProduto();flag=false;}
                 sum+=v.getUnidades();
-            ret.add(new ParProdutoInt(aux,sum));
             }
+            ret.add(new ParProdutoInt(aux,sum));
         }
         it= ret.iterator();
         i=0;
@@ -290,11 +283,11 @@ public class Hipermercado implements java.io.Serializable {
     }
     public ArrayList<Cliente> query7(){
         ArrayList<Cliente> ret=new ArrayList<>(9);
-        TreeMap<Cliente,Float> res = new TreeMap<>();
-        TreeSet<ParClienteFloat> aux = new TreeSet<>();
         Iterator<ParClienteFloat> it= null;
         Filial f;
         for(int i=0;i<3;i++){
+            HashMap<Cliente,Float> res = new HashMap<>();
+            TreeSet<ParClienteFloat> aux = new TreeSet<>();
             if(i==0)f=vendasFilial1;
             else if(i==1)f=vendasFilial2;
             else f=vendasFilial3;
@@ -313,20 +306,19 @@ public class Hipermercado implements java.io.Serializable {
     }
     
     public ArrayList<ParClienteFloat> query8(int x){
-        TreeMap<Cliente,Integer> ret= new TreeMap<>();
+        HashMap<Cliente,Integer> ret= new HashMap<>();
         TreeSet<ParClienteFloat> res= new TreeSet<>();
         ArrayList<ParClienteFloat> resultado= new ArrayList<>();
         Iterator<ParClienteFloat> it=null;
         int sum,i;
         for(HashSet<Venda> lVendas : faturacao.getFaturacaoGlobal().getFaturacao().values() ){
             HashSet<Cliente> aux= new HashSet<>();
-            Cliente aux1=null;
             for(Venda v : lVendas)
                 aux.add(v.getCliente());
                 
             aux.forEach(cliente-> {
                     if (ret.containsKey(cliente))
-                        ret.replace(cliente,ret.get(cliente)+1);
+                        ret.replace(cliente,(ret.get(cliente))+1);
                     else ret.put(cliente,1);
             });
         }
@@ -360,7 +352,7 @@ public class Hipermercado implements java.io.Serializable {
                 else res.put(v.getCliente(),new ParFloat((float)v.getUnidades(),(float)(v.getUnidades()*v.getPreco())));
             res.entrySet().forEach(entry -> ret.add(new ParClienteFloat(entry.getKey(),entry.getValue().getSecond())));
 
-            it=ret.iterator();
+            it=ret.iterator();  
             int i=0;
             while(i<x && it.hasNext()){
                 Cliente aux= it.next().getCliente();
@@ -368,8 +360,77 @@ public class Hipermercado implements java.io.Serializable {
                 i++;
             }
             return resultado;
-
-        }
-       
+        } 
     }
+
+    public int nClientesCompraram(){
+        HashSet<Cliente> clientes=new HashSet<>();
+        
+        for(HashSet<Venda> listaVendas : faturacao.getFaturacaoGlobal().getFaturacao().values())
+                for(Venda v : listaVendas)
+                    clientes.add(v.getCliente());
+        return clientes.size();
+    }
+    
+     public float totalFaturado(){
+        float faturado=(float)0.0;
+        
+        for(HashSet<Venda> listaVendas : faturacao.getFaturacaoGlobal().getFaturacao().values())
+                for(Venda v : listaVendas)
+                    faturado+= v.getPreco() * v.getUnidades();
+        return faturado;
+    }
+    
+     
+    public ArrayList<Integer> totalCompras(){
+        ArrayList<Integer> res = new ArrayList<>(12);
+        for(int i=0;i<12;i++){
+            res.add(i,0);
+        }
+
+        for(HashSet<Venda> vendasProd : faturacao.getFaturacaoGlobal().getFaturacao().values()){
+                for (Venda y : vendasProd)
+                    res.set(y.getMes()-1, res.get(y.getMes()-1)+1);
+        }
+        return res;
+    }
+    
+     public ArrayList<ArrayList<Float>> faturacaoMes(){
+        ArrayList<ArrayList<Float>> res = new ArrayList<>(4);
+        for(int i=0;i<4;i++){
+            res.add(i,new ArrayList<>(12));
+            for(int j=0;j<12;j++)
+                res.get(i).add((float)0.0);
+        }
+        for(HashSet<Venda> vendasProd : faturacao.getFaturacaoGlobal().getFaturacao().values()){
+                for (Venda v : vendasProd){
+                    res.get(0).set(v.getMes()-1,
+                            (float)(res.get(0).get(v.getMes()-1) + (v.getUnidades()*v.getPreco())));
+                    res.get(v.getFilial()).set(v.getMes()-1,
+                            (float)(res.get(v.getFilial()).get(v.getMes()-1) + (v.getUnidades()*v.getPreco())));
+                }
+        }
+        return res;
+    }
+     
+    public ArrayList<Integer> clientesPorMes(){
+        ArrayList<Integer> ret= new ArrayList<>(12);
+        List<HashSet<Cliente>> res = new ArrayList<>(12);
+        for(int i=0;i<12;i++)
+            res.add(i,new HashSet<>());
+        for(HashSet<Venda> vendasProd : faturacao.getFaturacaoGlobal().getFaturacao().values()){
+            for (Venda v : vendasProd){
+                res.get(v.getMes()-1).add(v.getCliente());
+            }
+        }
+        int i=0;
+        for(HashSet<Cliente> x : res){
+            ret.add(i,x.size());
+            i++;
+        }
+        
+        return ret;
+    }
+     
+
 }

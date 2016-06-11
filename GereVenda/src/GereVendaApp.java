@@ -9,7 +9,17 @@ public class GereVendaApp {
     
     
     private static void carregarMenus() {
-        String[] principal={"Ler os ficheiros com os dados","Gravar estado atual do programa","Query 1","Query 2","Query 3","Query 4","Query 5"};
+        String[] principal={"Query 1",
+                            "Query 2",
+                            "Query 3",
+                            "Query 4",
+                            "Query 5",
+                            "Query 6",
+                            "Query 7",
+                            "Query 8",
+                            "Query 9",
+                            "Ler os ficheiros com os dados",
+                            "Gravar estado atual do programa"};
         menuPrincipal = new Menu(principal);
     }
     
@@ -25,9 +35,9 @@ public class GereVendaApp {
             ficheiroProdutos=Input.lerString();
             System.out.print("\nInsira o nome do ficheiro de Clientes: ");
             ficheiroClientes=Input.lerString();
-            Crono.start();
             System.out.print("\nInsira o nome do ficheiro de Vendas: ");
             ficheiroVendas=Input.lerString();
+            Crono.start();
             hip.setCatalogoClientes(Leitura.leituraClientes(ficheiroClientes));
             Crono.stop();
             System.out.println("\nTempo leitura Clientes: "+Crono.print());
@@ -48,13 +58,13 @@ public class GereVendaApp {
     private static void initApp() {
         try {
             System.out.println("A ler dados...");
-            hip = Hipermercado.lerEstado("GereVenda.data");
+            hip = Hipermercado.lerEstado("hipermercado.data");
             System.gc();
             
         }
         catch (IOException e) {
             hip = new Hipermercado();
-            System.out.println("Não foi possível carregar os dados!\nO ficheiro GereVenda.data não existe.\n");
+            System.out.println("Não foi possível carregar os dados!\nO ficheiro hipermercado.data não existe.\n");
         }
         catch (ClassNotFoundException e) {
            hip = new Hipermercado();
@@ -68,7 +78,7 @@ public class GereVendaApp {
     
     public static void gravar(){
         try{
-           hip.gravarEstado("GereVenda.data");
+           hip.gravarEstado("hipermercado.dat");
            System.out.println("Dados gravados com sucesso.");
         }
         catch(IOException e){
@@ -100,7 +110,7 @@ public class GereVendaApp {
     }
     
     public static void query3Menu(){
-        ArrayList<TripleFloat> resultado = new ArrayList<>();
+        ArrayList<TripleFloat> resultado;
         String codigoCliente;
         System.out.print("\nCliente: ");
         codigoCliente=Input.lerString();
@@ -118,7 +128,7 @@ public class GereVendaApp {
     }
     
      public static void query4Menu(){
-        ArrayList<TripleFloat> resultado = new ArrayList<>();
+        ArrayList<TripleFloat> resultado;
         String codigoProduto;
         System.out.print("\nProduto: ");
         codigoProduto=Input.lerString();
@@ -136,15 +146,74 @@ public class GereVendaApp {
     }
      
      public static void query5Menu(){
+        TreeSet<ParProdutoInt> resultado;
         String codigoCliente;
         System.out.print("\nCliente: ");
         codigoCliente=Input.lerString();
         Crono.start();
-        hip.query5(codigoCliente);
+        resultado=hip.query5(codigoCliente);
         Crono.stop();
         System.out.println("Tempo: "+ Crono.print()+"s");
-         
+        System.out.println("Produto -> quantidade");
+        resultado.forEach(x -> System.out.println(x.getProduto().getCodigo() + " -> " + x.getInteiro() ));
      }
+     
+    
+     public static void query6Menu(){
+       TreeSet<ParProdutoInt> resultado;
+       int n;
+       System.out.print("Insira o numero de produtos: ");
+       n=Input.lerInt();
+       Crono.start();
+       resultado=hip.query6(n);
+       Crono.stop();
+       System.out.println("Tempo: "+ Crono.print()+"s");
+       System.out.println("Produto -> número de clientes");
+       resultado.forEach(x -> System.out.println(x.getProduto().getCodigo() + " -> " + x.getInteiro() ));
+    }
+     
+    public static void query7Menu(){
+        ArrayList<Cliente> resultado;
+        Crono.start();
+        resultado=hip.query7();
+        Crono.stop();
+        System.out.println("Tempo: "+ Crono.print()+"s");
+        System.out.println("Produto -> número de clientes");
+        System.out.println("Filial 1 | Filial 2 | Filial 3");
+        for(int i=0;i<3;i++)
+            System.out.println(resultado.get(i).getCodigo()+"      "+
+                               resultado.get(i+3).getCodigo()+"      "+
+                               resultado.get(i+6).getCodigo());
+    }
+    
+     public static void query8Menu(){
+       ArrayList<ParClienteFloat> resultado;
+       int n;
+       System.out.print("Insira o numero de clientes: ");
+       n=Input.lerInt();
+       Crono.start();
+       resultado=hip.query8(n);
+       Crono.stop();
+       System.out.println("Tempo: "+ Crono.print()+"s");
+       System.out.println("Cliente -> número de produtos");
+       resultado.forEach(x -> System.out.println(x.getCliente().getCodigo() + " -> " + (int)x.getValor() ));
+    }
+     
+     public static void query9Menu(){
+       ArrayList<ParClienteFloat> resultado;
+       int n;
+       System.out.print("Insira o numero de clientes: ");
+       n=Input.lerInt();
+       String codigoProduto;
+       System.out.print("\nProduto: ");
+       codigoProduto=Input.lerString();
+       Crono.start();
+       resultado=hip.query9(codigoProduto,n);
+       Crono.stop();
+       System.out.println("Tempo: "+ Crono.print()+"s");
+       System.out.println("Cliente -> valor gasto");
+       resultado.forEach(x -> System.out.println(x.getCliente().getCodigo() + " -> " + x.getValor() ));
+    }
  
     public static void main(String [] args){
         carregarMenus();
@@ -152,34 +221,50 @@ public class GereVendaApp {
         do{
            menuPrincipal.executa();
            switch(menuPrincipal.getOpcao()){
-               case 1:
-                   clearScreen();
-                   leituraFicheiros();
-                   break;
-               case 2:
-                   clearScreen();
-                   gravar();
-                   break;
-               case 3:
+              case 1:
                    clearScreen();
                    query1Menu();
                    break;
-              case 4:
+              case 2:
                   clearScreen();
                   query2Menu();
                   break;
-              case 5:
+              case 3:
                   clearScreen();
                   query3Menu();
                   break;
-              case 6:
+              case 4:
                   clearScreen();
                   query4Menu();
                   break;
-              case 7:
+              case 5:
                   clearScreen();
                   query5Menu();
                   break;
+              case 6:
+                  clearScreen();
+                  query6Menu();
+                  break;
+              case 7:
+                  clearScreen();
+                  query7Menu();
+                  break;
+              case 8:
+                  clearScreen();
+                  query8Menu();
+                  break;
+              case 9:
+                  clearScreen();
+                  query9Menu();
+                  break;
+              case 10:
+                   clearScreen();
+                   leituraFicheiros();
+                   break;
+               case 11:
+                   clearScreen();
+                   gravar();
+                   break;
            }
         } while (menuPrincipal.getOpcao()!=0);
         System.out.println("BYE!");

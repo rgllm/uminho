@@ -208,8 +208,9 @@ public class Hipermercado implements java.io.Serializable {
      return res;
     } 
     
-    public void query5(String codigoCliente){
+    public TreeSet<ParProdutoInt> query5(String codigoCliente){
         TreeMap<Produto,Integer> res = new TreeMap<>();
+        TreeSet<ParProdutoInt> ret= new TreeSet<>();
         
         for(HashSet<Venda> lVendas : faturacao.getFaturacaoGlobal().getFaturacao().values() )
             for(Venda v : lVendas)
@@ -218,8 +219,119 @@ public class Hipermercado implements java.io.Serializable {
                         res.replace(v.getProduto(),res.get(v.getProduto())+v.getUnidades());
                     else res.put(v.getProduto(), v.getUnidades());
         
-        System.out.println(res.toString());
+       
+        res.forEach((k,v)-> ret.add(new ParProdutoInt(k,v)));
+        return ret;
     }
    
+    public TreeSet<ParProdutoInt> query6(int x){
+        TreeSet<ParProdutoInt> ret= new TreeSet<>();
+        TreeSet<ParProdutoInt> res= new TreeSet<>();
+        Iterator<ParProdutoInt> it=null;
+        int sum,i;
+        for(HashSet<Venda> lVendas : faturacao.getFaturacaoGlobal().getFaturacao().values() ){
+            sum=0;
+            Produto aux=null;
+            boolean flag=true;
+            for(Venda v : lVendas){
+                if(flag){aux=v.getProduto();flag=false;}
+                sum+=v.getUnidades();
+            ret.add(new ParProdutoInt(aux,sum));
+            }
+        }
+        it= ret.iterator();
+        i=0;
+        while(i<x){
+            res.add(it.next());
+            i++;
+        }
+        for(ParProdutoInt par : res){
+            HashSet<Cliente> clientes = new HashSet<>(); 
+            for (Venda y : faturacao.getFaturacaoGlobal().getFaturacao().get(par.getProduto())){                 
+                clientes.add(y.getCliente());
+            }
+            par.setInteiro(clientes.size());
+        }
+        return res;
+    }
+    public ArrayList<Cliente> query7(){
+        ArrayList<Cliente> ret=new ArrayList<>(9);
+        TreeMap<Cliente,Float> res = new TreeMap<>();
+        TreeSet<ParClienteFloat> aux = new TreeSet<>();
+        Iterator<ParClienteFloat> it= null;
+        Filial f;
+        for(int i=0;i<3;i++){
+            if(i==0)f=vendasFilial1;
+            else if(i==1)f=vendasFilial2;
+            else f=vendasFilial3;
+            for(Venda v : f.getVendas()){
+                if(res.containsKey(v.getCliente()))
+                    res.replace(v.getCliente(), (float)(res.get(v.getCliente()) + (v.getUnidades()*v.getPreco())));
+                else res.put(v.getCliente(),(float)(v.getUnidades()*v.getPreco()));
+            }
+            res.forEach( (k,v) -> aux.add(new ParClienteFloat(k,v)));
+            it= aux.iterator();
+            for(int j = i*3; j<i*3+3;j++){
+                ret.add(j,it.next().getCliente());
+            }
+        }
+        return ret;
+    }
+    
+    public ArrayList<ParClienteFloat> query8(int x){
+        TreeMap<Cliente,Integer> ret= new TreeMap<>();
+        TreeSet<ParClienteFloat> res= new TreeSet<>();
+        ArrayList<ParClienteFloat> resultado= new ArrayList<>();
+        Iterator<ParClienteFloat> it=null;
+        int sum,i;
+        for(HashSet<Venda> lVendas : faturacao.getFaturacaoGlobal().getFaturacao().values() ){
+            HashSet<Cliente> aux= new HashSet<>();
+            Cliente aux1=null;
+            for(Venda v : lVendas)
+                aux.add(v.getCliente());
+                
+            aux.forEach(cliente-> {
+                    if (ret.containsKey(cliente))
+                        ret.replace(cliente,ret.get(cliente)+1);
+                    else ret.put(cliente,1);
+            });
+        }
+        ret.forEach((k,v)->
+                res.add(new ParClienteFloat(k,(float)v)));
+       
+        it= res.iterator();
+        i=0;
+        while(i<x){
+            resultado.add(it.next());
+            i++;
+        }
+        return resultado;
+    
+    }
+
+    public ArrayList<ParClienteFloat> query9(String codigoProduto, int x){
+        TreeMap<Cliente,ParFloat> res = new TreeMap<>();
+        TreeSet<ParClienteFloat> ret= new TreeSet<>();
+        Iterator<ParClienteFloat> it=null;
+        ArrayList<ParClienteFloat> resultado= new ArrayList<>();
+        
+        for(Venda v : faturacao.getFaturacaoGlobal().getFaturacaoProduto(new Produto(codigoProduto)))
+            if(res.containsKey(v.getCliente())){
+                res.get(v.getCliente()).addFirst((float)v.getUnidades());
+                res.get(v.getCliente()).addSecond((float)(v.getUnidades()*v.getPreco()));
+            }
+            else res.put(v.getCliente(),new ParFloat((float)v.getUnidades(),(float)(v.getUnidades()*v.getPreco())));
+        res.entrySet().forEach(entry -> ret.add(new ParClienteFloat(entry.getKey(),entry.getValue().getSecond())));
+        
+        it=ret.iterator();
+        int i=0;
+        while(i<x && it.hasNext()){
+            Cliente aux= it.next().getCliente();
+            resultado.add(new ParClienteFloat(aux,res.get(aux).getSecond()));
+            i++;
+        }
+        return resultado;
+ 
+    }    
     
 }

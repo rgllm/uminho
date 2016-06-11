@@ -23,7 +23,7 @@ public class ParProdutoInt implements Comparable<ParProdutoInt>{
     public void setInteiro(int inteiro) {
         this.inteiro = inteiro;
     }
-    // ordena primeiramente por ordem descentente do inteiro e de seguida os Produtos por ordem ascendente
+    /** ordena primeiramente por ordem descentente do inteiro e de seguida os Produtos por ordem ascendente */
     public int compareTo(ParProdutoInt x){
         if(this.inteiro<x.getInteiro())
             return 1;

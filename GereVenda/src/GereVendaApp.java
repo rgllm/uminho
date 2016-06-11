@@ -64,13 +64,13 @@ public class GereVendaApp implements Serializable {
     private static void initApp() {
         try {
             System.out.println("A ler dados...");
-            hip = Hipermercado.lerEstado("hipermercado.data");
+            hip = Hipermercado.lerEstado("hipermercado.dat");
             System.gc();
             
         }
         catch (IOException e) {
             hip = new Hipermercado();
-            System.out.println("Não foi possível carregar os dados!\nO ficheiro hipermercado.data não existe.\n");
+            System.out.println("Não foi possível carregar os dados!\nO ficheiro hipermercado.dat não existe.\n");
         }
         catch (ClassNotFoundException e) {
            hip = new Hipermercado();
@@ -130,11 +130,11 @@ public class GereVendaApp implements Serializable {
             Crono.start();
             resultado=hip.query3(codigoCliente);
             Crono.stop();
-            System.out.println("Mês -> Número compras -> Produtos Comprados -> Valor Total");
+            System.out.println("       Número compras | Produtos Comprados | Valor Total");
             for(int i=0;i<12;i++){
-                System.out.println("Mês: "+ (i+1) + " -> " + 
-                        (int)resultado.get(i).getFirst().getFirst() + " -> " + 
-                        (int)resultado.get(i).getFirst().getSecond() + " -> " + 
+                System.out.println("Mês "+ (i+1) + ":       " + 
+                        (int)resultado.get(i).getFirst().getFirst() + "        |           " + 
+                        (int)resultado.get(i).getFirst().getSecond() + "        | " + 
                         resultado.get(i).getSecond());
             }
             System.out.println("Resultado obtido em " + Crono.print()+"s");
@@ -154,11 +154,11 @@ public class GereVendaApp implements Serializable {
             Crono.start();
             resultado=hip.query4(codigoProduto);
             Crono.stop();
-            System.out.println("Mês -> Número Unidades -> Número Clientes -> Valor Total");
+            System.out.println("       Número Unidades | Número Clientes | Valor Total");
             for(int i=0;i<12;i++){
-                System.out.println("Mês: "+ (i+1) + " -> " + 
-                        (int)resultado.get(i).getFirst().getFirst() + " -> " + 
-                        (int)resultado.get(i).getFirst().getSecond() + " -> " + 
+                System.out.println("Mês "+ (i+1) + " :      " + 
+                        (int)resultado.get(i).getFirst().getFirst() + "                 " + 
+                        (int)resultado.get(i).getFirst().getSecond() + "           " + 
                         resultado.get(i).getSecond());
             }
             System.out.println("Resultado obtido em " + Crono.print()+"s");
@@ -279,12 +279,12 @@ public class GereVendaApp implements Serializable {
         }
         
         System.out.println("\nFaturação total por mês");
-        System.out.println("Mes |  Global     |  Filial 1     |  Filial 2     |  Filial 3  ");
+        System.out.println("Mes     Global        Filial 1        Filial 2        Filial 3  ");
         for(i=0;i<12;i++){
             System.out.println((i+1) + "   " +
                                 res.get(0).get(i) + "   " + 
-                                res.get(1).get(i) + "   " + 
-                                res.get(2).get(i) + "   " + 
+                                res.get(1).get(i) + "    " + 
+                                res.get(2).get(i) + "    " + 
                                 res.get(3).get(i));
         }
         System.out.println("\nClientes por mês");

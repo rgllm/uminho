@@ -32,11 +32,6 @@ public class GereVendaApp implements Serializable {
 
     private static void leituraFicheiros(){
         String ficheiroProdutos,ficheiroClientes;
-        //Mimimum acceptable free memory you think your app needs
-        long minRunningMemory = (1024*1024);
-        Runtime runtime = Runtime.getRuntime();
-        if(runtime.freeMemory()<minRunningMemory)
-         System.gc();
         try{
             clearScreen();
             System.out.print("\nInsira o nome do ficheiro de Produtos: ");

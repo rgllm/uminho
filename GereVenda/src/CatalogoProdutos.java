@@ -1,13 +1,6 @@
 
 import java.util.HashSet;
-import java.util.Objects;
-import java.util.TreeSet;
 
-
-/**
- *
- * @author munybt
- */
 public class CatalogoProdutos implements java.io.Serializable {
     
     private HashSet<Produto> produtos;

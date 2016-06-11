@@ -250,6 +250,15 @@ public class GereVendaApp implements Serializable {
      
     public static void estatisticas1(){
         System.out.println("Nome do Ficheiro de Vendas -> " + ficheiroVendas);
+        System.out.println("Número de Vendas erradas -> " + hip.getVendasErradas());
+        System.out.println("Número total de Produtos -> " + hip.getCatalogoProdutos().getProdutos().size());
+        System.out.println("Número de diferentes produtos comprados");
+        System.out.println("Número de Produtos não comprados");
+        System.out.println("Número total de Clientes -> " + hip.getCatalogoClientes().getClientes().size());
+        System.out.println("Número de Clientes que realizaram compras");
+        System.out.println("Número de Clientes que não realizaram compras");
+        System.out.println("Número de Vendas de valor 0");
+        System.out.println("Faturação Total");
     }
     public static void estatisticas2(){
 

@@ -12,6 +12,8 @@ public class Hipermercado implements java.io.Serializable {
     private Filial vendasFilial1;
     private Filial vendasFilial2;
     private Filial vendasFilial3;
+    private int vendasErradas;
+    
     
     public Hipermercado(){
         this.catalogoProdutos = new CatalogoProdutos();
@@ -20,15 +22,17 @@ public class Hipermercado implements java.io.Serializable {
         this.vendasFilial1 = new Filial();
         this.vendasFilial2 = new Filial();
         this.vendasFilial3 = new Filial();
+        this.vendasErradas = 0;
     }
 
-    public Hipermercado(CatalogoProdutos catalogoProdutos, CatalogoClientes catalogoClientes, Faturacoes faturacao, Filial vendasFilial1, Filial vendasFilial2, Filial vendasFilial3, ArrayList<Integer> comprasMes) {
+    public Hipermercado(CatalogoProdutos catalogoProdutos, CatalogoClientes catalogoClientes, Faturacoes faturacao, Filial vendasFilial1, Filial vendasFilial2, Filial vendasFilial3, ArrayList<Integer> comprasMes, int vendasErradas) {
         this.catalogoProdutos = catalogoProdutos;
         this.catalogoClientes = catalogoClientes;
         this.faturacao = faturacao;
         this.vendasFilial1 = vendasFilial1;
         this.vendasFilial2 = vendasFilial2;
         this.vendasFilial3 = vendasFilial3;
+        this.vendasErradas = vendasErradas;
     }
     
     public Hipermercado(Hipermercado h){
@@ -38,6 +42,7 @@ public class Hipermercado implements java.io.Serializable {
         this.vendasFilial1 = h.getVendasFilial1();
         this.vendasFilial2 = h.getVendasFilial2();
         this.vendasFilial3 = h.getVendasFilial3();
+        this.vendasErradas = h.getVendasErradas();
     }
 
     public CatalogoProdutos getCatalogoProdutos() {
@@ -88,6 +93,15 @@ public class Hipermercado implements java.io.Serializable {
         this.vendasFilial3 = vendasFilial3;
     }
 
+    public int getVendasErradas() {
+        return vendasErradas;
+    }
+
+    public void setVendasErradas(int vendasErradas) {
+        this.vendasErradas = vendasErradas;
+    }
+    
+
     
     /* Leitura das Vendas */
     
@@ -133,6 +147,7 @@ public class Hipermercado implements java.io.Serializable {
                    vendasFilial3.getVendas().add(venda);
                }
             }
+            else vendasErradas++;
             }
         }
         catch(NullPointerException e){

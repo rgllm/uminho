@@ -150,7 +150,6 @@ public class Hipermercado implements java.io.Serializable {
     
     /*Querys*/
     
-    //Falta a ordenação e a impressão em lista
     public TreeSet<Produto> query1(){
         TreeSet<Produto> lista = new TreeSet<>(catalogoProdutos.getProdutos());
         faturacao.getFaturacaoGlobal().getFaturacao().keySet().forEach(p->lista.remove(p));

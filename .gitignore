@@ -1,7 +1,10 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 80ad3e854ddd8e4fe3849d1813ebffbf68a3cfb0
+=======
+>>>>>>> 4fc69963b2d0e4d462afbd3f6d6f20fa2c816646
 # Object files
 *.o
 *.ko
@@ -9,11 +12,14 @@
 *.elf
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 # Binary files
 !/*.*
 
 >>>>>>> 80ad3e854ddd8e4fe3849d1813ebffbf68a3cfb0
+=======
+>>>>>>> 4fc69963b2d0e4d462afbd3f6d6f20fa2c816646
 # Precompiled Headers
 *.gch
 *.pch
@@ -41,6 +47,7 @@
 # Debug files
 *.dSYM/
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 dist
 cabal-dev
@@ -65,3 +72,6 @@ cabal.sandbox.config
 #OSX files
 .DS_STORE
 >>>>>>> 80ad3e854ddd8e4fe3849d1813ebffbf68a3cfb0
+=======
+.DS_STORE
+>>>>>>> 4fc69963b2d0e4d462afbd3f6d6f20fa2c816646

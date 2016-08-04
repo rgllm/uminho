@@ -1,0 +1,73 @@
+\hypertarget{fase1_8c}{}\section{fase1.\+c File Reference}
+\label{fase1_8c}\index{fase1.\+c@{fase1.\+c}}
+{\ttfamily \#include \char`\"{}header.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{fase1_8c_ae7a8dc51221ae93196dfa17b60542b8e}{carregar} (F\+I\+L\+E $\ast$var, \hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$\hyperlink{structtab}{tab})
+\item 
+void \hyperlink{fase1_8c_a5449dae0c0fbfb21a1f115e591b703fd}{colocar} (\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$\hyperlink{structtab}{tab}, char c, int x, int y)
+\item 
+\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} \hyperlink{fase1_8c_a134b4f5fc54fd39c19bc66444409005d}{mostrar} (\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} x)
+\item 
+void \hyperlink{fase1_8c_a4eebea202611d1926cfefcc593e92357}{preencherl} (\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$\hyperlink{structtab}{tab}, int x)
+\item 
+void \hyperlink{fase1_8c_a6c08e03e13ee753d4b36839005f1d1f2}{preencherc} (\hyperlink{header_8h_a82b1e990787e6069a9af95c65a082b67}{T\+A\+B} $\ast$\hyperlink{structtab}{tab}, int y)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{fase1_8c_ae7a8dc51221ae93196dfa17b60542b8e}{}\index{fase1.\+c@{fase1.\+c}!carregar@{carregar}}
+\index{carregar@{carregar}!fase1.\+c@{fase1.\+c}}
+\subsubsection[{carregar}]{\setlength{\rightskip}{0pt plus 5cm}void carregar (
+\begin{DoxyParamCaption}
+\item[{F\+I\+L\+E $\ast$}]{var, }
+\item[{{\bf T\+A\+B} $\ast$}]{tab}
+\end{DoxyParamCaption}
+)}\label{fase1_8c_ae7a8dc51221ae93196dfa17b60542b8e}
+Utilizamos fgets para armazenar a informação inserida no terminal com espaços, sendo posteriormente \char`\"{}processada\char`\"{} por sscanf de forma a (na estrutura tab) indicar o número de linhas e colunas respetivamente.
+
+Introdução do número de segmentos por linha.
+
+Será inserido no elemento de índice i no vetor o valor introduzido anteriormente.
+
+Irá copiar o resto para linha de forma a ser novamente \char`\"{}processado\char`\"{}.
+
+Vai preencher as entradas do tabuleiro consoante a informação dada.
+
+Informação para preencher uma linha do tabuleiro. \hypertarget{fase1_8c_a5449dae0c0fbfb21a1f115e591b703fd}{}\index{fase1.\+c@{fase1.\+c}!colocar@{colocar}}
+\index{colocar@{colocar}!fase1.\+c@{fase1.\+c}}
+\subsubsection[{colocar}]{\setlength{\rightskip}{0pt plus 5cm}void colocar (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+A\+B} $\ast$}]{tab, }
+\item[{char}]{c, }
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}\label{fase1_8c_a5449dae0c0fbfb21a1f115e591b703fd}
+\hypertarget{fase1_8c_a134b4f5fc54fd39c19bc66444409005d}{}\index{fase1.\+c@{fase1.\+c}!mostrar@{mostrar}}
+\index{mostrar@{mostrar}!fase1.\+c@{fase1.\+c}}
+\subsubsection[{mostrar}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+A\+B} mostrar (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+A\+B}}]{x}
+\end{DoxyParamCaption}
+)}\label{fase1_8c_a134b4f5fc54fd39c19bc66444409005d}
+Tal como sugere, quando invocada mostrar imprime no ecrã o tabuleiro. No fim de cada linha é impresso o número de segmentos na mesma e avança de linha.
+
+Imprime sequencialmente o número de segmentos por coluna. \hypertarget{fase1_8c_a6c08e03e13ee753d4b36839005f1d1f2}{}\index{fase1.\+c@{fase1.\+c}!preencherc@{preencherc}}
+\index{preencherc@{preencherc}!fase1.\+c@{fase1.\+c}}
+\subsubsection[{preencherc}]{\setlength{\rightskip}{0pt plus 5cm}void preencherc (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+A\+B} $\ast$}]{tab, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}\label{fase1_8c_a6c08e03e13ee753d4b36839005f1d1f2}
+\hypertarget{fase1_8c_a4eebea202611d1926cfefcc593e92357}{}\index{fase1.\+c@{fase1.\+c}!preencherl@{preencherl}}
+\index{preencherl@{preencherl}!fase1.\+c@{fase1.\+c}}
+\subsubsection[{preencherl}]{\setlength{\rightskip}{0pt plus 5cm}void preencherl (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+A\+B} $\ast$}]{tab, }
+\item[{int}]{x}
+\end{DoxyParamCaption}
+)}\label{fase1_8c_a4eebea202611d1926cfefcc593e92357}
+Vai substituir \textquotesingle{}.\textquotesingle{} por \textquotesingle{}$\sim$\textquotesingle{} numa linha. 

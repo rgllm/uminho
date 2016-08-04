@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Object files
 *.o
 *.ko
@@ -30,3 +31,22 @@
 
 # Debug files
 *.dSYM/
+=======
+dist
+cabal-dev
+*.o
+*.hi
+*.chi
+*.chs.h
+*.dyn_o
+*.dyn_hi
+.hpc
+.hsenv
+.cabal-sandbox/
+cabal.sandbox.config
+*.prof
+*.aux
+*.hp
+.stack-work/
+.DS_STORE
+>>>>>>> 1a7a0436e3a532dbef803abecdd0ced3c01fc273

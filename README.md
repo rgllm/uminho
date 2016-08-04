@@ -31,4 +31,4 @@ If you're a Computer Engineering student looking at this, the projects will *pro
 * [Samuel Ferreira](https://github.com/munybt)
 * [Gustavo Andrez](https://github.com/Gandrez)
 * [Diogo Silva](https://github.com/tiagoddinis)
-* And a special thanks to [Fernando Mendes](https://github.com/frmendes) for the inspiration to create this repo and
+* And a special thanks to [Fernando Mendes](https://github.com/frmendes) for the inspiration to create this repo.

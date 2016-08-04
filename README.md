@@ -23,7 +23,7 @@ If you're a Computer Engineering student looking at this, the projects will *pro
     - [Object Oriented Programming](https://github.com/rgllm/uminho/tree/master/02/POO) - a real estate app done in Java.
     - [Operating Systems](https://github.com/rgllm/uminho/tree/master/02/SO) - backup solution done in C.
 
-3rd year is waiting for me...
+* **3rd year is waiting for me...**
 
 ## Contributors
 
@@ -31,4 +31,4 @@ If you're a Computer Engineering student looking at this, the projects will *pro
 * [Samuel Ferreira](https://github.com/JoRod94)
 * [Gustavo Andrez](https://github.com/prccaraujo)
 * [Diogo Silva](https://github.com/tiagoddinis)
-* And a special thanks to [Fernando Mendes](https://github.com/frmendes) for the inspiration to create this repo.
+* And a special thanks to [Fernando Mendes](https://github.com/frmendes) for the inspiration to create this repo and

@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+ <html xmlns='http://www.w3.org/1999/xhtml'>
+ <head> <meta http-equiv='X-UA-Compatible' content='chrome=1' />
+ <meta http-equiv='Content-Type' content='text/html;charset=utf-8' />
+ <title> Tabuleiro e Robot </title>
+ <script type='text/javascript' src='http://www.x3dom.org/release/x3dom.js'></script>
+ <link rel='stylesheet' type='text/css' href='http://www.x3dom.org/release/x3dom.css'/>
+ </head> <body>
+ <X3D width='500px' height='500px'>
+ <scene>
+
+<transform DEF = 'Robot'>
+<transform scale='1 1 1'>
+<transform translation='0 1.4 0'  scale='0.8 0.7 .7'> 
+<shape>
+<appearance>
+<material diffuseColor='0.7 0.7 0.7'>
+</appearance>
+<sphere></sphere> 
+</shape>
+</transform>
+<transform translation='0 0 0' rotation='0 0 1 3.2' scale='1 1 1'>
+<shape>
+<appearance>
+<material diffuseColor='0.7 0.7 0.7'>
+</appearance>
+<sphere></sphere> 
+</shape>
+</transform>
+
+
+
+<transform translation='0 2.5 0.2' rotation='0 0 0 0' scale='.1 .1 .1'>
+<shape>
+<appearance>
+<material diffuseColor='1 1 1'>
+</appearance>
+<sphere></sphere> 
+</shape>
+</transform>
+
+
+
+<transform translation='0 2.3 0.2' rotation='0 0 0 0' scale='0.03 0.3 0.03'>
+<shape>
+<appearance>
+<material diffuseColor='0.7 0.7 0.7'>
+</appearance>
+<sphere></sphere> 
+</shape>
+</transform>
+
+
+<transform translation='-.3 1.4 .7' scale='.15 .15 .05'>
+<shape>
+<appearance>
+<material diffuseColor='1 1 1'></material>
+</appearance>
+<sphere></sphere>
+</shape>
+</transform>
+<transform translation='.3 1.4 .7' scale='.15 .15 .05'>
+<shape>
+<appearance>
+<material diffuseColor='1 1 1'></material>
+</appearance>
+<sphere></sphere>
+</shape>
+</transform>
+<transform translation='0 1.1 .71' scale='.2 .075 0'>
+<shape>
+<appearance>
+<material diffuseColor='1 1 1'></material>
+</appearance>
+<sphere></sphere>
+</shape>
+</transform>
+
+
+</Scene>
+</X3D>
+</body></html>

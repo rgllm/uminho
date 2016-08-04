@@ -2,6 +2,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 80ad3e854ddd8e4fe3849d1813ebffbf68a3cfb0
 =======
@@ -50,12 +51,15 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> da1aef2f5b5009f5369d5052bfb2d1744477c485
 dist
 cabal-dev
 *.o
 *.hi
 *.chi
 *.chs.h
+<<<<<<< HEAD
 *.dyn_o
 *.dyn_hi
 .hpc
@@ -97,3 +101,10 @@ hs_err_pid*
 *.ctxt
 *.class
 >>>>>>> 7144b43ea1f32cc24691dd73c61136b69ba44745
+=======
+.virtualenv
+.hsenv
+.cabal-sandbox/
+cabal.sandbox.config
+cabal.config
+>>>>>>> da1aef2f5b5009f5369d5052bfb2d1744477c485

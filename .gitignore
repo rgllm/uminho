@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 80ad3e854ddd8e4fe3849d1813ebffbf68a3cfb0
 =======
@@ -75,3 +76,24 @@ cabal.sandbox.config
 =======
 .DS_STORE
 >>>>>>> 4fc69963b2d0e4d462afbd3f6d6f20fa2c816646
+=======
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+#Mac files
+.DS_STORE
+
+#BlueJ files
+*.ctxt
+*.class
+>>>>>>> 7144b43ea1f32cc24691dd73c61136b69ba44745

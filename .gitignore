@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 80ad3e854ddd8e4fe3849d1813ebffbf68a3cfb0
 =======
@@ -81,6 +82,8 @@ cabal.sandbox.config
 .DS_STORE
 >>>>>>> 4fc69963b2d0e4d462afbd3f6d6f20fa2c816646
 =======
+=======
+>>>>>>> 0834347a65ca525f63e6c80373a323905c326875
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -90,10 +93,18 @@ cabal.sandbox.config
 *.jar
 *.war
 *.ear
+<<<<<<< HEAD
+=======
+*.ctxt
+*.package
+*.class
+*.bluej
+>>>>>>> 0834347a65ca525f63e6c80373a323905c326875
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+<<<<<<< HEAD
 #Mac files
 .DS_STORE
 
@@ -108,3 +119,21 @@ hs_err_pid*
 cabal.sandbox.config
 cabal.config
 >>>>>>> da1aef2f5b5009f5369d5052bfb2d1744477c485
+=======
+#OSX Files
+.DS_STORE
+/code/nbproject/private/
+/src/GereVenda/nbproject/private/
+/src/GereVenda/build/
+/src/AnagramGame/nbproject/private/
+Vendas_1M.txt
+Vendas_3M.txt
+Vendas_5M.txt
+Produtos.txt
+Clientes.txt
+/GereVenda/dist/
+hipermercado.1m
+hipermercado.3m
+hipermercado.5m
+hipermercado.dat
+>>>>>>> 0834347a65ca525f63e6c80373a323905c326875

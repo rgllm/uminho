@@ -1,23 +1,24 @@
-# Battleship-Game
-Battleship Game
+Battleship Solver Game
+===========
 
 Computer labs 2 project (UMinho/LEI - 1 ano)
 
-Autor
+Authors
+-----
 
-Rogério Gomes Lopes Moreira (74634)
-Samuel Ferreira
-Diogo Silva
+* Rogério Moreira
+* Samuel Ferreira
 
 General information
+----------------
 
-Some information about Battleship game:
+Some information about Battleship:
 
-Wikipedia - https://en.wikipedia.org/wiki/Battleship_(game)
+* Wikipedia - https://en.wikipedia.org/wiki/Battleship_(game)
 
-Battleship Solving Guide - http://www.gamesmagazine-online.com/art/BtlshipSolvGuide.pdf
+* Battleship Solving Guide - http://www.gamesmagazine-online.com/art/BtlshipSolvGuide.pdf
 
-Code Makefile Flags:
+Makefile Flags
+--------
 
-Wall, Wextra, ansi, pedantic and O2
-
+* Wall, Wextra, ansi, pedantic and O2

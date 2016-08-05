@@ -1,7 +1,7 @@
 Efficient Backup
 ===========
 
-Operating Systems project (UMinho/LEI - 2 ano)
+Operating Systems project (UMinho/MIEI - 2 ano)
 
 Authors
 -----
@@ -13,9 +13,8 @@ Authors
 General information
 ----------------
 
-
-All the information is available in docs.
-Sobusrv needs to be executed while backup files.
+* All the information is available in docs.
+* Sobusrv needs to be executed while backup files.
 
 
 Makefile

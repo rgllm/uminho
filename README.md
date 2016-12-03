@@ -23,7 +23,8 @@ If you're a Computer Engineering student looking at this, the projects will *pro
     - [Object Oriented Programming](https://github.com/rgllm/uminho/tree/master/02/POO) - a real estate app done in Java.
     - [Operating Systems](https://github.com/rgllm/uminho/tree/master/02/SO) - backup solution done in C.
 
-* **3rd year is waiting for me...**
+* **3rd year**:
+    - [Software Labs III](https://github.com/rgllm/uminho/tree/master/03/BD/mysql)  - a database for train reservations done in MySQL.
 
 ## Contributors
 

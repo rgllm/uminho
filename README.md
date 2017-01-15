@@ -1,4 +1,4 @@
-# UMinho
+ UMinho
 
 ![uminho](http://www4.di.uminho.pt/~jmf/IMAGES/um_eeng.gif)
 
@@ -25,6 +25,7 @@ If you're a Computer Engineering student looking at this, the projects will *pro
 
 * **3rd year**:
     - [Databases](https://github.com/rgllm/uminho/tree/master/03/BD/mysql)  - a database for train reservations done in MySQL.
+    - [Software Systems Development](https://github.com/rgllm/uminho/tree/master/03/DSS/) - a program to split bills
 
 ## Contributors
 

@@ -27,6 +27,7 @@ If you're a Computer Engineering student looking at this, the projects will *pro
     - [Databases](https://github.com/rgllm/uminho/tree/master/03/BD/mysql)  - a database for train reservations done in MySQL.
     - [Software Systems Development](https://github.com/rgllm/uminho/tree/master/03/DSS/) - a program to split bills
     - [Distributed Systems](https://github.com/rgllm/uminho/tree/master/03/SD) - auction software.
+
 ## Contributors
 
 * [Rogério Moreira](https://github.com/rgllm)

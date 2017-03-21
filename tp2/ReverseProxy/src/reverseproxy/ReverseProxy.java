@@ -9,19 +9,19 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ReverseProxy {
-
-    /**
-     * @param args the command line arguments
-     */
+    HashMap<String,BackendInfo> infoBackends= new HashMap<>();
+    
     public static void main(String args[]) throws Exception
       {
             DatagramSocket serverSocket = new DatagramSocket(5555);
             byte[] receiveData = new byte[1024];
             byte[] sendData = new byte[1024];
+            
             while(true)
                {
                   DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);

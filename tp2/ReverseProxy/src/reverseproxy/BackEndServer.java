@@ -20,13 +20,7 @@ public class BackEndServer {
       byte[] sendData = new byte[1024];
       byte[] receiveData = new byte[1024];
       InetAddress IPAddress = InetAddress.getByName("localhost");
-      boolean ocupado=false;
-      // -> criar nova thread(ocupado) para executar o seguinte codigo
-      //        DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-      //        clientSocket.receive(receivePacket);
-      //        String modifiedSentence = new String(receivePacket.getData());
-      //        System.out.println("FROM SERVER:" + modifiedSentence);
-      Beeper b=new Beeper(ocupado,clientSocket,IPAddress);
+      Beeper b=new Beeper(clientSocket,IPAddress);
       b.start();
       b.join();
       clientSocket.close();

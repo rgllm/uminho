@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package reverseproxy;
 
 import java.io.IOException;
@@ -14,22 +10,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Beeper extends Thread {
-   boolean ocupado;
-   byte[] sendData;
+   byte[] data;
    DatagramSocket clientSocket;
    InetAddress ipAddress;
    
-   public Beeper(boolean oc, DatagramSocket cs,InetAddress ip){
-       ocupado=oc;
+   public Beeper(DatagramSocket cs,InetAddress ip){
        clientSocket=cs;
-       sendData = new byte[1024];
+       data = new byte[1024];
        ipAddress=ip;
    }
     public void run(){
-        while(!ocupado){
+        while(true){
             try {
-                sendData = "HELLO".getBytes();
-                DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ipAddress, 5555);
+                data = "HELLO".getBytes();
+                DatagramPacket sendPacket = new DatagramPacket(data, data.length, ipAddress, 5555);
                 clientSocket.send(sendPacket);
                 sleep(1000);
             } catch (Exception ex) {

@@ -13,29 +13,20 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ReverseProxy {
-    HashMap<String,BackendInfo> infoBackends= new HashMap<>();
-    
+public class ReverseProxy {    
     public static void main(String args[]) throws Exception
       {
-            DatagramSocket serverSocket = new DatagramSocket(5555);
             byte[] receiveData = new byte[1024];
             byte[] sendData = new byte[1024];
-            
-            while(true)
-               {
-                  DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-                  serverSocket.receive(receivePacket);
-                  String sentence = new String( receivePacket.getData());
-                  System.out.println("RECEIVED: " + sentence + "\n" + 
-                                     "socket:" + receivePacket.getSocketAddress()+ "\n");
-                  InetAddress IPAddress = receivePacket.getAddress();
-                  int port = receivePacket.getPort();
-                  String capitalizedSentence = sentence.toUpperCase();
-                  sendData = capitalizedSentence.getBytes();
-                  DatagramPacket sendPacket =new DatagramPacket(sendData, sendData.length, IPAddress, port);
-                  //serverSocket.send(sendPacket);
-               }
+            DatagramSocket serverSocket = new DatagramSocket(5555);
+            HashMap<String,BackendInfo> infoBackends= new HashMap<>();  // a cada ip está associado um BackendInfo
+            Listener l=new Listener(infoBackends,serverSocket);
+            ProbeSender ps=new ProbeSender(infoBackends,serverSocket);
+            l.start();
+            ps.start();
+            l.join();
+            ps.join();
+               
             // inicializar uma estrutura de dados para guardar dados estatisticos das conexões
             // que vão ser úteis para a escolha do servidor backend ao qual enviar o pedido
             

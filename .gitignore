@@ -13,3 +13,5 @@ hs_err_pid*
 
 #macOS files
 .DS_STORE
+/tp2/ReverseProxy/nbproject/private/
+/tp2/ReverseProxy/build/

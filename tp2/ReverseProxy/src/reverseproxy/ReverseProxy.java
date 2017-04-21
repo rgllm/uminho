@@ -16,8 +16,6 @@ import java.util.logging.Logger;
 public class ReverseProxy {    
     public static void main(String args[]) throws Exception
       {
-            byte[] receiveData = new byte[1024];
-            byte[] sendData = new byte[1024];
             DatagramSocket serverSocket = new DatagramSocket(5555);
             HashMap<String,BackendInfo> infoBackends= new HashMap<>();  // a cada ip está associado um BackendInfo
             Listener l=new Listener(infoBackends,serverSocket);

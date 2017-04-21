@@ -22,6 +22,7 @@ class Listener extends Thread{
         byte[] data = new byte[1024];
         while(true){
             try {
+                System.out.println(infoBackends.toString());
                 DatagramPacket pacote = new DatagramPacket(data, data.length);
                 serverSocket.receive(pacote);
                 String address=pacote.getAddress().toString().substring(1);

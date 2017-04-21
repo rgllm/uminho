@@ -31,7 +31,7 @@ class ProbeSender extends Thread{
                 synchronized(infoBackends){
                     for(String beServer : infoBackends.keySet()){
                         InetAddress IPAddress = InetAddress.getByName(beServer);
-                        data = "diz-me coisas".getBytes();
+                        data = "Probe: ".getBytes();
                         DatagramPacket sendPacket =new DatagramPacket(data, data.length, IPAddress, 5555);
                         String resposta="";
                         DatagramPacket receivePacket = new DatagramPacket(data, data.length);

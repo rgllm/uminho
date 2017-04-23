@@ -15,6 +15,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Utils.*;
+import java.util.Random;
+
 
 class ProbeSender extends Thread{
     HashMap<String,BackendInfo> infoBackends;
@@ -30,30 +33,36 @@ class ProbeSender extends Thread{
                 sleep(1000);
                 synchronized(infoBackends){
                     for(String beServer : infoBackends.keySet()){
+                        System.out.println("PS: vou enviar probe request para o "+beServer);
                         InetAddress IPAddress = InetAddress.getByName(beServer);
-                        data = "Probe: ".getBytes();
+                        int seq=new Random().nextInt();
+                        data = ("Probe: "+seq).getBytes();
                         DatagramPacket sendPacket =new DatagramPacket(data, data.length, IPAddress, 5555);
-                        String resposta="";
+                        PDU resposta=new PDU(-1,-1,InetAddress.getByName("localhost")); // acho que e preciso mudar isto
                         DatagramPacket receivePacket = new DatagramPacket(data, data.length);
                         boolean timeout=false;
                         serverSocket.send(sendPacket);
                         Date antes = new Date();
-                        while(!( resposta.startsWith("sou o") && receivePacket.getAddress().equals(IPAddress) )){
+                        do{
                             receivePacket = new DatagramPacket(data, data.length);
                             serverSocket.receive(receivePacket);
-                            resposta = new String( receivePacket.getData());
+                            Serializer s= new Serializer();
+                            System.out.println("----------------------"+resposta.getSeq());
+                            data=receivePacket.getData();
+                            String message=new String(data);
+                            if(!(message.equals("HELLO") || message.startsWith("Probe")))
+                                resposta = (PDU)s.deserialize(data);
                             if((new Date().getTime() - antes.getTime()) > 2000){
                                 timeout=true;
                                 break;
                             }
-                        }
+                        }while(resposta.getSeq()!=seq);
                         if(!timeout){
                             float rtt=new Date().getTime() - antes.getTime();
                             infoBackends.get(beServer).atualizaRTT(rtt);
-                            // analisar a resposta para atualizar o numero de conexões ativas
-                            System.out.println(resposta);
+                            infoBackends.get(beServer).setConexoesAtivas(resposta.getnConexoes());
+                            System.out.println("PS: recebi resposta do " + beServer + "\n\trtt: " + rtt + " ; numero de conexoes ativas : " + resposta.getnConexoes() );
                         }
-
                     }
                 }
             }

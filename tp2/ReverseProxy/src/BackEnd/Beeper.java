@@ -25,7 +25,7 @@ public class Beeper extends Thread {
                 data = "HELLO".getBytes();
                 DatagramPacket sendPacket = new DatagramPacket(data, data.length, ipAddress, 5555);
                 clientSocket.send(sendPacket);
-                sleep(1000);
+                sleep(7000);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

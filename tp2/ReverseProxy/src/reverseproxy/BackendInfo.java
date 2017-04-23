@@ -18,6 +18,10 @@ class BackendInfo {
     public InetAddress getIp() {
         return ip;
     }
+    
+    public String getIpString() {
+        return ip.toString().substring(1);
+    }
 
     public void setIp(InetAddress ip) {
         this.ip = ip;
@@ -30,6 +34,32 @@ class BackendInfo {
     public void atualizaRTT(float medicaoRTT){
         somaRTTs+=medicaoRTT;
         medicoesRTT++;
-    } 
+    }
+
+    public int getConexoesAtivas() {
+        return conexoesAtivas;
+    }
+
+    public void setConexoesAtivas(int conexoesAtivas) {
+        this.conexoesAtivas = conexoesAtivas;
+    }
+
+    public int getMedicoesRTT() {
+        return medicoesRTT;
+    }
+
+    public void setMedicoesRTT(int medicoesRTT) {
+        this.medicoesRTT = medicoesRTT;
+    }
+
+    public float getSomaRTTs() {
+        return somaRTTs;
+    }
+
+    public void setSomaRTTs(float somaRTTs) {
+        this.somaRTTs = somaRTTs;
+    }
+    
+    
     
 }

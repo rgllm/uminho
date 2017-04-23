@@ -8,6 +8,7 @@ package reverseproxy;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.util.HashMap;
 
 
@@ -19,23 +20,35 @@ class Listener extends Thread{
         serverSocket=ss;   
     }
     public void run(){
-        byte[] data = new byte[1024];
         while(true){
             try {
-                System.out.println(infoBackends.toString());
+                sleep(3000);
+                byte[] data = new byte[1024];
+                printInfoBackends();
                 DatagramPacket pacote = new DatagramPacket(data, data.length);
                 serverSocket.receive(pacote);
-                String address=pacote.getAddress().toString().substring(1);
+                InetAddress ia=pacote.getAddress();
+                String address=ia.toString().substring(1);
                 String message=new String(pacote.getData());
-                System.out.println(message);
-                if(message.equals("HELLO") && !infoBackends.containsKey(address))
-                    System.out.println("----");
+                System.out.println("LISTENER recebeu : '" +message+"'");
+                if(message.startsWith("HELLO") && !infoBackends.containsKey(address)){
+                    BackendInfo bi=new BackendInfo(ia);
+                    System.out.println("LISTENER: vai adicionar um novo backend à tabela -- "+address);
                     synchronized(infoBackends){
-                        infoBackends.put(address,new BackendInfo(pacote.getAddress()));
+                        infoBackends.put(address,bi);
                     }
+                }
+                
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
+    }
+    
+    private void printInfoBackends(){
+        System.out.println("LISTENER : infoBackends ");
+        for(BackendInfo bi : infoBackends.values())
+            System.out.println("\tip:"+bi.getIpString()+" #medicoes:"+bi.getMedicoesRTT()+" somaRTTs:"+bi.getSomaRTTs()+" #conexoesAtivas:"+bi.getConexoesAtivas());
+        System.out.println("");
     }
 }

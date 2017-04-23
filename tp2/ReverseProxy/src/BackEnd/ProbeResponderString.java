@@ -12,11 +12,11 @@ import Utils.*;
 
 
 
-public class ProbeResponder extends Thread {
+public class ProbeResponderString extends Thread {
     DatagramSocket cs;
     InetAddress ip;
     
-    public ProbeResponder(DatagramSocket clientSocket,InetAddress ipAddress){
+    public ProbeResponderString(DatagramSocket clientSocket,InetAddress ipAddress){
        cs=clientSocket;
        ip=ipAddress;
     }
@@ -32,17 +32,16 @@ public class ProbeResponder extends Thread {
                 // reponder alguma coisa?
             }
             else{
-                responde(new PDU(seq,nConexoes,ip));
+                responde(""+seq+","+nConexoes);
             }
         }
     }
     // responde(string resposta) retorna true em caso de sucesso ou falso caso contrário 
-    private boolean responde(PDU resposta){
+    private boolean responde(String resposta){
         byte[] data;
         data = new byte[1024];
         try {
-            Serializer s=new Serializer();
-            data =s.serialize(resposta);
+            data=resposta.getBytes();
             DatagramPacket pacote =new DatagramPacket(data, data.length, ip, 5555);
             cs.send(pacote);
             return true;
@@ -59,16 +58,22 @@ public class ProbeResponder extends Thread {
         
         try {
             cs.receive(pacote);
+                        System.out.println("PROBE RESPONDER");
+
             // FALTA: Certificar que o pacote vem do reverse proxy e que a mensagem tem a sintaxe correta
             String pedido=new String(pacote.getData());
-            System.out.println("PR: recebi um probe request :\n\t\t\t"+pedido);
-            int seq=Integer.parseInt(pedido.split(" ")[1]);
-            return seq;
+            if(pedido.startsWith("Probe: ")){
+                System.out.println("PR: recebi um probe request :\n\t\t\t"+pedido);
+                String []arr=pedido.split(" ");
+                int seq=Integer.parseInt(arr[1]);
+                return seq;
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
             // o que retornar nesta situação?
-            return recebePedido();
         }
+        return recebePedido();
+
     }
     
 }

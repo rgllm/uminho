@@ -19,7 +19,7 @@ public class ReverseProxy {
             DatagramSocket serverSocket = new DatagramSocket(5555);
             HashMap<String,BackendInfo> infoBackends= new HashMap<>();  // a cada ip está associado um BackendInfo
             Listener l=new Listener(infoBackends,serverSocket);
-            ProbeSender ps=new ProbeSender(infoBackends,serverSocket);
+            ProbeSenderString ps=new ProbeSenderString(infoBackends,serverSocket);
             l.start();
             ps.start();
             l.join();

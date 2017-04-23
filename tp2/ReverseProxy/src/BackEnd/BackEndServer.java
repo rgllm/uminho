@@ -21,7 +21,7 @@ public class BackEndServer {
       byte[] receiveData = new byte[1024];
       InetAddress IPAddress = InetAddress.getByName("localhost");
       Beeper b=new Beeper(clientSocket,IPAddress);
-      ProbeResponder p= new ProbeResponder(clientSocket,IPAddress);
+      ProbeResponderString p= new ProbeResponderString(clientSocket,IPAddress);
       b.start();
       p.start();
       b.join();

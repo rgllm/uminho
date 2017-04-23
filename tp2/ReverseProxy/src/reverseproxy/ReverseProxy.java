@@ -10,16 +10,19 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.HashMap;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ReverseProxy {    
     public static void main(String args[]) throws Exception
       {
-            DatagramSocket serverSocket = new DatagramSocket(5555);
+            ServerSocket serverSocket = new ServerSocket();
             HashMap<String,BackendInfo> infoBackends= new HashMap<>();  // a cada ip está associado um BackendInfo
-            Listener l=new Listener(infoBackends,serverSocket);
-            ProbeSenderString ps=new ProbeSenderString(infoBackends,serverSocket);
+            byte []data=new byte[0];
+            Pacote probeResponse=new Pacote(new DatagramPacket(data, data.length, InetAddress.getByName("0.0.0.0"), 1000));
+            Listener l=new Listener(infoBackends,serverSocket,probeResponse);
+            ProbeSenderString ps=new ProbeSenderString(infoBackends,serverSocket,probeResponse);
             l.start();
             ps.start();
             l.join();

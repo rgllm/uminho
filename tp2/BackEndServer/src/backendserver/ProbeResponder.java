@@ -25,6 +25,7 @@ public class ProbeResponder extends Thread {
         int seq;
         int nConexoes;
         while(true){
+            System.out.println("PR: vou receberum pedido");
             seq=recebePedido();
             nConexoes=0; //NOTA: so pode ser feito na fase 2
             if(seq==-1){
@@ -32,6 +33,7 @@ public class ProbeResponder extends Thread {
                 // reponder alguma coisa?
             }
             else{
+                System.out.println("PR: vou responder ao pedido com numero de sequencia "+seq);
                 responde(new PDU(seq,nConexoes,ip));
             }
         }
@@ -61,8 +63,9 @@ public class ProbeResponder extends Thread {
             cs.receive(pacote);
             // FALTA: Certificar que o pacote vem do reverse proxy e que a mensagem tem a sintaxe correta
             String pedido=new String(pacote.getData());
-            System.out.println("PR: recebi um probe request :\n\t\t\t"+pedido);
-            int seq=Integer.parseInt(pedido.split(" ")[1]);
+            System.out.println("PR: recebi um probe request :\n\t\t"+pedido);
+            String []arr=pedido.split(" ");
+            int seq=Integer.parseInt(arr[2]);
             return seq;
         } catch (IOException ex) {
             ex.printStackTrace();

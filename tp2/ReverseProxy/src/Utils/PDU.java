@@ -11,7 +11,7 @@ public class PDU {
     
     public PDU(int s, int nc, InetAddress ip){
         seq=s;
-        nConexoes=s;
+        nConexoes=nc;
         this.ip=ip;
     }
 

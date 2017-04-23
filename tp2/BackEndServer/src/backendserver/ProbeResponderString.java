@@ -32,7 +32,7 @@ public class ProbeResponderString extends Thread {
                 // reponder alguma coisa?
             }
             else{
-                responde(""+seq+","+nConexoes);
+                while(!responde(""+seq+","+nConexoes)){};
             }
         }
     }
@@ -53,19 +53,18 @@ public class ProbeResponderString extends Thread {
     
     private int recebePedido(){
         byte[] data;
+        int seq;
         data = new byte[1024];
         DatagramPacket pacote = new DatagramPacket(data, data.length);
         
         try {
             cs.receive(pacote);
-                        System.out.println("PROBE RESPONDER");
-
             // FALTA: Certificar que o pacote vem do reverse proxy e que a mensagem tem a sintaxe correta
             String pedido=new String(pacote.getData());
             if(pedido.startsWith("Probe: ")){
                 System.out.println("PR: recebi um probe request :\n\t\t\t"+pedido);
                 String []arr=pedido.split(" ");
-                int seq=Integer.parseInt(arr[1]);
+                seq=Integer.parseInt(arr[1].trim());
                 return seq;
             }
         } catch (IOException ex) {

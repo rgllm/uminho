@@ -16,16 +16,16 @@ public class BackEndServer {
     public static void main(String args[]) throws Exception
    {
       //BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-      DatagramSocket clientSocket = new DatagramSocket();
+      DatagramSocket beSocket = new DatagramSocket(5555);
       byte[] sendData = new byte[1024];
       byte[] receiveData = new byte[1024];
-      InetAddress IPAddress = InetAddress.getByName("localhost");
-      Beeper b=new Beeper(clientSocket,IPAddress);
-      ProbeResponderString p= new ProbeResponderString(clientSocket,IPAddress);
+      InetAddress IPAddress = InetAddress.getByName("10.0.0.1");
+      Beeper b=new Beeper(beSocket,IPAddress);
+      ProbeResponderString p= new ProbeResponderString(beSocket,IPAddress);
       b.start();
       p.start();
       b.join();
       p.join();
-      clientSocket.close();
+      beSocket.close();
    }
 }

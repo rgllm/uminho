@@ -16,3 +16,5 @@ hs_err_pid*
 /tp2/ReverseProxy/nbproject/private/
 /tp2/ReverseProxy/build/
 /tp2/ReverseProxy/dist/
+/tp2/BackEndServer/build/
+/tp2/BackEndServer/dist/

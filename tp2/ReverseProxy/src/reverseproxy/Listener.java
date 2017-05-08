@@ -13,10 +13,10 @@ import java.util.HashMap;
 
 
 class Listener extends Thread{
-    private ServerSocket serverSocket;
+    private UDPServerSocket serverSocket;
     private HashMap<String,BackendInfo> infoBackends;
     private Pacote probeResponse;
-    public Listener(HashMap<String,BackendInfo> ib , ServerSocket ss , Pacote pr){
+    public Listener(HashMap<String,BackendInfo> ib , UDPServerSocket ss , Pacote pr){
         infoBackends=ib;
         serverSocket=ss;   
         probeResponse=pr;
@@ -32,10 +32,10 @@ class Listener extends Thread{
                 String message=new String(pacote.getData());
                 System.out.println("LISTENER recebeu : '" +message+"' \n");
                 if(message.trim().equals("HELLO")){
-                    if( !infoBackends.containsKey(address)){
-                        BackendInfo bi=new BackendInfo(ia);
-                        System.out.println("LISTENER: vai adicionar um novo backend à tabela -- "+address+ "\n");
-                        synchronized(infoBackends){
+                    synchronized(infoBackends){
+                        if( !infoBackends.containsKey(address)){
+                            BackendInfo bi=new BackendInfo(ia);
+                            System.out.println("LISTENER: vai adicionar um novo backend à tabela -- "+address+ "\n");
                             infoBackends.put(address,bi);  // devia meter synchronized aqui, mas da DeadLock
                         }
                     }

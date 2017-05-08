@@ -7,12 +7,17 @@ class BackendInfo {
     private int medicoesRTT;  //número de probes que já foram feitos a este bakend server
     private float somaRTTs;
     private int conexoesAtivas;
+    private int nPerdas;
+    private int perdasConsecutivas;
     
     public BackendInfo(InetAddress ip){
         this.ip = ip;
         medicoesRTT=0;
         somaRTTs=0;
         this.conexoesAtivas = -1;
+        nPerdas=0;
+        perdasConsecutivas=0;
+        
     }
     
     public InetAddress getIp() {
@@ -59,7 +64,53 @@ class BackendInfo {
     public void setSomaRTTs(float somaRTTs) {
         this.somaRTTs = somaRTTs;
     }
+
+    public int getnPerdas() {
+        return nPerdas;
+    }
     
+    public void incrementnPerdas() {
+        nPerdas++;
+    }
+
+    public void setnPerdas(int nPerdas) {
+        this.nPerdas = nPerdas;
+    }
+
+    public int getPerdasConsecutivas() {
+        return perdasConsecutivas;
+    }
     
+    public float getTaxaPerdas(){
+        return nPerdas/(medicoesRTT+nPerdas);
+    }
     
+    public void incrementPerdasConsecutivas() {
+        perdasConsecutivas++;
+    }
+
+    public void setPerdasConsecutivas(int perdasConsecutivas) {
+        this.perdasConsecutivas = perdasConsecutivas;
+    }
+    
+    public int compare(BackendInfo b1, BackendInfo b2) {
+        if(b1.getConexoesAtivas() < b2.getConexoesAtivas())
+            return -1;
+        if(b1.getConexoesAtivas() > b2.getConexoesAtivas())
+            return 1;
+        
+        if(b1.getMediaRTT() < b2.getMediaRTT())
+            return -1;
+        if(b1.getMediaRTT() > b2.getMediaRTT())
+            return 1;
+        
+        if(b1.getTaxaPerdas() < b2.getTaxaPerdas())
+            return -1;
+        if(b1.getTaxaPerdas()> b2.getTaxaPerdas())
+            return 1;
+        
+        return 0;
+        
+    }
 }
+

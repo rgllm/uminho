@@ -12,11 +12,11 @@ import Utils.*;
 
 
 
-public class ProbeResponder extends Thread {
+public class MonitorUDP extends Thread {
     DatagramSocket cs;
     InetAddress ip;
     
-    public ProbeResponder(DatagramSocket clientSocket,InetAddress ipAddress){
+    public MonitorUDP(DatagramSocket clientSocket,InetAddress ipAddress){
        cs=clientSocket;
        ip=ipAddress;
     }
@@ -25,7 +25,6 @@ public class ProbeResponder extends Thread {
         int seq;
         int nConexoes;
         while(true){
-            System.out.println("PR: vou receberum pedido");
             seq=recebePedido();
             nConexoes=0; //NOTA: so pode ser feito na fase 2
             if(seq==-1){
@@ -33,18 +32,16 @@ public class ProbeResponder extends Thread {
                 // reponder alguma coisa?
             }
             else{
-                System.out.println("PR: vou responder ao pedido com numero de sequencia "+seq);
-                responde(new PDU(seq,nConexoes,ip));
+                while(!responde(""+seq+","+nConexoes)){};
             }
         }
     }
     // responde(string resposta) retorna true em caso de sucesso ou falso caso contrário 
-    private boolean responde(PDU resposta){
+    private boolean responde(String resposta){
         byte[] data;
         data = new byte[1024];
         try {
-            Serializer s=new Serializer();
-            data =s.serialize(resposta);
+            data=resposta.getBytes();
             DatagramPacket pacote =new DatagramPacket(data, data.length, ip, 5555);
             cs.send(pacote);
             return true;
@@ -56,6 +53,7 @@ public class ProbeResponder extends Thread {
     
     private int recebePedido(){
         byte[] data;
+        int seq;
         data = new byte[1024];
         DatagramPacket pacote = new DatagramPacket(data, data.length);
         
@@ -63,15 +61,18 @@ public class ProbeResponder extends Thread {
             cs.receive(pacote);
             // FALTA: Certificar que o pacote vem do reverse proxy e que a mensagem tem a sintaxe correta
             String pedido=new String(pacote.getData());
-            System.out.println("PR: recebi um probe request :\n\t\t"+pedido);
-            String []arr=pedido.split(" ");
-            int seq=Integer.parseInt(arr[2]);
-            return seq;
+            if(pedido.startsWith("Probe: ")){
+                System.out.println("PR: recebi um probe request :\n\t\t\t"+pedido);
+                String []arr=pedido.split(" ");
+                seq=Integer.parseInt(arr[1].trim());
+                return seq;
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
             // o que retornar nesta situação?
-            return recebePedido();
         }
+        return recebePedido();
+
     }
     
 }

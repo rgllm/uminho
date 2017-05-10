@@ -2,7 +2,7 @@ package reverseproxy;
 
 import java.net.InetAddress;
 
-class BackendInfo {
+class BackendInfo  {
     InetAddress ip;
     private int medicoesRTT;  //número de probes que já foram feitos a este bakend server
     private float somaRTTs;
@@ -93,24 +93,5 @@ class BackendInfo {
         this.perdasConsecutivas = perdasConsecutivas;
     }
     
-    public int compare(BackendInfo b1, BackendInfo b2) {
-        if(b1.getConexoesAtivas() < b2.getConexoesAtivas())
-            return -1;
-        if(b1.getConexoesAtivas() > b2.getConexoesAtivas())
-            return 1;
-        
-        if(b1.getMediaRTT() < b2.getMediaRTT())
-            return -1;
-        if(b1.getMediaRTT() > b2.getMediaRTT())
-            return 1;
-        
-        if(b1.getTaxaPerdas() < b2.getTaxaPerdas())
-            return -1;
-        if(b1.getTaxaPerdas()> b2.getTaxaPerdas())
-            return 1;
-        
-        return 0;
-        
-    }
 }
 

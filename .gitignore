@@ -10,3 +10,5 @@ hs_err_pid*
 
 #macOS files
 .DS_STORE
+/tp2/CopyPaste/build/
+/tp2/CopyPaste/dist/

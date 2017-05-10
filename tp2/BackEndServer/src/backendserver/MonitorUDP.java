@@ -9,31 +9,30 @@ import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Utils.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 
 public class MonitorUDP extends Thread {
     DatagramSocket cs;
     InetAddress ip;
+    AtomicInteger nConexoes;
     
-    public MonitorUDP(DatagramSocket clientSocket,InetAddress ipAddress){
+    public MonitorUDP(DatagramSocket clientSocket,InetAddress ipAddress , AtomicInteger nc){
        cs=clientSocket;
        ip=ipAddress;
+       nConexoes=nc;
     }
     
     public void run(){
         int seq;
-        int nConexoes;
         while(true){
             seq=recebePedido();
-            nConexoes=0; //NOTA: so pode ser feito na fase 2
-            if(seq==-1){
+            if(seq==-1)
                 System.out.println("PR: Recebida mensagem com sintaxe desconhecida");
-                // reponder alguma coisa?
-            }
-            else{
-                while(!responde(""+seq+","+nConexoes)){};
-            }
+            else if(seq==-2)
+                System.out.println("PR: Erro a receber pacote ou o reverseProxy esta desligado");
+            responde(""+seq+","+nConexoes.toString());
         }
     }
     // responde(string resposta) retorna true em caso de sucesso ou falso caso contrário 
@@ -67,11 +66,11 @@ public class MonitorUDP extends Thread {
                 seq=Integer.parseInt(arr[1].trim());
                 return seq;
             }
+            else return-1;
         } catch (IOException ex) {
             ex.printStackTrace();
-            // o que retornar nesta situação?
+            return -2;
         }
-        return recebePedido();
 
     }
     

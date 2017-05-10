@@ -5,16 +5,15 @@
  */
 package reverseproxy;
 
+import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ReverseProxy {    
     public static void main(String args[]) throws Exception
@@ -28,10 +27,47 @@ public class ReverseProxy {
             ProbeSender ps=new ProbeSender(infoBackends,udpServerSocket,probeResponse);
             l.start();
             ps.start();
-            l.join();
-            ps.join();
-               
             
+            while(true){
+                Socket clientSocket=tcpServerSocket.accept();
+                System.out.println("Reverse: pedido de conexao do "+ clientSocket.getInetAddress().getHostAddress());
+                if(!infoBackends.isEmpty()){
+                    ArrayList<BackendInfo> backends=new ArrayList<>(infoBackends.values());
+                    Collections.sort(backends,new Comparator<BackendInfo>() {
+                        @Override
+                        public int compare(BackendInfo b1, BackendInfo b2) {
+                            if(b1.getTaxaPerdas() < b2.getTaxaPerdas())
+                                return -1;
+                            if(b1.getTaxaPerdas()> b2.getTaxaPerdas())
+                                return 1;
+
+                            if(b1.getConexoesAtivas() < b2.getConexoesAtivas())
+                                return -1;
+                            if(b1.getConexoesAtivas() > b2.getConexoesAtivas())
+                                return 1;
+
+                            if(b1.getMediaRTT() < b2.getMediaRTT())
+                                return -1;
+                            if(b1.getMediaRTT() > b2.getMediaRTT())
+                                return 1;
+
+                            return 0;
+                        }
+                    });
+                
+                    BackendInfo melhor=backends.get(0);
+                    System.out.println("Reverse: o melhor backend e o "+ melhor.getIpString());
+                    Handler h=new Handler(clientSocket,melhor);
+                    h.start();
+                }
+                else{
+                    ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
+                    out.writeObject("ERRO: De momento nao ha servidores disponiveis");
+                    out.flush();
+
+                }
+            }
+
             // --------------------------- FASE 1 -------------------------------------
             // inicializar uma estrutura de dados para guardar dados estatisticos das conexões
             // que vão ser úteis para a escolha do servidor backend ao qual enviar o pedido

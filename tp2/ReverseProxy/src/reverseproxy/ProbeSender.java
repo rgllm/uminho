@@ -6,22 +6,12 @@
 package reverseproxy;
 
 import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import Utils.*;
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -39,8 +29,7 @@ class ProbeSender extends Thread{
         try{ 
             while(true){
                 sleep(2000);
-                ArrayList<BackendInfo> aux=new ArrayList<>();
-                aux=new ArrayList<>(infoBackends.values());
+                ArrayList<BackendInfo> aux=new ArrayList<>(infoBackends.values());
                 for(BackendInfo beServer : aux){
                     byte[] sendData = new byte[1024];
                     InetAddress IPAddress = beServer.getIp();

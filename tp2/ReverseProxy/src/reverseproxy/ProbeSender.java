@@ -22,14 +22,15 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 class ProbeSender extends Thread{
-    private HashMap<String,BackendInfo> infoBackends;
+    private ConcurrentHashMap<String,BackendInfo> infoBackends;
     private UDPServerSocket serverSocket;
     private Pacote probeResponse;
     
-    public ProbeSender(HashMap<String,BackendInfo> ib , UDPServerSocket ss , Pacote pr){
+    public ProbeSender(ConcurrentHashMap<String,BackendInfo> ib , UDPServerSocket ss , Pacote pr){
         infoBackends=ib;
         serverSocket=ss;
         probeResponse=pr;
@@ -39,9 +40,7 @@ class ProbeSender extends Thread{
             while(true){
                 sleep(2000);
                 ArrayList<BackendInfo> aux=new ArrayList<>();
-                synchronized(infoBackends){
-                    aux=new ArrayList<>(infoBackends.values());
-                }
+                aux=new ArrayList<>(infoBackends.values());
                 for(BackendInfo beServer : aux){
                     byte[] sendData = new byte[1024];
                     InetAddress IPAddress = beServer.getIp();
@@ -52,7 +51,7 @@ class ProbeSender extends Thread{
                     DatagramPacket receivePacket=null ;
                     boolean timeout=false;
                     System.out.println("PS: vou enviar probe request para o "+beServer.getIpString()+" com o numero de sequencia "+seq+"\n");
-                    Date antes = new Date();
+                    long antes = System.currentTimeMillis();
                     serverSocket.enviarPacote(sendPacket);
                     do{
                         synchronized(probeResponse){
@@ -77,28 +76,24 @@ class ProbeSender extends Thread{
                             int nConexoes= Integer.parseInt(arr[1].trim());
                             resposta = new PDU(nSeq,nConexoes,receivePacket.getAddress());
                         }
-                        if(new Date().getTime() - antes.getTime()>2000)
+                        if(System.currentTimeMillis() - antes>2000)
                             timeout=true;
                     }while(!timeout && resposta.getSeq()!=seq);
                     
                     if(!timeout){
-                        float rtt=new Date().getTime() - antes.getTime();
-                        synchronized(infoBackends){
-                            infoBackends.get(beServer.getIpString()).atualizaRTT(rtt);
-                            infoBackends.get(beServer.getIpString()).setConexoesAtivas(resposta.getnConexoes());
-                            infoBackends.get(beServer.getIpString()).setPerdasConsecutivas(0); 
-                        }
+                        float rtt=(float)(System.currentTimeMillis() - antes);
+                        infoBackends.get(beServer.getIpString()).atualizaRTT(rtt);
+                        infoBackends.get(beServer.getIpString()).setConexoesAtivas(resposta.getnConexoes());
+                        infoBackends.get(beServer.getIpString()).setPerdasConsecutivas(0); 
                         System.out.println("PS: recebi resposta do " + beServer.getIpString() + "\n\trtt: " + rtt + " ; numero de conexoes ativas : " + resposta.getnConexoes()+"\n" );
                     }
                     else{
-                        synchronized(infoBackends){
-                            infoBackends.get(beServer.getIpString()).incrementnPerdas();
-                            if(infoBackends.get(beServer.getIpString()).getPerdasConsecutivas()+1 >=5){
-                                infoBackends.remove(beServer.getIpString());
-                            }
-                            else
-                                infoBackends.get(beServer.getIpString()).incrementPerdasConsecutivas();
+                        infoBackends.get(beServer.getIpString()).incrementnPerdas();
+                        if(infoBackends.get(beServer.getIpString()).getPerdasConsecutivas()+1 >=5){
+                            infoBackends.remove(beServer.getIpString());
                         }
+                        else
+                            infoBackends.get(beServer.getIpString()).incrementPerdasConsecutivas();
                     }
                 }
             }

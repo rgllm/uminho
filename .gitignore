@@ -4,7 +4,6 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 
@@ -13,8 +12,3 @@ hs_err_pid*
 
 #macOS files
 .DS_STORE
-/tp2/ReverseProxy/nbproject/private/
-/tp2/ReverseProxy/build/
-/tp2/ReverseProxy/dist/
-/tp2/BackEndServer/build/
-/tp2/BackEndServer/dist/

@@ -9,14 +9,14 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 class Listener extends Thread{
     private UDPServerSocket serverSocket;
-    private HashMap<String,BackendInfo> infoBackends;
+    private ConcurrentHashMap<String,BackendInfo> infoBackends;
     private Pacote probeResponse;
-    public Listener(HashMap<String,BackendInfo> ib , UDPServerSocket ss , Pacote pr){
+    public Listener(ConcurrentHashMap<String,BackendInfo> ib , UDPServerSocket ss , Pacote pr){
         infoBackends=ib;
         serverSocket=ss;   
         probeResponse=pr;
@@ -32,12 +32,10 @@ class Listener extends Thread{
                 String message=new String(pacote.getData());
                 System.out.println("LISTENER recebeu : '" +message+"' \n");
                 if(message.trim().equals("HELLO")){
-                    synchronized(infoBackends){
-                        if( !infoBackends.containsKey(address)){
-                            BackendInfo bi=new BackendInfo(ia);
-                            System.out.println("LISTENER: vai adicionar um novo backend à tabela -- "+address+ "\n");
-                            infoBackends.put(address,bi);  // devia meter synchronized aqui, mas da DeadLock
-                        }
+                    if( !infoBackends.containsKey(address)){
+                        BackendInfo bi=new BackendInfo(ia);
+                        System.out.println("LISTENER: vai adicionar um novo backend à tabela -- "+address+ "\n");
+                        infoBackends.put(address,bi);  // devia meter synchronized aqui, mas da DeadLock
                     }
                 }
                 else if(message.trim().matches("[0-9]+,[0-9]+")){

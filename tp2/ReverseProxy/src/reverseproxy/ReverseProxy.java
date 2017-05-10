@@ -11,8 +11,8 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
 import java.util.Stack;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +20,7 @@ public class ReverseProxy {
     public static void main(String args[]) throws Exception
       {
             UDPServerSocket udpServerSocket = new UDPServerSocket();
-            HashMap<String,BackendInfo> infoBackends= new HashMap<>();  // a cada ip está associado um BackendInfo
+            ConcurrentHashMap<String,BackendInfo> infoBackends= new ConcurrentHashMap<>();  // a cada ip está associado um BackendInfo
             ServerSocket tcpServerSocket = new ServerSocket(80);
             byte []data=new byte[0];
             Pacote probeResponse=new Pacote(new DatagramPacket(data, data.length, InetAddress.getByName("0.0.0.0"), 1000));

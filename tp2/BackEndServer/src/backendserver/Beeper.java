@@ -1,4 +1,3 @@
-
 package backendserver;
 
 import java.io.IOException;
@@ -19,6 +18,8 @@ public class Beeper extends Thread {
        data = new byte[1024];
        ipAddress=ip;
    }
+   
+   @Override
     public void run(){
         while(true){
             try {
@@ -26,8 +27,8 @@ public class Beeper extends Thread {
                 DatagramPacket sendPacket = new DatagramPacket(data, data.length, ipAddress, 5555);
                 clientSocket.send(sendPacket);
                 sleep(7000);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
       } 
     }

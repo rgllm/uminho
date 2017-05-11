@@ -1,4 +1,3 @@
-
 package reverseproxy;
 
 import java.io.IOException;
@@ -53,7 +52,7 @@ class Handler extends Thread {
                 clientOut.writeObject(resposta);
                 clientOut.flush();
                 
-            }while(!mensagem.trim().equals("sair"));
+            }while(!mensagem.trim().equals("quit"));
             
             backendOut.close();
             backendIn.close();
@@ -68,7 +67,7 @@ class Handler extends Thread {
             
         } catch (IOException | ClassNotFoundException ex) {
             try {
-                aux.writeObject("ERRO: Falha na comunicacao com o servidor");
+                aux.writeObject("ERRO: Fail trying to connect with server.");
                 aux.flush();
 
             } catch (IOException ex1) {

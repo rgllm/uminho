@@ -4,11 +4,11 @@ import java.net.InetAddress;
 
 class BackendInfo  {
     InetAddress ip;
-    private int medicoesRTT;  //número de probes que já foram feitos a este bakend server
-    private float somaRTTs;
-    private int conexoesAtivas;
-    private int nPerdas;
-    private int perdasConsecutivas;
+    private int medicoesRTT; //number of probe requests done to a specific backend server
+    private float somaRTTs; //sum of the time of probe requests
+    private int conexoesAtivas; //number of active connections of a specific backend server
+    private int nPerdas; //number of missed packages of a specific backend server
+    private int perdasConsecutivas; //number of consecutive missed packages of a specific backend server
     
     public BackendInfo(InetAddress ip){
         this.ip = ip;

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package backendserver;
 
 import java.io.ObjectInputStream;
@@ -13,47 +8,47 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Server extends Thread {
     private ServerSocket tcpServerSocket ;
-    private AtomicInteger nConexoes;
-    private Socket clientSocket;
+    private AtomicInteger nConnections;
+    private Socket tcpClientSocket;
     
     public Server(ServerSocket ss , AtomicInteger nc , Socket c){
         tcpServerSocket = ss;
-        nConexoes = nc;
-        clientSocket = c;
+        nConnections = nc;
+        tcpClientSocket = c;
     }
     
     public void run(){
         try{
-            nConexoes.incrementAndGet();
-            String pedidoAux="sair";
-            ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());                                
-            ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
+            nConnections.incrementAndGet();
+            String pedidoAux="quit";
+            ObjectOutputStream out = new ObjectOutputStream(tcpClientSocket.getOutputStream());                                
+            ObjectInputStream in = new ObjectInputStream(tcpClientSocket.getInputStream());
             
-            //INFORMAR O CLIENTE DO SUCESSO DA CONEXAO
-            out.writeObject("SERVER: Connection successful");
+            /* Informs client of a successful connection*/
+            out.writeObject("SERVER: Connection successful.");
                 out.flush();
                 
             do{
-                //LER PEDIDO DO CLIENTE
+                /*Reads client request. */
                 String pedido = (String)in.readObject();
                 pedidoAux=pedido;
-                if (pedido.equals("ola")){
-                    out.writeObject("ola pa");
+                if (pedido.equals("hello")){
+                    out.writeObject("hello client");
                     out.flush();
-                }else if(pedido.equals("sair")){
-                    out.writeObject("Adeus");
+                }else if(pedido.equals("quit")){
+                    out.writeObject("BYE!");
                     out.flush();
                 }
                 else{
-                    out.writeObject("nao percebi");
+                    out.writeObject("I received your request but I did not understand.");
                     out.flush();
                 }
-            }while(!pedidoAux.equals("sair"));
+            }while(!pedidoAux.equals("quit"));
             
-            nConexoes.set(nConexoes.get()-1);
+            nConnections.set(nConnections.get()-1);
             out.close();
             in.close();
-            clientSocket.close();
+            tcpClientSocket.close();
             
             this.interrupt();
             

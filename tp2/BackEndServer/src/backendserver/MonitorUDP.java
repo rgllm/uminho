@@ -1,4 +1,3 @@
-
 package backendserver;
 
 import java.io.IOException;
@@ -7,17 +6,15 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
-
 public class MonitorUDP extends Thread {
     DatagramSocket cs;
     InetAddress ip;
-    AtomicInteger nConexoes;
+    AtomicInteger nConnections;
     
     public MonitorUDP(DatagramSocket clientSocket,InetAddress ipAddress , AtomicInteger nc){
        cs=clientSocket;
        ip=ipAddress;
-       nConexoes=nc;
+       nConnections=nc;
     }
     
     @Override
@@ -26,13 +23,13 @@ public class MonitorUDP extends Thread {
         while(true){
             seq=recebePedido();
             if(seq==-1)
-                System.out.println("PR: Recebida mensagem com sintaxe desconhecida");
+                System.out.println("PR: Unknown Request");
             else if(seq==-2)
-                System.out.println("PR: Erro a receber pacote ou o reverseProxy esta desligado");
-            responde(""+seq+","+nConexoes.toString());
+                System.out.println("PR: Packet transfer error or ReverseProxy not initialized.");
+            responde(""+seq+","+nConnections.toString());
         }
     }
-    // responde(string resposta) retorna true em caso de sucesso ou falso caso contrário 
+    /* Responde(string resposta) retorna true em caso de sucesso ou falso caso contrário */
     private boolean responde(String resposta){
         byte[] data;
         data = new byte[1024];
@@ -55,10 +52,11 @@ public class MonitorUDP extends Thread {
         
         try {
             cs.receive(pacote);
-            // FALTA: Certificar que o pacote vem do reverse proxy e que a mensagem tem a sintaxe correta
+            /* TODO: Certificar que o pacote vem do 
+            reverse proxy e que a mensagem tem a sintaxe correta */
             String pedido=new String(pacote.getData());
             if(pedido.startsWith("Probe: ")){
-                System.out.println("PR: recebi um probe request :\n\t\t\t"+pedido);
+                System.out.println("PR: probe request not received :\n\t\t\t"+pedido);
                 String []arr=pedido.split(" ");
                 seq=Integer.parseInt(arr[1].trim());
                 return seq;

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package reverseproxy;
 
 import java.io.IOException;
@@ -16,6 +11,8 @@ class Listener extends Thread{
     private UDPServerSocket serverSocket;
     private ConcurrentHashMap<String,BackendInfo> infoBackends;
     private Pacote probeResponse;
+    
+    
     public Listener(ConcurrentHashMap<String,BackendInfo> ib , UDPServerSocket ss , Pacote pr){
         infoBackends=ib;
         serverSocket=ss;   
@@ -34,8 +31,8 @@ class Listener extends Thread{
                 if(message.trim().equals("HELLO")){
                     if( !infoBackends.containsKey(address)){
                         BackendInfo bi=new BackendInfo(ia);
-                        System.out.println("LISTENER: vai adicionar um novo backend à tabela -- "+address+ "\n");
-                        infoBackends.put(address,bi);  // devia meter synchronized aqui, mas da DeadLock
+                        System.out.println("LISTENER: add new backend to the table -- "+address+ "\n");
+                        infoBackends.put(address,bi);  // TODO: devia meter synchronized aqui, mas da DeadLock
                     }
                 }
                 else if(message.trim().matches("[0-9]+,[0-9]+")){
@@ -44,7 +41,7 @@ class Listener extends Thread{
                         probeResponse.notifyAll();
                     }
                 }
-                else System.out.println("LISTENER: recebida mensagem com sintaxe desconhecida: "+message+ "\n");
+                else System.out.println("LISTENER: received a message with unknown syntax: "+message+ "\n");
                 
             } catch (Exception ex) {
                 ex.printStackTrace();

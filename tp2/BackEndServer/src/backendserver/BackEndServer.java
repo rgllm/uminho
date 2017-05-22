@@ -20,7 +20,7 @@ public class BackEndServer {
             InetAddress IPAddress = InetAddress.getByName(serverAdress);
             
             Beeper b=new Beeper(udpServerSocket,IPAddress);
-            MonitorUDP m= new MonitorUDP(udSpServerSocket,IPAddress, nConnections);
+            MonitorUDP m= new MonitorUDP(udpServerSocket,IPAddress, nConnections);
             b.start();
             m.start();
             

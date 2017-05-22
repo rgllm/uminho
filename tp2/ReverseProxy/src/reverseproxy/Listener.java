@@ -36,10 +36,8 @@ class Listener extends Thread{
                     }
                 }
                 else if(message.trim().matches("[0-9]+,[0-9]+")){
-                    synchronized(probeResponse){
-                        probeResponse.setPacote(pacote);
-                        probeResponse.notifyAll();
-                    }
+                    probeResponse.setPacote(pacote);
+                    probeResponse.notifyAll();
                 }
                 else System.out.println("LISTENER: received a message with unknown syntax: "+message+ "\n");
                 

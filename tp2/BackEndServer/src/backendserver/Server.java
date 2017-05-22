@@ -26,7 +26,7 @@ public class Server extends Thread {
             
             /* Informs client of a successful connection*/
             out.writeObject("SERVER: Connection successful.");
-                out.flush();
+            out.flush();
                 
             do{
                 /*Reads client request. */

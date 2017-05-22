@@ -56,7 +56,7 @@ public class MonitorUDP extends Thread {
             reverse proxy e que a mensagem tem a sintaxe correta */
             String pedido=new String(pacote.getData());
             if(pedido.startsWith("Probe: ")){
-                System.out.println("PR: probe request not received :\n\t\t\t"+pedido);
+                System.out.println("PR: probe request received :\n\t\t\t"+pedido);
                 String []arr=pedido.split(" ");
                 seq=Integer.parseInt(arr[1].trim());
                 return seq;

@@ -29,8 +29,7 @@ public class Client {
             
             //IMPRIMIR NO ECRAN MENSAGEM DE CONFRMACAO DO SERVIDOR
             String confirm=(String)in.readObject();
-          
-                System.out.println(confirm);
+            System.out.println(confirm);
             if(confirm.startsWith("ERRO"))  
                 return;
 
@@ -45,7 +44,7 @@ public class Client {
                 System.out.println("Resposta do servidor: " + resposta );
                 if(resposta.startsWith("ERRO"))  
                     return;
-            }while(!userInput.equals("sair"));
+            }while(!userInput.equals("quit"));
             out.close();
             in.close();
             requestSocket.close();

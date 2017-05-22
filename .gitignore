@@ -12,3 +12,4 @@ hs_err_pid*
 .DS_STORE
 /tp2/CopyPaste/build/
 /tp2/CopyPaste/dist/
+/tp2/ReverseProxy/dist/

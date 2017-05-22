@@ -59,7 +59,8 @@ public class ReverseProxy {
                     ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
                     out.writeObject("ERRO: De momento nao ha servidores disponiveis");
                     out.flush();
-
+                    out.close();
+                    clientSocket.close();
                 }
             }
 

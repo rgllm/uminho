@@ -1,29 +1,12 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 80ad3e854ddd8e4fe3849d1813ebffbf68a3cfb0
-=======
->>>>>>> 4fc69963b2d0e4d462afbd3f6d6f20fa2c816646
 # Object files
 *.o
 *.ko
 *.obj
 *.elf
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 # Binary files
 !/*.*
 
->>>>>>> 80ad3e854ddd8e4fe3849d1813ebffbf68a3cfb0
-=======
->>>>>>> 4fc69963b2d0e4d462afbd3f6d6f20fa2c816646
 # Precompiled Headers
 *.gch
 *.pch
@@ -49,12 +32,6 @@
 *.hex
 
 # Debug files
-*.dSYM/
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> da1aef2f5b5009f5369d5052bfb2d1744477c485
 dist
 cabal-dev
 *.o
@@ -73,18 +50,10 @@ cabal.sandbox.config
 *.hp
 .stack-work/
 .DS_STORE
->>>>>>> 1a7a0436e3a532dbef803abecdd0ced3c01fc273
-=======
+
 
 #OSX files
 .DS_STORE
->>>>>>> 80ad3e854ddd8e4fe3849d1813ebffbf68a3cfb0
-=======
-.DS_STORE
->>>>>>> 4fc69963b2d0e4d462afbd3f6d6f20fa2c816646
-=======
-=======
->>>>>>> 0834347a65ca525f63e6c80373a323905c326875
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -94,64 +63,10 @@ cabal.sandbox.config
 *.jar
 *.war
 *.ear
-<<<<<<< HEAD
-=======
 *.ctxt
 *.package
 *.class
 *.bluej
->>>>>>> 0834347a65ca525f63e6c80373a323905c326875
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-
-<<<<<<< HEAD
-#Mac files
-.DS_STORE
-
-#BlueJ files
-*.ctxt
-*.class
->>>>>>> 7144b43ea1f32cc24691dd73c61136b69ba44745
-=======
-.virtualenv
-.hsenv
-.cabal-sandbox/
-cabal.sandbox.config
-cabal.config
->>>>>>> da1aef2f5b5009f5369d5052bfb2d1744477c485
-=======
-#OSX Files
-.DS_STORE
-/code/nbproject/private/
-/src/GereVenda/nbproject/private/
-/src/GereVenda/build/
-/src/AnagramGame/nbproject/private/
-Vendas_1M.txt
-Vendas_3M.txt
-Vendas_5M.txt
-Produtos.txt
-Clientes.txt
-/GereVenda/dist/
-hipermercado.1m
-hipermercado.3m
-hipermercado.5m
-hipermercado.dat
->>>>>>> 0834347a65ca525f63e6c80373a323905c3268
-=======
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-
-#macOS files
-.DS_STORE
-/tp2/CopyPaste/build/
-/tp2/CopyPaste/dist/
-/tp2/ReverseProxy/dist/
->>>>>>> cc/master

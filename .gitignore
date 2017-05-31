@@ -4,6 +4,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 80ad3e854ddd8e4fe3849d1813ebffbf68a3cfb0
 =======
@@ -137,3 +138,20 @@ hipermercado.3m
 hipermercado.5m
 hipermercado.dat
 >>>>>>> 0834347a65ca525f63e6c80373a323905c3268
+=======
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+#macOS files
+.DS_STORE
+/tp2/CopyPaste/build/
+/tp2/CopyPaste/dist/
+/tp2/ReverseProxy/dist/
+>>>>>>> cc/master

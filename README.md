@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 UMinho
 
 ![uminho](http://www4.di.uminho.pt/~jmf/IMAGES/um_eeng.gif)
@@ -35,3 +36,6 @@ If you're a Computer Engineering student looking at this, the projects will *pro
 * [Gustavo Andrez](https://github.com/Gandrez)
 * [Diogo Silva](https://github.com/dios95)
 * And a special thanks to [Fernando Mendes](https://github.com/frmendes) for the inspiration to create this repo.
+=======
+# cc
+>>>>>>> cc/master

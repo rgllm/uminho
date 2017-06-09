@@ -1,0 +1,11 @@
+\select@language {portuguese}
+\contentsline {chapter}{\numberline {1}Introdu\c {c}\~ao}{2}
+\contentsline {chapter}{\numberline {2}An\IeC {\'a}lise e Especifica\c {c}\~ao}{3}
+\contentsline {section}{\numberline {2.1}Caracter\IeC {\'\i }sticas dos Dados e Padr\~oes de Frase}{3}
+\contentsline {chapter}{\numberline {3}Concep\c {c}\~ao/desenho da Resolu\c {c}\~ao}{6}
+\contentsline {section}{\numberline {3.1}A\c {c}\~oes Sem\IeC {\^a}nticas e Estruturas de Dados}{6}
+\contentsline {chapter}{\numberline {4}Codifica\IeC {\c c}\IeC {\~a}o e Testes}{8}
+\contentsline {section}{\numberline {4.1}Alternativas, Decis\IeC {\~o}es e Problemas de Implementa\IeC {\c c}\IeC {\~a}o}{8}
+\contentsline {section}{\numberline {4.2}Resultados}{12}
+\contentsline {chapter}{\numberline {5}Conclus\IeC {\~a}o}{15}
+\contentsline {chapter}{\numberline {A}C\IeC {\'o}digo GAWK}{16}

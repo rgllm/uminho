@@ -1,0 +1,14 @@
+<scene>
+	<lights>
+		<light type="POINT" posX=4 posY=4 posZ=0 />
+	</lights>
+	<group>
+		<models>
+			<model file="sphere.3d" diffR=1 diffG=0 diffB=0  />
+			<model file="plane.3d" diffR=0 diffG=1 diffB=0 />
+		</models>
+	</group>
+	
+	
+
+</scene>

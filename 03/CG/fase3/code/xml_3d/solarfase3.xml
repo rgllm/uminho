@@ -1,0 +1,423 @@
+<scene>
+	<group>
+		<translate time=0 />
+		<scale X=5 Y=5 Z=5 />
+		<rotate time=0 axisX=0 axisY=0 axisZ=0 />
+	
+		<group><!-- Sol --> 
+			<translate time=0>
+				<point X=0 Y=0 Z=0 />
+				<point X=0 Y=0 Z=0 />
+				<point X=0 Y=0 Z=0 />
+				<point X=0 Y=0 Z=0 />
+			</translate>
+			<scale X=2 Y=2 Z=2 />
+			<rotate time=30 axisX=0 axisY=1 axisZ=0 />
+			<models>
+				<model file="estrela.3d"/>
+			</models>
+		</group>
+		<group><!-- Mercúrio --> 
+			<translate time= 4>
+				<point X=0 Y=0 Z=-1 />
+				<point X=-0.707 Y=0 Z=-0.707 />
+				<point X=-1 Y=0 Z=0 />
+				<point X=-0.707 Y=0 Z=0.707 />
+				<point X=0 Y=0 Z=1 />
+				<point X=0.707 Y=0 Z=0.707 />
+
+				<point X=1 Y=0 Z=0 />
+				<point X=0.707 Y=0 Z=-0.707 />
+				
+
+			</translate>
+			<rotate time=59 axisX=0 axisY=1 axisZ=0 />
+			<scale X=0.2 Y=0.2 Z=0.2 />
+			<models>
+				<model file="estrela.3d"/>
+			</models>
+		</group>
+		<group><!-- Vénus --> 
+			<translate time= 3>
+				<point X=0 Y=0 Z=-2 />
+				<point X=-1.414 Y=0 Z=-1.414 />
+				<point X=-2 Y=0 Z=0 />
+				<point X=-1.414 Y=0 Z=1.414 />
+				<point X=0 Y=0 Z=2 />
+				<point X=1.414 Y=0 Z=1.414 />
+				<point X=2 Y=0 Z=0 />
+				<point X=1.414 Y=0 Z=-1.414 />
+			</translate>
+			<rotate time=-243 axisX=0 axisY=1 axisZ=0 />
+			<scale X=0.051 Y=0.051 Z=0.051 />
+			<models>
+				<model file="estrela.3d"/>
+			</models>
+		</group>
+		<group><!-- Terra --> 
+			<translate time= 1>
+				<point X=0 Y=0 Z=-3 />
+				<point X=-2.121 Y=0 Z=-2.121 />
+				<point X=-3 Y=0 Z=0 />
+				<point X=-2.121 Y=0 Z=2.121 />
+				<point X=0 Y=0 Z=3 />
+				<point X=2.121 Y=0 Z=2.121 />
+				<point X=3 Y=0 Z=0 />
+				<point X=2.121 Y=0 Z=-2.121 />
+			</translate>
+			<rotate time=1 axisX=0 axisY=1 axisZ=0/>
+			<scale X=0.054 Y=0.054 Z=0.054 />
+			<models>
+				<model file="estrela.3d"/>
+			</models>
+			<group><!-- lua Lua --> 
+				<translate time= 27.3>
+					<point X=0 Y=0 Z=-2 />
+				<point X=-1.414 Y=0 Z=-1.414 />
+				<point X=-2 Y=0 Z=0 />
+				<point X=-1.414 Y=0 Z=1.414 />
+				<point X=0 Y=0 Z=2 />
+				<point X=1.414 Y=0 Z=1.414 />
+				<point X=2 Y=0 Z=0 />
+				<point X=1.414 Y=0 Z=-1.414 />
+				</translate>
+				<rotate time=27.3 axisX=0 axisY=1 axisZ=0 />
+				<scale X=0.27 Y=0.27 Z=0.27 />
+				<models>
+					<model file="estrela.3d"/>
+				</models>
+			</group>
+		</group>
+		<group><!-- Marte --> 
+			<translate time= 2>
+				<point X=0 Y=0 Z=-4 />
+				<point X=-2.828 Y=0 Z=-2.828 />
+				<point X=-4 Y=0 Z=0 />
+				<point X=-2.828 Y=0 Z=2.828 />
+				<point X=0 Y=0 Z=4 />
+				<point X=2.828 Y=0 Z=2.828 />
+				<point X=4 Y=0 Z=0 />
+				<point X=2.828 Y=0 Z=-2.828 />
+			</translate>
+			<rotate time=1.1 axisX=0 axisY=1 axisZ=0 />
+			<scale X=0.029 Y=0.029 Z=0.029 />
+			<models>
+				<model file="estrela.3d"/>
+			</models>
+		</group>
+		<group><!-- Júpiter --> 
+			<translate time= 12>
+				<point X=0 Y=0 Z=-5 />
+				<point X=-3.535 Y=0 Z=-3.535 />
+				<point X=-5 Y=0 Z=0 />
+				<point X=-3.535 Y=0 Z=3.535 />
+				<point X=0 Y=0 Z=5 />
+				<point X=3.535 Y=0 Z=3.535 />
+				<point X=5 Y=0 Z=0 />
+				<point X=3.535 Y=0 Z=-3.535 />
+			</translate>
+			<rotate time=0.4 axisX=0 axisY=1 axisZ=0 />
+			<scale X=0.589 Y=0.589 Z=0.589 />
+			<models>
+				<model file="estrela.3d"/>
+			</models>
+			<group><!-- lua Io --> 
+				<translate time= 9>
+					<point X=0 Y=0 Z=-2 />
+					<point X=-1.414 Y=0 Z=-1.414 />
+					<point X=-2 Y=0 Z=0 />
+					<point X=-1.414 Y=0 Z=1.414 />
+					<point X=0 Y=0 Z=2 />
+					<point X=1.414 Y=0 Z=1.414 />
+					<point X=2 Y=0 Z=0 />
+					<point X=1.414 Y=0 Z=-1.414 />
+				</translate>
+				<rotate time=1.8 axisX=0 axisY=1 axisZ=0 />
+				<scale X=0.0273 Y=0.0273 Z=0.0273 />
+				<models>
+					<model file="estrela.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Europa --> 
+				<translate time= 5>
+					<point X=0 Y=0 Z=-2 />
+					<point X=-1.414 Y=0 Z=-1.414 />
+					<point X=-2 Y=0 Z=0 />
+					<point X=-1.414 Y=0 Z=1.414 />
+					<point X=0 Y=0 Z=2 />
+					<point X=1.414 Y=0 Z=1.414 />
+					<point X=2 Y=0 Z=0 />
+					<point X=1.414 Y=0 Z=-1.414 />
+				</translate>
+				<rotate time=3 axisX=0 axisY=1 axisZ=0 />
+				<scale X=0.0223 Y=0.0223 Z=0.0223 />
+				<models>
+					<model file="estrela.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Ganimedes --> 
+				<translate time= 20>
+					<point X=0 Y=0 Z=-2 />
+					<point X=-1.414 Y=0 Z=-1.414 />
+					<point X=-2 Y=0 Z=0 />
+					<point X=-1.414 Y=0 Z=1.414 />
+					<point X=0 Y=0 Z=2 />
+					<point X=1.414 Y=0 Z=1.414 />
+					<point X=2 Y=0 Z=0 />
+					<point X=1.414 Y=0 Z=-1.414 />
+				</translate>
+				<rotate time=7.15 axisX=0 axisY=1 axisZ=0 />
+				<scale X=0.0376 Y=0.0376 Z=0.0376 />
+				<models>
+					<model file="estrela.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Calisto --> 
+				<translate time= 16>
+					<point X=0 Y=0 Z=-2 />
+					<point X=-1.414 Y=0 Z=-1.414 />
+					<point X=-2 Y=0 Z=0 />
+					<point X=-1.414 Y=0 Z=1.414 />
+					<point X=0 Y=0 Z=2 />
+					<point X=1.414 Y=0 Z=1.414 />
+					<point X=2 Y=0 Z=0 />
+					<point X=1.414 Y=0 Z=-1.414 />
+				</translate>
+				<rotate time=16 axisX=0 axisY=1 axisZ=0 />
+				<scale X=0.0344 Y=0.0344 Z=0.0344 />
+				<models>
+					<model file="estrela.3d"/>
+				</models>
+			</group>
+		</group>
+		<group><!-- Saturno --> 
+			<translate time= 12>
+				<point X=0 Y=0 Z=-6 />
+				<point X=-4.242 Y=0 Z=-4.242 />
+				<point X=-6 Y=0 Z=0 />
+				<point X=-4.242 Y=0 Z=4.242 />
+				<point X=0 Y=0 Z=6 />
+				<point X=4.242 Y=0 Z=4.242 />
+				<point X=6 Y=0 Z=0 />
+				<point X=4.242 Y=0 Z=-4.242 />
+			</translate>
+			<rotate time=0.43 axisX=0 axisY=1 axisZ=0 />
+			<scale X=0.491 Y=0.491 Z=0.491 />
+			<models>
+				<model file="estrela.3d"/>
+			</models>
+<!-- 			<group> anel
+ 				<translate X=0 Y=0 Z=0 />
+
+				<scale X=1.7 Y=0.01 Z=1.7 />
+				<models>
+					<model file="estrela.3d"/>
+				</models>
+			</group> -->
+			<group><!-- lua Japeto --> 
+				<translate time= 12>
+					<point X=0 Y=0 Z=-2 />
+					<point X=-1.414 Y=0 Z=-1.414 />
+					<point X=-2 Y=0 Z=0 />
+					<point X=-1.414 Y=0 Z=1.414 />
+					<point X=0 Y=0 Z=2 />
+					<point X=1.414 Y=0 Z=1.414 />
+					<point X=2 Y=0 Z=0 />
+					<point X=1.414 Y=0 Z=-1.414 />
+				</translate>
+				<rotate time=79 axisX=0 axisY=1 axisZ=0 />
+				<scale X=0.0123 Y=0.0123 Z=0.0123 />
+				<models>
+					<model file="estrela.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Titã --> 
+				<translate time= 130>
+					<point X=0 Y=0 Z=-2 />
+					<point X=-1.414 Y=0 Z=-1.414 />
+					<point X=-2 Y=0 Z=0 />
+					<point X=-1.414 Y=0 Z=1.414 />
+					<point X=0 Y=0 Z=2 />
+					<point X=1.414 Y=0 Z=1.414 />
+					<point X=2 Y=0 Z=0 />
+					<point X=1.414 Y=0 Z=-1.414 />
+				</translate>
+				<rotate time=16 axisX=0 axisY=1 axisZ=0 />
+				<scale X=0.044 Y=0.044 Z=0.044 />
+				<models>
+					<model file="estrela.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Reia --> 
+				<translate time= 18>
+					<point X=0 Y=0 Z=-2 />
+					<point X=-1.414 Y=0 Z=-1.414 />
+					<point X=-2 Y=0 Z=0 />
+					<point X=-1.414 Y=0 Z=1.414 />
+					<point X=0 Y=0 Z=2 />
+					<point X=1.414 Y=0 Z=1.414 />
+					<point X=2 Y=0 Z=0 />
+					<point X=1.414 Y=0 Z=-1.414 />
+				</translate>
+				<rotate time=4.5 axisX=0 axisY=1 axisZ=0 />
+				<scale X=0.0132 Y=0.0132 Z=0.0132 />
+				<models>
+					<model file="estrela.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Dione --> 
+				<translate time= 12>
+					<point X=0 Y=0 Z=-2 />
+					<point X=-1.414 Y=0 Z=-1.414 />
+					<point X=-2 Y=0 Z=0 />
+					<point X=-1.414 Y=0 Z=1.414 />
+					<point X=0 Y=0 Z=2 />
+					<point X=1.414 Y=0 Z=1.414 />
+					<point X=2 Y=0 Z=0 />
+					<point X=1.414 Y=0 Z=-1.414 />
+				</translate>
+				<rotate time=2.7 axisX=0 axisY=1 axisZ=0 />
+				<scale X=0.01 Y=0.01 Z=0.01 />
+				<models>
+					<model file="estrela.3d"/>
+				</models>
+			</group>
+		</group>
+		<group><!-- Úrano --> 
+			<translate time= 84>
+				<point X=0 Y=0 Z=-7 />
+				<point X=-4.949 Y=0 Z=-4.949 />
+				<point X=-7 Y=0 Z=0 />
+				<point X=-4.949 Y=0 Z=4.949 />
+				<point X=0 Y=0 Z=7 />
+				<point X=4.949 Y=0 Z=4.949 />
+				<point X=7 Y=0 Z=0 />
+				<point X=4.949 Y=0 Z=-4.949 />
+			</translate>
+			<rotate time=-0.72 axisX=0 axisY=1 axisZ=0 />
+			<scale X=0.214 Y=0.214 Z=0.214 />
+			<models>
+				<model file="estrela.3d"/>
+			</models>
+			<group><!-- lua Oberom --> 
+				<translate time= 13>
+					<point X=0 Y=0 Z=-2 />
+					<point X=-1.414 Y=0 Z=-1.414 />
+					<point X=-2 Y=0 Z=0 />
+					<point X=-1.414 Y=0 Z=1.414 />
+					<point X=0 Y=0 Z=2 />
+					<point X=1.414 Y=0 Z=1.414 />
+					<point X=2 Y=0 Z=0 />
+					<point X=1.414 Y=0 Z=-1.414 />
+				</translate>
+				<rotate time=13.1 axisX=0 axisY=1 axisZ=0 />
+				<scale X=0.03 Y=0.03 Z=0.03 />
+				<models>
+					<model file="estrela.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Titania --> 
+				<translate time= 8.7>
+					<point X=0 Y=0 Z=-2 />
+					<point X=-1.414 Y=0 Z=-1.414 />
+					<point X=-2 Y=0 Z=0 />
+					<point X=-1.414 Y=0 Z=1.414 />
+					<point X=0 Y=0 Z=2 />
+					<point X=1.414 Y=0 Z=1.414 />
+					<point X=2 Y=0 Z=0 />
+					<point X=1.414 Y=0 Z=-1.414 />
+				</translate>
+				<rotate time=8.7 axisX=0 axisY=1 axisZ=0 />
+				<scale X=0.031 Y=0.031 Z=0.031 />
+				<models>
+					<model file="estrela.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Umbriel --> 
+				<translate time= 30>
+					<point X=0 Y=0 Z=-2 />
+					<point X=-1.414 Y=0 Z=-1.414 />
+					<point X=-2 Y=0 Z=0 />
+					<point X=-1.414 Y=0 Z=1.414 />
+					<point X=0 Y=0 Z=2 />
+					<point X=1.414 Y=0 Z=1.414 />
+					<point X=2 Y=0 Z=0 />
+					<point X=1.414 Y=0 Z=-1.414 />
+				</translate>
+				<rotate time=4.14 axisX=0 axisY=1 axisZ=0 />
+				<scale X=0.033 Y=0.033 Z=0.033 />
+				<models>
+					<model file="estrela.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Ariel --> 
+				<translate time= 30>
+					<point X=0 Y=0 Z=-2 />
+					<point X=-1.414 Y=0 Z=-1.414 />
+					<point X=-2 Y=0 Z=0 />
+					<point X=-1.414 Y=0 Z=1.414 />
+					<point X=0 Y=0 Z=2 />
+					<point X=1.414 Y=0 Z=1.414 />
+					<point X=2 Y=0 Z=0 />
+					<point X=1.414 Y=0 Z=-1.414 />
+				</translate>
+				<rotate time=2.12 axisX=0 axisY=1 axisZ=0 />
+				<scale X=0.0229 Y=0.0229 Z=0.0229 />
+				<models>
+					<model file="estrela.3d"/>
+				</models>
+			</group>
+		</group>
+		<group><!-- Neptuno --> 
+			<translate time= 164>
+				<point X=0 Y=0 Z=-8 />
+				<point X=-5.656 Y=0 Z=-5.656 />
+				<point X=-8 Y=0 Z=0 />
+				<point X=-5.656 Y=0 Z=5.656 />
+				<point X=0 Y=0 Z=8 />
+				<point X=5.656 Y=0 Z=5.656 />
+				<point X=8 Y=0 Z=0 />
+				<point X=5.656 Y=0 Z=-5.656 />
+			</translate>
+			<rotate time=0.67 axisX=0 axisY=1 axisZ=0 />
+			<scale X=0.207 Y=0.207 Z=0.207 />
+			<models>
+				<model file="estrela.3d"/>
+			</models>
+			<group><!-- lua Titão--> 
+				<translate time= 12>
+					<point X=0 Y=0 Z=-2 />
+					<point X=-1.414 Y=0 Z=-1.414 />
+					<point X=-2 Y=0 Z=0 />
+					<point X=-1.414 Y=0 Z=1.414 />
+					<point X=0 Y=0 Z=2 />
+					<point X=1.414 Y=0 Z=1.414 />
+					<point X=2 Y=0 Z=0 />
+					<point X=1.414 Y=0 Z=-1.414 />
+				</translate>
+				<rotate time=5 axisX=0 axisY=1 axisZ=0 />
+				<scale X=0.055 Y=0.055 Z=0.055 />
+				<models>
+					<model file="estrela.3d"/>
+				</models>
+			</group>
+		</group>
+		<group><!-- Plutão --> 
+			<translate time= 248>
+				<point X=0 Y=0 Z=-9 />
+				<point X=-6.363 Y=0 Z=-6.363 />
+				<point X=-9 Y=0 Z=0 />
+				<point X=-6.363 Y=0 Z=6.363 />
+				<point X=0 Y=0 Z=9 />
+				<point X=6.363 Y=0 Z=6.363 />
+				<point X=9 Y=0 Z=0 />
+				<point X=6.363 Y=0 Z=-6.363 />
+			</translate>
+			<rotate time=6.5 axisX=0 axisY=1 axisZ=0 />
+			<scale X=0.01 Y=0.01 Z=0.01 />
+			<models>
+				<model file="estrela.3d"/>
+			</models>
+		</group>
+	</group>
+</scene>

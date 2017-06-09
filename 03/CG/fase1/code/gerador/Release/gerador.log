@@ -1,0 +1,8 @@
+﻿  gerador.cpp
+  Generating code
+  3 of 184 functions ( 1.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+stdafx.obj : warning LNK4020: a type record in 'c:\users\andrez\google drive\cg\tp1\gerador\release\vc140.pdb' is corrupted; some symbols and types may not be accessible from the debugger
+  gerador.vcxproj -> C:\Users\Andrez\Google Drive\CG\TP1\gerador\Release\gerador.exe

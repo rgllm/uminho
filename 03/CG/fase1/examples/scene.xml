@@ -1,0 +1,6 @@
+<scene>
+	<model file="plane1.3d" />	
+	<model file="plane2.3d" />	
+	<model file="plane3.3d" />	
+	<model file="plane4.3d" />	
+</scene>

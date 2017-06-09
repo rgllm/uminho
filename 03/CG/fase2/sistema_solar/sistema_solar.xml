@@ -1,0 +1,107 @@
+<scene>
+   <group>
+      <translate X=0 Y=0 Z=0 />
+      <rotate angle=0 axisX=0 axisY=0 axisZ=0 />
+      <models>
+         <model file="sol.3d" />
+      </models>
+   </group>
+   <group>
+      <translate X=48786.86 Y=0 Z=0 />
+      <rotate angle=0 axisX=0 axisY=0 axisZ=0 />
+      <models>
+         <model file="mercurio.3d" />
+   </group>
+   <group>
+      <translate X=91154.17 Y=0 Z=0 />
+      <rotate angle=0 axisX=0 axisY=0 axisZ=0 />
+      <models>
+         <model file="venus.3d" />
+      </models>
+   </group>
+   <group>
+         <translate X=126032.01 Y=0 Z=0 />
+         <rotate angle=0 axisX=0 axisY=0 axisZ=0 />
+         <models>
+            <model file="terra.3d" />
+         </models>
+      <group>
+         <translate X=0 Y=? Z=? />
+         <rotate angle=0 axisX=0 axisY=0 axisZ=0/>
+         <models>
+            <model file="lua.3d" />
+         </models>
+      </group>
+   </group>
+   <group>
+      <translate X=191996.63 Y=0 Z=0 />
+      <rotate angle=0 axisX=0 axisY=0 axisZ=0 />
+      <models>
+         <model file="marte.3d" />
+      </models>
+   </group>
+   <group>
+         <translate X=655855.1 Y=0 Z=0 />
+         <rotate angle=0 axisX=0 axisY=0 axisZ=0 />
+         <models>
+            <model file="jupiter.3d" />
+         </models>
+      <group>
+         <translate X=? Y=0 Z=0 />
+         <rotate angle=0 axisX=0 axisY=0 axisZ=0 />
+         <models>
+            <model file="io.3d" />
+         </models>
+         <translate X=? Y=0 Z=0 />
+         <rotate angle=0 axisX=0 axisY=0 axisZ=0 />
+         <models>
+            <model file="europa.3d" />
+         </models>
+         <translate X=? Y=0 Z=0 />
+         <rotate angle=0 axisX=0 axisY=0 axisZ=0 />
+         <models>
+            <model file="ganimedes.3d" />
+         </models>
+         <translate X=? Y=0 Z=0 />
+         <rotate angle=0 axisX=0 axisY=0 axisZ=0 />
+         <models>
+            <model file="calisto.3d" />
+         </models>
+      </group>
+   </group>
+   <group>
+      <translate X=1203875.32 Y=0 Z=0 />
+      <rotate angle=0 axisX=0 axisY=0 axisZ=0 />
+      <models>
+         <model file="saturno.3d" />
+      </models>
+   </group>
+   <group>
+      <translate X=2418702.61 Y=0 Z=0 />
+      <rotate angle=0 axisX=0 axisY=0 axisZ=0 />
+      <models>
+         <model file="urano.3d" />
+      </models>
+   </group>
+      <translate X=3789385 Y=0 Z=0 />
+      <rotate angle=0 axisX=0 axisY=0 axisZ=0 />
+      <models>
+         <model file="neptuno.3d" />
+      </models>
+   </group>
+   <group>
+      <translate X=4000000 Y=0 Z=0 />
+      <rotate angle=0 axisX=0 axisY=0 axisZ=0 />
+      <models>
+         <model file="nave.3d" />
+      </models>
+   </group>
+   <group>
+   <group>
+      <translate X=4981903.96 Y=0 Z=0 />
+      <rotate angle=0 axisX=0 axisY=0 axisZ=0 />
+      <models>
+         <model file="plutao.3d" />
+      </models>
+   </group>
+</scene>

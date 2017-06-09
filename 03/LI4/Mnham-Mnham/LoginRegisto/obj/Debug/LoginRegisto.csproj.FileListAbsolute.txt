@@ -1,0 +1,23 @@
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\bin\Debug\LoginRegisto.exe.config
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\bin\Debug\LoginRegisto.exe
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\bin\Debug\LoginRegisto.pdb
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\obj\Debug\LoginRegisto.Form1.resources
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\obj\Debug\LoginRegisto.Properties.Resources.resources
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\obj\Debug\LoginRegisto.csproj.GenerateResource.Cache
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\obj\Debug\LoginRegisto.exe
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\obj\Debug\LoginRegisto.pdb
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\obj\Debug\LoginRegisto.Form2.resources
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\obj\Debug\LoginRegisto.csprojResolveAssemblyReference.cache
+C:\Users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\obj\Debug\LoginRegisto.Form3.resources
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\bin\Debug\LoginRegisto.exe.config
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\bin\Debug\LoginRegisto.exe
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\bin\Debug\LoginRegisto.pdb
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Debug\LoginRegisto.csprojResolveAssemblyReference.cache
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Debug\LoginRegisto.Form1.resources
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Debug\LoginRegisto.Form2.resources
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Debug\LoginRegisto.Form3.resources
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Debug\LoginRegisto.Form4.resources
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Debug\LoginRegisto.Properties.Resources.resources
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Debug\LoginRegisto.csproj.GenerateResource.Cache
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Debug\LoginRegisto.exe
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Debug\LoginRegisto.pdb

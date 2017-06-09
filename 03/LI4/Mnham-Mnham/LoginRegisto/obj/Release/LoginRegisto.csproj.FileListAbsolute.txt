@@ -1,0 +1,23 @@
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\bin\Release\LoginRegisto.exe.config
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\bin\Release\LoginRegisto.exe
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\bin\Release\LoginRegisto.pdb
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\obj\Release\LoginRegisto.Form1.resources
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\obj\Release\LoginRegisto.Form2.resources
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\obj\Release\LoginRegisto.Properties.Resources.resources
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\obj\Release\LoginRegisto.csproj.GenerateResource.Cache
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\obj\Release\LoginRegisto.exe
+c:\users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\obj\Release\LoginRegisto.pdb
+C:\Users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\obj\Release\LoginRegisto.csprojResolveAssemblyReference.cache
+C:\Users\perei\documents\visual studio 2015\Projects\LoginRegisto\LoginRegisto\obj\Release\LoginRegisto.Form3.resources
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\bin\Release\LoginRegisto.exe
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\bin\Release\LoginRegisto.pdb
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\bin\Release\LoginRegisto.exe.config
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Release\LoginRegisto.Form1.resources
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Release\LoginRegisto.Form2.resources
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Release\LoginRegisto.Form3.resources
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Release\LoginRegisto.Form4.resources
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Release\LoginRegisto.Properties.Resources.resources
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Release\LoginRegisto.csproj.GenerateResource.Cache
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Release\LoginRegisto.exe
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Release\LoginRegisto.pdb
+C:\Users\Samuel\Desktop\LI4\LoginRegisto\LoginRegisto\obj\Release\LoginRegisto.csprojResolveAssemblyReference.cache

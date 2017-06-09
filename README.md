@@ -28,7 +28,12 @@ If you're a Computer Engineering student looking at this, the projects will *pro
     - [Software Systems Development](https://github.com/rgllm/uminho/tree/master/03/DSS/) - a program to split bills
     - [Distributed Systems](https://github.com/rgllm/uminho/tree/master/03/SD) - auction software.
     - [Computer Communications](https://github.com/rgllm/uminho/tree/master/03/CC) - reverse proxy implementation using UDP and TCP protocols.
-
+    - [Computer Graphics](https://github.com/rgllm/uminho/tree/master/03/CG) - a solar system done with Glut, OpenGL and lots of patient.
+    - [Language Processing](https://github.com/rgllm/uminho/tree/master/03/PL) - We started off with a small set of projects using Flex and Gawk and ended up with a small language that runs on a stack-based VM.
+    - [Knowledge and Reasoning Representation Systems](https://github.com/rgllm/uminho/tree/master/03/SRCR) - Artifical Intelligence. A set of projects using Prolog to represent knowledge and neural networks for the reasoning part.
+    - [Software Labs IV](https://github.com/rgllm/uminho/tree/master/03/LI4) - restaurant suggestion app for Windows.
+                          
+                          
 ## Contributors
 
 * [Rogério Moreira](https://github.com/rgllm)

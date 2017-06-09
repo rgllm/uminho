@@ -1,0 +1,192 @@
+<scene>
+	<group>
+		<translate X=0 Y=0 Z=-5 />
+		<scale X=5 Y=5 Z=5 />
+		<rotate angle=0 axisX=0 axisY=0 axisZ=0 />
+	
+		<group><!-- Sol --> 
+			<translate X=0 Y=0 Z=0 />
+			<scale X=1 Y=1 Z=1 />
+			<models>
+				<model file="grande.3d"/>
+			</models>
+		</group>
+		<group><!-- Mercúrio --> 
+			<translate X=0.2 Y=0 Z=0 />
+			<scale X=0.021 Y=0.021 Z=0.021 />
+			<models>
+				<model file="pequeno.3d"/>
+			</models>
+		</group>
+		<group><!-- Vénus --> 
+			<translate X=0 Y=-0.3 Z=0 />
+			<scale X=0.051 Y=0.051 Z=0.051 />
+			<models>
+				<model file="pequeno.3d"/>
+			</models>
+		</group>
+		<group><!-- Terra --> 
+			<translate X=-0.4 Y=0 Z=0 />
+			<scale X=0.054 Y=0.054 Z=0.054 />
+			<models>
+				<model file="pequeno.3d"/>
+			</models>
+			<group><!-- lua Lua --> 
+				<translate X=0 Y=0.1 Z=0.2 />
+				<scale X=0.27 Y=0.27 Z=0.27 />
+				<models>
+					<model file="pequeno.3d"/>
+				</models>
+			</group>
+		</group>
+		<group><!-- Marte --> 
+			<translate X=0 Y=0.5 Z=0 />
+			<scale X=0.029 Y=0.029 Z=0.029 />
+			<models>
+				<model file="pequeno.3d"/>
+			</models>
+		</group>
+		<group><!-- Júpiter --> 
+			<translate X=0.65 Y=0 Z=0 />
+			<scale X=0.589 Y=0.589 Z=0.589 />
+			
+			<models>
+				<model file="grande.3d"/>
+			</models>
+			<group><!-- lua Io --> 
+				<translate X=0 Y=0.05 Z=0.15 />
+
+				<scale X=0.0273 Y=0.0273 Z=0.0273 />
+				<models>
+					<model file="pequeno.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Europa --> 
+				<translate X=0.1 Y=0.04 Z=0.13 />
+
+				<scale X=0.0223 Y=0.0223 Z=0.0223 />
+				<models>
+					<model file="pequeno.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Ganimedes --> 
+				<translate X=-0.1 Y=0.04 Z=-0.13 />
+				<scale X=0.0376 Y=0.0376 Z=0.0376 />
+				<models>
+					<model file="pequeno.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Calisto --> 
+				<translate X=0.1 Y=0.04 Z=-0.13 />
+				<scale X=0.0344 Y=0.0344 Z=0.0344 />
+				<models>
+					<model file="pequeno.3d"/>
+				</models>
+			</group>
+		</group>
+		<group><!-- Saturno --> 
+			<translate X=0 Y=-0.85 Z=0 />
+			<scale X=0.491 Y=0.491 Z=0.491 />
+			
+			<models>
+				<model file="grande.3d"/>
+			</models>
+<!-- 			<group> anel
+ 				<translate X=0 Y=0 Z=0 />
+
+				<scale X=1.7 Y=0.01 Z=1.7 />
+				<models>
+					<model file="pequeno.3d"/>
+				</models>
+			</group> -->
+			<group><!-- lua Japeto --> 
+				<translate X=0 Y=0.05 Z=0.15 />
+
+				<scale X=0.0123 Y=0.0123 Z=0.0123 />
+				<models>
+					<model file="pequeno.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Titã --> 
+				<translate X=0.1 Y=0.04 Z=0.13 />
+				<scale X=0.044 Y=0.044 Z=0.044 />
+				<models>
+					<model file="pequeno.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Reia --> 
+				<translate X=-0.1 Y=0.04 Z=-0.13 />
+
+				<scale X=0.0132 Y=0.0132 Z=0.0132 />
+				<models>
+					<model file="pequeno.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Dione --> 
+				<translate X=0.1 Y=0.04 Z=-0.13 />
+
+				<scale X=0.01 Y=0.01 Z=0.01 />
+				<models>
+					<model file="pequeno.3d"/>
+				</models>
+			</group>
+		</group>
+		<group><!-- Úrano --> 
+			<translate X=-1 Y=0 Z=0 />
+			<scale X=0.214 Y=0.214 Z=0.214 />
+			<models>
+				<model file="grande.3d"/>
+			</models>
+			<group><!-- lua Oberom --> 
+				<translate X=0 Y=0.05 Z=0.15 />
+				<scale X=0.03 Y=0.03 Z=0.03 />
+				<models>
+					<model file="pequeno.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Titania --> 
+				<translate X=0.1 Y=0.04 Z=0.13 />
+				<scale X=0.031 Y=0.031 Z=0.031 />
+				<models>
+					<model file="pequeno.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Umbriel --> 
+				<translate X=-0.1 Y=0.04 Z=-0.13 />
+				<scale X=0.033 Y=0.033 Z=0.033 />
+				<models>
+					<model file="pequeno.3d"/>
+				</models>
+			</group>
+			<group><!-- lua Ariel --> 
+				<translate X=0.1 Y=0.04 Z=-0.13 />
+
+				<scale X=0.0229 Y=0.0229 Z=0.0229 />
+				<models>
+					<model file="pequeno.3d"/>
+				</models>
+			</group>
+		</group>
+		<group><!-- Neptuno --> 
+			<translate X=0 Y=1.1 Z=0 />
+			<scale X=0.207 Y=0.207 Z=0.207 />
+			<models>
+				<model file="grande.3d"/>
+			</models>
+			<group><!-- lua Titão--> 
+				<translate X=0.1 Y=0.04 Z=-0.13 />
+				<scale X=0.055 Y=0.055 Z=0.055 />
+				<models>
+					<model file="pequeno.3d"/>
+				</models>
+			</group>
+		</group>
+		<group><!-- Plutão --> 
+			<translate X=1.2 Y=0 Z=0 />
+			<scale X=0.01 Y=0.01 Z=0.01 />
+			<models>
+				<model file="pequeno.3d"/>
+			</models>
+		</group>
+	</group>
+</scene>

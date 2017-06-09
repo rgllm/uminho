@@ -1,0 +1,336 @@
+%
+% Layout retirado de http://www.di.uminho.pt/~prh/curplc09.html#notas
+%
+\documentclass{report}
+%encoding
+%--------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%--------------------------------------
+
+%Portuguese-specific commands
+%--------------------------------------
+\usepackage[portuguese]{babel}
+%--------------------------------------
+
+%Hyphenation rules
+%--------------------------------------
+\usepackage{hyphenat}
+\hyphenation{mate-mática recu-perar}
+%--------------------------------------
+
+\usepackage{url}
+\usepackage{enumerate}
+\usepackage{graphicx}
+
+%\usepackage{alltt}
+%\usepackage{fancyvrb}
+\usepackage{listings}
+%LISTING - GENERAL
+\lstset{
+    basicstyle=\small,
+    numbers=left,
+    numberstyle=\tiny,
+    numbersep=5pt,
+    breaklines=true,
+    frame=tB,
+    mathescape=true,
+    escapeinside={(*@}{@*)}
+}
+%
+%\lstset{ %
+%   language=Java,                          % choose the language of the code
+%   basicstyle=\ttfamily\footnotesize,      % the size of the fonts that are used for the code
+%   keywordstyle=\bfseries,                 % set the keyword style
+%   %numbers=left,                          % where to put the line-numbers
+%   numberstyle=\scriptsize,                % the size of the fonts that are used for the line-numbers
+%   stepnumber=2,                           % the step between two line-numbers. If it's 1 each line
+%                                           % will be numbered
+%   numbersep=5pt,                          % how far the line-numbers are from the code
+%   backgroundcolor=\color{white},          % choose the background color. You must add \usepackage{color}
+%   showspaces=false,                       % show spaces adding particular underscores
+%   showstringspaces=false,                 % underline spaces within strings
+%   showtabs=false,                         % show tabs within strings adding particular underscores
+%   frame=none,                             % adds a frame around the code
+%   %abovecaptionskip=-.8em,
+%   %belowcaptionskip=.7em,
+%   tabsize=2,                              % sets default tabsize to 2 spaces
+%   captionpos=b,                           % sets the caption-position to bottom
+%   breaklines=true,                        % sets automatic line breaking
+%   breakatwhitespace=false,                % sets if automatic breaks should only happen at whitespace
+%   title=\lstname,                         % show the filename of files included with \lstinputlisting;
+%                                           % also try caption instead of title
+%   escapeinside={\%*}{*)},                 % if you want to add a comment within your code
+%   morekeywords={*,...}                    % if you want to add more keywords to the set
+%}
+
+\usepackage{xspace}
+
+\parindent=0pt
+\parskip=2pt
+
+\setlength{\oddsidemargin}{-1cm}
+\setlength{\textwidth}{18cm}
+\setlength{\headsep}{-1cm}
+\setlength{\textheight}{23cm}
+
+\def\darius{\textsf{Darius}\xspace}
+\def\antlr{\texttt{AnTLR}\xspace}
+\def\pl{\emph{Processamento de Linguagens}\xspace}
+
+\def\titulo#1{\section{#1}}
+\def\super#1{{\em Supervisor: #1}\\ }
+\def\area#1{{\em \'{A}rea: #1}\\[0.2cm]}
+\def\resumo{\underline{Resumo}:\\ }
+
+
+%%%%\input{LPgeneralDefintions}
+
+\title{Processamento de Linguagens (3º ano do MiEI)\\ \textbf{Trabalho Prático 1 - Parte B}\\ Flex - Processador de Inglês corrente}
+\author{Gustavo Andrez\\ (A27748) \and Rogério Moreira\\ (A74634) \and Samuel Ferreira\\ (A76507) }
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+A diversidade e quantidade de informação nos dias de hoje é cada vez maior e mais dispersa, está em todo o lado em grandes quantidades, a todo o momento. Posto isto, torna-se ainda mais necessária uma linguagem de programação como o C Flex, que permite filtrar, de maneira facilitada, a informação essencial num ficheiro em que os dados estejam dispersos e ainda tratar essa informação. O trabalho apresentado na unidade curricular de Processamento de Linguagens tem como objetivo usar esta ferramenta para filtrar um conjunto de dados fornecidos, extraindo desses dados informação relevante.
+
+\end{abstract}
+
+\tableofcontents
+
+\chapter{Introdu\c{c}\~ao} \label{intro}
+
+\section*{Introdu\c{c}\~ao} \
+
+A diversidade e quantidade de informação nos dias de hoje é cada vez maior e mais dispersa, está em todo o lado em grandes quantidades, a todo o momento. Posto isto, torna-se ainda mais necessária uma linguagem de programação como o C Flex, que permite filtrar, de maneira facilitada, a informação essencial num ficheiro em que os dados estejam dispersos e ainda tratar essa informação. O trabalho apresentado na unidade curricular de Processamento de Linguagens tem como objetivo usar esta ferramenta para filtrar um conjunto de dados fornecidos, extraindo desses dados informação relevante.
+
+\section*{Sele\c{c}\~ao de enunciados} \
+
+O tema escolhido pelo grupo foi “Processador de Inglês corrente” cuja descrição apresentamos em seguida.
+\\
+“Neste projeto pretende-se que leiam um texto corrente em inglês que faça uso das habituais contrações do tipo I'm, I'll, We're, can't, it's e:
+\begin{description}
+\item[] reproduza o texto de entrada na saída expandindo todas as contrações que encontrar.
+\item[] gere em HTML uma lista ordenada de todos os verbos (no infinitivo não flexionado) que encontrar no texto, recordando que essa forma verbal em inglês precedida pela palavra to, sendo a mesma palavra retirada se o dito verbo for antecedido por can, could, shall, should, will, would, may, might. Considere também a forma interrogativa em que o verbo no infinitivo é precedido por do/does ou did.
+\end{description}
+
+\section*{Objetivos}
+Para o desenvolvimento deste trabalho foram definidos os seguintes objetivos:
+\\
+\begin{description}
+\item[] Conseguir expandir corretamente um número elevado de contrações presentes num texto em língua inglesa;
+\item[] Identificar, com uma taxa de correção elevada, os verbos no infinitivo constantes num texto em língua inglesa.
+\end{description}
+
+\section*{Estrutura do Relatório} \
+
+Inicialmente vai ser explicado o problema, as características dos dados fornecidos e os padrões de frase por nós encontrados e que levaram à resolução dos problemas inicialmente propostos.
+Numa segunda fase apresentamos a codificação em Flex da solução desenvolvida mostrando as estruturas de dados e ações semânticas, bem como alternativas e decisões tomadas face aos problemas de implementação.
+Em seguida mostramos exemplo de um input e output e, posteriormente, é feita uma análise de resultado onde se explicam a realização de alguns testes para caracterizar a solução encontrada.
+Em apêndice a este relatório está também todo o código desenvolvido.
+
+\section*{Características dos Dados, Padr\~oes de Frase e Decisões}
+
+O programa a desenvolver tem por propósito receber textos em língua inglesa. Neste idioma é comum a utilização de contrações. Assim, quando estas forem detectadas far-se-á a respectiva expansão. Para isto foi necessário investigar sobre as contrações possíveis e decidir acerca de quais os casos a serem cobertos. De uma forma geral, decidiu-se cobrir todos os casos mais comuns de contrações tanto específicos (p.ex. gonna) como gerais (p.ex. we’ll).
+Relativamente à recolha de verbos no infinitivo, para os localizar, considerou-se que se encontram precedidos por palavras características (p.ex. to e may). No entanto, nos casos em que a frase se encontra na forma interrogativa, entre as palavras atrás referidas e o verbo, usualmente é encontrado um pronome. Assim, assumiu-se que é um verbo no infinito a palavra que é precedida de um pronome e uma das palavras atrás referidas e seguido por um ponto de interrogação.
+
+\chapter{Implementação e Ações Semânticas} \label{ae}
+\section{Expansão de contrações}
+Em seguida são discriminadas as expressões irregulares responsáveis por expandir as contrações detectadas bem como alguns exemplos abrangidos pelas mesmas.
+\\
+\begin{verbatim}
+[gG]onna[\.\?\!\;,\ \n\t] {printf("%coing to%c",yytext[0],yytext[strlen(yytext)-1]);}
+\end{verbatim}
+Gonna -> Going to      e 	gonna -> going to
+\\
+
+\section{Recolha de verbos}
+
+\section{Apresentação do Output}
+
+\chapter{Apresentação de Resultados}
+Em seguida apresentamos um pequeno exemplo de input por forma a demonstrar as funcionalidades do programa desenvolvido.
+\textbf{\underline{Input - Exemplo}}
+\begin{verbatim}
+   It's my life
+   It's now or never
+   I ain't gonna live forever
+   I just want to live while I'm alive
+   (It's my life)
+   My heart is like an open highway
+   Like Frankie said
+   I did it my way
+   I just wanna live while I'm alive
+   It's my life
+\end{verbatim}
+\\
+\textbf{\underline{Output - Expansão de contrações}}
+\begin{verbatim}
+   It [is/has] my life
+   It [is/has] now or never
+   I am not going to live forever
+   I just want to live while I am alive
+   (It [is/has] my life)
+   My heart is like an open highway
+   Like Frankie said
+   I did it my way
+   I just want to live while I am alive
+   It [is/has] my life
+\end{verbatim}
+\\
+\textbf{\underline{Output - Recolha de verbos}}
+
+\chapter{Análise de Resultados}
+Perante os resultados obtidos procedemos a uma análise onde em seguida se sintetizam alguns comentários relativos à expansão de contrações e à recolhas de verbos no infinitivo.
+\\
+\textbf{\underline{Expansão de contrações}}
+\\
+\begin{itemize}
+      \item
+\end{itemize}
+\\
+\textbf{\underline{Recolha de verbos}}
+\\
+\begin{itemize}
+      \item
+\end{itemize}
+\\
+Obtivemos os seguintes resultados para o livro Eragon:
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{my-label}
+\begin{tabular}{llll}
+Total & Certos & Errados & Sucesso \\
+873   & 713    & 160     & 81,67
+\end{tabular}
+\end{table}
+Resultados obtidos sem a deteção dos verbos no infinitivo nas frases interrogativas.
+\\
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{my-label}
+\begin{tabular}{llll}
+Total & Certos & Errados & Sucesso \\
+876   & 715    & 161     & 81,62
+\end{tabular}
+\end{table}
+Resultados obtidos com a deteção dos verbos no infinitivo nas frases interrogativas, o verbo tem que ser obrigatoriamente a última palavra da frase.
+\\
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{my-label}
+\begin{tabular}{llll}
+Total & Certos & Errados & Sucesso \\
+876   & 714    & 162     & 81,50
+\end{tabular}
+\end{table}
+Resultados obtidos com a deteção dos verbos no infinitivo nas frases interrogativas mas em que o verbo poderá ser a última ou penúltima palavra da frases.
+\\
+Tendo em conta os resultados obtidos e visto que, a taxa de sucesso e idêntica nos três casos optámos por dar privilégio ao número de verbos obtidos, tendo sido incluído na versão final o passo INTERROG.
+
+\chapter{Conclusão} \label{concl}
+Atendendo aos resultados obtidos, consideramos que todos os objectivos foram atingidos com sucesso.
+Consideramos que o programa desenvolvido pode ser usado como ferramenta de tratamento de texto em diversos contextos.
+Como trabalho futuro sugerimos a inclusão de mais alguns casos de contrações e a automatização da comparação dos verbos recolhidos com uma lista de verbos de modo a eliminar os casos não válidos.
+
+\appendix
+\chapter{Código GAWK}
+
+Lista-se a seguir o código desenvolvido.
+\\
+\begin{verbatim}
+   %option noyywrap
+   %x VERBO INTERROG
+   %{
+   	#include "string.h"
+   	#include <stdlib.h>
+   	#define MAX 3000
+   	char * verbos[MAX];
+   	int countVerbos=0;
+   	static int compare (const void * a, const void * b){
+       	return strcmp (*(const char **) a, *(const char **) b);
+   	}
+   %}
+   %%
+   [^a-zA-Z]+(?i:(to|can('t)?|could|shall|should|will|would|may|might|did(n't)))\ +  { ECHO; BEGIN VERBO; }
+   <VERBO>(?i:(i|me|my(self)?|mine|you(r|rs|rself)?|he|him(self)?|his|she|her(s|self)?|it(s)?|we|us|our(s|selves)?|the(y)|them(selves)?|a|th(is|at)))[\.\?\!\;\',\:\ \n\t] { ECHO ; BEGIN INTERROG;}
+   <VERBO>[a-z]+ {
+   	int i=0;
+   	while(i<countVerbos){
+       	if(strcmp(verbos[i],yytext)==0)
+           	break;
+       	i++;
+   	}
+   	if(i==countVerbos)
+       	verbos[countVerbos++]=strdup(yytext);
+   	ECHO;
+   	BEGIN INITIAL;
+   }
+   <VERBO>.|\n                	{ ECHO ; BEGIN INITIAL ; }
+   <INTERROG>[a-z]+(\ [a-z]+)?\? {
+   	int i=0;
+   	yytext[strlen(yytext)-1]='\0';
+   	char * aux=strtok(yytext," ");
+   	aux=strtok(aux,"?");
+   	while(i<countVerbos){
+       	if(strcmp(verbos[i],aux)==0)
+           	break;
+       	i++;
+   	}
+   	if(i==countVerbos)
+       	verbos[countVerbos++]=strdup(aux);
+   	ECHO;
+   	BEGIN INITIAL;
+   }
+   <INTERROG>.|\n                	{ ECHO ; BEGIN INITIAL ; }
+
+
+
+   [gG]onna[\.\?\!\;,\ \n\t]                	{ printf("%coing to%c",yytext[0],yytext[strlen(yytext)-1]); }
+   [wW]anna[\.\?\!\;,\ \n\t]                	{ printf("%cant to%c",yytext[0],yytext[strlen(yytext)-1]); }
+   [cC]an't[\.\?\!\;,\ \n\t]                	{ printf("%cannot%c",yytext[0],yytext[strlen(yytext)-1]); }
+   [wW]on't[\.\?\!\;,\ \n\t]                	{ printf("%cill not%c",yytext[0],yytext[strlen(yytext)-1]); }
+   I\ ain't[\.\?\!\;,\ \n\t]          	{ printf("I am not%c",yytext[strlen(yytext)-1]); }
+   ([hH]e|[sS]he|[iI]t)\ ain't[\.\?\!\;,\ \n\t]  { printf("%s is not%c",strtok(yytext," "),yytext[strlen(yytext)-1]);}
+   ([yY]ou|[tT]hey|[wW]e)\ ain't[\.\?\!\;,\ \n\t] { printf("%s are not%c",strtok(yytext," "),yytext[strlen(yytext)-1]);}
+   [tT]hat\ ain't[\.\?\!\;,\ \n\t]       	{ printf("%chat is not%c",yytext[0],yytext[strlen(yytext)-1]); }
+   [tT]his\ ain't[\.\?\!\;,\ \n\t]       	{ printf("%chis is not%c",yytext[0],yytext[strlen(yytext)-1]); }
+   \'[cC]ause[\.\?\!\;,\ \n\t]              	{ printf("%cecause%c", yytext[1]-1,yytext[strlen(yytext)-1]); }
+   'm[\.\?\!\;,\ \n\t]                      	{ printf(" am%c",yytext[strlen(yytext)-1]); }
+   're[\.\?\!\;,\ \n\t]                     	{ printf(" are%c",yytext[strlen(yytext)-1]); }
+   n't[\.\?\!\;,\ \n\t]                     	{ printf(" not%c",yytext[strlen(yytext)-1]); }
+   'll[\.\?\!\;,\ \n\t]                     	{ printf(" will%c",yytext[strlen(yytext)-1]); }
+   've[\.\?\!\;,\ \n\t]                     	{ printf(" have%c",yytext[strlen(yytext)-1]); }
+   'd[\.\?\!\;,\ \n\t]                      	{ printf(" would%c",yytext[strlen(yytext)-1]); }
+   's[\.\?\!\;,\ \n\t]                      	{ printf(" [is/has]%c",yytext[strlen(yytext)-1]); }
+   %%
+   int main(){
+   	yylex();
+   	int i=0;printf("\n\n");
+   	FILE *fp;
+   	fp= fopen("verbos.html", "w");
+   	qsort (verbos, countVerbos, sizeof (const char *), compare);
+   	fprintf(fp,"<html><body><h1>verbos:%d</h1><ul>\n",countVerbos);
+   	for(i=0;i<countVerbos;i++)
+       	fprintf(fp,"<li>to %s</li>\n",verbos[i]);
+   	fprintf(fp,"</ul></body></html>");
+   	fclose(fp);
+   	return 1;
+   }
+\end{verbatim}
+
+\bibliographystyle{alpha}
+\bibliography{relprojLayout}
+
+
+
+
+
+\end{document}

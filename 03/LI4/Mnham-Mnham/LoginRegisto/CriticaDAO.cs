@@ -14,10 +14,10 @@ namespace LoginRegisto
         public void efetuaCritica(int idE, int idU, int cla, string com)
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "li4server1.database.windows.net";
-            builder.UserID = "rgllm";
-            builder.Password = "Universidade2016";
-            builder.InitialCatalog = "li4";
+            builder.DataSource = "your.azure.server";
+            builder.UserID = "id";
+            builder.Password = "xxxx";
+            builder.InitialCatalog = "xxx";
 
             using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
             {

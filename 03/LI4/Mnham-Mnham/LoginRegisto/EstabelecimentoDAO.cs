@@ -16,10 +16,10 @@ namespace LoginRegisto
         {
             Int32 id = -1;
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "li4server1.database.windows.net";
-            builder.UserID = "rgllm";
-            builder.Password = "Universidade2016";
-            builder.InitialCatalog = "li4";
+            builder.DataSource = "your.azure.server";
+            builder.UserID = "id";
+            builder.Password = "xxxx";
+            builder.InitialCatalog = "xxx";
 
             using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
             {
@@ -125,10 +125,10 @@ namespace LoginRegisto
             int id;
 
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "li4server1.database.windows.net";
-            builder.UserID = "rgllm";
-            builder.Password = "Universidade2016";
-            builder.InitialCatalog = "li4";
+            builder.DataSource = "your.azure.server";
+            builder.UserID = "id";
+            builder.Password = "xxxx";
+            builder.InitialCatalog = "xxx";
 
             using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
             {
@@ -260,10 +260,10 @@ namespace LoginRegisto
         public void registaIngrediente(int idR, string ing)
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "li4server1.database.windows.net";
-            builder.UserID = "rgllm";
-            builder.Password = "Universidade2016";
-            builder.InitialCatalog = "li4";
+            builder.DataSource = "your.azure.server";
+            builder.UserID = "id";
+            builder.Password = "xxxx";
+            builder.InitialCatalog = "xxx";
 
             using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
             {
@@ -309,10 +309,10 @@ namespace LoginRegisto
             SortedDictionary<int, Estabelecimento> estabelecimentos = new SortedDictionary<int, Estabelecimento>();
 
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "li4server1.database.windows.net";
-            builder.UserID = "rgllm";
-            builder.Password = "Universidade2016";
-            builder.InitialCatalog = "li4";
+            builder.DataSource = "your.azure.server";
+            builder.UserID = "id";
+            builder.Password = "xxxx";
+            builder.InitialCatalog = "xxx";
 
             using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
             {

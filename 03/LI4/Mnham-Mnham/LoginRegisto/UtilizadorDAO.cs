@@ -16,10 +16,10 @@ namespace LoginRegisto
         public void adicionaPesquisa(int id, string pesquisa)
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "li4server1.database.windows.net";
-            builder.UserID = "rgllm";
-            builder.Password = "Universidade2016";
-            builder.InitialCatalog = "li4";
+            builder.DataSource = "your.azure.server";
+            builder.UserID = "id";
+            builder.Password = "xxxx";
+            builder.InitialCatalog = "xxx";
 
             using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
             {
@@ -45,10 +45,10 @@ namespace LoginRegisto
         {
             List<String> pesquisas = new List<string>();
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "li4server1.database.windows.net";
-            builder.UserID = "rgllm";
-            builder.Password = "Universidade2016";
-            builder.InitialCatalog = "li4";
+            builder.DataSource = "your.azure.server";
+            builder.UserID = "id";
+            builder.Password = "xxxx";
+            builder.InitialCatalog = "xxx";
 
             using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
             {
@@ -103,10 +103,10 @@ namespace LoginRegisto
 
             bool exists = false;
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "li4server1.database.windows.net";
-            builder.UserID = "rgllm";
-            builder.Password = "Universidade2016";
-            builder.InitialCatalog = "li4";
+            builder.DataSource = "your.azure.server";
+            builder.UserID = "id";
+            builder.Password = "xxxx";
+            builder.InitialCatalog = "xxx";
 
             using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
             {
@@ -147,10 +147,10 @@ namespace LoginRegisto
             int id = -1;
 
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "li4server1.database.windows.net";
-            builder.UserID = "rgllm";
-            builder.Password = "Universidade2016";
-            builder.InitialCatalog = "li4";
+            builder.DataSource = "your.azure.server";
+            builder.UserID = "id";
+            builder.Password = "xxxx";
+            builder.InitialCatalog = "xxx";
 
             using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
             {

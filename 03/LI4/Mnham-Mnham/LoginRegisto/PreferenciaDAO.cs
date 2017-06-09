@@ -17,10 +17,10 @@ namespace LoginRegisto
             int existe = -1;
 
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "li4server1.database.windows.net";
-            builder.UserID = "rgllm";
-            builder.Password = "Universidade2016";
-            builder.InitialCatalog = "li4";
+            builder.DataSource = "your.azure.server";
+            builder.UserID = "id";
+            builder.Password = "xxxx";
+            builder.InitialCatalog = "xxx";
 
             using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
             {
@@ -67,10 +67,10 @@ namespace LoginRegisto
         public void registaPreferencia(int idU, int idP, bool t, string i, string tc)
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "li4server1.database.windows.net";
-            builder.UserID = "rgllm";
-            builder.Password = "Universidade2016";
-            builder.InitialCatalog = "li4";
+            builder.DataSource = "your.azure.server";
+            builder.UserID = "id";
+            builder.Password = "xxxx";
+            builder.InitialCatalog = "xxx";
 
             using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
             {
@@ -156,10 +156,10 @@ namespace LoginRegisto
             HashSet<String> preferencias = new HashSet<string>();
 
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "li4server1.database.windows.net";
-            builder.UserID = "rgllm";
-            builder.Password = "Universidade2016";
-            builder.InitialCatalog = "li4";
+            builder.DataSource = "your.azure.server";
+            builder.UserID = "id";
+            builder.Password = "xxxx";
+            builder.InitialCatalog = "xxx";
 
             using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
             {
@@ -237,10 +237,10 @@ namespace LoginRegisto
             bool existe = false;
 
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "li4server1.database.windows.net";
-            builder.UserID = "rgllm";
-            builder.Password = "Universidade2016";
-            builder.InitialCatalog = "li4";
+            builder.DataSource = "your.azure.server";
+            builder.UserID = "id";
+            builder.Password = "xxxx";
+            builder.InitialCatalog = "xxx";
 
             using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
             {

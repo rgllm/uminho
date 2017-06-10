@@ -1,0 +1,8 @@
+&
+i;
+&
+i=1;
+enquanto(i<=5){
+	escrever i;
+	i++;
+}

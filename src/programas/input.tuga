@@ -1,0 +1,14 @@
+&
+a;
+v[5];
+&
+ler a;
+enquanto(a<5){
+	ler v[a];
+	se(v[a]>=0){
+		a++;
+	}
+	senao{
+		escrever "tem que inserir um numero maior que 0";
+	}
+}

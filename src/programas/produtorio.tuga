@@ -1,0 +1,10 @@
+N=5;
+indice;
+produtorio;
+numero;
+enquanto(indice<0){
+	ler numero;
+	produtorio=produtorio*numero;
+	indice=indice-1;
+}
+escrever produtorio;

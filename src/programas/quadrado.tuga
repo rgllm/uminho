@@ -1,0 +1,18 @@
+a;
+b;
+c;
+d;
+ler a;
+ler b;
+ler c;
+ler d;
+se(a==b){
+	se(b==c){
+		se(c==d){
+			escrever("É um quadrado.\n");
+		}
+	}
+}
+senao{
+	escrever("Não é um quadrado.\n")
+}

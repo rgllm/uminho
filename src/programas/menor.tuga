@@ -1,0 +1,14 @@
+N;
+ler N;
+a[N];
+indice;
+menor;
+enquanto(indice < N){
+	ler a[indice];
+}
+menor=a[0];
+enquanto(indice < N){
+	se(a[indice]<menor){
+		menor=a[indice];
+	}
+}

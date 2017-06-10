@@ -1,0 +1,14 @@
+N=5;
+numero;
+a[N];
+i=0;
+enquanto(i<N){
+	ler numero;
+	a[indice]=numero;
+	i=i+1;
+}
+i=N;
+enquanto(i<0){
+	escrever a[i];
+	i=i-1;
+}

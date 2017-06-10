@@ -1,18 +1,16 @@
+// programa que lê 4 números e verifica se podem corresponder aos lados de um quadrado
 a;
 b;
 c;
 d;
+&
 ler a;
 ler b;
 ler c;
 ler d;
-se(a==b){
-	se(b==c){
-		se(c==d){
-			escrever("É um quadrado.\n");
-		}
-	}
+se(a==b && b==c && c==d){
+	escrever "É um quadrado.\n";
 }
 senao{
-	escrever("Não é um quadrado.\n")
+	escrever "Não é um quadrado.\n";
 }

@@ -1,18 +1,112 @@
 		pushi 0
+		pushn 10
+		pushi 0
+		pushi 0
 start
-		pushi 1
-		storeg 0
 while0:
 		pushg 0
-		pushi 5
-		infeq
+		pushi 10
+		inf
 		jz while1
+		pushgp
+		pushi 1
+		padd
 		pushg 0
-		writei
+		read
+		atoi
+		storen
 		pushg 0
 		pushi 1
 		add
 		storeg 0
 		jump while0
 while1:
+		pushi 1
+		storeg 12
+while2:
+		pushg 12
+		jz while3
+		pushi 0
+		storeg 12
+		pushi 0
+		storeg 0
+while4:
+		pushg 0
+		pushi 10
+		pushi 1
+		sub
+		inf
+		jz while5
+		pushgp
+		pushi 1
+		padd
+		pushg 0
+		loadn
+		pushgp
+		pushi 1
+		padd
+		pushg 0
+		pushi 1
+		add
+		loadn
+		inf
+		jz if0
+		pushgp
+		pushi 1
+		padd
+		pushg 0
+		loadn
+		storeg 11
+		pushgp
+		pushi 1
+		padd 
+		pushg 0
+		pushgp
+		pushi 1
+		padd
+		pushg 0
+		pushi 1
+		add
+		loadn
+		storen
+		pushgp
+		pushi 1
+		padd 
+		pushg 0
+		pushi 1
+		add
+		pushg 11
+		storen
+		pushi 1
+		storeg 12
+if0:
+		pushg 0
+		pushi 1
+		add
+		storeg 0
+		jump while4
+while5:
+		jump while2
+while3:
+		pushi 0
+		storeg 0
+while6:
+		pushg 0
+		pushi 10
+		inf
+		jz while7
+		pushgp
+		pushi 1
+		padd
+		pushg 0
+		loadn
+		writei
+		pushs ",";
+		writes
+		pushg 0
+		pushi 1
+		add
+		storeg 0
+		jump while6
+while7:
 stop

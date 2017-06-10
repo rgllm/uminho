@@ -1,4 +1,4 @@
-
+// programa que lê 10 numeros naturais e os escreve por ordem descendente
 i; 
 a[10];	
 troca;	
@@ -9,7 +9,7 @@ enquanto(i<10){
 	i++;
 }
 trocado=1;
-enquanto(trocado){ 
+enquanto(trocado){
 	trocado=0;
 	i=0;
 	enquanto(i<10 -1 ){
@@ -17,7 +17,7 @@ enquanto(trocado){
 			troca=a[i];
 			a[i]=a[i+1];
 			a[i+1]=troca;
-			trocado=1; 	
+			trocado=1;
 		}
 		i++;
 	}

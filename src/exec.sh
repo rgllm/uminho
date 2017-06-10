@@ -1,4 +1,4 @@
 #!/bin/bash
 make
-./gramatica inputs/mat.tuga > emul/teste.vm
-java -jar ~/uni/PL/TP3/emul/dist/vm.jar
+./gramatica programas/mat.tuga > emul/teste.vm
+java -jar emul/dist/vm.jar

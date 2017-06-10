@@ -1,10 +1,13 @@
-N=5;
-indice;
+// programa que lê 5 números naturais e imprime o seu produtório
+n;
 produtorio;
 numero;
-enquanto(indice<0){
+&
+n=5;
+produtorio=1;
+enquanto(n){
 	ler numero;
 	produtorio=produtorio*numero;
-	indice=indice-1;
+	n--;
 }
 escrever produtorio;

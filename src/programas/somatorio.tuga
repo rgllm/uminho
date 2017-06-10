@@ -1,0 +1,13 @@
+// programa que lê 5 números naturais e imprime o seu somatório
+
+a;
+num;
+soma;
+&
+enquanto(a<5){
+	ler num;
+	soma+=num;
+	a++;
+}
+escrever "Soma: ";
+escrever soma;

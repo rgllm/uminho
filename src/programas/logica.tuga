@@ -1,0 +1,17 @@
+// programa para testar operações lógicas e relacionais
+i;
+f;
+&
+enquanto(i<10){
+	se(!f){
+		escrever " SIM ,";
+	}
+	senao{
+		escrever " NAO ,";
+	}
+	se( f==1 ||  i%2==0 && i==5  ){
+		escrever ",,JACKPOT,,";
+	}
+	f=(f+1)%2;
+	i++;
+}

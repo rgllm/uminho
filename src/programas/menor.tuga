@@ -1,14 +1,17 @@
-N;
-ler N;
-a[N];
-indice;
+// programa que lê n números (n fornecido pelo utilizador) e escreve o menor deles
+n;
+aux;
 menor;
-enquanto(indice < N){
-	ler a[indice];
-}
-menor=a[0];
-enquanto(indice < N){
-	se(a[indice]<menor){
-		menor=a[indice];
+&
+ler n;
+ler aux;
+menor=aux;
+n--;
+enquanto(n){
+	ler aux;
+	se(aux<menor){
+		menor=aux;
 	}
+	n--;
 }
+escrever menor;

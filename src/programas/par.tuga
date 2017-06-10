@@ -1,7 +1,0 @@
-numero;
-enquanto(numero){
-	ler numero;
-	se((numero%2)!=0){
-		escrever(numero);
-	}
-}

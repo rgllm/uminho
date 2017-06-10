@@ -28,12 +28,14 @@
 	char *var; 
 	char *string; 
 }
-%token <inteiro>INT  
+%token <inteiro>INT
 %token <var>VAR
 %token <op>OPINC OPDEC OPATRMAIS OPATRMENOS OPATRPROD OPATRDIV OPATRMOD OPAND OPOR OPGT OPLT OPGE OPLE OPEQ OPNE  
 %token <op>OPARITMAIS OPARITMENOS OPARITPROD OPARITDIV OPARITMOD
 %token <string>STRING
-%token SCAN PRINT IF ELSE WHILE NOT ERRO
+%token SCAN PRINT IF ELSE NOT ERRO
+%token <inteiro>WHILE
+
 
 %left OPAND OPOR
 %left NOT OPGT OPLT OPGE OPLE OPEQ OPNE 
@@ -42,9 +44,10 @@
 
 %start Programa
 
+
 %%
 
-Programa : '&' Declaracoes { listaInstrucoes = insertInstrucao(iAddr++,"start",listaInstrucoes); }
+Programa : Declaracoes { listaInstrucoes = insertInstrucao(iAddr++,"start",listaInstrucoes); }
 			'&' Instrucoes { listaInstrucoes = insertInstrucao(iAddr++,"stop",listaInstrucoes); }
 	  	 ;
 
@@ -59,8 +62,7 @@ Declaracao : VAR ';' {
 					auxVariavel = malloc(sizeof(struct variavel));
 		   			auxVariavel->nome = strdup($1);						
 
-					if(!existeVariavel(auxVariavel->nome,listaVariaveis))
-					{
+					if(!existeVariavel(auxVariavel->nome,listaVariaveis)){
 						auxVariavel->tipo = strdup("inteiro");
 			   			auxVariavel->endereco = gp;
 						listaVariaveis = insertVariavel(auxVariavel,listaVariaveis);
@@ -80,8 +82,7 @@ Declaracao : VAR ';' {
 		   			auxVariavel->tipo = strdup("array");
 		   			auxVariavel->endereco = gp;
 		   			
-					if(!existeVariavel(auxVariavel->nome,listaVariaveis))
-					{
+					if(!existeVariavel(auxVariavel->nome,listaVariaveis)){
 						listaVariaveis = insertVariavel(auxVariavel,listaVariaveis); 
 						char buf[20];
 						sprintf(buf,"\t\tpushn %d",$3); 
@@ -96,8 +97,7 @@ Declaracao : VAR ';' {
 		   		}
 		   ;
 
-
-//--- CORPO ---//
+		   //--- CORPO ---//
 Instrucoes : Instrucoes Instrucao
 		   | Instrucao
 		   ;
@@ -295,8 +295,49 @@ Atribuicao : VAR '=' Exp ';' {
 		   ;
 
 //--- LEITURA ---//
-Leitura : SCAN VAR ';'
-		| SCAN VAR '[' Exp ']' ';'
+Leitura : SCAN VAR ';' {
+				if(!existeVariavel($2,listaVariaveis)){
+					erros = 1;
+					fprintf(stderr,"l.%d erro: variável '%s' não declarada\n",yylineno,$2);
+				}
+				else if(strcmp(tipoVariavel($2,listaVariaveis),"inteiro") != 0){
+					erros = 1;
+					fprintf(stderr,"l.%d erro: variável '%s' não é um escalar\n",yylineno,$2);
+				}
+				else{	
+					char buf[1024];
+					sprintf(buf,"\t\tread"); 
+					listaInstrucoes = insertInstrucao(iAddr++,buf,listaInstrucoes);	
+					listaInstrucoes = insertInstrucao(iAddr++,"\t\tatoi",listaInstrucoes);	
+
+					sprintf(buf,"storeg %d",enderecoVariavel($2,listaVariaveis)); 
+					listaInstrucoes = insertInstrucao(iAddr++,buf,listaInstrucoes);	
+				}
+			}
+		| SCAN VAR {
+				if(!existeVariavel($2,listaVariaveis)){
+					erros = 1;
+					fprintf(stderr,"l.%d erro: variável '%s' não declarada\n",yylineno,$2);
+				}
+				else if(strcmp(tipoVariavel($2,listaVariaveis),"array") != 0){
+					erros = 1;
+					fprintf(stderr,"l.%d erro: variável '%s' não é um vector\n",yylineno,$2);
+				}
+				else {
+					listaInstrucoes = insertInstrucao(iAddr++,"\t\tpushgp",listaInstrucoes);
+	   				char buf[20];
+
+					sprintf(buf,"\t\tpushi %d",enderecoVariavel($2,listaVariaveis)); 
+					listaInstrucoes = insertInstrucao(iAddr++,buf,listaInstrucoes);
+					listaInstrucoes = insertInstrucao(iAddr++,"\t\tpadd",listaInstrucoes);
+				}  
+			}
+		'[' Exp ']' ';'
+			{
+				listaInstrucoes = insertInstrucao(iAddr++,"\t\tread",listaInstrucoes);	
+				listaInstrucoes = insertInstrucao(iAddr++,"\t\tatoi",listaInstrucoes);	
+				listaInstrucoes = insertInstrucao(iAddr++,"\t\tstoren",listaInstrucoes);
+			}
 		;
 
 //--- ESCRITA ---//
@@ -305,12 +346,11 @@ Escrita : PRINT Exp ';' {
 			}
 		| PRINT STRING ';'{ 				
 				char buf[1024];
-				sprintf(buf,"\t\tpushs \"%s\"",$2); 
+				sprintf(buf,"\t\tpushs %s",$2); 
 				listaInstrucoes = insertInstrucao(iAddr++,buf,listaInstrucoes);			
 				listaInstrucoes = insertInstrucao(iAddr++,"\t\twrites",listaInstrucoes);
 			} 
 		;
-
 
 //--- CONDICIONAL IF ---//
 Condicional : IF '(' Exp ')' {
@@ -347,13 +387,14 @@ Else : ELSE {
 				listaInstrucoes = insertInstrucao(iAddr++,buf1,listaInstrucoes);}
 	 ;
 
-
 //--- CICLO WHILE ---//
-Ciclo : WHILE '('{ 
+Ciclo : WHILE '(' { 
 				whileAddr = iAddr;
-				char buf1[20];
-				sprintf(buf1,"while%d:",whiles++);
-				listaInstrucoes = insertInstrucao(iAddr++,buf1,listaInstrucoes); 
+				char buf[20];
+				$1=whiles;
+				whiles+=2;
+				sprintf(buf,"while%d:",$1);
+				listaInstrucoes = insertInstrucao(iAddr++,buf,listaInstrucoes); 
 			}
 		 Exp ')' { 
 
@@ -361,14 +402,14 @@ Ciclo : WHILE '('{
 				listaInstrucoes = insertInstrucao(iAddr++,"while",listaInstrucoes); 
 			}
 	 	'{' Instrucoes { 
-				int jump = whileJump(whiles,pilhaWhileAddr,listaInstrucoes); 
+				int jump = whileJump($1+1,pilhaWhileAddr,listaInstrucoes); 
 				pilhaWhileAddr = popWhileAddr(pilhaWhileAddr);
 
 				char buf[20]; 
-				sprintf(buf,"\t\tjump while%d",whiles-1); 
+				sprintf(buf,"\t\tjump while%d",$1); 
 				listaInstrucoes = insertInstrucao(iAddr++,buf,listaInstrucoes);
 				char buf1[20];
-				sprintf(buf1,"while%d:",whiles++);
+				sprintf(buf1,"while%d:",$1+1);
 				listaInstrucoes = insertInstrucao(iAddr++,buf1,listaInstrucoes);
 			}
 		'}' 
@@ -432,19 +473,15 @@ Exp : NOT Exp { listaInstrucoes = insertInstrucao(iAddr++,"\t\tpushi 0\n\t\tequa
 	| '(' Exp ')'
 	;
 
-
 %%
 #include "lex.yy.c"
 
-void yyerror(char* s)
-{
+void yyerror(char* s){
    fprintf(stderr,"erro: %d: %s: %s\n",yylineno,s,yytext);
    erros = 1;
 }
 
-
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
 	if(argc < 2){ 
 		printf("Introduzir ficheiro para compilação como argumento!\n"); 
 		exit(0); 
@@ -461,8 +498,7 @@ int main(int argc, char *argv[])
 	if(!erros){
 		while(listaInstrucoes){
 			if(listaInstrucoes->instrucao){
-				//fprintf(f,"_%06d: %s\n",listaInstrucoes->endereco,listaInstrucoes->instrucao);
-				//printf("_%06d: %s\n",listaInstrucoes->endereco,listaInstrucoes->instrucao);
+				//fprintf(f,"%s\n",listaInstrucoes->instrucao);
 				printf("%s\n",listaInstrucoes->instrucao);
 			}
 			listaInstrucoes = listaInstrucoes->next;

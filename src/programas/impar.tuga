@@ -1,0 +1,17 @@
+// programa que lê uma sequência de números terminada por 0 e imprime a
+// contagem e os números ímpares da sequência
+numero;
+conta;
+&
+numero=1;
+escrever "IMPARES: ";
+enquanto(numero){
+	ler numero;
+	se(numero%2){
+		escrever(numero);
+		escrever " , ";
+		conta++;
+	}
+}
+escrever "\nCONTAGEM:";
+escrever conta;

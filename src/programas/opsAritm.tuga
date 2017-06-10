@@ -1,4 +1,5 @@
-&
+// programa para testar o funcionamento das operações aritméticas
+// e atribuições/leituras dos índices de um array
 b;
 a[5];
 &

@@ -1,18 +1,15 @@
 #include "estrutura.h"
 
 //--- VARIAVEIS ---// 
-struct variavel* insertVariavel(struct variavel *variavel, struct variavel *listaVariaveis)
-{
+struct variavel* insertVariavel(struct variavel *variavel, struct variavel *listaVariaveis){
 	struct variavel *ant=NULL,*pt=listaVariaveis,*aux=variavel;
 
-	while(pt && pt->nome && strcmp(variavel->nome,pt->nome)>=0)
-	{
+	while(pt && pt->nome && strcmp(variavel->nome,pt->nome)>=0){
 		ant = pt;
 		pt = pt->next;
 	}
 
-	if(!ant)
-	{
+	if(!ant){
 		aux->next = listaVariaveis;
 		return aux;
 	}
@@ -24,13 +21,11 @@ struct variavel* insertVariavel(struct variavel *variavel, struct variavel *list
 	}
 }
 
-int existeVariavel(char *variavel, struct variavel *listaVariaveis)
-{
+int existeVariavel(char *variavel, struct variavel *listaVariaveis){
 	struct variavel *pt=listaVariaveis;
 	int res = 0;
 	
-	while(pt && pt->nome && strcmp(variavel,pt->nome)>=0)
-	{
+	while(pt && pt->nome && strcmp(variavel,pt->nome)>=0){
 		if(strcmp(variavel,pt->nome)==0) 
 			res = 1;
 		pt = pt->next;
@@ -39,13 +34,11 @@ int existeVariavel(char *variavel, struct variavel *listaVariaveis)
 	return res;
 }
 
-int enderecoVariavel(char *variavel, struct variavel *listaVariaveis)
-{
+int enderecoVariavel(char *variavel, struct variavel *listaVariaveis){
 	struct variavel *pt=listaVariaveis;
 	int res = -1;
 	
-	while(pt && pt->nome && strcmp(variavel,pt->nome)>=0)
-	{
+	while(pt && pt->nome && strcmp(variavel,pt->nome)>=0){
 		if(strcmp(variavel,pt->nome)==0) 
 			res = pt->endereco;
 		pt = pt->next;
@@ -54,12 +47,10 @@ int enderecoVariavel(char *variavel, struct variavel *listaVariaveis)
 	return res;
 }
 
-char* tipoVariavel(char *variavel, struct variavel *listaVariaveis)
-{struct variavel *pt=listaVariaveis;
+char* tipoVariavel(char *variavel, struct variavel *listaVariaveis){struct variavel *pt=listaVariaveis;
 	char* res = NULL;
 	
-	while(pt && pt->nome && strcmp(variavel,pt->nome)>=0)
-	{
+	while(pt && pt->nome && strcmp(variavel,pt->nome)>=0){
 		if(strcmp(variavel,pt->nome)==0) 
 			res = pt->tipo;
 		pt = pt->next;
@@ -71,8 +62,7 @@ char* tipoVariavel(char *variavel, struct variavel *listaVariaveis)
 
 
 //--- INSTRUCOES ---// 
-struct instrucao* insertInstrucao(int endereco, char *instrucao, struct instrucao *listaInstrucoes)
-{
+struct instrucao* insertInstrucao(int endereco, char *instrucao, struct instrucao *listaInstrucoes){
 	struct instrucao *ant=NULL,*pt=listaInstrucoes,*aux=NULL;
 
 	aux = malloc(sizeof(struct instrucao));
@@ -80,14 +70,12 @@ struct instrucao* insertInstrucao(int endereco, char *instrucao, struct instruca
 	aux->instrucao = strdup(instrucao);
 	aux->next = NULL;
 
-	while(pt && aux->endereco >= pt->endereco)
-	{
+	while(pt && aux->endereco >= pt->endereco){
 		ant = pt;
 		pt = pt->next;
 	}
 
-	if(!ant)
-	{
+	if(!ant){
 		aux->next = listaInstrucoes;
 		return aux;
 	}
@@ -100,23 +88,20 @@ struct instrucao* insertInstrucao(int endereco, char *instrucao, struct instruca
 }
 
 //--- CONDICIONAL IF ---//
-struct ifAddr* pushIfAddr(int endereco, struct ifAddr *pilhaIfAddr)
-{
+struct ifAddr* pushIfAddr(int endereco, struct ifAddr *pilhaIfAddr){
 	struct ifAddr *aux = malloc(sizeof(struct ifAddr));
 	aux->jz = endereco;
 	aux->next = pilhaIfAddr;
 	return aux;
 }
 
-struct ifAddr* popIfAddr(struct ifAddr *pilhaIfAddr)
-{
+struct ifAddr* popIfAddr(struct ifAddr *pilhaIfAddr){
 	struct ifAddr *res = pilhaIfAddr->next;
 	free(pilhaIfAddr);
 	return res;
 }
 
-void ifJump(int endereco, struct ifAddr *pilhaIfAddr, struct instrucao *listaInstrucoes)
-{
+void ifJump(int endereco, struct ifAddr *pilhaIfAddr, struct instrucao *listaInstrucoes){
 	struct instrucao *pt=listaInstrucoes, *aux=NULL;
 
 	while(pt && pt->endereco != pilhaIfAddr->jz)
@@ -127,8 +112,7 @@ void ifJump(int endereco, struct ifAddr *pilhaIfAddr, struct instrucao *listaIns
 	pt->instrucao = strdup(buf);
 }
 
-void elseJump(int endereco, struct ifAddr *pilhaIfAddr, struct instrucao *listaInstrucoes)
-{
+void elseJump(int endereco, struct ifAddr *pilhaIfAddr, struct instrucao *listaInstrucoes){
 	struct instrucao *pt=listaInstrucoes, *aux=NULL;
 
 	while(pt && pt->endereco != pilhaIfAddr->jz)
@@ -140,8 +124,7 @@ void elseJump(int endereco, struct ifAddr *pilhaIfAddr, struct instrucao *listaI
 }
 
 //--- CICLO WHILE ---//
-struct whileAddr* pushWhileAddr(int endereco, int whileAddr, struct whileAddr *pilhaWhileAddr)
-{
+struct whileAddr* pushWhileAddr(int endereco, int whileAddr, struct whileAddr *pilhaWhileAddr){
 	struct whileAddr *aux = malloc(sizeof(struct whileAddr));
 	aux->jump = whileAddr;
 	aux->jz = endereco;
@@ -149,15 +132,13 @@ struct whileAddr* pushWhileAddr(int endereco, int whileAddr, struct whileAddr *p
 	return aux;
 }
 
-struct whileAddr* popWhileAddr(struct whileAddr *pilhaWhileAddr)
-{
+struct whileAddr* popWhileAddr(struct whileAddr *pilhaWhileAddr){
 	struct whileAddr *res = pilhaWhileAddr->next;
 	free(pilhaWhileAddr);
 	return res;
 }
 
-int whileJump(int endereco, struct whileAddr *pilhaWhileAddr, struct instrucao *listaInstrucoes)
-{
+int whileJump(int endereco, struct whileAddr *pilhaWhileAddr, struct instrucao *listaInstrucoes){
 	struct instrucao *pt=listaInstrucoes, *aux=NULL;
 
 	while(pt && pt->endereco != pilhaWhileAddr->jz)
@@ -169,7 +150,4 @@ int whileJump(int endereco, struct whileAddr *pilhaWhileAddr, struct instrucao *
 
 	return pilhaWhileAddr->jump;
 }
-
-
-
 

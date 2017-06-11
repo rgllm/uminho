@@ -1,0 +1,49 @@
+		pushi 0
+		pushi 0
+start
+while0:
+		pushg 0
+		pushi 10
+		inf
+		jz while1
+		pushg 1
+		pushi 0
+		equal
+		jz if0
+		pushs " SIM ,";
+		writes
+		jump else0
+if0:
+		pushs " NAO ,";
+		writes
+else0:
+		pushg 1
+		pushi 1
+		equal
+		pushg 0
+		pushi 2
+		mod
+		pushi 0
+		equal
+		add
+		pushg 0
+		pushi 5
+		equal
+		mul
+		jz if1
+		pushs ",,JACKPOT,,";
+		writes
+if1:
+		pushg 1
+		pushi 1
+		add
+		pushi 2
+		mod
+		storeg 1
+		pushg 0
+		pushi 1
+		add
+		storeg 0
+		jump while0
+while1:
+stop

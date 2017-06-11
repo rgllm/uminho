@@ -310,7 +310,7 @@ Leitura : SCAN VAR ';' {
 					listaInstrucoes = insertInstrucao(iAddr++,buf,listaInstrucoes);	
 					listaInstrucoes = insertInstrucao(iAddr++,"\t\tatoi",listaInstrucoes);	
 
-					sprintf(buf,"storeg %d",enderecoVariavel($2,listaVariaveis)); 
+					sprintf(buf,"\t\tstoreg %d",enderecoVariavel($2,listaVariaveis)); 
 					listaInstrucoes = insertInstrucao(iAddr++,buf,listaInstrucoes);	
 				}
 			}
@@ -494,12 +494,13 @@ int main(int argc, char *argv[]){
    	//--- IMPRIMR OUTPUT ---//
    	filename = strdup(argv[1]);
 	filename[strrchr(filename,'.')-filename] = '\0';
-	//FILE* f = fopen(filename,"w");
+	strcat(filename,".vm");
+	FILE* f = fopen(filename,"w");
 	if(!erros){
 		while(listaInstrucoes){
 			if(listaInstrucoes->instrucao){
-				//fprintf(f,"%s\n",listaInstrucoes->instrucao);
-				printf("%s\n",listaInstrucoes->instrucao);
+				fprintf(f,"%s\n",listaInstrucoes->instrucao);
+				//printf("%s\n",listaInstrucoes->instrucao);
 			}
 			listaInstrucoes = listaInstrucoes->next;
 		}
@@ -507,6 +508,6 @@ int main(int argc, char *argv[]){
 	else {
 		printf("Houve erros durante a compilação\n");
 	}
-	//fclose(f);
+	fclose(f);
    	return 0;
 }

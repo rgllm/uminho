@@ -1,0 +1,38 @@
+		pushi 0
+		pushi 0
+		pushi 0
+start
+		read
+		atoi
+		storeg 0
+		read
+		atoi
+		storeg 1
+		pushg 1
+		storeg 2
+		pushg 0
+		pushi 1
+		sub
+		storeg 0
+while0:
+		pushg 0
+		jz while1
+		read
+		atoi
+		storeg 1
+		pushg 1
+		pushg 2
+		inf
+		jz if0
+		pushg 1
+		storeg 2
+if0:
+		pushg 0
+		pushi 1
+		sub
+		storeg 0
+		jump while0
+while1:
+		pushg 2
+		writei
+stop

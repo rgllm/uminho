@@ -1,0 +1,83 @@
+		pushi 0
+		pushi 0
+start
+		pushg 0
+		pushi 0
+		equal
+		jz if4
+		pushs "SIM,";
+		writes
+		pushg 0
+		pushi 1
+		equal
+		jz if0
+		pushs "SIM,";
+		writes
+		jump else0
+if0:
+while0:
+		pushg 1
+		pushi 2
+		inf
+		jz while1
+		pushs "NAO,";
+		writes
+		pushg 0
+		pushi 1
+		equal
+		jz if2
+		pushs "SIM,";
+		writes
+		pushg 0
+		pushi 1
+		equal
+		jz if1
+		pushs "SIM,";
+		writes
+		jump else0
+if1:
+		pushs "NAO,";
+		writes
+else0:
+		jump else1
+if2:
+		pushs "NAO,";
+		writes
+		pushg 0
+		pushi 0
+		equal
+		jz if3
+		pushs "SIM,";
+		writes
+		jump else1
+if3:
+		pushs "NAO,";
+		writes
+else1:
+else2:
+		pushg 1
+		pushi 1
+		add
+		storeg 1
+		jump while0
+while1:
+else3:
+		jump else4
+if4:
+		pushs "NAO,";
+		writes
+		pushg 0
+		pushi 0
+		equal
+		jz if5
+		pushs "SIM,";
+		writes
+		jump else4
+if5:
+		pushs "NAO,";
+		writes
+else4:
+else5:
+		pushs " FIM";
+		writes
+stop

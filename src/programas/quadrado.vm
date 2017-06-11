@@ -1,0 +1,37 @@
+		pushi 0
+		pushi 0
+		pushi 0
+		pushi 0
+start
+		read
+		atoi
+		storeg 0
+		read
+		atoi
+		storeg 1
+		read
+		atoi
+		storeg 2
+		read
+		atoi
+		storeg 3
+		pushg 0
+		pushg 1
+		equal
+		pushg 1
+		pushg 2
+		equal
+		mul
+		pushg 2
+		pushg 3
+		equal
+		mul
+		jz if0
+		pushs "É um quadrado.\n";
+		writes
+		jump else0
+if0:
+		pushs "Não é um quadrado.\n";
+		writes
+else0:
+stop

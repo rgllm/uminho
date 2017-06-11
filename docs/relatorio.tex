@@ -39,7 +39,7 @@
 }
 %
 %\lstset{ %
-%   language=Java,                          % choose the language of the code
+%   language=C,                          % choose the language of the code
 %   basicstyle=\ttfamily\footnotesize,      % the size of the fonts that are used for the code
 %   keywordstyle=\bfseries,                 % set the keyword style
 %   %numbers=left,                          % where to put the line-numbers
@@ -86,7 +86,7 @@
 
 %%%%\input{LPgeneralDefintions}
 
-\title{Processamento de Linguagens (3º ano do MiEI)\\ \textbf{Trabalho Prático 1 - Parte B}\\ Flex - Processador de Inglês corrente}
+\title{Processamento de Linguagens (3º ano do MiEI)\\ \textbf{Trabalho Prático 2}\\ Compilador usando Flex e Yacc - Linguagem Tuga}
 \author{Gustavo Andrez\\ (A27748) \and Rogério Moreira\\ (A74634) \and Samuel Ferreira\\ (A76507) }
 \date{\today}
 
@@ -96,8 +96,8 @@
 
 \begin{abstract}
 
-O presente trabalho tem como objetivo aumentar a experiência no uso do ambiente Linux, aumentar capacidade de escrever Expressões Regulares (ER) e, a partir destas,  desenvolver Processadores de Linguagens Regulares.
-A ferramenta de processamento de texto utilizada é o C Flex que, por sua vez, também utiliza o GCC. Todos os objetivos inicialmente propostos foram cumpridos.
+O presente trabalho tem como objetivo aumentar a experiência em engenharia de linguagens e em programação generativa (gramatical), com o propósito de desenvolver processadores de linguagens segundo o método da tradução dirigida pela sintaxe, a partir de uma gramática tradutora, para uma máquina de stack virtual.
+A ferramenta usada foi o Yacc. Todos os objetivos inicialmente propostos foram cumpridos.
 
 \end{abstract}
 
@@ -107,431 +107,1468 @@ A ferramenta de processamento de texto utilizada é o C Flex que, por sua vez, t
 
 \section*{Introdu\c{c}\~ao} \
 
-A diversidade e quantidade de informação nos dias de hoje é cada vez maior e mais dispersa, está em todo o lado em grandes quantidades, a todo o momento. Posto isto, torna-se ainda mais necessária uma linguagem de programação como o C Flex, que permite filtrar, de maneira facilitada, a informação essencial num ficheiro em que os dados estejam dispersos e ainda tratar essa informação. O trabalho apresentado na unidade curricular de Processamento de Linguagens tem como objetivo usar esta ferramenta para filtrar um conjunto de dados fornecidos, extraindo desses dados informação relevante.
+O presente relatório tem como objetivo documentar o processo de desenvolvimento de uma linguagem de programação imperativa simples, e o respetivo compilador, que deverá ser capaz de gerar pseudo-código Assembly para máquina virtual VM, utilizada neste projeto. Para este fim, é necessário criar uma gramática independente de contexto que defina a linguagem, e estabelecer as regras de tradução para o Assembly da VM fornecido pela equipa docente.
+O grupo decidiu criar uma linguagem em que todas as instruções são descritas em português de Portugal, apelidada de \emph{Tuga}. 
 
-\section*{Sele\c{c}\~ao de enunciados} \
+\section*{Enunciado} \
 
-O tema escolhido pelo grupo foi "Processador de Inglês corrente" cuja descrição apresentamos em seguida.
-\\“Neste projeto pretende-se que leiam um texto corrente em inglês que faça uso das habituais contrações do tipo I'm, I'll, We're, can't, it's e:
+Pretende-se que se comece por definir uma linguagem de programação imperativa simples.
+Deve-se ter em consideração que essa linguagem terá de permitir:
 \begin{itemize}
-\item[a)] reproduza o texto de entrada na saída expandindo todas as contrações que encontrar.
-\item[b)] gere em HTML uma lista ordenada de todos os verbos (no infinitivo não flexionado) que encontrar no texto, recordando que essa forma verbal em inglês precedida pela palavra to, sendo a mesma palavra retirada se o dito verbo for antecedido por can, could, shall, should, will, would, may, might. Considere também a forma interrogativa em que o verbo no infinitivo é precedido por do/does ou did.”
+\item declarar e manusear variáveis atómicas do tipo inteiro, com os quais se podem realizar as habituais operações aritméticas, relacionais e lógicas;
+\item declarar e manusear variáveis estruturadas do tipo array (a 1 ou 2 dimensões) de inteiros, em relação aos quais é apenas permitida a operação de indexação (índice inteiro);
+\item efetuar instruções algorítmicas básicas como a atribuição de expressões a variáveis;
+\item ler do standard input e escrever no standard output.
+\item efetuar instruções para controlo do fluxo de execução — condicional e cíclica — que possam ser aninhadas;
+\item as variáveis deverão ser declaradas no início do programa e não pode haver re-declarações, nem utilizações sem declaração prévia.  Se nada for explicitado, o valor da variável após a declaração é 0 (zero);
 \end{itemize}
+Pretende-se então desenvolver um compilador para a linguagem definida com base na GIC criada acima e com recurso ao Gerador Yacc/Flex.
+O compilador deve gerar pseudo-código Assembly da Máquina Virtual VM.
 
-\section*{Objetivos}
-Para o desenvolvimento deste trabalho foram definidos os seguintes objetivos:
-\\
-\begin{itemize}
-\item Conseguir expandir corretamente um número elevado de contrações presentes num texto em língua inglesa;
-\item Identificar, com uma taxa de correção elevada, os verbos no infinitivo constantes num texto em língua inglesa.
-\end{itemize}
-\newpage
+\section*{Descrição do problema}
+O problema proposto no segundo trabalho prático da disciplina de Processamento de Linguagens compreende a realização de uma linguagem LIPS, com uma gramática própria e capaz de ser executada numa máquina virtual com Assembly próprio previamente fornecida pela equipa docente.
+Posto isto, o problema tem três fases principais:
+\begin{enumerate}
+\item Desenho de uma gramática tradutora (Yacc);
+\item Tradução das instruções da gramática para o Assembly da máquina virtual (Flex);
+\item Elaboração de programas de teste na linguagem elaborada;
+\end{enumerate}
+
+
 \section*{Estrutura do Relatório} \
 
-Inicialmente vai ser explicado o problema, as características dos dados fornecidos e os padrões de frase por nós encontrados e que levaram à resolução dos problemas inicialmente propostos.\\
-Numa segunda fase apresentamos a codificação em Flex da solução desenvolvida mostrando as estruturas de dados e ações semânticas, bem como alternativas e decisões tomadas face aos problemas de implementação.\\
-Em seguida mostramos exemplo de um input e output e, posteriormente, é feita uma análise de resultado onde se explicam a realização de alguns testes para caracterizar a solução encontrada.\\
-Em apêndice a este relatório está também todo o código desenvolvido.
+O relatório está dividido em três capítulos, correspondentes ao desenho da linguagem e gramática, às regras de tradução criadas,
+e ao resultado dos testes efetuados com programas exemplo, por esta ordem. 
+No primeiro capítulo, \emph{Desenho da linguagem/gramática}, são expostos tanto os requisitos do problema  apresentado, e discutidas as estratégias utilizadas para a consequente implementação da solução do problema. O capítulo dois, \emph{Regras da tradução para Assembly da VM}, apresenta para além das operações de tradução da linguagem para o Assembly próprio da VM, são também descritas a especificação das estruturas de dados e outras notas importantes.
+Por fim, o capítulo \emph{Testes e Resultados} expõe o resultado dos testes requeridos à demonstração do funcionamento da linguagem e compilador desenvolvidos durante o projeto. Para isto foram criados alguns programas testes como pedido no enunciado do trabalho prático.
 
-\section*{Características dos Dados, Padr\~oes de Frase e Decisões}
+\chapter{Desenho da linguagem/gramática} \label{ae}
 
-O programa a desenvolver tem por propósito receber textos em língua inglesa. Neste idioma é comum a utilização de contrações. Assim, quando estas forem detectadas far-se-á a respectiva expansão. Para isto foi necessário investigar sobre as contrações possíveis e decidir acerca de quais os casos a serem cobertos. De uma forma geral, decidiu-se cobrir todos os casos mais comuns de contrações tanto específicos (p.ex. gonna) como gerais (p.ex. we’ll).\\
-Relativamente à recolha de verbos no infinitivo, para os localizar, considerou-se que se encontram precedidos por palavras características (p.ex. to e may). No entanto, nos casos em que a frase se encontra na forma interrogativa, entre as palavras atrás referidas e o verbo, usualmente é encontrado um pronome. Assim, assumiu-se que é um verbo no infinito a palavra que é precedida de um pronome e uma das palavras atrás referidas e seguido por um ponto de interrogação.
-
-\chapter{Implementação e Ações Semânticas} \label{ae}
-\section{Expansão de contrações}
-Em seguida são discriminadas as expressões irregulares responsáveis por expandir as contrações detectadas bem como alguns exemplos abrangidos pelas mesmas.
-\\
-\begin{verbatim}
-[gG]onna[\.\?\!\;,\ \n\t] {printf("%coing to%c",yytext[0],yytext[strlen(yytext)-1]);}
-\end{verbatim}
-Gonna -> Going to      e 	gonna -> going to
-\\
-\begin{verbatim}
-[wW]anna[\.\?\!\;,\ \n\t]     { printf("%cant to%c",yytext[0],yytext[strlen(yytext)-1]); }
-\end{verbatim}
-Wanna -> Want to    e     wanna -> want to
-\\
-\begin{verbatim}
-[cC]an't[\.\?\!\;,\ \n\t]     { printf("%cannot%c",yytext[0],yytext[strlen(yytext)-1]); }
-\end{verbatim}
-Can't -> Cannot    e     can't -> cannot
-\\
-\begin{verbatim}
-[wW]on't[\.\?\!\;,\ \n\t]   {printf("%cill not%c",yytext[0],yytext[strlen(yytext)-1]);}
-\end{verbatim}
-Won't -> Will not    e     won't -> will not
-\\
-\begin{verbatim}
-I\ ain't[\.\?\!\;,\ \n\t]    { printf("I am not%c",yytext[strlen(yytext)-1]); }
-\end{verbatim}
-I ain't -> I am not
-\\
-\begin{verbatim}
-([hH]e|[sS]he|[iI]t)\ ain't[\.\?\!\;,\ \n\t]
-{ printf("%s is not%c",strtok(yytext,""),yytext[strlen(yytext)-1]);}
-\end{verbatim}
-He / She / It ain't -> He / She / It is not
-e
-he / she / it ain't -> he / she / it is not
-\\
-\begin{verbatim}
-([yY]ou|[tT]hey|[wW]e)\ ain't[\.\?\!\;,\ \n\t]
-{ printf("%s are not%c",strtok(yytext," "),yytext[strlen(yytext)-1]);}
-\end{verbatim}
-You / They / We ain't -> You / They / We are not
-e
-you / they / we ain't -> you / they / we are not
-\\
-\begin{verbatim}
-[tT]hat\ ain't[\.\?\!\;,\ \n\t]
-{ printf("%chat is not%c",yytext[0],yytext[strlen(yytext)-1]);}
-\end{verbatim}
-That ain't -> That is not
-e
-that ain't -> that is not
-\\
-\begin{verbatim}
-[tT]his\ ain't[\.\?\!\;,\ \n\t]  { printf("%chis is not%c",yytext[0],yytext[strlen(yytext)-1]);}
-\end{verbatim}
-This ain't -> This is not
-e
-this ain't -> this is not
-
-\\
-\begin{verbatim}
-\'[cC]ause[\.\?\!\;,\ \n\t]  { printf("%cecause%c", yytext[1]-1,yytext[strlen(yytext)-1]); }
-\end{verbatim}
-'Cause -> Because
-       e
-'cause -> because
-
-\\
-Neste caso Yytext[1]-1 coloca o caratere “b” ou “B” consoante o “c” identificado seja minúsculo ou maiúsculo, ou seja, subtrai uma unidade ao código ASCII do “c” ou “C” resultando em “b” ou “B”.
-\\
-\begin{verbatim}
-'m[\.\?\!\;,\ \n\t]    { printf(" am%c",yytext[strlen(yytext)-1]); }
-\end{verbatim}
-I’m -> I am
-\\
-\begin{verbatim}
-'re[\.\?\!\;,\ \n\t]    { printf(" are%c",yytext[strlen(yytext)-1]); }
-\end{verbatim}
-'re -> are
-\\
-Por exemplo:
-You're -> You are    e     what're -> what are
-
-\\
-\begin{verbatim}
-n't[\.\?\!\;,\ \n\t]    { printf(" not%c",yytext[strlen(yytext)-1]); }
-\end{verbatim}
-n't -> not
-Por exemplo:
-Didn't -> Did not    e     weren't -> were not
-\\
-\begin{verbatim}
-'ll[\.\?\!\;,\ \n\t] { printf(" will%c",yytext[strlen(yytext)-1]); }
-\end{verbatim}
-'ll -> will
-\\
-Por exemplo:
-What'll -> What will    e     she'll -> she will
-\\
-Neste caso assumiu-se que a contração “'ll” corresponderá na grande maioria dos casos à extensão “will” e não “shall”. Por isto considerou-se que quando aparece esta contração será desdobrada em “will”.
-
-\\
-\begin{verbatim}
-'ve[\.\?\!\;,\ \n\t]    { printf(" have%c",yytext[strlen(yytext)-1]); }
-\end{verbatim}
-'ve -> have
-\\
-Por exemplo:
-You've -> You have    e     might've -> might have
-
-\\
-\begin{verbatim}
-'d[\.\?\!\;,\ \n\t]    { printf(" would%c",yytext[strlen(yytext)-1]); }
-\end{verbatim}
-'d -> would
-\\
-Por exemplo:
-I'd -> I would    e     how'd -> how would
-
-\\
-\begin{verbatim}
-'s[\.\?\!\;,\ \n\t]    { printf(" [is/has]%c",yytext[strlen(yytext)-1]); }
-\end{verbatim}
-'s -> is ou has
-\\
-Por exemplo:
-She's -> She [is/has]   e  that's -> that [is/has]
-
-Neste caso considerámos que a contração “‘s” poderá corresponder a “is” ou “has” com probabilidades próximas. Assim optou-se por não assumir uma das opções mas sim apresentar ambas deixando ao critério do utilizador a sua interpretação, utilizando uma ou outra consoante o contexto da frase.
-\\
-\\
-\section{Recolha de verbos}
-
-Para a recolha de verbos no infinitivo foi seguido o seguinte algoritmo, em que se mostram as correspondentes expressões regulares:
-\\
-\begin{enumerate}
-\item Cada vez que é  detectada uma das seguintes palavras  (com a primeiro caractere maiúsculo ou minúsculo), o estado é alterado de INITIAL para VERBO.
-\\
-\{to, can, can't, could, shall, should, will, would, may, might, did, didn't\}
+\section{Símbolos terminais e não terminais}
 
 \begin{verbatim}
-[^a-zA-Z]+(?i:(to|can('t)?|could|shall|should|will|would|may|might|did(n't)))\ + { ECHO; BEGIN VERBO; }
+T={INT , VAR , OPINC , OPDEC , 
+OPATRMAIS , OPATRMENOS , 
+OPATRPROD , OPATRDIV , OPATRMOD , OPAND , 
+OPOR , OPGT , OPLT , OPGE , OPLE , OPEQ , OPNE ,
+OPARITMAIS , OPARITMENOS , OPARITPROD ,
+OPARITDIV , OPARITMOD , STRING , SCAN , 
+PRINT , IF , ELSE , NOT , ERRO , WHILE , 
+( , ) , [ , ] , { , } , = , " , ; , & }
+ 
+ OPINC ::- \+\+    
+ OPDEC ::- \-\-    
+ 
+ OPATRMAIS ::- \+\=    
+ OPATRMENOS ::- \-\=    
+ OPATRPROD ::- \*\=     
+ OPATRDIV ::- \/\=     
+ OPATRMOD ::- \%\=    
+ 
+ SCAN ::- (?i:ler)
+ 
+ PRINT ::- (?i:escrever)
+ STRING ::- \"([^"]|\\\")*\"
+ 
+ IF ::- (?i:se)   
+ ELSE ::- (?i:senao)
+ WHILE ::- (?i:enquanto)
+ 
+ OPGE ::- \>\=
+ OPLE ::- \<\=
+ OPEQ ::- \=\=
+ OPNE ::- \!\=
+ NOT ::- \!    
+ OPGT ::- \>    
+ OPLT ::- \<    
+ 
+ 
+ OPAND ::- \&\&
+ OPOR ::- \|\|
+ 
+ OPARITMENOS ::- \-    
+ OPARITMAIS ::- \+    
+ OPARITPROD ::- \*    
+ OPARITDIV ::- \/    
+ OPARITMOD ::- \%    
+ 
+ INT ::- [0-9]+
+ VAR ::- [a-z_][a-zA-Z0-9_]*     
+ 
+ ERRO ::- .
+\end{verbatim}
+ 
+ 
+ 
+O conjunto dos símbolos não terminais da gramática é o que se segue:
+ 
+\begin{verbatim}
+NT={ Programa , Declaracoes , Instrucoes , 
+Declaracao , Instrucao , Atribuicao , 
+Escrita , Leitura , Condicional , 
+Ciclo , Exp }
+\end{verbatim}
+
+\section{Gramática}
+
+Na linguagem desenhada os programas seguem a seguinte estrutura: nas primeiras linhas são declaradas todas as variáveis (inteiros ou arrays de inteiros) que irão ser necessárias durante o programa, depois aparece o símbolo ‘&’ e por fim as instruções do programa. (Programa : Declaracoes '\&' Instrucoes).
+
+A gramática elaborada é a seguinte:
+ 
+\begin{verbatim}
+//--- CABECA ---//
+ 
+Declaracoes : Declaracoes Declaracao
+       |
+         ;
+ 
+Declaracao : VAR ';'
+      | VAR '[' INT ']' ';'
+      ;
+ 
+//--- CORPO ---//
+Instrucoes : Instrucoes Instrucao
+      | Instrucao
+      ;
+ 
+Instrucao : Atribuicao
+       | Escrita
+       | Leitura
+       | Condicional
+       | Ciclo
+       ;
+ 
+//--- ATRIBUICAO ---//
+Atribuicao : VAR '=' Exp ';'
+      | VAR '[' Exp ']' '=' Exp ';
+      | VAR OPINC ';'
+      | VAR OPDEC ';'
+      | VAR OPATRMAIS Exp ';'
+      | VAR OPATRMENOS Exp ';'
+      | VAR OPATRPROD Exp ';'
+        | VAR OPATRDIV Exp ';'
+        | VAR OPATRMOD Exp ';'
+      ;
+ 
+//--- LEITURA ---//
+Leitura : SCAN VAR ';'
+     | SCAN VAR '[' Exp ']' ';'
+     ;
+ 
+//--- ESCRITA ---//
+Escrita : PRINT Exp ';'
+     | PRINT STRING ';'
+     ;
+ 
+//--- CONDICIONAL IF ---//
+Condicional : IF '(' Exp ')' '{' Instrucoes '}' Else
+       ;
+ 
+Else : ELSE '{' Instrucoes '}'
+     |  
+     ;
+ 
+//--- CICLO WHILE ---//
+Ciclo : WHILE '(' Exp ')' '{' Instrucoes '}'
+      ;
+ 
+//--- EXPRESSAO ---//
+Exp : NOT Exp
+    | Exp OPLT Ex
+    | Exp OPGT Exp
+    | Exp OPLE Exp
+    | Exp OPGE Exp
+    | Exp OPEQ Exp
+    | Exp OPNE Exp
+    | Exp OPAND Exp
+    | Exp OPOR Exp
+    | Exp OPARITMAIS Exp
+    | Exp OPARITMENOS Exp
+    | Exp OPARITPROD Exp
+    | Exp OPARITDIV Exp
+    | Exp OPARITMOD Exp
+    | VAR
+    | VAR '[' Exp ']'
+    | INT
+    | '(' Exp ')'
+    ;
+ 
 \end{verbatim}
 
 
-\item Caso a palavra sucessora da identificada no passo 1 seja uma das seguintes palavras (com a primeiro caractere maiúsculo ou minúsculo), o estado é alterado de VERBO para INTERROG (passo 2.1).
+\chapter{Regras da tradução para Assembly da VM} \label{ae}
 
-\\
-\{i, me, my, myself, mine, you, your, yours, yourself, he, him, himself, his, she, her, hers, herself, it, its, we, us, our, ours, ourselves, the, they, them, themselves, a, this, that\}
+Em seguida é apresentado um pseudocódigo que descreve o processo de conversão da linguagem desenvolvida (Tuga) para linguagem Assembly da VM.
 
 \begin{verbatim}
-<VERBO>(?i:(i|me|my(self)?|mine|you(r|rs|rself)?|he|him(self)?|his|she|her(s|self)?|it(s)?|we|us|
-our(s|selves)?|the(y)|them(selves)?|a|th(is|at)))[\.\?\!\;\',\:\ \n\t]  { ECHO ; BEGIN INTERROG;}
+Programa : Declaracoes { adicionar instrução "start" à pilha de instruções }
+       '&' Instrucoes { adicionar instrução "stop" à pilha de instruções }
+        ;
+ 
+Declaracoes : Declaracoes Declaracao
+       |
+         ;
+ 
+Declaracao : VAR ';' {
+         se (o nome de variável em $1 já foi atribuído)
+           erro
+         senao
+           registar variável na estrutura de dados (nome, tipo, endereço)
+           adicionar instrução "pushi 0" à pilha de instruções
+           gp++
+         }
+      | VAR '[' INT ']' ';' {
+           se (o nome de variável em $1 já foi atribuído)
+           erro
+         senao
+           registar variável na estrutura de dados (nome, tipo, endereço)
+           adicionar instrução "pushn X" à pilha de instruções, em que X=$3
+           gp+=$3
+           }
+      ;
+ 
+Instrucoes : Instrucoes Instrucao
+      | Instrucao
+      ;
+ 
+Instrucao : Atribuicao
+       | Escrita
+       | Leitura
+       | Condicional
+       | Ciclo
+       ;
+ 
+Atribuicao : VAR '=' Exp ';' {
+           se(não existe a variável em $1 || a variável é do tipo inteiro)
+             erro
+           senao
+             adicionar a instrução "storeg X" à pilha de instruções, em que X=endereço($1)
+         }
+      | VAR {
+             se(não existe a variável em $1 || a variavel é do tipo array)
+             erro
+           senao
+             adicionar a instrução "pushgp" à pilha de instruções
+             adicionar a instrução "pushi X" à pilha de instruções, em que X=endereço($1)
+             adicionar a instrução "padd" à pilha de instruções
+         }
+       '[' Exp ']' '=' Exp ';'{
+             adicionar a instrução "storen" à pilha de instruções
+           }
+ 
+      | VAR OPINC ';'{
+             se(não existe a variável em $1 || a variavel é do tipo array)
+             erro
+           senao
+             // incrementar a variável $1
+             adicionar a instrução "pushg X" à pilha de instruções, em que X=endereço($1)
+             adicionar a instrução "puhi 1" à pilha de instruções
+             adicionar a instrução "add" à pilha de instruções
+             adicionar a instrução "storeg X" à pilha de instruções, em que X=endereço($1)
+           }
+      | VAR OPDEC ';'{ processo análogo ao anterior, mas decrementa em vez de incrementar    }
+     (1)->  | VAR {
+             se(não existe a variável em $1 || a variavel é do tipo array)
+             erro
+           senao
+             adicionar a instrução "pushg X" à pilha de instruções, em que X=endereço($1)
+         }
+       OPATRMAIS Exp ';'{
+           adicionar a instrução "add" à pilha de instruções
+           adicionar a instrução "storeg X" à pilha de instruções, em que X=endereço($1)
+           }
+        | VAR OPATRMENOS Exp ';'{ análogo ao processo em (1) }
+        | VAR OPATRPROD Exp ';'{ análogo ao processo em (1) }
+        | VAR OPATRDIV Exp ';'{ análogo ao processo em (1) }
+        | VAR OPATRMOD Exp ';'{ análogo ao processo em (1) }
+      ;
+ 
+Leitura : SCAN VAR ';' {
+         se(não existe a variável em $1 || a variavel é do tipo array)
+           erro
+         senao
+           adicionar a instrução "read" à pilha de instruções
+           adicionar a instrução "atoi" à pilha de instruções
+           adicionar a instrução "storeg X" à pilha de instruções, em que X=endereço($2)
+       }
+     | SCAN VAR {
+         se(não existe a variável em $1 || a variável é do tipo inteiro)
+             erro
+         senao
+           adicionar a instrução "pushgp" à pilha de instruções
+           adicionar a instrução "pushi X" à pilha de instruções, em que X=endereço($2)
+           adicionar a instrução "padd" à pilha de instruções
+       }
+     '[' Exp ']' ';'    {
+         adicionar a instrução "read" à pilha de instruções
+         adicionar a instrução "atoi" à pilha de instruções
+         adicionar a instrução "storen" à pilha de instruções
+       }
+     ;
+ 
+Escrita : PRINT Exp ';' { adicionar a instrução "writei" à pilha de instruções }
+     | PRINT STRING ';'{       
+         adicionar a instrução "pushs X" à pilha de instruções, em que X= endereço($2)
+         adicionar a instrução "writes" à pilha de instruções
+       }
+     ;
+ 
+Condicional : IF '(' Exp ')' {
+           adicionar endereço da instrução à stack de se's
+           adicionar a instrução "jz ifX" à pilha de instruções, em que X=ifs
+         }
+        '{' Instrucoes '}' { fazer pop da stack de se's }
+         Else
+       ;
+ 
+Else : ELSE {  
+         adicionar endereço da instrução à stack de se's
+         adicionar a instrução "jump elseX" à pilha de instruções, em que X=elses
+         adicionar a label "ifX:" à pilha de instruções, em que X= ifs
+         incrementar ifs
+       }
+     '{' Instrucoes '}' {
+         fazer pop da stack de se's
+         adicionar a label "elseX:" à pilha de instruções, em que X=elses
+         incrementar variável elses
+       }
+     |  {    adicionar a label "ifX:" à pilha de instruções, em que X=ifs
+       incrementar variável ifs }
+     ;
+ 
+Ciclo : WHILE '(' {
+         $1=whiles;
+         incrementar a variável ""whiles" em 2 unidades
+         adicionar a label "whileX :" à pilha de instruções, em que X=$1
+       }
+      Exp ')' {  
+         adicionar a instrução "jz whileX" à pilha de instruções, em que X=$1+1
+       }
+      '{' Instrucoes {
+           adicionar a instrução "jump whileX" à pilha de instruções, em que X=$1
+           adicionar a label "whileX :" à pilha de instruções, em que X=$1+1
+       }
+     '}'
+      ;
+ 
+//--- EXPRESSAO ---//
+Exp : NOT Exp { adicionar a instrução "pushi 0" à pilha de instruções
+            adicionar a instrução "equal" à pilha de instruções }
+    | Exp OPLT Exp { adicionar a instrução "sup" à pilha de instruções }
+    | Exp OPGT Exp { adicionar a instrução "pushgp" à pilha de instruções }
+    | Exp OPLE Exp { adicionar a instrução "infeq" à pilha de instruções }
+    | Exp OPGE Exp { adicionar a instrução "supeq" à pilha de instruções }
+    | Exp OPEQ Exp { adicionar a instrução "equal" à pilha de instruções }
+    | Exp OPNE Exp { adicionar a instrução "pushi 0" à pilha de instruções
+            adicionar a instrução "equal" à pilha de instruções }
+    | Exp OPAND Exp { adicionar a instrução "mul" à pilha de instruções    }
+    | Exp OPOR Exp { adicionar a instrução "add" à pilha de instruções }
+    | Exp OPARITMAIS Exp { adicionar a instrução "add" à pilha de instruções }
+    | Exp OPARITMENOS Exp { adicionar a instrução "sub" à pilha de instruções }
+    | Exp OPARITPROD Exp { adicionar a instrução "mul" à pilha de instruções }
+    | Exp OPARITDIV Exp { adicionar a instrução "div" à pilha de instruções }
+    | Exp OPARITMOD Exp { adicionar a instrução "mod" à pilha de instruções }
+    | VAR {
+       se(não existe a variável em $1 || a variavel é do tipo array)
+         erro
+       senao
+         adicionar a instrução "pushg X" à pilha de instruções, em que X=endereço($1)
+     }
+    | VAR {    
+       se(não existe a variável em $1 || a variável é do tipo inteiro)
+         erro
+       senao
+         adicionar a instrução "pushgp" à pilha de instruções
+         adicionar a instrução "pushi X" à pilha de instruções, em que X=endereço($1)
+         adicionar a instrução "padd" à pilha de instruções
+     }
+    '[' Exp ']'{
+       adicionar a instrução "loadn" à pilha de instruções
+     }
+ 
+    | INT { adicionar a instrução "pushs X" à pilha de instruções, em que X=$1    }
+    | '(' Exp ')'
+    ;
 \end{verbatim}
 
-\begin{enumerate}
-\item Nesta altura assumimos que a frase presente está na interrogativa e que a palavra seguinte corresponderá a um verbo caso seja a última ou a penúltima antes do sinal de ponto de interrogação. Nesse caso a palavra será um verbo e é armazenada. Por fim o estado é alterado de INTERROG para INITIAL.
+\section{Main do programa}
 
+Aquando da execução do programa, depois de validar se existem argumentos, executam-se os seguintes passos:
+
+\begin{itemize}
+\item redirecionar o stdin do analisador sintático para um descritor do ficheiro fornecido como argumento;
+\item executar a função yyparse (analisador sintático). Durante o decorrer desta função, a variável listaInstrucoes vai ser preenchida para posterior apresentação;
+\item abrir para escrita um ficheiro com o mesmo nome do argumento fornecido, mas com a extensão .vm;
+\item Verificar se existiram erros de compilação e:
+\begin{itemize}
+\item em caso afirmativo, escrever para o descritor do ficheiro .vm uma mensagem de erro;
+\item em caso negativo, imprime cada uma uma das instruções na lista de instruções, separadas por um “\n”;
+\end{itemize}
+\end{itemize}
+O código associado a este procedimento é apresentado em seguida.
 \begin{verbatim}
-INTERROG>[a-z]+(\ [a-z]+)?\? {
-    int i=0;
-    yytext[strlen(yytext)-1]='\0';
-    char * aux=strtok(yytext," ");
-    aux=strtok(aux,"?");
-    while(i<countVerbos){
-        if(strcmp(verbos[i],aux)==0)
-            break;
-        i++;
+int main(int argc, char *argv[]){
+    if(argc < 2){
+     printf("Introduzir ficheiro para compilação como argumento!\n");
+     exit(0);
     }
-    if(i==countVerbos)
-        verbos[countVerbos++]=strdup(aux);
-    ECHO;
-    BEGIN INITIAL;
-\end{verbatim}
-\end{enumerate}
-
-\item Nesta altura sabemos que depois das palavras explicitadas no passo 1 não está um pronome. Assim, assumimos que é um verbo este é armazenado. Por fim o estado é alterado de VERBO para INITIAL.
-
-\begin{verbatim}
-<VERBO>[a-z]+ {
-    int i=0;
-    while(i<countVerbos){
-        if(strcmp(verbos[i],yytext)==0)
-            break;
-        i++;
+    //--- PARSE ---//
+    yyin = fopen(argv[1],"r");
+     yyparse();
+   //--- IMPRIMR OUTPUT ---//
+   filename = strdup(argv[1]);
+    filename[strrchr(filename,'.')-filename] = '\0';
+    strcat(filename,".vm");
+    FILE* f = fopen(filename,"w");
+    if(!erros){
+     while(listaInstrucoes){
+       if(listaInstrucoes->instrucao){
+         fprintf(f,"%s\n",listaInstrucoes->instrucao);
+       }
+       listaInstrucoes = listaInstrucoes->next;
+     }
     }
-    if(i==countVerbos)
-        verbos[countVerbos++]=strdup(yytext);
-    ECHO;
-    BEGIN INITIAL;
-\end{verbatim}
-
-\item Caso não haja correspondência no passo 3, ou seja, não é imediatamente identificada uma palavra, o estado é alterado de VERBO para INITIAL.
-
-\begin{verbatim}
-<VERBO>.|\n                    { ECHO ; BEGIN INITIAL ; }
-\end{verbatim}
-
-\end{enumerate}
-\section{Apresentação do Output}
-Para tratamento dos dados de input e respectiva apresentação da informação tratada foi desenvolvida a seguinte main:
-
-\begin{verbatim}
-int main(){
-    yylex();
-    int i=0;printf("\n\n");
-    FILE *fp;
-    fp= fopen("verbos.html", "w");
-    qsort (verbos, countVerbos, sizeof (const char *), compare);
-    fprintf(fp,"<html><body><h1>verbos:%d</h1><ul>\n",countVerbos);
-    for(i=0;i<countVerbos;i++)
-        fprintf(fp,"<li>to %s</li>\n",verbos[i]);
-    fprintf(fp,"</ul></body></html>");
-    fclose(fp);
-    return 1;
+    else {
+     printf("Houve erros durante a compilação\n");
+    }
+    fclose(f);
+     return 0;
 }
 \end{verbatim}
 
-O texto de entrada é varrido pelo yylex() sendo apresentado no ecrã com as expansões das contrações e preenchido o array com os verbos identificados (sem repetições). Por fim, os verbos constantes do array são exportados para um ficheiro HTML (verbos.html) como uma lista ordenada alfabeticamente sendo apresentados numa página HTML bem como a contagem do número de verbos diferentes recolhidos.
-\chapter{Apresentação de Resultados}
-Em seguida apresentamos um pequeno exemplo de input por forma a demonstrar as funcionalidades do programa desenvolvido.
-\\
-\\
-\section{Input - Exemplo}
-\begin{verbatim}
-   It's my life
-   It's now or never
-   I ain't gonna live forever
-   I just want to live while I'm alive
-   (It's my life)
-   My heart is like an open highway
-   Like Frankie said
-   I did it my way
-   I just wanna live while I'm alive
-   It's my life
-\end{verbatim}
-\\
-\section{Output - Expansão de contrações}
-\begin{verbatim}
-   It [is/has] my life
-   It [is/has] now or never
-   I am not going to live forever
-   I just want to live while I am alive
-   (It [is/has] my life)
-   My heart is like an open highway
-   Like Frankie said
-   I did it my way
-   I just want to live while I am alive
-   It [is/has] my life
-\end{verbatim}
-\newpage
-\section{Output - Recolha de verbos}
-\begin{center}
-\includegraphics[scale=0.5]{print}
-\end{center}
-\chapter{Análise de Resultados}
-Perante os resultados obtidos procedemos a uma análise onde em seguida se sintetizam alguns comentários relativos à expansão de contrações e à recolhas de verbos no infinitivo.
-\\
-\\
-\section{Expansão de contrações}
-\\
-\begin{itemize}
-      \item Casos em que não há dúvida na expansão é logo substituído
-      \item Casos em que existe mais do que uma expansão possível e em que a probabilidade de ser uma das expansões muito elevada, utilizamos essa opção (especificamente o caso de ‘ll corresponder a will)
-      \item Casos em que existe mais do que uma expansão possível, oferecemos as várias possibilidades de expansão ao utilizador que depois se encarregará de optar pela mais adequada para o  caso em questão
 
-\end{itemize}
-\\
-\section{Recolha de verbos}
-\\
-\begin{itemize}
-      \item Fez-se a recolha dos os verbos no infinitivo
-      \item Testou-se com três livros: Harry Potter and the Sorcerer's Stone, The Sonnet e Eragon.
-      \item Compilou-se uma lista de verbos em inglês (6057 verbos) e fez-se comparação linha a linha dos verbos recolhidos com esta lista
-      \item Fizeram-se teste nos vários livros abarcando ou não as frases na interrogativa.
-      \item Procedeu-se a uma aprimoração de resultados
+\section{Estruturas de Dados}
+Foi necessário criar estruturas de dados capazes de albergar a informação para a correta execução dos programas. As estruturas criadas foram as seguintes:
+ 
+\begin{verbatim}
+struct variavel
+{
+  char *nome;
+  char *tipo; 
+  int endereco;
+  struct variavel *next;
+};
+\end{verbatim}
+Estrutura que armazena toda a informação respeitante à declaração de uma variável. O \texttt{nome} é o nome da variável, o \texttt{tipo} é o tipo da variável (ex: INT), o \texttt{endereco} é o endereço onde a variável está na VM e o \texttt{next} é o apontador para a próxima variável. Trata-se de uma lista ligada de variáveis.
+ 
+\begin{verbatim}
+struct instrucao
+{
+  int endereco;
+  char *instrucao;
+  struct instrucao *next;
+};
+\end{verbatim}
+Estrutura que armazena uma instrução. O  \texttt{endereco} é um endereço no qual a instrução está localizada na VM, a  \texttt{instrucao} é a instrução em causa e  o  \texttt{next} é, à semelhança da declaração de variáveis, o apontador para a próxima instrução. Trata-se de uma lista ligada.
+ 
+\begin{verbatim}
+struct ifAddr
+{
+  int jz;
+  struct ifAddr *next;
+};
+\end{verbatim}
+Estrutura respeitante a uma condição If. A variável \texttt{jz} na estrutura armazena o salto condicional e a variável \texttt{next} armazena o endereço da próxima estrutura na lista ligada.
+ 
+\begin{verbatim}
+struct whileAddr
+{
+  int jump;
+  int jz;
+  struct whileAddr *next;
+};
+\end{verbatim}
 
-\end{itemize}
-\\
-Obtivemos os seguintes resultados para o livro Eragon:
-\\
-\\
-Total & Certos & Errados & Sucesso \\
-873   & 713    & 160     & 81,67
-\\
-Resultados obtidos sem a deteção dos verbos no infinitivo nas frases interrogativas.
-\\
-\\
-Total & Certos & Errados & Sucesso \\
-876   & 715    & 161     & 81,62
-\\
-Resultados obtidos com a deteção dos verbos no infinitivo nas frases interrogativas, o verbo tem que ser obrigatoriamente a última palavra da frase.
-\newpage
-Total & Certos & Errados & Sucesso \\
-876   & 714    & 162     & 81,50
-\\
-Resultados obtidos com a deteção dos verbos no infinitivo nas frases interrogativas mas em que o verbo poderá ser a última ou penúltima palavra da frases.
-\\
-\\
-Tendo em conta os resultados obtidos e visto que, a taxa de sucesso e idêntica nos três casos optámos por dar privilégio ao número de verbos obtidos, tendo sido incluído na versão final o passo INTERROG.
+Estrutura respeitante a um ciclo while. A variável  \texttt{jump} armazena o salto do início do while, a variável  \texttt{jz} armazena o salto condicional e a variável  \texttt{next} armazena o endereço da próxima estrutura na lista ligada.
+\newline
+\newline
+Estas são as estruturas principais, para além destas foram também criadas outras estruturas mas que fazem uso destas.
+ 
+\begin{verbatim}
+struct variavel* insertVariavel(struct variavel *variavel, struct variavel *listaVariaveis);
+int existeVariavel(char *variavel, struct variavel *listaVariaveis);
+int enderecoVariavel(char *variavel, struct variavel *listaVariaveis);
+char* tipoVariavel(char *variavel, struct variavel *listaVariaveis);
+ 
+struct instrucao* insertInstrucao(int endereco, char *instrucao, struct instrucao *listaInstrucoes);
+ 
+struct ifAddr* pushIfAddr(int endereco, struct ifAddr *pilhaIfAddr);
+struct ifAddr* popIfAddr(struct ifAddr *pilhaIfAddr);
+ 
+struct whileAddr* pushWhileAddr(int endereco, int whileAddr, struct whileAddr *pilhaWhileAddr);
+struct whileAddr* popWhileAddr(struct whileAddr *pilhaWhileAddr);
+ 
+void ifJump(int endereco, struct ifAddr *pilhaIfAddr, struct instrucao *pilhaInstrucoes);
+void elseJump(int endereco, struct ifAddr *pilhaIfAddr, struct instrucao *pilhaInstrucoes);
+int whileJump(int endereco, struct whileAddr *pilhaWhileAddr, struct instrucao *pilhaInstrucoes);
+\end{verbatim}
+
+\chapter{Programas Exemplo} \label{ae}
+
+\section{Ordenação descendente - Bubble Sort}
+
+\underline{Descrição:} programa que lê 10 números naturais e os escreve por ordem descendente.
+\newline
+\newline
+\underline{Código-Fonte:}
+
+\begin{verbatim}
+i;
+a[10];    
+troca;    
+trocado;  
+&
+enquanto(i<10){
+    ler a[i];
+    i++;
+}
+trocado=1;
+enquanto(trocado){
+    trocado=0;
+    i=0;
+    enquanto(i<10 -1 ){
+     se(a[i]<a[i+1]){
+       troca=a[i];
+       a[i]=a[i+1];
+       a[i+1]=troca;
+       trocado=1;
+     }
+     i++;
+    }
+}
+i=0;
+enquanto(i<10){
+    escrever a[i];
+    escrever ",";
+    i++;
+}
+\end{verbatim}
+
+\underline{Assembly gerado:}
+
+\begin{Verbatim}
+pushi 0
+     pushn 10
+     pushi 0
+     pushi 0
+start
+while0:
+     pushg 0
+     pushi 10
+     inf
+     jz while1
+     pushgp
+     pushi 1
+     padd
+     pushg 0
+     read
+     atoi
+     storen
+     pushg 0
+     pushi 1
+     add
+     storeg 0
+     jump while0
+while1:
+     pushi 1
+     storeg 12
+while2:
+     pushg 12
+     jz while3
+     pushi 0
+     storeg 12
+     pushi 0
+     storeg 0
+while4:
+     pushg 0
+     pushi 10
+     pushi 1
+     sub
+     inf
+     jz while5
+     pushgp
+     pushi 1
+     padd
+     pushg 0
+     loadn
+     pushgp
+     pushi 1
+     padd
+     pushg 0
+     pushi 1
+     add
+     loadn
+     inf
+     jz if0
+     pushgp
+     pushi 1
+     padd
+     pushg 0
+     loadn
+     storeg 11
+     pushgp
+     pushi 1
+     padd
+     pushg 0
+     pushgp
+     pushi 1
+     padd
+     pushg 0
+     pushi 1
+     add
+     loadn
+     storen
+     pushgp
+     pushi 1
+     padd
+     pushg 0
+     pushi 1
+     add
+     pushg 11
+     storen
+     pushi 1
+     storeg 12
+if0:
+     pushg 0
+     pushi 1
+     add
+     storeg 0
+     jump while4
+while5:
+     jump while2
+while3:
+     pushi 0
+     storeg 0
+while6:
+     pushg 0
+     pushi 10
+     inf
+     jz while7
+     pushgp
+     pushi 1
+     padd
+     pushg 0
+     loadn
+     writei
+     pushs ",";
+     writes
+     pushg 0
+     pushi 1
+     add
+     storeg 0
+     jump while6
+while7:
+Stop
+\end{Verbatim}
+
+\includegraphics[width=\textwidth]{screen1}
+
+\section{Séries de Fibbonacci}
+
+\underline{Descrição:} programa que lê um número natural e escreve a sua sequência de fibbonacci
+\newline
+\newline
+\underline{Código-Fonte:}
+
+\begin{verbatim}
+i;
+j;
+k;
+t;
+n;
+&
+ler n;
+j+=1;
+escrever j;
+k++;
+enquanto(k<=n){
+    t = i + j;
+  i = j;
+  j = t;
+    k++;
+    escrever j;
+    escrever " , ";
+}
+
+\end{verbatim}
+
+\underline{Assembly gerado:}
+
+\begin{verbatim}
+pushi 0
+     pushi 0
+     pushi 0
+     pushi 0
+     pushi 0
+start
+     read
+     atoi
+ storeg 4
+     pushg 1
+     pushi 1
+     add
+     storeg 1
+     pushg 1
+     writei
+     pushg 2
+     pushi 1
+     add
+     storeg 2
+while0:
+     pushg 2
+     pushg 4
+     infeq
+     jz while1
+     pushg 0
+     pushg 1
+     add
+     storeg 3
+     pushg 1
+     storeg 0
+     pushg 3
+     storeg 1
+     pushg 2
+     pushi 1
+     add
+     storeg 2
+     pushg 1
+     writei
+     pushs " , ";
+     writes
+     jump while0
+while1:
+stop
+\end{verbatim}
+
+\section{Números Ímpares}
+
+\underline{Descrição:} programa que lê uma sequência de números terminada por 0 e imprime a contagem e os números ímpares da sequência.
+\newline
+\newline
+\underline{Código-Fonte:}
+
+\begin{verbatim}
+numero;
+conta;
+&
+numero=1;
+escrever "IMPARES: ";
+enquanto(numero){
+    ler numero;
+    se(numero%2){
+     escrever(numero);
+     escrever " , ";
+     conta++;
+    }
+}
+escrever "\nCONTAGEM:";
+escrever conta;
+\end{verbatim}
+
+\underline{Assembly gerado:}
+
+\begin{verbatim}
+pushi 0
+     pushi 0
+start
+     pushi 1
+     storeg 0
+     pushs "IMPARES: ";
+     writes
+while0:
+     pushg 0
+     jz while1
+     read
+     atoi
+     storeg 0
+     pushg 0
+     pushi 2
+     mod
+     jz if0
+     pushg 0
+     writei
+     pushs " , ";
+     writes
+     pushg 1
+     pushi 1
+     add
+     storeg 1
+if0:
+     jump while0
+while1:
+     pushs "\nCONTAGEM:";
+     writes
+     pushg 1
+     writei
+stop
+\end{verbatim}
+
+\section{Ordem Inversa}
+
+\underline{Descrição:} programa que lê uma sequência de 5 numeros naturais e imprime-os na ordem inversa.
+\newline
+\newline
+\underline{Código-Fonte:}
+
+\begin{verbatim}
+n;
+a[5];
+i;
+&
+n=5;
+enquanto(i<n){
+    ler a[i];
+    i++;
+}
+i=n-1;
+enquanto(i>=0){
+    escrever a[i];
+    ESCREVER " , ";
+    i--;
+}
+\end{verbatim}
+
+\underline{Assembly gerado:}
+
+\begin{verbatim}
+pushi 0
+     pushn 5
+     pushi 0
+start
+     pushi 5
+     storeg 0
+while0:
+     pushg 6
+     pushg 0
+     inf
+     jz while1
+     pushgp
+     pushi 1
+     padd
+     pushg 6
+     read
+     atoi
+     storen
+     pushg 6
+     pushi 1
+     add
+     storeg 6
+     jump while0
+while1:
+     pushg 0
+     pushi 1
+     sub
+     storeg 6
+while2:
+     pushg 6
+     pushi 0
+     supeq
+     jz while3
+     pushgp
+     pushi 1
+     padd
+     pushg 6
+     loadn
+     writei
+     pushs " , ";
+     writes
+     pushg 6
+     pushi 1
+     sub
+     storeg 6
+     jump while2
+while3:
+stop
+\end{verbatim}
+
+\section{Se’s aninhados}
+\underline{Descrição:} programa de teste de vários se's aninhados (com e sem senao's)
+\newline
+\newline
+\underline{Código-Fonte:}
+
+\begin{verbatim}
+a;
+i;
+&
+se(a==0){
+    escrever "SIM,";
+    se(a==1){
+     escrever "SIM,";
+    }
+    senao{
+     enquanto(i<2){
+       escrever "NAO,";
+       se(a==1){
+         escrever "SIM,";
+         se(a==1){
+           escrever "SIM,";
+         }
+         senao{
+           escrever "NAO,";
+         }
+       }
+       senao{
+         escrever "NAO,";
+         se(a==0){
+           escrever "SIM,";
+         }
+         senao{
+           escrever "NAO,";
+         }
+ 
+       }
+       i+=1;
+     }
+    }
+}
+senao{
+    escrever "NAO,";
+    se(a==0){
+     escrever "SIM,";
+    }
+    senao{
+     escrever "NAO,";
+    }
+ 
+}
+ 
+escrever " FIM";
+\end{verbatim}
+
+\underline{Assembly gerado:}
+
+\begin{verbatim}
+pushi 0
+     pushi 0
+start
+     pushg 0
+     pushi 0
+     equal
+     jz if4
+     pushs "SIM,";
+     writes
+     pushg 0
+     pushi 1
+     equal
+     jz if0
+     pushs "SIM,";
+     writes
+     jump else0
+if0:
+while0:
+     pushg 1
+     pushi 2
+     inf
+     jz while1
+     pushs "NAO,";
+     writes
+     pushg 0
+     pushi 1
+     equal
+     jz if2
+     pushs "SIM,";
+     writes
+     pushg 0
+     pushi 1
+     equal
+     jz if1
+     pushs "SIM,";
+     writes
+     jump else0
+if1:
+     pushs "NAO,";
+     writes
+else0:
+     jump else1
+if2:
+     pushs "NAO,";
+     writes
+     pushg 0
+     pushi 0
+     equal
+     jz if3
+     pushs "SIM,";
+     writes
+     jump else1
+if3:
+     pushs "NAO,";
+     writes
+else1:
+else2:
+     pushg 1
+     pushi 1
+     add
+     storeg 1
+     jump while0
+while1:
+else3:
+     jump else4
+if4:
+     pushs "NAO,";
+     writes
+     pushg 0
+     pushi 0
+     equal
+     jz if5
+     pushs "SIM,";
+     writes
+     jump else4
+if5:
+     pushs "NAO,";
+     writes
+else4:
+else5:
+     pushs " FIM";
+     writes
+stop
+\end{verbatim}
+
+\section{Lógica Clássica}
+
+\underline{Descrição:} programa para testar operações lógicas e relacionais.
+\newline
+\newline
+\underline{Código-Fonte:}
+
+\begin{verbatim}
+i;
+f;
+&
+enquanto(i<10){
+    se(!f){
+     escrever " SIM ,";
+    }
+    senao{
+     escrever " NAO ,";
+    }
+    se( f==1 ||  i%2==0 && i==5  ){
+     escrever ",,JACKPOT,,";
+    }
+    f=(f+1)%2;
+    i++;
+}
+\end{verbatim}
+
+\underline{Assembly gerado:}
+
+\begin{verbatim}
+pushi 0
+     pushi 0
+start
+while0:
+     pushg 0
+     pushi 10
+     inf
+     jz while1
+     pushg 1
+     pushi 0
+     equal
+     jz if0
+     pushs " SIM ,";
+     writes
+     jump else0
+if0:
+     pushs " NAO ,";
+     writes
+else0:
+     pushg 1
+     pushi 1
+     equal
+     pushg 0
+     pushi 2
+     mod
+     pushi 0
+     equal
+     add
+     pushg 0
+     pushi 5
+     equal
+     mul
+     jz if1
+     pushs ",,JACKPOT,,";
+     writes
+if1:
+     pushg 1
+     pushi 1
+     add
+     pushi 2
+     mod
+     storeg 1
+     pushg 0
+     pushi 1
+     add
+     storeg 0
+     jump while0
+while1:
+stop
+\end{verbatim}
+
+\section{Menor número}
+\underline{Descrição:} programa que lê n números (n fornecido pelo utilizador) e escreve o menor deles.
+\newline
+\newline
+\underline{Código-Fonte:}
+
+\begin{verbatim}
+n;
+aux;
+menor;
+&
+ler n;
+ler aux;
+menor=aux;
+n--;
+enquanto(n){
+    ler aux;
+    se(aux<menor){
+     menor=aux;
+    }
+    n--;
+}
+escrever menor;
+\end{verbatim}
+
+\underline{Assembly gerado:}
+
+\begin{verbatim}
+pushi 0
+     pushi 0
+     pushi 0
+start
+     read
+     atoi
+     storeg 0
+     read
+     atoi
+     storeg 1
+     pushg 1
+     storeg 2
+     pushg 0
+     pushi 1
+     sub
+     storeg 0
+while0:
+     pushg 0
+     jz while1
+     read
+     atoi
+     storeg 1
+     pushg 1
+     pushg 2
+     inf
+     jz if0
+     pushg 1
+     storeg 2
+if0:
+     pushg 0
+     pushi 1
+     sub
+     storeg 0
+     jump while0
+while1:
+     pushg 2
+     writei
+stop
+\end{verbatim}
+
+\section{Operações Ariteméticas}
+
+\underline{Descrição:} programa para testar o funcionamento das operações aritméticas e atribuições/leituras dos índices de um array.
+\newline
+\newline
+\underline{Código-Fonte:}
+
+\begin{verbatim}
+b;
+a[5];
+&
+a[0]=7/7;
+a[1]= 5%3;
+a[2]= 6-3;
+a[3]= 2*2;
+a[4]= 10;
+escrever (b+1)*100/2;
+escrever a[0];
+escrever a[1];
+escrever a[2];
+escrever a[3];
+escrever (a[4]);
+\end{verbatim}
+
+\underline{Assembly gerado:}
+
+\begin{verbatim}
+pushi 0
+     pushn 5
+start
+     pushgp
+     pushi 1
+     padd
+     pushi 0
+     pushi 7
+     pushi 7
+     div
+     storen
+     pushgp
+     pushi 1
+     padd
+     pushi 1
+     pushi 5
+     pushi 3
+     mod
+     storen
+     pushgp
+     pushi 1
+     padd
+     pushi 2
+     pushi 6
+     pushi 3
+     sub
+     storen
+     pushgp
+     pushi 1
+     padd
+     pushi 3
+     pushi 2
+     pushi 2
+     mul
+     storen
+     pushgp
+     pushi 1
+     padd
+     pushi 4
+     pushi 10
+     storen
+     pushg 0
+     pushi 1
+     add
+     pushi 100
+     mul
+     pushi 2
+     div
+     writei
+     pushgp
+     pushi 1
+     padd
+     pushi 0
+     loadn
+     writei
+     pushgp
+     pushi 1
+     padd
+     pushi 1
+     loadn
+     writei
+     pushgp
+     pushi 1
+     padd
+     pushi 2
+     loadn
+     writei
+     pushgp
+     pushi 1
+     padd
+     pushi 3
+     loadn
+     writei
+     pushgp
+     pushi 1
+     padd
+     pushi 4
+     loadn
+     writei
+stop
+\end{verbatim}
+
+\section{Produtório}
+
+\underline{Descrição:} programa que lê 5 números naturais e imprime o seu produtório.
+\newline
+\newline
+\underline{Código-Fonte:}
+
+\begin{verbatim}
+n;
+produtorio;
+numero;
+&
+n=5;
+produtorio=1;
+enquanto(n){
+    ler numero;
+    produtorio=produtorio*numero;
+    n--;
+}
+escrever produtorio;
+\end{verbatim}
+
+\underline{Assembly gerado:}
+
+\begin{verbatim}
+      pushi 0
+     pushi 0
+     pushi 0
+start
+     pushi 5
+     storeg 0
+     pushi 1
+     storeg 1
+while0:
+     pushg 0
+     jz while1
+     read
+     atoi
+storeg 2
+     pushg 1
+     pushg 2
+     mul
+     storeg 1
+     pushg 0
+     pushi 1
+     sub
+     storeg 0
+     jump while0
+while1:
+     pushg 1
+     writei
+stop
+\end{verbatim}
+
+\section{Quadrado}
+
+\underline{Descrição:} programa que lê 4 números e verifica se podem corresponder aos lados de um quadrado.
+\newline
+\newline
+\underline{Código-Fonte:}
+
+\begin{verbatim}
+a;
+b;
+c;
+d;
+&
+ler a;
+ler b;
+ler c;
+ler d;
+se(a==b && b==c && c==d){
+    escrever "É um quadrado.\n";
+}
+senao{
+    escrever "Não é um quadrado.\n";
+}
+\end{verbatim}
+
+\underline{Assembly gerado:}
+
+\begin{verbatim}
+pushi 0
+     pushi 0
+     pushi 0
+     pushi 0
+start
+     read
+     atoi
+     storeg 0
+     read
+     atoi
+     storeg 1
+     read
+     atoi
+     storeg 2
+     read
+     atoi
+     storeg 3
+     pushg 0
+     pushg 1
+     equal
+     pushg 1
+     pushg 2
+     equal
+     mul
+     pushg 2
+     pushg 3
+     equal
+     mul
+     jz if0
+     pushs "É um quadrado.\n";
+     writes
+     jump else0
+if0:
+     pushs "Não é um quadrado.\n";
+     writes
+else0:
+stop
+\end{verbatim}
+
+\section{Números Ímpares}
+
+\underline{Descrição:} programa que lê 5 números naturais e imprime o seu somatório.
+\newline
+\newline
+\underline{Código-Fonte:}
+
+\begin{verbatim}
+a;
+num;
+soma;
+&
+enquanto(a<5){
+    ler num;
+    soma+=num;
+    a++;
+}
+escrever "Soma: ";
+escrever soma;
+\end{verbatim}
+
+\underline{Assembly gerado:}
+
+\begin{verbatim}
+pushi 0
+     pushi 0
+     pushi 0
+start
+while0:
+     pushg 0
+     pushi 5
+     inf
+     jz while1
+     read
+     atoi
+     storeg 1
+     pushg 2
+     pushg 1
+     add
+     storeg 2
+     pushg 0
+     pushi 1
+     add
+     storeg 0
+     jump while0
+while1:
+     pushs "Soma: ";
+     writes
+     pushg 2
+     writei
+stop
+\end{verbatim}
+
 
 \chapter{Conclusão} \label{concl}
-Atendendo aos resultados obtidos, consideramos que todos os objectivos foram atingidos com sucesso.
-Consideramos que o programa desenvolvido pode ser usado como ferramenta de tratamento de texto em diversos contextos.
-\\
-Como trabalho futuro sugerimos a inclusão de mais alguns casos de contrações e a automatização da comparação dos verbos recolhidos com uma lista de verbos de modo a eliminar os casos não válidos.
-
-\appendix
-\chapter{Código FLEX}
-
-Lista-se a seguir o código desenvolvido.
-\\
-\begin{verbatim}
-   %option noyywrap
-   %x VERBO INTERROG
-   %{
-   	#include "string.h"
-   	#include <stdlib.h>
-   	#define MAX 3000
-   	char * verbos[MAX];
-   	int countVerbos=0;
-   	static int compare (const void * a, const void * b){
-       	return strcmp (*(const char **) a, *(const char **) b);
-   	}
-   %}
-   %%
-   [^a-zA-Z]+(?i:(to|can('t)?|could|shall|should|will|would|may|might|did(n't)))\ +  { ECHO; BEGIN VERBO; }
-   <VERBO>(?i:(i|me|my(self)?|mine|you(r|rs|rself)?|he|him(self)?|his|she
-   |her(s|self)?|it(s)?|we|us|our(s|selves)?|the(y)|them(selves)?|a|th(is|at)))[\.\?\!\;\',\:\ \n\t]
-   { ECHO ; BEGIN INTERROG;}
-   <VERBO>[a-z]+ {
-   	int i=0;
-   	while(i<countVerbos){
-       	if(strcmp(verbos[i],yytext)==0)
-           	break;
-       	i++;
-   	}
-   	if(i==countVerbos)
-       	verbos[countVerbos++]=strdup(yytext);
-   	ECHO;
-   	BEGIN INITIAL;
-   }
-   <VERBO>.|\n                	{ ECHO ; BEGIN INITIAL ; }
-   <INTERROG>[a-z]+(\ [a-z]+)?\? {
-   	int i=0;
-   	yytext[strlen(yytext)-1]='\0';
-   	char * aux=strtok(yytext," ");
-   	aux=strtok(aux,"?");
-   	while(i<countVerbos){
-       	if(strcmp(verbos[i],aux)==0)
-           	break;
-       	i++;
-   	}
-   	if(i==countVerbos)
-       	verbos[countVerbos++]=strdup(aux);
-   	ECHO;
-   	BEGIN INITIAL;
-   }
-   <INTERROG>.|\n                	{ ECHO ; BEGIN INITIAL ; }
-   [gG]onna[\.\?\!\;,\ \n\t] { printf("%coing to%c",yytext[0],yytext[strlen(yytext)-1]); }
-   [wW]anna[\.\?\!\;,\ \n\t] { printf("%cant to%c",yytext[0],yytext[strlen(yytext)-1]); }
-   [cC]an't[\.\?\!\;,\ \n\t] { printf("%cannot%c",yytext[0],yytext[strlen(yytext)-1]); }
-   [wW]on't[\.\?\!\;,\ \n\t] { printf("%cill not%c",yytext[0],yytext[strlen(yytext)-1]); }
-   I\ ain't[\.\?\!\;,\ \n\t] { printf("I am not%c",yytext[strlen(yytext)-1]); }
-   ([hH]e|[sS]he|[iI]t)\ ain't[\.\?\!\;,\ \n\t]
-   v{ printf("%s is not%c",strtok(yytext," "),yytext[strlen(yytext)-1]);}
-   ([yY]ou|[tT]hey|[wW]e)\ ain't[\.\?\!\;,\ \n\t]
-   { printf("%s are not%c",strtok(yytext," "),yytext[strlen(yytext)-1]);}
-   [tT]hat\ ain't[\.\?\!\;,\ \n\t]       	{ printf("%chat is not%c",yytext[0],yytext[strlen(yytext)-1]); }
-   [tT]his\ ain't[\.\?\!\;,\ \n\t]       	{ printf("%chis is not%c",yytext[0],yytext[strlen(yytext)-1]); }
-   \'[cC]ause[\.\?\!\;,\ \n\t]              	{ printf("%cecause%c", yytext[1]-1,yytext[strlen(yytext)-1]); }
-   'm[\.\?\!\;,\ \n\t]                      	{ printf(" am%c",yytext[strlen(yytext)-1]); }
-   're[\.\?\!\;,\ \n\t]                     	{ printf(" are%c",yytext[strlen(yytext)-1]); }
-   n't[\.\?\!\;,\ \n\t]                     	{ printf(" not%c",yytext[strlen(yytext)-1]); }
-   'll[\.\?\!\;,\ \n\t]                     	{ printf(" will%c",yytext[strlen(yytext)-1]); }
-   've[\.\?\!\;,\ \n\t]                     	{ printf(" have%c",yytext[strlen(yytext)-1]); }
-   'd[\.\?\!\;,\ \n\t]                      	{ printf(" would%c",yytext[strlen(yytext)-1]); }
-   's[\.\?\!\;,\ \n\t]                      	{ printf(" [is/has]%c",yytext[strlen(yytext)-1]); }
-   %%
-   int main(){
-   	yylex();
-   	int i=0;printf("\n\n");
-   	FILE *fp;
-   	fp= fopen("verbos.html", "w");
-   	qsort (verbos, countVerbos, sizeof (const char *), compare);
-   	fprintf(fp,"<html><body><h1>verbos:%d</h1><ul>\n",countVerbos);
-   	for(i=0;i<countVerbos;i++)
-       	fprintf(fp,"<li>to %s</li>\n",verbos[i]);
-   	fprintf(fp,"</ul></body></html>");
-   	fclose(fp);
-   	return 1;
-   }
-\end{verbatim}
+No geral, os objetivos esperados para o programa foram alcançados e obtivemos uma solução sólida para o problema apresentado, cumprindo o definido inicialmente.
+Destacamos ainda alguns pontos:
+\begin{itemize}
+\item a GIC desenvolvida é de simples utilização, intuitiva e bastante completa;
+\item foram implementadas várias formas de manuseamento de variáveis do tipo inteiro tradicionais: i++, i+=int,  arr[(i-int)*int ], entre outras.
+\end{itemize}
+\newline
+Como trabalho futuro sugerimos:
+\begin{itemize}
+\item implementação de manipulação de arrays em 2 dimensões;
+\item definição e invocação de subprogramas sem parâmetros que possam retornar um resultado atómico.
+\end{itemize}
 
 \bibliographystyle{alpha}
 \bibliography{relprojLayout}

@@ -1,0 +1,47 @@
+// programa de teste de vários se's aninhados (com e sem senao's)
+a;
+i;
+&
+se(a==0){
+	escrever "SIM,";
+	se(a==1){
+		escrever "SIM,";
+	}
+	senao{
+		enquanto(i<2){
+			escrever "NAO,";
+			se(a==1){
+				escrever "SIM,";
+				se(a==1){
+					escrever "SIM,";
+				}
+				senao{
+					escrever "NAO,";
+				}
+			}
+			senao{
+				escrever "NAO,";
+				se(a==0){
+					escrever "SIM,";
+				}
+				senao{
+					escrever "NAO,";
+				}
+
+			}
+			i+=1;
+		}
+	}
+}
+senao{
+	escrever "NAO,";
+	se(a==0){
+		escrever "SIM,";
+	}
+	senao{
+		escrever "NAO,";
+	}
+
+}
+
+escrever " FIM";

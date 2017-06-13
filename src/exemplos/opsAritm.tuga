@@ -1,0 +1,16 @@
+// programa para testar o funcionamento das operações aritméticas
+// e atribuições/leituras dos índices de um array
+b;
+a[5];
+&
+a[0]=7/7;
+a[1]= 5%3;
+a[2]= 6-3;
+a[3]= 2*2;
+a[4]= 10;
+escrever (b+1)*100/2;
+escrever a[0];
+escrever a[1];
+escrever a[2];
+escrever a[3];
+escrever (a[4]);

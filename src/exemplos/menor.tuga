@@ -1,0 +1,17 @@
+// programa que lê n números (n fornecido pelo utilizador) e escreve o menor deles
+n;
+aux;
+menor;
+&
+ler n;
+ler aux;
+menor=aux;
+n--;
+enquanto(n){
+	ler aux;
+	se(aux<menor){
+		menor=aux;
+	}
+	n--;
+}
+escrever menor;

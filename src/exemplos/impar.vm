@@ -1,0 +1,33 @@
+		pushi 0
+		pushi 0
+start
+		pushi 1
+		storeg 0
+		pushs "IMPARES: ";
+		writes
+while0:
+		pushg 0
+		jz while1
+		read
+		atoi
+		storeg 0
+		pushg 0
+		pushi 2
+		mod
+		jz if0
+		pushg 0
+		writei
+		pushs " , ";
+		writes
+		pushg 1
+		pushi 1
+		add
+		storeg 1
+if0:
+		jump while0
+while1:
+		pushs "\nCONTAGEM:";
+		writes
+		pushg 1
+		writei
+stop

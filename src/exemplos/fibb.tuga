@@ -1,0 +1,19 @@
+// programa que lê um número natural e escreve a sua sequência de fibbonacci
+i; 
+j;
+k;
+t;
+n; 
+&
+ler n;
+j+=1;
+escrever j;
+k++;
+enquanto(k<=n){
+	t = i + j;
+    i = j;
+    j = t;
+	k++;
+	escrever j;
+	escrever " , ";
+}

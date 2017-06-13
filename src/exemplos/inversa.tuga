@@ -1,0 +1,16 @@
+// programa que lê uma sequência de 5 numeros naturais e imprime-os na ordem inversa
+n;
+a[5];
+i;
+&
+n=5;
+enquanto(i<n){
+	ler a[i];
+	i++;
+}
+i=n-1;
+enquanto(i>=0){
+	escrever a[i];
+	ESCREVER " , ";
+	i--;
+}

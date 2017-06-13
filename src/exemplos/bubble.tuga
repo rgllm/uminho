@@ -1,0 +1,30 @@
+// programa que lê 10 numeros naturais e os escreve por ordem descendente
+i; 
+a[10];	
+troca;	
+trocado;  
+&
+enquanto(i<10){
+	ler a[i];
+	i++;
+}
+trocado=1;
+enquanto(trocado){
+	trocado=0;
+	i=0;
+	enquanto(i<10 -1 ){
+		se(a[i]<a[i+1]){
+			troca=a[i];
+			a[i]=a[i+1];
+			a[i+1]=troca;
+			trocado=1;
+		}
+		i++;
+	}
+}
+i=0;
+enquanto(i<10){
+	escrever a[i];
+	escrever ",";
+	i++;
+}

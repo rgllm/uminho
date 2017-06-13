@@ -1,0 +1,27 @@
+		pushi 0
+		pushi 0
+		pushi 0
+start
+while0:
+		pushg 0
+		pushi 5
+		inf
+		jz while1
+		read
+		atoi
+		storeg 1
+		pushg 2
+		pushg 1
+		add
+		storeg 2
+		pushg 0
+		pushi 1
+		add
+		storeg 0
+		jump while0
+while1:
+		pushs "Soma: ";
+		writes
+		pushg 2
+		writei
+stop

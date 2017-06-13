@@ -1,0 +1,80 @@
+		pushi 0
+		pushn 5
+start
+		pushgp
+		pushi 1
+		padd 
+		pushi 0
+		pushi 7
+		pushi 7
+		div
+		storen
+		pushgp
+		pushi 1
+		padd 
+		pushi 1
+		pushi 5
+		pushi 3
+		mod
+		storen
+		pushgp
+		pushi 1
+		padd 
+		pushi 2
+		pushi 6
+		pushi 3
+		sub
+		storen
+		pushgp
+		pushi 1
+		padd 
+		pushi 3
+		pushi 2
+		pushi 2
+		mul
+		storen
+		pushgp
+		pushi 1
+		padd 
+		pushi 4
+		pushi 10
+		storen
+		pushg 0
+		pushi 1
+		add
+		pushi 100
+		mul
+		pushi 2
+		div
+		writei
+		pushgp
+		pushi 1
+		padd
+		pushi 0
+		loadn
+		writei
+		pushgp
+		pushi 1
+		padd
+		pushi 1
+		loadn
+		writei
+		pushgp
+		pushi 1
+		padd
+		pushi 2
+		loadn
+		writei
+		pushgp
+		pushi 1
+		padd
+		pushi 3
+		loadn
+		writei
+		pushgp
+		pushi 1
+		padd
+		pushi 4
+		loadn
+		writei
+stop

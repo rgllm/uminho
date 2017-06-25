@@ -21,7 +21,7 @@ If you're a Computer Engineering student looking at this, the projects will *pro
 * **2nd year**:
     - [Software Labs III](https://github.com/rgllm/uminho/tree/master/02/LI3) - a supermarket management software done twice in C and Java.
     - [Object Oriented Programming](https://github.com/rgllm/uminho/tree/master/02/POO) - a real estate app done in Java.
-    - [Operating Systems](https://github.com/rgllm/uminho/tree/master/02/SO) - backup solution done in C.
+    - [Operating Systems](https://github.com/rgllm/uminho/tree/master/02/SO) - backup solution done in C and the pratical classes scripts solved.
 
 * **3rd year**:
     - [Databases](https://github.com/rgllm/uminho/tree/master/03/BD/mysql)  - a database for train reservations done in MySQL and Neo4J.

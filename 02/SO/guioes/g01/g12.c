@@ -23,7 +23,7 @@ int main(int argc, char **argv){
 			return -1;
 		}
 
-	    for (int i=0;i<10*1024*1024;i++){
+	    for (int i=0;i<10000000;i++){
 	       write(fd,&a,1);
 	   }
 

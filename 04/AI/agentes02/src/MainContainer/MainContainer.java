@@ -1,5 +1,6 @@
 package MainContainer;
-
+        
+import java.util.concurrent.TimeUnit;
 import jade.core.Runtime;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
@@ -10,6 +11,7 @@ public class MainContainer {
 
 	Runtime rt;
 	ContainerController container;
+	protected static int numCust = 1;
 
 	public void initMainContainerInPlatform(String host, String port, String containerName) {
 
@@ -46,7 +48,16 @@ public class MainContainer {
 		MainContainer a = new MainContainer();
 		
 		a.initMainContainerInPlatform("localhost","9888","MainContainer");
-		a.startAgentInPlatform("costumer", "Agents.costumer");
-		a.startAgentInPlatform("librarian", "Agents.librarian");
+		a.startAgentInPlatform("Librarian", "MainContainer.Librarian");
+		while(true) {
+			System.out.println("MainContainer - Customer Number: " + numCust);
+			a.startAgentInPlatform("Customer "+ numCust, "MainContainer.Customer");
+			numCust++;
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

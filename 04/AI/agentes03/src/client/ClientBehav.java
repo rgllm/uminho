@@ -35,7 +35,7 @@ public class ClientBehav extends TickerBehaviour{
 		msg.addReceiver(new AID("Manager", AID.ISLOCALNAME));
 		
 		if(time <= 0){
-			msg.setContent("end");
+			msg.setContent("END");
 			myAgent.send(msg);
 			stop();
 		}

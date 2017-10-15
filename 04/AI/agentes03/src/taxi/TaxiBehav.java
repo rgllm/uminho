@@ -27,7 +27,7 @@ public class TaxiBehav extends CyclicBehaviour {
 			if (msg.getPerformative() == 11) {
 				ACLMessage inf = new ACLMessage(ACLMessage.PROPOSE);
 				inf.addReceiver(msg.getSender());
-				inf.setContent("pos: "+pos[0]+" "+pos[1]);
+				inf.setContent("Position: "+pos[0]+" "+pos[1]);
 				myAgent.send(inf);
 	 			
 			}

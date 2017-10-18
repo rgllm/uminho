@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<p0:properties xmlns:p0="http://jadex.sourceforge.net/jadexconf" __ID="0">
+	<p0:properties __ID="1" type="StarterServicePanel">
+		<p0:properties __ID="2" type="mpanel">
+			<p0:property __ID="3" type="tree"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<p0:TreeProperties xmlns:p0="typeinfo:jadex.base.gui.filetree" __ID="0">
+	<expandedNodes>
+		<p0:NodePath__1 __ID="1" __len="0"></p0:NodePath__1>
+	</expandedNodes>
+	<selectedNode>
+		<p0:NodePath __ID="2" entry="0">
+			<path>
+				<p1:String__1 xmlns:p1="typeinfo:java.lang" __ID="3" __len="0"></p1:String__1>
+			</path>
+		</p0:NodePath>
+	</selectedNode>
+	<rootPathEntries>
+		<p1:String__1 xmlns:p1="typeinfo:java.lang" __ID="4" __len="1">
+			<entries>
+				<p1:String __ID="5">src/agentes04/PingPongScenario.application.xml</p1:String>
+			</entries>
+		</p1:String__1>
+	</rootPathEntries>
+</p0:TreeProperties>
+]]></p0:property>
+			<p0:properties __ID="4" type="mic">
+				<p0:property __ID="5" type="Micro Agent">true</p0:property>
+				<p0:property __ID="6" type="Component">true</p0:property>
+				<p0:property __ID="7" type="Application">true</p0:property>
+				<p0:property __ID="8" type="BPMN Process">true</p0:property>
+			</p0:properties>
+		</p0:properties>
+		<p0:properties __ID="9" type="spanel">
+			<p0:property __ID="10" type="model">src/agentes04/PingPongScenario.application.xml</p0:property>
+			<p0:property __ID="11" type="ridurl">file:src/agentes04/PingPongScenario.application.xml</p0:property>
+			<p0:property __ID="12" type="globalrid"></p0:property>
+			<p0:property __ID="13" type="config">Ping-Pong</p0:property>
+			<p0:property __ID="14" type="startsuspended">false</p0:property>
+			<p0:property __ID="15" type="autogenerate">false</p0:property>
+			<p0:property __ID="16" type="number">1</p0:property>
+			<p0:property __ID="17" type="name">PingPongScenario</p0:property>
+		</p0:properties>
+	</p0:properties>
+	<p0:properties __ID="18" type="library_service">
+		<p0:properties __ID="19" type="link">
+			<p0:properties __ID="20" type="a"></p0:properties>
+			<p0:properties __ID="21" type="b">
+				<p0:property __ID="22" type="lid_url">file:src/agentes04/PingPongScenario.application.xml</p0:property>
+			</p0:properties>
+		</p0:properties>
+	</p0:properties>
+	<p0:properties __ID="23" type="clockservice">
+		<p0:property __ID="24" type="type">system</p0:property>
+		<p0:property __ID="25" type="delta">100</p0:property>
+		<p0:property __ID="26" type="dilation">1.0</p0:property>
+	</p0:properties>
+	<p0:properties __ID="27" type="simulationservice">
+		<p0:property __ID="28" type="executing">true</p0:property>
+	</p0:properties>
+	<p0:properties __ID="29" type="chat">
+		<p0:property __ID="30" type="nickname">user_7d0</p0:property>
+	</p0:properties>
+	<p0:properties __ID="31" type="securityservice">
+		<p0:property __ID="32" type="validityduration">327680</p0:property>
+		<p0:property __ID="33" type="usepass">true</p0:property>
+		<p0:property __ID="34" type="password">a0da9a78-ae4</p0:property>
+		<p0:property __ID="35" type="selected_mechanism">0</p0:property>
+		<p0:property __ID="36" type="trustedlan">false</p0:property>
+		<p0:property __ID="37" type="storepath">./keystore</p0:property>
+		<p0:property __ID="38" type="storepass">keystore</p0:property>
+		<p0:property __ID="39" type="keypass">keystore</p0:property>
+		<p0:property __ID="40" type="selmech">0</p0:property>
+		<p0:properties __ID="41" type="DecentralizedAcquisitionMechanism">
+			<p0:property __ID="42" type="responses">1</p0:property>
+		</p0:properties>
+		<p0:properties __ID="43" type="TTPAcquisitionMechanism">
+			<p0:property __ID="44" type="verify">true</p0:property>
+		</p0:properties>
+	</p0:properties>
+	<p0:properties __ID="45" type="awa">
+		<p0:property __ID="46" type="fast">false</p0:property>
+		<p0:property __ID="47" type="autocreate">true</p0:property>
+		<p0:property __ID="48" type="autodelete">true</p0:property>
+	</p0:properties>
+</p0:properties>

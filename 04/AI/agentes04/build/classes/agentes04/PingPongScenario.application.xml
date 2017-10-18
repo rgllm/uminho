@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- <H3> The PingPong Scenario </H3> Starts Ping agent, and sends a Ping 
+	message to Pong Agent. Pong agent will reply with pong to Ping Agent. -->
+
+<!-- Agent -->
+
+<applicationtype xmlns="http://jadex.sourceforge.net/jadex" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://jadex.sourceforge.net/jadex-bdi
+						http://jadex.sourceforge.net/jadex-bdi-2.4.xsd"
+	name="PingPongScenario" package="agentes04">
+
+	<componenttypes>
+		<!-- Define the available agents of the system -->
+            <componenttype name="Ping" filename="build/classes/agentes04/PingAgent.class"></componenttype>
+            <componenttype name="Pong" filename="build/classes/agentes04/PongAgent.class"></componenttype>     
+
+	</componenttypes>
+
+	<configurations>
+		<!-- Define in configurations available for the system. In this case, define 
+			single configuration to run both agents -->
+		<configuration name="Ping-Pong">
+			<components> 
+                            <component type="Pong" name="Pong"></component>
+                            <component type="Ping" name="Ping"></component>
+			</components>
+		</configuration>
+	</configurations>
+</applicationtype>

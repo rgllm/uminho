@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+   <agent xmlns ="http://jadex.sourceforge.net/jadex"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://jadex.sourceforge.net/jadex-bdi
+          http://jadex.sourceforge.net/jadex-bdi-2.4.xsd"
+          name="TranslatorAgent" package="aula_ai5">
+    
+        <imports>
+            <import>java.util.*</import>
+            <import>jadex.commons.*</import>
+            <import>jadex.bridge.fipa.*</import>
+            <import>jadex.bdi.runtime.*</import>
+        </imports>
+        
+        <beliefs>
+            <beliefset name="epwords" class="Tuple">
+                <fact> new Tuple("milk","leite")</fact>
+                <fact> new Tuple("cow","vaca")</fact>
+                <fact> new Tuple("cat","gato")</fact>
+                <fact> new Tuple("dog","cão")</fact>
+            </beliefset>
+  
+        
+            <belief name="alarme" class="long">
+                <fact> System.currentTimeMillis() </fact>
+            </belief>
+
+            <belief name="timer" class="long" updaterate="1000">
+                <fact>System.currentTimeMillis()</fact> 
+            </belief>
+            
+            <belief name="contador" class="int" argument="true">
+                <fact>0</fact>
+            </belief>
+        </beliefs>
+        
+        <plans>
+            <plan name="translate">
+                <body class="EnPtTranslationPlan"/>
+                <trigger>
+                    <messageevent ref = "request_translation"/>
+                </trigger>
+            </plan>
+            
+            <plan name="addentry">
+                <body class="UpdateDictionaryPlan"/>
+                <trigger>
+                    <messageevent ref="request_addentry"/>
+                </trigger>
+            </plan>
+            
+            <plan name="notify">
+                <body class="NotifyPlan" />
+                <trigger>
+                    <condition>
+                       $beliefbase.alarme &lt;= $beliefbase.timer
+                    </condition>
+                </trigger>
+            </plan>
+         </plans>
+         
+         <events>
+             <!-- RECEIVE TRANSLATION REQUEST -->
+            <messageevent name="request_translation" direction="receive" type="fipa">
+                <parameter name="performative" class="String" direction="fixed">
+                    <value>SFipa.REQUEST</value>
+                </parameter>
+                <match>
+                   ((String)$content).startsWith("translate en_pt")
+                </match>
+            </messageevent>
+            
+           <!-- SEND TRANSLATION RESPONSE -->
+           <messageevent name="respond_translation" direction="send" type="fipa">
+               <parameter name="performative" class="String" direction="fixed">
+                   <value>SFipa.INFORM</value>
+               </parameter>    
+           </messageevent>
+           
+            <!-- FAILURE IN TRANSLATION -->
+           <messageevent name="failure_translation" direction="send" type="fipa">
+               <parameter name="performative" class="String" direction="fixed">
+                   <value>SFipa.FAILURE</value>
+               </parameter>
+           </messageevent>
+           
+           <!-- ADD ENTRY -->
+           <messageevent name="request_addentry" direction="receive" type="fipa">
+               <parameter name="performative" class="String" direction="fixed">
+                   <value>SFipa.REQUEST</value>
+               </parameter>
+               <match>
+                   ((String)$content).startsWith("add en_pt")
+               </match>
+           </messageevent>
+           
+           <!--SEND ADD ENTRY RESPONSE -->
+           <messageevent name="inform_addentry" direction="send" type="fipa">
+               <parameter name="performative" class="String" direction="fixed">
+                   <value>SFipa.INFORM</value> 
+               </parameter>
+           </messageevent>
+           
+           <!-- FAILURE IN ADD ENTRY -->
+           <messageevent name="failure_addentry" direction="send" type="fipa">
+               <parameter name="performative" class="String" direction="fixed">
+                   <value>SFipa.FAILURE</value>
+               </parameter>
+           </messageevent>
+           
+         </events>
+         
+         <expressions>
+             <expression name="query_epword" class="String">
+                 select one $wordpair.get(1)
+			from Tuple $wordpair in $beliefbase.getBeliefSet("epwords").getFacts()
+			where $wordpair.get(0).equals($eword)
+             </expression> 
+         </expressions>
+         
+         <properties>
+             <property name="logging.useParentHandlers">true</property>
+             <property name="debugging">true</property>
+         </properties>
+         
+         <configurations>
+             <configuration name="default">
+                 <plans>
+                     <initialplan ref = "translate"/>
+                     <initialplan ref = "addentry"/>
+                     <initialplan ref = "notify" />
+                 </plans>
+             </configuration>     
+         </configurations>
+             
+   </agent>               

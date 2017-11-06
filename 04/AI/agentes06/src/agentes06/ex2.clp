@@ -89,12 +89,12 @@
      => (printout t "Third age" crlf )
 )
 
-;;8(todo: assim ou ver pela idade?)
+;;8
 
-(defrule allAdults
-     (exists (child))
-     => (printout t "There are childs." crlf )
-)
+(defrule rule
+      (not (exists (person {(abstraction == child || abstraction == third-age)})))
+      =>
+      (printout t "Every person is an adult!"))
 
 ;;9
 

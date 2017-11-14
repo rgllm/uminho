@@ -32,6 +32,38 @@ If you're a Computer Engineering student looking at this, the projects will *pro
     - [Language Processing](https://github.com/rgllm/uminho/tree/master/03/PL) - We started off with a small set of projects using Flex and Gawk and ended up with a small language that runs on a stack-based VM.
     - [Knowledge and Reasoning Representation Systems](https://github.com/rgllm/uminho/tree/master/03/SRCR) - Artifical Intelligence. A set of projects using Prolog to represent knowledge and neural networks for the reasoning part.
     - [Software Labs IV](https://github.com/rgllm/uminho/tree/master/03/LI4) - restaurant suggestion app for Windows.
+
+## SlocCount
+
+SLOC    Directory   SLOC-by-Language (Sorted)
+16587   03              cpp=8157,java=4335,cs=1911,ansic=1078,perl=512,yacc=455,
+                        lex=136,sh=3
+6248    02              java=3149,ansic=2780,haskell=313,sh=6
+1496    01              ansic=900,haskell=528,sh=68
+741     04              java=741
+0       top_dir         (none)
+
+
+Totals grouped by language (dominant language first):
+java:          8225 (32.81%)
+cpp:           8157 (32.53%)
+ansic:         4758 (18.98%)
+cs:            1911 (7.62%)
+haskell:        841 (3.35%)
+perl:           512 (2.04%)
+yacc:           455 (1.81%)
+lex:            136 (0.54%)
+sh:              77 (0.31%)
+
+
+Total Physical Source Lines of Code (SLOC)                = 25,072
+Development Effort Estimate, Person-Years (Person-Months) = 5.89 (70.69)
+ (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
+Schedule Estimate, Years (Months)                         = 1.05 (12.61)
+ (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
+Estimated Average Number of Developers (Effort/Schedule)  = 5.61
+Total Estimated Cost to Develop                           = $ 795,775
+ (average salary = $56,286/year, overhead = 2.40).
                           
                           
 ## Contributors

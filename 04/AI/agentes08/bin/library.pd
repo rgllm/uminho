@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project PDTVersion="0.3.2">
+<RelationPool IMemento.internal.id="4362" PoolType="5">
+<Relation DST="3585" IMemento.internal.id="4101" Prominence="0" RelationType="1073741830" SRC="2561"/>
+</RelationPool>
+<DiagramPool IMemento.internal.id="778" PoolType="3">
+<Diagram DiagramType="86" IMemento.internal.id="1539"/>
+<Diagram DiagramType="88" IMemento.internal.id="515"/>
+<Diagram DiagramType="84" IMemento.internal.id="2307"/>
+<Diagram DiagramType="90" IMemento.internal.id="1283"/>
+<Diagram DiagramType="85" IMemento.internal.id="2051"/>
+<Diagram DiagramType="89" IMemento.internal.id="1027"/>
+<Diagram DiagramType="87" IMemento.internal.id="1795"/>
+</DiagramPool>
+<CellPool IMemento.internal.id="3338" PoolType="2">
+<EntityCell IMemento.internal.id="9730" MotherDiagram="1027" WrappedEntity="9473">
+<Look Height="-1" Width="-1" XCoordinate="100" YCoordinate="160"/>
+</EntityCell>
+<EntityCell IMemento.internal.id="3074" MotherDiagram="1539" WrappedEntity="2561">
+<Look Height="-1" Width="-1" XCoordinate="100" YCoordinate="130"/>
+</EntityCell>
+<EntityCell IMemento.internal.id="3842" MotherDiagram="1027" WrappedEntity="3585">
+<Look Height="-1" Width="-1" XCoordinate="100" YCoordinate="130"/>
+</EntityCell>
+<EntityCell IMemento.internal.id="4610" MotherDiagram="515" WrappedEntity="2561">
+<Look Height="-1" Width="-1" XCoordinate="46" YCoordinate="58"/>
+</EntityCell>
+</CellPool>
+<EntityPool IMemento.internal.id="2826" PoolType="1">
+<Goal EntityName="checkout" IMemento.internal.id="3585"/>
+<Scenario EntityName="checkout Scenario" IMemento.internal.id="2561" RelevantGoal="3585"/>
+<Goal EntityName="rbbu" IMemento.internal.id="9473"/>
+</EntityPool>
+</Project>

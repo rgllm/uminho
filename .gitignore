@@ -25,3 +25,5 @@ hs_err_pid*
 .DS_STORE
 /src/SuperBike/nbproject/private/
 /src/SuperBike/build/
+/src/aebd_test/nbproject/private/
+/src/aebd_test/build/

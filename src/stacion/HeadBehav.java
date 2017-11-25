@@ -1,50 +1,107 @@
 package stacion;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
-import jade.core.AID;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 
 @SuppressWarnings("serial")
 public class HeadBehav extends CyclicBehaviour {
-	private static ArrayList<String> estacoes;
+	private static HashMap<String,Stacion> stacions = new HashMap<String,Stacion>();
 	
-	public void add(String s) {
-		
+	
+	public HashMap<String,Stacion> toStacion(ArrayList<String> s) {
+		HashMap<String,Stacion> sta = new HashMap<String, Stacion>();
+		Stacion tmp;
+		for(String st : s) {
+			tmp = new Stacion(st);
+            sta.put(tmp.getName(),tmp);
+        }
+		return sta;
 	}
 	
 	public void populate() {
 		StationWriter s = new StationWriter();
-		estacoes = s.readFile();
+		stacions = toStacion(s.readFile());
 	}
+	
+	public Boolean notVeryFarGo(Float x,Float y,Stacion s) {
+		Boolean notFar = false;
+		if( Math.sqrt(Math.pow((x-s.getX()),2) + Math.pow(y-s.getY(),2)) > s.getAreaGo()) {
+			notFar = true;
+		}
+		return notFar;
+	}
+	
+	public Boolean notVeryFarLeave(Float x,Float y,Stacion s) {
+		Boolean notFar = false;
+		if( Math.sqrt(Math.pow((x-s.getX()),2) + Math.pow(y-s.getY(),2)) > s.getAreaLeave()) {
+			notFar = true;
+		}
+		return notFar;
+	}
+	
 	
 	@Override
     public void action() {
-		String senderID;
+		populate();
 		ACLMessage msg= myAgent.receive();
         if(msg!=null){
-            String[] parts = msg.getContent().split(" - ");
-            String receiver = parts[0];
-            String content = parts[1];
-            String[] contentParts = content.split("\\s+");
-            String op = contentParts[0];
-            senderID = myAgent.getLocalName() + " - ";
-            if(op.equals("listar")){
+            String[] parts = msg.getContent().split("\\s+");
+            if(parts[0].equals("Listar")){
                 ACLMessage todasEstacoes = new ACLMessage( ACLMessage.INFORM );
                 StringBuilder answer = new StringBuilder();
-                Object[] estacoes_list = estacoes.toArray();
-                answer.append(senderID).append("Estacoes: \n");
-                for(Object obj : estacoes_list) {
-                    answer.append(obj.toString()).append('\n');
-                }
+                for(Entry<String, Stacion> entry : stacions.entrySet()) {
+    				answer.append(entry.getKey()).append('\n');
+    			}
                 todasEstacoes.setContent(answer.toString());
-                AID dest = new AID(receiver, AID.ISLOCALNAME);
-                todasEstacoes.addReceiver(dest);
+                todasEstacoes.addReceiver(msg.getSender());
                 myAgent.send(todasEstacoes);
                 System.out.println(answer);
             }
-            
+            else if(parts[0].equals("+")) {
+            	if(stacions.get(parts[1])!=null) {
+            		if(stacions.get(parts[1]).addBike()) {
+            			ACLMessage inf = new ACLMessage( ACLMessage.INFORM );
+                        inf.setContent("Bicicleta deixada em" + parts[1]);
+                        inf.addReceiver(msg.getSender());
+                        myAgent.send(inf);
+            		}
+            	}
+            }
+            else if(parts[0].equals("-")) {
+            	if(stacions.get(parts[1])!=null) {
+            		if(stacions.get(parts[1]).remBike()) {
+            			ACLMessage inf = new ACLMessage( ACLMessage.INFORM );
+                        inf.setContent("Bicicleta levantada em" + parts[1]);
+                        inf.addReceiver(msg.getSender());
+                        myAgent.send(inf);
+            		}
+            	}
+            }
+            else if(parts[0].equals("Pos:")) {
+            	ACLMessage todasEstacoes = new ACLMessage( ACLMessage.INFORM );
+                StringBuilder answer = new StringBuilder();
+                System.out.println(stacions);
+                for(Entry<String, Stacion> entry : stacions.entrySet()) {
+                	if(parts[3].charAt(0) == 'G') {
+	    				if(notVeryFarGo(Float.parseFloat(parts[1]),Float.parseFloat(parts[2]), entry.getValue())) {
+	    					answer.append(entry.getValue().toString()).append('\n');
+	    				}
+                	}
+                	else if(parts[3].charAt(0) == 'L') {
+	    				if(notVeryFarGo(Float.parseFloat(parts[1]),Float.parseFloat(parts[2]), entry.getValue())) {
+	    					answer.append(entry.getValue().toString()).append('\n');
+	    				}
+                	}
+    			}
+                todasEstacoes.setContent(answer.toString());
+                todasEstacoes.addReceiver(msg.getSender());
+                myAgent.send(todasEstacoes);
+                System.out.println(answer);
+            }
         }  
     block();   
     }

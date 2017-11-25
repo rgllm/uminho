@@ -31,14 +31,6 @@
 		(slot price)
 )
 
-(defrule receivedStation
-    (ACLMessage (sender ?s)
-                (content ?n ?x ?y ?p))
-    =>
-    (store "word" ?n)
-	(printout t "Just received a message from " ?s "with temp " ?n crlf)
-)
-
 (defrule receivedUser
     (ACLMessage (sender ?se)
                 (content ?u ?s ?a ?sex ?h ?c ?x ?y ?xd ?yd))

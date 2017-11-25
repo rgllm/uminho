@@ -1,17 +1,20 @@
 package decider;
 import java.util.ArrayList;
 
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jess.JessException;
 import jess.Rete;
+import stacion.Stacion;
 
 @SuppressWarnings("serial")
 public class JessInfo extends CyclicBehaviour {
 	private Rete engine;
 	Node nodos;
-	private ArrayList<String> stacions = new ArrayList<String>();
+	private ArrayList<Stacion> stacions = new ArrayList<Stacion>();
+	private String weather;
 	
     public JessInfo(Agent a,String filename){
         engine = new Rete();
@@ -27,27 +30,53 @@ public class JessInfo extends CyclicBehaviour {
     }
     
     
-    public void updateStacions() {
-    	
+    public void updateStacions(String go,Float x, Float y) {
+    	ACLMessage inf = new ACLMessage( ACLMessage.INFORM );
+        inf.setContent("Pos: " + x + " " + y + " " + go );
+        inf.addReceiver(new AID("StacionHead", AID.ISLOCALNAME));
+        myAgent.send(inf);
+        
+        try {
+	        ACLMessage msg =myAgent.receive();
+	        String[] splited = msg.getContent().split("\n");
+	        int i;
+	        for(i=0;i!=splited.length;i++) {
+	        	stacions.add(new Stacion(splited[i]));
+	        }
+        }catch (Exception e) {}
     }
+    
+    public void getWeather() {
+    	
+	    	ACLMessage inf = new ACLMessage(ACLMessage.INFORM);
+			inf.addReceiver(new AID("Meteo", AID.ISLOCALNAME));
+			inf.setContent("M");
+			myAgent.send(inf);
+			
+			ACLMessage msg =myAgent.receive();
+		if(msg!=null) {
+			if(msg.getContent().charAt(0)=='W')
+				weather = msg.getContent();
+		}
+    }
+    
     
 	@Override
 	public void action() {
        ACLMessage msg = myAgent.receive();
-       
-       updateStacions();
-
-       
-       
-       
        if(msg != null){
-            try {
-                  ACLMsg2Jess(msg);
-                  engine.run();  
-                  System.out.println(engine.fetch("word"));
-            } catch (JessException ex) {
-                ex.printStackTrace();
-            }
+    	   if(msg.getContent().length() > 0) {
+	    	   String[] res = msg.getContent().split("\\s+");
+	           updateStacions("Go",Float.parseFloat(res[7]),Float.parseFloat(res[8]));
+	           getWeather();
+	    	   try {
+	                  ACLMsg2Jess(msg);
+	                  engine.run();  
+	                  System.out.println(engine.fetch(res[0]));
+	            } catch (JessException ex) {
+	                ex.printStackTrace();
+	            }
+    	   }   	
        }
     }
     

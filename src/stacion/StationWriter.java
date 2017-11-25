@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class StationWriter {
 	
-    private static final String FILENAME = "estacoes.txt";
+    private static final String FILENAME = "../../data/stacions.txt";
 	
 	public ArrayList<String> readFile() {
 		ArrayList<String> estacoes= new ArrayList<>();

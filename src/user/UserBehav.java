@@ -38,6 +38,7 @@ public class UserBehav extends OneShotBehaviour {
         ACLMessage data = new ACLMessage( ACLMessage.INFORM );
         senderID = myAgent.getLocalName() + " ";
         StringBuilder answer = new StringBuilder();
+        answer.append("A ");
         answer.append(senderID).append(state).append(" ").append(age);
         answer.append(" ").append(sex).append(" ").append(health);
         answer.append(" ").append(condition).append(" ").append(xini).append(" ").append(yini);

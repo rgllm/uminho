@@ -2,13 +2,9 @@ package main;
 
 
 import jade.core.Runtime;
-
-import java.util.ArrayList;
-
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.ContainerController;
-import stacion.StationWriter;
 import user.Mother;
 
 public class MainContainer {
@@ -44,12 +40,8 @@ public class MainContainer {
 		
 
 		//tratar de ler o ficheiro aqui tambem e criar os agentes das estações todas
-		cont.addAgentToContainer("stacionHead", "stacion.Head", usr);
-		StationWriter sw = new StationWriter();
-		ArrayList<String> stations = sw.readFile();
-		 for (String name : stations) { 		      
-			 cont.addAgentToContainer(name, "stacion.Stacion", usr); 		
-	      }
+		cont.addAgentToContainer("StacionHead", "stacion.Head", usr);
+		
 		 //inserir metereologia
 		 cont.addAgentToContainer("Meteo", "meteo.MeteoAgent", usr);
 		 cont.addAgentToContainer("MeteoUpdater", "meteo.MeteoUpdater", usr);

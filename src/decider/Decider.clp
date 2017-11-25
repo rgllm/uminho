@@ -41,10 +41,9 @@
 
 (defrule receivedUser
     (ACLMessage (sender ?se)
-                (content ?s ?a ?h ?c ?x ?y ?xd ?yd))
+                (content ?u ?s ?a ?sex ?h ?c ?x ?y ?xd ?yd))
     =>
     (store "word" ?s)
-   	(foreach Station ?c (retract ?c))
 	(printout t "Just received a message from " ?se "with temp " ?s crlf)
 )
 

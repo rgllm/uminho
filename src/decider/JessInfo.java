@@ -1,4 +1,6 @@
 package decider;
+import java.util.ArrayList;
+
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -9,6 +11,7 @@ import jess.Rete;
 public class JessInfo extends CyclicBehaviour {
 	private Rete engine;
 	Node nodos;
+	private ArrayList<String> stacions = new ArrayList<String>();
 	
     public JessInfo(Agent a,String filename){
         engine = new Rete();
@@ -23,9 +26,19 @@ public class JessInfo extends CyclicBehaviour {
         }
     }
     
+    
+    public void updateStacions() {
+    	
+    }
+    
 	@Override
 	public void action() {
        ACLMessage msg = myAgent.receive();
+       
+       updateStacions();
+
+       
+       
        
        if(msg != null){
             try {

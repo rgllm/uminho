@@ -1,17 +1,11 @@
-package agents;
+package user;
 
-import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.*;
-import jade.lang.acl.ACLMessage;
 import java.util.Random;
-/**
- *
- * @author Tiago
- */
-public class Utilizador extends Agent {
+
+@SuppressWarnings("serial")
+public class User extends Agent {
     
-    private String deciderID;
     private String senderID;
     private int age;
     private int state;
@@ -23,51 +17,13 @@ public class Utilizador extends Agent {
     private float xfin;
     private float yfin;
     
-    Utilizador(String deciderID) {
-        this.deciderID = deciderID;
-    }
     
     @Override
     public void setup(){
         setValues();
-        //this.addBehaviour(new sendMessage1());
-        //sleep ??
-        //this.addBehaviour(new sendMessage2());
+        this.addBehaviour(new UserBehav(senderID,age,state,sex,condition,health,xini,yini,xfin,yfin));
     }
-    
-    private class sendMessage1 extends OneShotBehaviour {
-        @Override
-        public void action() {
-            ACLMessage data = new ACLMessage( ACLMessage.INFORM );
-            senderID = myAgent.getLocalName() + " - ";
-            StringBuilder answer = new StringBuilder();
-            answer.append(senderID).append(state).append(" - ").append(age);
-            answer.append(" - ").append(sex).append(" - ").append(health);
-            answer.append(" - ").append(condition).append(" - ").append(xini).append(" - ").append(yini);
-            answer.append(" - ").append(xfin).append(" - ").append(yfin);
-            AID dest = new AID(deciderID, AID.ISLOCALNAME);
-            data.setContent(answer.toString());
-            data.addReceiver(dest);
-            send(data);
-        }
-    }
-    
-    private class sendMessage2 extends OneShotBehaviour {
-        @Override
-        public void action() {
-            ACLMessage data = new ACLMessage( ACLMessage.INFORM );
-            senderID = myAgent.getLocalName() + " - ";
-            StringBuilder answer = new StringBuilder();
-            answer.append(senderID).append(state).append(" - ").append(age);
-            answer.append(" - ").append(sex).append(" - ").append(health);
-            answer.append(" - ").append(condition).append(" - ").append(xini).append(" - ").append(yini);
-            answer.append(" - ").append(xfin).append(" - ").append(yfin);
-            AID dest = new AID(deciderID, AID.ISLOCALNAME);
-            data.setContent(answer.toString());
-            data.addReceiver(dest);
-            send(data);
-        }
-    }    
+      
     
     private void setValues() {
         Random rand = new Random(System.currentTimeMillis());

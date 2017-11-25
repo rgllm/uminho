@@ -6,10 +6,8 @@ public class Case {
 	private String sex;
 	private String sick;
 	private String phisic;
-	private float xi;
-	private float yi;
-	private float xd;
-	private float yd;
+	private Boolean acceptInit;
+	private Boolean acceptEnd;
 	
 	
 	public Case(String s) {
@@ -19,10 +17,8 @@ public class Case {
 		this.sex = parts[2];
 		this.sick = parts[3];
 		this.phisic = parts[4];
-		this.xi = Float.parseFloat(parts[5]);
-		this.yi = Float.parseFloat(parts[6]);
-		this.xd = Float.parseFloat(parts[7]);
-		this.yd = Float.parseFloat(parts[8]);
+		this.acceptInit = Boolean.parseBoolean(parts[5]);
+		this.acceptEnd = Boolean.parseBoolean(parts[6]);
 	}
 	
 	public String getState() {
@@ -45,19 +41,11 @@ public class Case {
 		return phisic;
 	}
 	
-	public Float getXi() {
-		return xi;
+	public Boolean getAcceptInit() {
+		return acceptInit;
 	}
 	
-	public Float getYi() {
-		return yi;
-	}
-	
-	public Float getXd() {
-		return xd;
-	}
-	
-	public Float getYd() {
-		return yd;
+	public Boolean getAcceptEnd() {
+		return acceptEnd;
 	}
 }

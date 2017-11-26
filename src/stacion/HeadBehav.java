@@ -68,6 +68,12 @@ public class HeadBehav extends CyclicBehaviour {
                         inf.addReceiver(msg.getSender());
                         myAgent.send(inf);
             		}
+            		else {
+	            		ACLMessage inf = new ACLMessage( ACLMessage.INFORM );
+	                    inf.setContent("Não foi possivel deixar a bicicleta em" + parts[1]);
+	                    inf.addReceiver(msg.getSender());
+	                    myAgent.send(inf);
+            		}
             	}
             }
             else if(parts[0].equals("-")) {
@@ -78,6 +84,12 @@ public class HeadBehav extends CyclicBehaviour {
                         inf.addReceiver(msg.getSender());
                         myAgent.send(inf);
             		}
+            		else {
+	            		ACLMessage inf = new ACLMessage( ACLMessage.INFORM );
+	                    inf.setContent("Não foi possivel deixar a bicicleta em" + parts[1]);
+	                    inf.addReceiver(msg.getSender());
+	                    myAgent.send(inf);
+                    }
             	}
             }
             else if(parts[0].equals("Pos:")) {

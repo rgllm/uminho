@@ -13,7 +13,7 @@ public class Response {
 		return accept;
 	}
 	
-	public String getReject() {
+	public String getStacion() {
 		return stacion;
 	}
 	

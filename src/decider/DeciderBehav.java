@@ -79,18 +79,60 @@ public class DeciderBehav extends CyclicBehaviour {
     }
     
     
+    public Boolean check(String s, String stacion) {
+    	Boolean checked = false;
+    	ACLMessage inf = new ACLMessage(ACLMessage.INFORM);
+		inf.addReceiver(new AID("StacionHead", AID.ISLOCALNAME));
+		if(s.contentEquals("Go")) {
+			inf.setContent("-" + " " + stacion);
+		}
+		else if(s.contentEquals("Leave")) {
+			inf.setContent("+" + " " + stacion);
+		}
+		
+		myAgent.send(inf);
+		
+		ACLMessage msg =myAgent.receive();
+		if(msg!=null) {
+			if(msg.getContent().charAt(0)=='N') {
+				checked = false;
+			}
+			else if(msg.getContent().charAt(0)=='B') {
+				checked = true;
+			}
+		}
+    	return checked;
+    }
+    
 	@Override
 	public void action() {
        ACLMessage msg = myAgent.receive();
+       Boolean notserved = true;
        if(msg != null){
     	   if(msg.getContent().charAt(0)=='A') {
 	    	   	String[] res = msg.getContent().split("\\s+");
-	    	   	updateStacions("Go",Float.parseFloat(res[7]),Float.parseFloat(res[8]));
+	    	   	System.out.println(msg.getContent());
 	    	   	getWeather();
-	    		System.out.println(msg.getContent());
-	    	   	Response go = decide(msg.getContent(),"go");
+	    		
+	    	   	
+	    	   	updateStacions("Go",Float.parseFloat(res[7]),Float.parseFloat(res[8]));
+	    	   	Response go = new Response(false,"not set");
+	    	   	while(notserved) {
+	    	   		go = decide(msg.getContent(),"Go");
+	    	   		notserved = check("Go",go.getStacion());
+	    	   		stacions.remove(go.getStacion());
+	    	   	}
 	    	   	updateStacions("Leave",Float.parseFloat(res[7]),Float.parseFloat(res[8]));
-	    	   	Response leave = decide(msg.getContent(),"leave");
+	    	   	Response leave = new Response(false,"not set");;
+	    	   	notserved = true;
+	    	   	while(notserved) {
+	    	   		leave = decide(msg.getContent(),"Leave");
+	    	   		notserved = check("Leave",leave.getStacion());
+	    	   		if(!notserved) {
+	    	   			stacions.remove(leave.getStacion());
+	    	   		}
+	    	   	}
+	    	   	
 	    	   	go.print(res[1],"Go");
 	    	   	leave.print(res[1],"Leave");
     	   }   	

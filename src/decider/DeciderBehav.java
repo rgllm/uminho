@@ -112,6 +112,7 @@ public class DeciderBehav extends CyclicBehaviour {
 		Boolean notserved = true;
 		if(msg != null){
 			if(msg.getContent().charAt(0)=='A') {
+				System.out.println(msg.getContent());
 				String[] res = msg.getContent().split("\\s+");
 	    	   	getWeather();
 	    		

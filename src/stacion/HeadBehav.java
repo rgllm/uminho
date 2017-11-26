@@ -109,7 +109,6 @@ public class HeadBehav extends CyclicBehaviour {
                 	}
     			}
                 todasEstacoes.setContent(answer.toString());
-                System.out.println("stacion:" + answer.toString());
                 todasEstacoes.addReceiver(msg.getSender());
                 myAgent.send(todasEstacoes);
             }

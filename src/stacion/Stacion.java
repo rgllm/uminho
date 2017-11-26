@@ -30,10 +30,10 @@ public class Stacion{
 		name = splited[0];
 		bikeCap = Integer.parseInt(splited[1]);
 		bikeAvail = Integer.parseInt(splited[2]);
-		areaToGo = Float.parseFloat(splited[3]);
-		areaToLeave = Float.parseFloat(splited[3]);
-		priceToGo = Float.parseFloat(splited[4]);
-		priceToLeave = Float.parseFloat(splited[4]);
+		priceToGo = Float.parseFloat(splited[3]);
+		priceToLeave = Float.parseFloat(splited[3]);
+		areaToGo = Float.parseFloat(splited[4]);
+		areaToLeave = Float.parseFloat(splited[4]);
 		x = Float.parseFloat(splited[5]);
 		y = Float.parseFloat(splited[6]);
 		state = 2;

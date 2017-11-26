@@ -29,7 +29,7 @@ public class HeadBehav extends CyclicBehaviour {
 	
 	public Boolean notVeryFarGo(Float x,Float y,Stacion s) {
 		Boolean notFar = false;
-		if( Math.sqrt(Math.pow((x-s.getX()),2) + Math.pow(y-s.getY(),2)) > s.getAreaGo()) {
+		if( Math.sqrt(Math.pow((x-s.getX()),2) + Math.pow(y-s.getY(),2)) < s.getAreaGo()) {
 			notFar = true;
 		}
 		return notFar;
@@ -37,7 +37,7 @@ public class HeadBehav extends CyclicBehaviour {
 	
 	public Boolean notVeryFarLeave(Float x,Float y,Stacion s) {
 		Boolean notFar = false;
-		if( Math.sqrt(Math.pow((x-s.getX()),2) + Math.pow(y-s.getY(),2)) > s.getAreaLeave()) {
+		if( Math.sqrt(Math.pow((x-s.getX()),2) + Math.pow(y-s.getY(),2)) < s.getAreaLeave()) {
 			notFar = true;
 		}
 		return notFar;
@@ -103,12 +103,13 @@ public class HeadBehav extends CyclicBehaviour {
 	    				}
                 	}
                 	else if(parts[3].charAt(0) == 'L') {
-	    				if(notVeryFarGo(Float.parseFloat(parts[1]),Float.parseFloat(parts[2]), entry.getValue())) {
+	    				if(notVeryFarLeave(Float.parseFloat(parts[1]),Float.parseFloat(parts[2]), entry.getValue())) {
 	    					answer.append(entry.getValue().toString()).append('\n');
 	    				}
                 	}
     			}
                 todasEstacoes.setContent(answer.toString());
+                System.out.println("stacion:" + answer.toString());
                 todasEstacoes.addReceiver(msg.getSender());
                 myAgent.send(todasEstacoes);
             }

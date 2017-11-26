@@ -58,6 +58,7 @@ public class DeciderBehav extends CyclicBehaviour {
 	        	if(!stacions.containsKey(tmp.getName())) {
 	        		stacions.put(tmp.getName(),tmp);
 	        	}
+	        	
 	        }
         }catch (Exception e) {}
     }
@@ -112,7 +113,6 @@ public class DeciderBehav extends CyclicBehaviour {
 		if(msg != null){
 			if(msg.getContent().charAt(0)=='A') {
 				String[] res = msg.getContent().split("\\s+");
-	    	   	System.out.println(msg.getContent());
 	    	   	getWeather();
 	    		
 	    	   	

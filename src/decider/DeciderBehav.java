@@ -106,11 +106,12 @@ public class DeciderBehav extends CyclicBehaviour {
     
 	@Override
 	public void action() {
-       ACLMessage msg = myAgent.receive();
-       Boolean notserved = true;
-       if(msg != null){
-    	   if(msg.getContent().charAt(0)=='A') {
-	    	   	String[] res = msg.getContent().split("\\s+");
+		int i;
+		ACLMessage msg = myAgent.receive();
+		Boolean notserved = true;
+		if(msg != null){
+			if(msg.getContent().charAt(0)=='A') {
+				String[] res = msg.getContent().split("\\s+");
 	    	   	System.out.println(msg.getContent());
 	    	   	getWeather();
 	    		
@@ -119,6 +120,13 @@ public class DeciderBehav extends CyclicBehaviour {
 	    	   	Response go = new Response(false,"not set");
 	    	   	while(notserved) {
 	    	   		go = decide(msg.getContent(),"Go");
+	    	   		for(i=0;i!=5;i++) {
+	    	   			if(go.getStacion().contentEquals("Não há estações disponiveis")) {
+	    	   				go = decide(msg.getContent(),"Go");
+	    	   			}
+	    	   			else break;
+	    	   		}
+	    	   	
 	    	   		notserved = check("Go",go.getStacion());
 	    	   		stacions.remove(go.getStacion());
 	    	   	}
@@ -127,6 +135,12 @@ public class DeciderBehav extends CyclicBehaviour {
 	    	   	notserved = true;
 	    	   	while(notserved) {
 	    	   		leave = decide(msg.getContent(),"Leave");
+	    	   		for(i=0;i!=5;i++) {
+	    	   			if(leave.getStacion().contentEquals("Não há estações disponiveis")) {
+	    	   				leave = decide(msg.getContent(),"Leave");
+	    	   			}
+	    	   			else break;
+	    	   		}
 	    	   		notserved = check("Leave",leave.getStacion());
 	    	   		if(!notserved) {
 	    	   			stacions.remove(leave.getStacion());

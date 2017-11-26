@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class StationWriter {
 	
-    private static final String FILENAME = "../../data/stacions.txt";
+    private static final String FILENAME = "data/stacions.txt";
 	
 	public ArrayList<String> readFile() {
 		ArrayList<String> estacoes= new ArrayList<>();
@@ -15,7 +15,7 @@ public class StationWriter {
         try (BufferedReader br = new BufferedReader(new FileReader(FILENAME))) {
             String sCurrentLine;
             while ((sCurrentLine = br.readLine()) != null) {
-		estacoes.add(sCurrentLine);
+            	estacoes.add(sCurrentLine);
             }
         } 
         catch (IOException e) {

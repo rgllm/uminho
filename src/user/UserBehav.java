@@ -47,7 +47,6 @@ public class UserBehav extends OneShotBehaviour {
         data.setContent(answer.toString());
         data.addReceiver(dest);
         myAgent.send(data);
-        System.out.println("User: "+answer.toString());
         myAgent.doDelete();
 	}
 }

@@ -9,7 +9,6 @@ import jade.lang.acl.ACLMessage;
 
 @SuppressWarnings("serial")
 public class SendMeteo extends CyclicBehaviour{
-    private String senderID;
     private String atualMode="QUENTE";
 	private ArrayList<String> list = new ArrayList<String>() {{add("CHUVA");add("QUENTE");add("FRIO");add("NEVOEIRO");add("TROVOADA");}};
 	
@@ -21,12 +20,11 @@ public class SendMeteo extends CyclicBehaviour{
                 if(msg.getContent().charAt(0)=='M'){
                     ACLMessage meteo = new ACLMessage( ACLMessage.INFORM );
                     StringBuilder answer = new StringBuilder();
-                    answer.append(senderID).append(atualMode);
+                    answer.append(atualMode);
                     AID dest = msg.getSender();
                     meteo.setContent("W " + answer.toString());
                     meteo.addReceiver(dest);
                     myAgent.send(meteo);
-                    System.out.println(answer);
                 }
                 if(msg.getContent().charAt(0)=='*') {
                 	Random rand = new Random();

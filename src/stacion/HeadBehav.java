@@ -49,7 +49,7 @@ public class HeadBehav extends CyclicBehaviour {
 		populate();
 		ACLMessage msg= myAgent.receive();
         if(msg!=null){
-            String[] parts = msg.getContent().split("\\s+");
+        	String[] parts = msg.getContent().split("\\s+");
             if(parts[0].equals("Listar")){
                 ACLMessage todasEstacoes = new ACLMessage( ACLMessage.INFORM );
                 StringBuilder answer = new StringBuilder();
@@ -59,7 +59,6 @@ public class HeadBehav extends CyclicBehaviour {
                 todasEstacoes.setContent(answer.toString());
                 todasEstacoes.addReceiver(msg.getSender());
                 myAgent.send(todasEstacoes);
-                System.out.println(answer);
             }
             else if(parts[0].equals("+")) {
             	if(stacions.get(parts[1])!=null) {
@@ -84,7 +83,7 @@ public class HeadBehav extends CyclicBehaviour {
             else if(parts[0].equals("Pos:")) {
             	ACLMessage todasEstacoes = new ACLMessage( ACLMessage.INFORM );
                 StringBuilder answer = new StringBuilder();
-                System.out.println(stacions);
+                answer.append("S \n");
                 for(Entry<String, Stacion> entry : stacions.entrySet()) {
                 	if(parts[3].charAt(0) == 'G') {
 	    				if(notVeryFarGo(Float.parseFloat(parts[1]),Float.parseFloat(parts[2]), entry.getValue())) {
@@ -100,7 +99,6 @@ public class HeadBehav extends CyclicBehaviour {
                 todasEstacoes.setContent(answer.toString());
                 todasEstacoes.addReceiver(msg.getSender());
                 myAgent.send(todasEstacoes);
-                System.out.println(answer);
             }
         }  
     block();   

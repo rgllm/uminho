@@ -68,17 +68,18 @@ public class Stacion{
 		return areaToGo;
 	}
 	
-	public float getPriceGo() {
-		return priceToGo;
+	public float getPrice(String state) {
+		if(state.contains("Go")) {
+			return priceToGo;
+		}
+		else
+		return priceToLeave;
 	}
 	
 	public float getAreaLeave() {
 		return areaToLeave;
 	}
 	
-	public float getPriceLeave() {
-		return priceToLeave;
-	}
 	
 	public float getX() {
 		return x;

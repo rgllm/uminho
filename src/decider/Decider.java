@@ -7,6 +7,6 @@ public class Decider extends Agent{
 	
 	@Override
     public void setup(){
-		this.addBehaviour(new JessInfo(this,"decider/Decider.clp"));
+		this.addBehaviour(new DeciderBehav());
     }
 }

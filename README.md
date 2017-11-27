@@ -33,29 +33,33 @@ If you're a Computer Engineering student looking at this, the projects will *pro
     - [Knowledge and Reasoning Representation Systems](https://github.com/rgllm/uminho/tree/master/03/SRCR) - Artifical Intelligence. A set of projects using Prolog to represent knowledge and neural networks for the reasoning part.
     - [Software Labs IV](https://github.com/rgllm/uminho/tree/master/03/LI4) - restaurant suggestion app for Windows.
 
+* **4th year**:
+- [Intelligent Agents](https://github.com/rgllm/uminho/tree/master/04/AI)  - intelligent bike-sharing service with a CBR platform. Also included the classes appointments.
+-[Learning and knowledge extraction](https://github.com/rgllm/uminho/tree/master/04/AEC) - paper about genetic algorithms, artificial neural networks and reinforcement learning.
+
 ## SlocCount
 
 
 Totals grouped by language (dominant language first):
-- java:          8225 (32.81%)
-- cpp:           8157 (32.53%)
-- ansic:         4758 (18.98%)
-- cs:            1911 (7.62%)
-- haskell:        841 (3.35%)
-- perl:           512 (2.04%)
-- yacc:           455 (1.81%)
-- lex:            136 (0.54%)
-- sh:              77 (0.31%)
+- java:          9536 (36.14%)
+- cpp:           8157 (30.92%)
+- ansic:         4758 (18.03%)
+- cs:            1911 (7.24%)
+- haskell:        841 (3.19%)
+- perl:           512 (1.94%)
+- yacc:           455 (1.72%)
+- lex:            136 (0.52%)
+- sh:              77 (0.29%)
 
 
-- Total Physical Source Lines of Code (SLOC)                = 25,072
-- Development Effort Estimate, Person-Years (Person-Months) = 5.89 (70.69)
- (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
-- Schedule Estimate, Years (Months)                         = 1.05 (12.61)
- (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
-- Estimated Average Number of Developers (Effort/Schedule)  = 5.61
-- Total Estimated Cost to Develop                           = $ 795,775
- (average salary = $56,286/year, overhead = 2.40).
+- Total Physical Source Lines of Code (SLOC)                = 26,383
+- Development Effort Estimate, Person-Years (Person-Months) = 6.21 (74.58)
+- (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
+- Schedule Estimate, Years (Months)                         = 1.07 (12.87)
+- (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
+- Estimated Average Number of Developers (Effort/Schedule)  = 5.80
+- Total Estimated Cost to Develop                           = $ 839,522
+- (average salary = $56,286/year, overhead = 2.40).
                           
                           
 ## Contributors
@@ -64,4 +68,6 @@ Totals grouped by language (dominant language first):
 * [Samuel Ferreira](https://github.com/munybt)
 * [Gustavo Andrez](https://github.com/Gandrez)
 * [Diogo Silva](https://github.com/dios95)
+* [André Gonçalves](https://github.com/Simbs38)
+* [Tiago Sá](https://github.com/ReiDeGuisande)
 * And a special thanks to [Fernando Mendes](https://github.com/fribmendes) for the inspiration to create this repo.

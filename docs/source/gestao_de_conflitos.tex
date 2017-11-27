@@ -1,0 +1,32 @@
+\section{Gestão de conflitos}\label{sec:gestao_de_conflitos}
+
+ O sistema desenhado tem a possibilidade de ocorrerem alguns conflitos. De seguida listamos alguns previamente identificados e as suas possíveis resoluções. É natural que no decorrer do desenvolvimento do projeto surjam mais.
+ 
+\begin{itemize}
+  \item Quando uma estação tem uma taxa de ocupação alta, há uma necessidade de reequilibrar o sistema, por forma a tentar garantir que as bicicletas sejam entregues noutras estações.
+		\begin{description}
+			\item[Resolução:] Diminuir a área abrangente da estação e aumentar o preço para 150\% do custo base nos casos em que a lotação é superior a 75\%.
+			\item[Vantagens:] Permite atenuar o PRPB\footnote{PRPB - Problema do Reequilíbrio de Partilha de Bicicletas}.
+			\item[Desvantagens:] Incorre numa possível perda de lucro da estação
+		\end{description}
+\vspace{5mm}
+  \item Quando uma estação tem uma taxa de ocupação baixa, há uma necessidade de reequilibrar o sistema, para tentar garantir que as bicicletas sejam entregues nesta estação, para que os utilizadores têm bicicletas disponíveis para alugar nessa estação.
+		\begin{description}
+			\item[Resolução:] Aumentar a área abrangente da estação, diminuir o preço para 50\% do custo base, nos casos em que a lotação é inferior a 25\%.
+			\item[Vantagens:] Permite atenuar o PRPB.
+			\item[Desvantagens:] Incorre numa possível perda de lucro da estação.
+		\end{description}
+\vspace{5mm}
+  \item  Quando um agente utilizador, faz o percurso entre o seu ponto inicial e o seu destino após ultrapassar ¾ do trajeto, este pode ser solicitado por 2 ou mais estações para entregar a bicicleta.
+		\begin{description}
+			\item[Resoução]: Usado um algoritmo que tem em conta o custo e a distância da estação, as características e a meteorologia atual. Se depois de efetuado o cálculo, o resultado for maior do que um determinado número então o utilizador aceita a proposta da estação.
+			\item[Vantagens:] Implementação que não opta pelos dois extremos (mais perto ou mais barata), permitindo transmitir uma interação mais realista entre cada utilizador e as estações, tentando criar decisões únicas para cada agente utilizador e não uma solução geral. 		
+			\item[Desvantagens:] Aumenta a complexidade do sistema, já que é necessário a interação com outros agentes.			\end{description}
+\vspace{5mm}
+  \item No nosso sistema, implementamos um agente que criará novos utilizadores, atribuindo-lhes diversos atributos. É necessário por isso, determinar a melhor forma de criar estes agentes com atributos o mais diverso possível.
+		\begin{description}
+			\item[Resolução:] Atribuir valores aleatórios a cada atributo.
+			\item[Vantagens:] Esta abordagem é de fácil implementação. Seria atribuída uma gama de valores para cada atributo, e o valor  de cada um seria escolhido de forma aleatória, a partir desse intervalo.
+			\item[Desvantagens:] Não existe qualquer relação entre os atributos, e pode-se vir a verificar incoerências, num contexto real, uma vez que alguns destes atributos terão dependências intrínsecas a outros. Por exemplo, a idade e a condição física.
+			\end{description}
+\end{itemize}

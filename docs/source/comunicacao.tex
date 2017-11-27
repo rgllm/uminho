@@ -1,0 +1,35 @@
+\section{Padrões de Comunicação}\label{sec:comunicacao}
+
+Os agentes comunica entre si para estabelecer as ligações do sistema. Os padrões de comunicação definidos para cada agente pelo grupo são os seguintes:
+
+\begin{description}
+\item [Estação]:
+    \begin{description}
+	\item[In]: Recebe o comando “listar”;
+	\item[Out]: Envia todas as estações disponíveis no sistema depois de lidas de um ficheiro onde foram previamente definidas. O formato em que são definidas é “Nome Total de Bicicletas Bicicletas Disponíveis Área de Influência Custo Base <Posição X, Posição Y>”
+	\end{description}
+
+\item [Utilizador]:
+    \begin{description}
+	\item [Out]: Pede ao “Decider” que baseado nos dados enviados no formato “Dados-Dados-Dados…” , num tempo previamente definido.
+	\end{description}
+
+\item [Mother]: Cria utilizadores com parâmetros aleatórios de 1 em 1 segundo.
+
+\item [Meteorologia]:
+    \begin{description}
+	\item [In]: Recebe o pedido de informação da meteorologia
+	\item [Out]: Envia a meteorologia atual que poderá ser Chuva, Quente, Frio, Nevoeiro ou Trovoada.
+	\end{description}
+
+\item [Estação]:
+    \begin{description}
+	\item [In]: Recebe “+” para aumentar o número de bicicletas e consequentemente mexer na área e no custo base e recebe “-“ para diminuir o número de bicicletas e também mexer na área e no custo base.
+	\end{description}
+
+\item [Decider]:
+    \begin{description}
+	\item [In]: Recebe “Dados-Dados…” e toma uma decisão baseada nisso.
+	\item [Out]: Decisão para o ficheiro.
+	\end{description}
+\end{description}

@@ -1,0 +1,22 @@
+\section{Tipos de Agentes}\label{sec:agentes}
+
+O sistema terá alguns tipos de agentes diferentes, permitindo uma abordagem de reequilíbrio:
+
+\begin{description}
+\item [Agente Estação] - representam as estações do Sistema de Partilha de Bicicletas e esperam pelos pedidos dos Utilizadores. Sempre que um utilizador entra ou sai da área de influencia de uma estação, a estação atualiza o seu conhecimento e associa os Utilizadores que estão dentro da sua área de proximidade. Para isto é necessário que cada agente estação tenha um número de bicicletas disponíveis que pode variar de estação para estação, uma área de influência, uma posição (x,y) e um custo base. O custo base é o custo que o utilizador terá por alugar uma bicicleta em determinada estação. De notar também que estações com maior capacidade, terão uma maior área de influência.
+\\
+\item [Agente Utilizador] - Com base na posição inicial e de destino do utilizador, o agente determina as estações de SPB, baseando-se na APE de cada estação. Quando a distância da viagem percorrida ultrapassar ¾ da totalidade do trajeto, são enviadas solicitações de entrega da bicicleta,
+de acordo com as estações próximas. O utilizador poderá aceitar o rejeitar o pedido, de acordo com os incentivos definidos e que variam
+consoante fatores como a meteorologia, a idade do utilizador, o sexo, a condição física, as doenças e o tempo de percurso. Os utilizadores registam-se no Directory Facilitator ao serem inicializados, para que as estações possam comunicar com eles. O Agente Utilizador tem assim que ter disponíveis os seguintes dados:
+estado de espírito, idade, sexo, doenças, condição física, posição inicial, posição destino e o tempo do percurso. O agente aceita a oferta de uma estação mediante os parâmetros, como por exemplo: se tiver doenças é provável que não aceite ofertas de estações a mais de 5km do destino, se a condição física for má não aceita ofertas de estações a mais de 1km do destino.
+\\
+\item [Agente Interface] - agente com o qual o utilizador interage e que tem uma lista das estações de entrega disponíveis. Será neste agente que a interface gráfica será feita, utilizando JFreeChart.
+\newpage
+\item [Agente Decider] - agente que guarda os dados dos agentes passados semelhante a CBR \footnote{CBR - Case-Based Reasoning}, ou seja, se um utilizador numa determinada altura, com determinados parâmetros decidiu de uma maneira então é mais provável que outro utilizador com os mesmos parâmetros decida igualmente.
+\\
+\item [Agente Manual] - agente que permite a interação manual com o sistema.
+\\
+\item [Agente Meteorologia] - agente responsável pela meteorologia. Como a meteorologia é igual para todos os utilizadores (dentro de uma cidade a variação da meteorologia varia muito pouco), o grupo chegou à conclusão que seria vantajoso ter um agente deste tipo para calcular a meteorologia e que esta fosse igual para todos os utilizadores a usufruir do sistema em determinada altura.
+\\
+\item [Mother] - agente que cria os utilizadores com os parâmetros de forma "random", para que a diversidade de utilizadores no sistema seja grande e assim se possa ver a afetação de diferentes parâmetros nas decisões dos utilizadores.
+\end{description}

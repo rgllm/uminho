@@ -1,0 +1,10 @@
+\section{Descrição do sistema}\label{sec:descricao}
+
+O projeto estruturado segue a seguinte estrutura. O agente JADE “Mother” cria agentes utilizadores com informações, relevantes para o ambiente onde estão inseridos, definidas pelo grupo. Estas informações variáveis são o estado de espírito, a idade, o sexo, as doenças e a condição física. Para além disso, os utilizadores têm ainda uma posição inicial e uma posição de destino.
+\\
+Este utilizador procura as estações disponíveis na sua proximidade e escolhendo assim a estação de onde irá partir com base nos fatores definidos na sua criação e no meio exterior, isto é, assim que as informações estiverem reunidas o utilizador comunica com o agente “Decider” que com base no perfil do utilizador e nos casos anteriores irá decidir qual a melhor estação de destino.
+Por exemplo se for uma pessoa idosa, talvez irá ignorar os descontos oferecidos por estações ligeiramente mais longe devido à dificuldade em se movimentar, enquanto um jovem estudante no topo da sua condição física, não se importará de se deslocar mais algum tempo e assim aproveitar o desconto oferecido por uma estação mais distante, de forma a regular o número de bicicletas em todas as estações.
+\\
+Desta forma pretendemos retratar da forma mais fidedigna um sistema real onde os utilizadores podem ou não aceitar as ofertas que o sistema lhes propõem, baseando-se em diversos fatores externos ao sistema e não apenas nos descontos oferecidos.
+Achamos também boa opção ter uma base de casos anteriores para que o sistema tenha cada vez mais eficácia nas decisões que define para o utilizador, e assim, abranger a parte da inteligência do sistema, tornando-se este cada vez mais "inteligente" no tratamento do problema em questão.
+Para além disso, como dito anteriormente, tivemos em conta também o meio exterior e não só as características do utilizador, para isto criamos um utilizador Meteorologia que a cada 5000ms muda a meteorologia de foram aleatória. Um utilizador ao fazer a escolha da estação a entregar tem também a meteorologia atual.

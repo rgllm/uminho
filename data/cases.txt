@@ -1,3 +1,7 @@
 Feliz 68 Masculino Saudavel Forte Quente True True
 Feliz 68 Masculino Saudavel Forte Quente True True
 Triste 35 Feminino Doente Fraco Frio True False
+Triste 18 Feminino Doente Forte Quente True False
+Feliz 20 Masculino Saudavel Forte Frio True True
+Triste 80 Feminino Doente Fraco True False
+Feliz 35 Masculino Saudavel Forte Quente True True

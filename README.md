@@ -34,8 +34,8 @@ If you're a Computer Engineering student looking at this, the projects will *pro
     - [Software Labs IV](https://github.com/rgllm/uminho/tree/master/03/LI4) - restaurant suggestion app for Windows.
 
 * **4th year**:
-- [Intelligent Agents](https://github.com/rgllm/uminho/tree/master/04/AI)  - intelligent bike-sharing service with a CBR platform. Also included the classes appointments.
-- [Learning and knowledge extraction](https://github.com/rgllm/uminho/tree/master/04/AEC) - paper about genetic algorithms, artificial neural networks and reinforcement learning.
+    - [Intelligent Agents](https://github.com/rgllm/uminho/tree/master/04/AI)  - intelligent bike-sharing service with a CBR platform. Also included the classes appointments.
+    - [Learning and knowledge extraction](https://github.com/rgllm/uminho/tree/master/04/AEC) - paper about genetic algorithms, artificial neural networks and reinforcement learning.
 
 ## SlocCount
 

@@ -1,0 +1,258 @@
+\section{Trabalho Prático 2}\label{sec:Tp2}
+\subsection{Code Smell detetados e respetivo Refactoring}
+
+\vspace{5mm}
+\textbf{Large Class}
+
+Verificou-se que a classe Trader continha muitos métodos e linhas de código. Portanto, identificou-se o code smell. O refactor usado para resolver o problema foi o \textbf{Extract Interface}, ou seja, criou-se uma interface a partir da classe Trader, permitindo aumentar a compreensibilidade.
+
+\textbf{Switch Statements}
+
+\noindent\begin{minipage}{.45\textwidth}
+\begin{lstlisting}[breaklines,caption=Original,frame=tlrb,language=java]{Name}
+updater.start();
+do{
+menumain.executa();
+switch(menumain.getOpcao()){
+case 1:
+signIn();
+break;
+case 2:
+signUp();
+break;
+}
+}while (menumain.getOpcao()!=0);
+\end{lstlisting}
+\end{minipage}\hfill
+\begin{minipage}{.45\textwidth}
+\begin{lstlisting}[breaklines,caption=Refactored,frame=tlrb,language=java]{Name}
+public enum MenuInicial {
+SIGNIN(1, TraderApp::signIn),
+SIGNUP(2, TraderApp::signUp),
+UNKNOWN(3, () -> doSomething());
+private int value;
+ private Runnable execution;
+private MenuInicial(int val, Runnable toRun) {
+    int value = val;
+    execution = toRun;
+}
+public void execute() { 
+    execution.run();
+}
+static void execute(int code) {
+    for (MenuInicial item : values()) {
+        if (item.value == code) {
+            item.run(); break;
+        }
+    }
+    throw new IAException("unknown");
+    }
+};
+\end{lstlisting}
+\end{minipage}
+
+Verificou-se que havia um code smell relacionado com \textbf{Switch Statements}. Para isto cria-se uma classe Enum para cada menu e o utilizador invoca a opção a que corresponde uma função.
+
+\textbf{Temporary Field Smell}
+
+\noindent\begin{minipage}{.45\textwidth}
+\begin{lstlisting}[breaklines,caption=Original,frame=tlrb,language=java]{Name}
+public class Trader implements Serializable{
+private boolean logged = false;
+private User loggedUser;
+private Map<String,User> allUsers = new TreeMap<>();
+\end{lstlisting}
+\end{minipage}\hfill
+\begin{minipage}{.45\textwidth}
+\begin{lstlisting}[breaklines,caption=Refactored,frame=tlrb,language=java]{Name}
+ppublic class Trader implements Serializable{
+private User loggedUser;
+private Map<String,User> allUsers = new TreeMap<>();
+\end{lstlisting}
+\end{minipage}
+
+Na classe Trader era utilizada uma variável de instância "logged" que era apenas usada em alguns casos, não era crucial uma vez que a mesma informação estava disponível noutra variável de instância "loggedUser". Posto isto, foi decidido remover a variável e utilizar apenas a variável "loggedUser". Caso esta esteja a null então é porque não há nenhum utilizado logado, caso contrário há.
+
+\vspace{5mm}
+\textbf{Comments}
+
+Documentou-se as maiores classes TraderApp e Trader já que não apresentavam comentários a nenhuma função. Teve-se também em conta a relevância dos comentários em cada função, garantindo que realmente acrescentariam informação.
+
+\vspace{5mm}
+\textbf{Data Class}
+
+Verificou-se que as classes \textbf{CFD} e \textbf{Asset} eram Data Class, ou seja, apenas guardavam dados. As classes devem conter dados mas também métodos para operar nesses dados. Contudo, verificou-se que segundo o esquema atual do projeto não seria possível ter as classes de outra forma.
+
+\newpage
+\textbf{Dead Code}
+
+\noindent\begin{minipage}{.45\textwidth}
+\begin{lstlisting}[breaklines,caption=Original,frame=tlrb,language=java]{Name}
+public class User implements Comparable<User>, Serializable;
+public class CFD implements Serializable;
+public class Trader implements Serializable;
+
+\end{lstlisting}
+\end{minipage}\hfill
+\begin{minipage}{.45\textwidth}
+\begin{lstlisting}[breaklines,caption=Refactored,frame=tlrb,language=java]{Name}
+public class User implements Comparable<User>;
+public class CFD;
+public class Trader;
+\end{lstlisting}
+\end{minipage}
+
+Verificou-se que as classes User, CFD e Trader continuavam a implementar o Serializable apesar de o recurso estar "morto", ou seja, não era utilizado. Procedeu-se então à sua remoção.
+
+
+\vspace{5mm}
+\textbf{Data Clumps}
+
+\noindent\begin{minipage}{.45\textwidth}
+\begin{lstlisting}[breaklines,caption=Original,frame=tlrb,language=java]{Name}
+MongoClientURI uri = new MongoClientURI("mongodb://java:fLN?]Nu~;8-@ds231315.mlab.com:31315/traderapp");
+MongoClient client = new MongoClient(uri);
+DB db = client.getDB( "traderapp" );
+DBCollection coll = db.getCollection("users");
+\end{lstlisting}
+\end{minipage}\hfill
+\begin{minipage}{.45\textwidth}
+\begin{lstlisting}[breaklines,caption=Refactored,frame=tlrb,language=java]{Name}
+DBCollection coll = new MongoConnection("users").getColl();
+\end{lstlisting}
+\end{minipage}
+
+Nas classes NotificationsDAO e UserDAO verificou-se que o mesmo bloco de código, que permitia a ligação inicial à base de dados, era utilizado em todos os métodos. Posto isto, procedeu-se ao refactoring \textbf{Extract Class} e criou-se uma nova classe MongoConnection e em cada DAO uma variável de instância de MongoConnection que permite fazer a ligação à base de dados. A classe MongoConnection é a seguinte:
+\newpageda
+\begin{lstlisting}[breaklines,caption=Classe criada,frame=tlrb,language=java]{Name}
+public class MongoConnection {
+private final MongoClientURI uri = new MongoClientURI("mongodb://");
+private final MongoClient client = new MongoClient(uri);
+private final DB db = client.getDB( "traderapp" );
+private final DBCollection coll;
+public MongoConnection(String name) {coll = db.getCollection(name);}
+public DBCollection getColl() {return coll;}
+}
+\end{lstlisting}
+
+
+\subsection{Métricas antes e depois do refactoring}
+
+Para que se possa perceber quais as implicações do Refactoring no código foram medidas uma série de itens antes e depois do processo. Existem métricas estáticas (ex: número de linhas de uma classe) e métricas dinâmicas, medidas em tempo de execução (ex: tempo para o utilizador executar x tarefas).
+As tarefas para as métricas dinâmicas são as seguintes:
+\vspace{5mm}
+\newline A \textbf{tarefa 1} consistia na seguinte sequência encadeada de passos:
+
+\begin{enumerate}
+    \item Registar utilizador
+    \item Login do utilizador
+    \item Comprar CFD
+    \item Fechar sessão
+\end{enumerate}
+
+A \textbf{tarefa 2} consistia na seguinte sequência encadeada de passos:
+
+\begin{enumerate}
+    \item Login do utilizador
+    \item Vender CFD
+    \item Fechar sessão
+\end{enumerate}
+
+A \textbf{tarefa 3} consistia na seguinte sequência encadeada de passos:
+
+\begin{enumerate}
+    \item Registar utilizador
+    \item Login do utilizador
+    \item Adicionar ativo à wathlist
+    \item Imprimir watchlist
+    \item Fechar sessão
+\end{enumerate}
+
+De seguida listam-se os resultados das medições.
+\vspace{5mm}
+\newline\textbf{Antes do Refactoring}
+
+\begin{table}[ht]
+\centering
+\begin{adjustbox}{width=1\textwidth}
+\small
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+Classe                       & Nº de Linhas & Expressões & \% Ramos usados & Chamadas & \% Comentários & Classes & Métodos/Classes & Média de Expressões/Método & Complexidade máxima & Profundidade máxima & Profundidade média & Complexidade média \\ \hline
+Asset                        & 57           & 32         & 0.0             & 0        & 0.0            & 1       & 10.00           & 1.60                       & 1                   & 2                   & 1.44               & 1.00               \\ \hline
+CFD                          & 102          & 65         & 13.8            & 10       & 0.0            & 1       & 11.00           & 3.82                       & 10                  & 3                   & 1.71               & 1.82               \\ \hline
+CFDtype                      & 8            & 3          & 0.0             & 0        & 0.0            & 1       & 0.00            & 0.00                       & 0                   & 1                   & 0.33               & 0.00               \\ \hline
+CompanyNotFoundException     & 7            & 4          & 0.0             & 1        & 1.7            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+ComparatorUser               & 10           & 5          & 0.0             & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.60               & 1.00               \\ \hline
+Menu                         & 60           & 41         & 17.1            & 16       & 0.0            & 1       & 5.00            & 5.60                       & 5                   & 4                   & 1.85               & 2.40               \\ \hline
+notificationsDAO             & 83           & 60         & 1.7             & 59       & 0.0            & 1       & 4.00            & 11.50                      & 2                   & 3                   & 1.72               & 1.25               \\ \hline
+SaldoException               & 7            & 4          & 0.0             & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+SemAutorizacaoException      & 7            & 4          & 0.0             & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+Trader                       & 217          & 152        & 13.8            & 140      & 0.0            & 3       & 9.00            & 4.52                       & 10                  & 9+                  & 3.32               & 3.00               \\ \hline
+TraderApp                    & 284          & 222        & 18.0            & 181      & 0.0            & 3       & 6.00            & 10.94                      & 7                   & 5                   & 2.49               & 2.88               \\ \hline
+User                         & 123          & 71         & 8.5             & 28       & 0.0            & 1       & 16.00           & 2.75                       & 7                   & 3                   & 1.63               & 1.38               \\ \hline
+userDAO                      & 247          & 173        & 5.2             & 184      & 0.0            & 1       & 12.00           & 12.67                      & 6                   & 5                   & 2.23               & 1.82               \\ \hline
+UtilizadorExistenteException & 8            & 4          & 0.0             & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+Utils                        & 17           & 4          & 0.0             & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Métricas estáticas das classes}
+\end{table}
+
+\begin{table}[]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Tarefa   & Elapsed Time & CPU Time    \\ \hline
+Tarefa 1 & 1.423028s    & 38.1617271s \\ \hline
+Tarefa 2 & 1.1273s    & 22.0295465s \\ \hline
+Tarefa 3 & 1.392363s    & 32.893317s \\ \hline
+\end{tabular}
+\caption{Métricas dinâmicas das classes}
+\end{table}
+
+\textbf{Depois do Refactoring}
+
+\begin{table}[ht]
+\centering
+\begin{adjustbox}{width=1\textwidth}
+\small
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+Classe                       & Nº de Linhas & Expressões & \% Ramos usados & Chamadas & \% Comentários & Classes & Métodos/Classes & Média de Expressões/Método & Complexidade máxima & Profundidade máxima & Profundidade média & Complexidade média \\ \hline
+Asset                        & 57           & 32         & 0.0             & 0        & 0.0            & 1       & 10.00           & 1.60                       & 1                   & 2                   & 1.44               & 1.00               \\ \hline
+CFD                          & 102          & 65         & 13.8            & 10       & 0.0            & 1       & 11.00           & 3.82                       & 10                  & 3                   & 1.71               & 1.82               \\ \hline
+CFDtype                      & 8            & 3          & 0.0             & 0        & 0.0            & 1       & 0.00            & 0.00                       & 0                   & 1                   & 0.33               & 0.00               \\ \hline
+CompanyNotFoundException     & 7            & 4          & 0.0             & 1        & 1.7            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+ComparatorUser               & 10           & 5          & 0.0             & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.60               & 1.00               \\ \hline
+Menu                         & 60           & 41         & 17.1            & 16       & 0.0            & 1       & 5.00            & 5.60                       & 5                   & 4                   & 1.85               & 2.40               \\ \hline
+MenuInicial                  & 30           & 17         & 11.8            & 6        & 0.0            & 1       & 3.00            & 2.33                       & 3                   & 4                   & 1.35               & 1.67               \\ \hline
+MongoConnection              & 22           & 14         & 0.0             & 4        & 0.0            & 1       & 2.00            & 1.00                       & 1                   & 2                   & 0.71               & 1.00               \\ \hline
+notificationsDAO             & 66           & 42         & 2.4             & 45       & 20.9           & 1       & 4.00            & 7.50                       & 2                   & 3                   & 1.71               & 1.25               \\ \hline
+SaldoException               & 7            & 4          & 0.0             & 1        & 13.9           & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+SemAutorizacaoException      & 7            & 4          & 0.0             & 1        & 17.6           & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+Trader                       & 273          & 146        & 14.4            & 139      & 0.0            & 3       & 8.67            & 4.54                       & 10                  & 9+                  & 3.38               & 3.08               \\ \hline
+TraderApp                    & 339          & 230        & 17.4            & 187      & 0.0            & 3       & 6.00            & 11.28                      & 7                   & 5                   & 2.45               & 2.88               \\ \hline
+TraderInterface              & 51           & 21         & 0.0             & 0        & 0.0            & 1       & 17.00           & 0.00                       & 0                   & 1                   & 0.81               & 0.00               \\ \hline
+User                         & 123          & 71         & 8.5             & 28       & 0.0            & 1       & 16.00           & 2.75                       & 7                   & 3                   & 1.63               & 1.38               \\ \hline
+userDAO                      & 203          & 135        & 6.7             & 150      & 0.0            & 1       & 12.00           & 9.67                       & 6                   & 5                   & 2.23               & 1.82               \\ \hline
+UtilizadorExistenteException & 8            & 4          & 0.0             & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+Utils                        & 17           & 4          & 0.0             & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Métricas estáticas das classes}
+\end{table}
+
+\begin{table}[]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Tarefa   & Elapsed Time & CPU Time    \\ \hline
+Tarefa 1 & 0.481199s    & 24.7417202s \\ \hline
+Tarefa 2 & 0.381198s    & 14.28260503s \\ \hline
+Tarefa 3 & 0.470829s    & 21.3260066s \\ \hline
+\end{tabular}
+\caption{Métricas dinâmicas das classes}
+\end{table}
+
+Como podemos observar pelos tempos, todos eles baixaram depois do refactoring efetuado. Em grande parte devido ao refactoring do Data Clump uma vez que permitiu estabelecer apenas duas ligações à base de dados e não várias, conforme os pedidos aos métodos. Diminuindo por isso o tempo de inicialização.

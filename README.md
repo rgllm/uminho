@@ -2,13 +2,13 @@
 
 ![uminho](http://www4.di.uminho.pt/~jmf/IMAGES/um_eeng.gif)
 
-I'm currently taking my BSc in Computer Engineering at [University of Minho](https://www.uminho.pt/EN/).
+I'm currently taking my MSc in Software Engineering at [University of Minho](https://www.uminho.pt/EN/).
 
 I use git for pretty much all of the course, but in a lot of different platforms. Now, I decided to put all together.
 
 All of the code here is student code, so don't get your hopes up.
 
-If you're a Computer Engineering student looking at this, the projects will *probably* help you, especially because every now and then the professors hand over the same project assignments. If you need help through any part or if you need to find out what was the assignment we were supposed to do, your best bet is probably to hit me up on [Twitter](https://twitter.com/rgllm).
+If you're a Software Engineering student looking at this, the projects will *probably* help you, especially because every now and then the professors hand over the same project assignments. If you need help through any part or if you need to find out what was the assignment we were supposed to do, your best bet is probably to hit me up on [Twitter](https://twitter.com/rgllm).
 
 ## Content
 
@@ -35,30 +35,31 @@ If you're a Computer Engineering student looking at this, the projects will *pro
 
 * **4th year**:
     - [Intelligent Agents](https://github.com/rgllm/uminho/tree/master/04/AI)  - intelligent bike-sharing service with a CBR platform. Also included the classes appointments.
-    - [Learning and knowledge extraction](https://github.com/rgllm/uminho/tree/master/04/AEC) - paper about genetic algorithms, artificial neural networks and reinforcement learning.
+    - [Learning and knowledge extraction](https://github.com/rgllm/uminho/tree/master/04/AEC) - paper about genetic algorithms, artificial neural networks and reinforcement learning. Knowledge extraction project with Weka.
+    - [Databases Administration and Exploitation](https://github.com/rgllm/uminho/tree/master/04/AEBD) - Oracle database monitoring tool made with AngularJS, REST API and Java.
+    - [Software Architectures](https://github.com/rgllm/uminho/tree/master/04/AS) - trading platform made in Java and with Yahoo Finance API.
+    - [Requirements Engineering](https://github.com/rgllm/uminho/tree/master/04/ER) - notifications platform for Talent Spy platform.
 
 ## SlocCount
 
 
 Totals grouped by language (dominant language first):
-- java:          9536 (36.14%)
-- cpp:           8157 (30.92%)
-- ansic:         4758 (18.03%)
-- cs:            1911 (7.24%)
-- haskell:        841 (3.19%)
-- perl:           512 (1.94%)
-- yacc:           455 (1.72%)
-- lex:            136 (0.52%)
-- sh:              77 (0.29%)
+- java:         14044 (45.43%)
+- cpp:           8157 (26.39%)
+- ansic:         4758 (15.39%)
+- cs:            1911 (6.18%)
+- haskell:        841 (2.72%)
+- perl:           512 (1.66%)
+- yacc:           455 (1.47%)
+- lex:            136 (0.44%)
+- sh:              98 (0.32%)
 
 
-- Total Physical Source Lines of Code (SLOC)                = 26,383
-- Development Effort Estimate, Person-Years (Person-Months) = 6.21 (74.58)
-- (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
-- Schedule Estimate, Years (Months)                         = 1.07 (12.87)
-- (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
-- Estimated Average Number of Developers (Effort/Schedule)  = 5.80
-- Total Estimated Cost to Develop                           = $ 839,522
+- Total Physical Source Lines of Code (SLOC)                = 30,912
+- Development Effort Estimate, Person-Years (Person-Months) = 7.34 (88.07)
+- Schedule Estimate, Years (Months)                         = 1.14 (13.71)
+- Estimated Average Number of Developers (Effort/Schedule)  = 6.42
+- Total Estimated Cost to Develop                           = $ 991,460
 - (average salary = $56,286/year, overhead = 2.40).
                           
                           
@@ -70,4 +71,5 @@ Totals grouped by language (dominant language first):
 * [Diogo Silva](https://github.com/dios95)
 * [André Gonçalves](https://github.com/Simbs38)
 * [Tiago Sá](https://github.com/ReiDeGuisande)
-* And a special thanks to [Fernando Mendes](https://github.com/fribmendes) for the inspiration to create this repo.
+* [Mariana Carvalho](https://github.com/mcarvalho13)
+* [José Cunha](https://github.com/JoseCunha96)

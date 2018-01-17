@@ -1,0 +1,21 @@
+\section{Introdução}\label{sec:Introduction}
+
+Neste projeto pretende-se fazer um estudo aprofundado sobre code smells, as respetivas técnicas de refactoring e a sua aplicabilidade. Como ponto de partida servem os trabalhos práticos da disciplina onde se pretendia desenvolver um Trader de CFDs. É assim esperado uma melhoria da estrutura interna após a aplicação das técnicas acima referidas.
+Este relatório serve como descrição dos procedimentos realizados durante o projeto, sendo que este está dividido em três partes distintas: uma primeira parte onde se descrevem os procedimentos referentes ao trabalho prático número 1, uma segunda parte onde se descrevem os procedimentos referentes ao trabalho prático número 2 e por fim, selecionou-se um anti-padrão não presente no código original e aplicou-se este anti-padrão.
+\vspace{5mm}
+\newline As ferramentas usadas foram:
+
+\begin{enumerate}
+    \item SourceMonitor (métricas estáticas)
+    \item Eclipse (IDE)
+    \item TheadMXBEan Library
+    \item nanoTime Library
+\end{enumerate}
+\vspace{5mm}
+\textbf{Métricas dinâmicas}
+\begin{lstlisting}[breaklines,frame=single,language=java]
+long startTimeNano = System.nanoTime( );
+ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
+long time = threadMXBean.getCurrentThreadCpuTime();
+long taskTimeNano  = System.nanoTime( ) - startTimeNano; 
+\end{lstlisting}

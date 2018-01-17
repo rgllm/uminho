@@ -1,0 +1,92 @@
+\section{Anti-Padrão}\label{sec:ap}
+
+Um dos objetivos iniciais do projeto era a implementação de um anti-padrão, à escolha. O anti-padrão selecionado foi o \textbf{Input Kludge}, que consiste na má gestão dos inputs dos utilizados na interface, ou seja, quando por exemplo o input permite texto livre do utilizador que pode conter texto inválido e prejudicial ao programa.
+\newline Para a implementação do anti-padrão foram removidas todas as verificações de texto do input do utilizador. Por exemplo, foram removidas as verificações se a empresa inserida existe, se o email é válido e se o texto é numérico (nos casos em que tem que ser).
+\newpage
+
+\subsection{Métricas}
+
+\textbf{Antes da implementação do Anti-Padrão}
+
+\begin{table}[ht]
+\centering
+\begin{adjustbox}{width=1\textwidth}
+\small
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+Classe                       & Nº de Linhas & Expressões & \% Ramos usados & Chamadas & \% Comentários & Classes & Métodos/Classes & Média de Expressões/Método & Complexidade máxima & Profundidade máxima & Profundidade média & Complexidade média \\ \hline
+Asset                        & 57           & 32         & 0.0             & 0        & 0.0            & 1       & 10.00           & 1.60                       & 1                   & 2                   & 1.44               & 1.00               \\ \hline
+CFD                          & 102          & 65         & 13.8            & 10       & 0.0            & 1       & 11.00           & 3.82                       & 10                  & 3                   & 1.71               & 1.82               \\ \hline
+CFDtype                      & 8            & 3          & 0.0             & 0        & 0.0            & 1       & 0.00            & 0.00                       & 0                   & 1                   & 0.33               & 0.00               \\ \hline
+CompanyNotFoundException     & 7            & 4          & 0.0             & 1        & 1.7            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+ComparatorUser               & 10           & 5          & 0.0             & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.60               & 1.00               \\ \hline
+Menu                         & 60           & 41         & 17.1            & 16       & 0.0            & 1       & 5.00            & 5.60                       & 5                   & 4                   & 1.85               & 2.40               \\ \hline
+notificationsDAO             & 83           & 60         & 1.7             & 59       & 0.0            & 1       & 4.00            & 11.50                      & 2                   & 3                   & 1.72               & 1.25               \\ \hline
+SaldoException               & 7            & 4          & 0.0             & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+SemAutorizacaoException      & 7            & 4          & 0.0             & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+Trader                       & 217          & 152        & 13.8            & 140      & 0.0            & 3       & 9.00            & 4.52                       & 10                  & 9+                  & 3.32               & 3.00               \\ \hline
+TraderApp                    & 284          & 222        & 18.0            & 181      & 0.0            & 3       & 6.00            & 10.94                      & 7                   & 5                   & 2.49               & 2.88               \\ \hline
+User                         & 123          & 71         & 8.5             & 28       & 0.0            & 1       & 16.00           & 2.75                       & 7                   & 3                   & 1.63               & 1.38               \\ \hline
+userDAO                      & 247          & 173        & 5.2             & 184      & 0.0            & 1       & 12.00           & 12.67                      & 6                   & 5                   & 2.23               & 1.82               \\ \hline
+UtilizadorExistenteException & 8            & 4          & 0.0             & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+Utils                        & 17           & 4          & 0.0             & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Métricas estáticas das classes}
+\end{table}
+
+\begin{table}[]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Tarefa   & Elapsed Time & CPU Time    \\ \hline
+Tarefa 1 & 1.423028s    & 38.1617271s \\ \hline
+Tarefa 2 & 1.1273s    & 22.0295465s \\ \hline
+Tarefa 3 & 1.392363s    & 32.893317s \\ \hline
+\end{tabular}
+\caption{Métricas dinâmicas das classes}
+\end{table}
+\newpage
+\textbf{Depois da implementação do Anti-Padrão}
+
+\begin{table}[ht]
+\centering
+\begin{adjustbox}{width=1\textwidth}
+\small
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+Classe                       & Nº de Linhas & Expressões & \% Ramos usados & Chamadas & \% Comentários & Classes & Métodos/Classes & Média de Expressões/Método & Complexidade máxima & Profundidade máxima & Profundidade média & Complexidade média \\ \hline
+Asset                        & 57           & 32         & 0.0             & 0        & 0.0            & 1       & 10.00           & 1.60                       & 1                   & 2                   & 1.44               & 1.00               \\ \hline
+CFD                          & 102          & 65         & 13.8            & 10       & 0.0            & 1       & 11.00           & 3.82                       & 10                  & 3                   & 1.71               & 1.82               \\ \hline
+CFDtype                      & 8            & 3          & 0.0             & 0        & 0.0            & 1       & 0.00            & 0.00                       & 0                   & 1                   & 0.33               & 0.00               \\ \hline
+CompanyNotFoundException     & 7            & 4          & 0.0             & 1        & 1.7            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+ComparatorUser               & 10           & 5          & 0.0             & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.60               & 1.00               \\ \hline
+Menu                         & 60           & 41         & 17.1            & 16       & 0.0            & 1       & 5.00            & 5.60                       & 5                   & 4                   & 1.85               & 2.40               \\ \hline
+MenuInicial                  & 30           & 17         & 11.8            & 6        & 0.0            & 1       & 3.00            & 2.33                       & 3                   & 4                   & 1.35               & 1.67               \\ \hline
+MongoConnection              & 22           & 14         & 0.0             & 4        & 0.0            & 1       & 2.00            & 1.00                       & 1                   & 2                   & 0.71               & 1.00               \\ \hline
+notificationsDAO             & 66           & 42         & 2.4             & 45       & 20.9           & 1       & 4.00            & 7.50                       & 2                   & 3                   & 1.71               & 1.25               \\ \hline
+SaldoException               & 7            & 4          & 0.0             & 1        & 13.9           & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+SemAutorizacaoException      & 7            & 4          & 0.0             & 1        & 17.6           & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+Trader                       & 203          & 144        & 11.1            & 130      & 0.0            & 3       & 9.00            & 4.22                       & 10                  & 9+                  & 3.35               & 3.35               \\ \hline
+TraderApp                    & 330          & 229        & 17.2            & 186      & 0.0            & 3       & 6.00            & 11.28                      & 7                   & 5                   & 2.45               & 2.88               \\ \hline
+TraderInterface              & 51           & 21         & 0.0             & 0        & 0.0            & 1       & 17.00           & 0.00                       & 0                   & 1                   & 0.81               & 0.00               \\ \hline
+User                         & 123          & 71         & 8.5             & 28       & 0.0            & 1       & 16.00           & 2.75                       & 7                   & 3                   & 1.63               & 1.38               \\ \hline
+userDAO                      & 203          & 135        & 6.7             & 150      & 0.0            & 1       & 12.00           & 9.67                       & 6                   & 5                   & 2.23               & 1.82               \\ \hline
+UtilizadorExistenteException & 8            & 4          & 0.0             & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+Utils                        & 17           & 4          & 0.0             & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Métricas estáticas das classes}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Tarefa   & Elapsed Time & CPU Time    \\ \hline
+Tarefa 1 & 0.481010s    & 24.7417182s \\ \hline
+Tarefa 2 & 0.381150s    & 14.28260403s \\ \hline
+Tarefa 3 & 0.470809s    & 21.3260026s \\ \hline
+\end{tabular}
+\caption{Métricas dinâmicas das classes}
+\end{table}

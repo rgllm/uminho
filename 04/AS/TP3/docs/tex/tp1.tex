@@ -1,0 +1,237 @@
+\section{Trabalho Prático 1}\label{sec:Tp1}
+
+\subsection{Code Smell detetados e respetivo Refactoring}
+
+\textbf{Long Method}
+
+\noindent\begin{minipage}{.45\textwidth}
+\begin{lstlisting}[breaklines,caption=Original,frame=tlrb,language=java]{Name}
+ public void portfolioUpdater(){
+    /*42 linhas*/
+    }, 5000,200000);
+   }
+}
+\end{lstlisting}
+\end{minipage}\hfill
+\begin{minipage}{.45\textwidth}
+\begin{lstlisting}[breaklines,caption=Refactored,frame=tlrb,language=java]{Name}
+   public void atualizaUsers(){
+     allUsers.entrySet().forEach((u) -> {
+        it.forEach((c) -> {
+        atualizaCFD(c);
+       });
+    });}
+    
+ public void portfolioUpdater(){
+    atualizaPortfolio();
+    }, 5000,200000);
+   }
+}
+\end{lstlisting}
+\end{minipage}
+\vspace{4mm}
+\newline
+O refactoring aplicado foi Extract Method, dividiu-se o método original em três métodos distintos. Tornando o método original mais pequeno e portanto, de mais fácil leitura e compreensão.
+
+\vspace{5mm}
+\textbf{Large Class}
+
+Verificou-se que as classes Trader continha muitos métodos e linhas de código. Portanto, identificou-se o code smell Large Class. O refactor usado para resolver o problema foi o \textbf{Extract Interface}, ou seja, criou-se uma interface a partir da classe Trader, pertimindo assim uma melhor compreensão da classe.
+\newpage
+
+\textbf{Switch Statements}
+
+\noindent\begin{minipage}{.45\textwidth}
+\begin{lstlisting}[breaklines,caption=Original,frame=tlrb,language=java]{Name}
+updater.start();
+do{
+menumain.executa();
+switch(menumain.getOpcao()){
+case 1:
+signIn();
+break;
+case 2:
+signUp();
+break;
+}
+}while (menumain.getOpcao()!=0);
+\end{lstlisting}
+\end{minipage}\hfill
+\begin{minipage}{.45\textwidth}
+\begin{lstlisting}[breaklines,caption=Refactored,frame=tlrb,language=java]{Name}
+public enum MenuInicial {
+SIGNIN(1, TraderApp::signIn),
+SIGNUP(2, TraderApp::signUp),
+UNKNOWN(3, () -> doSomething());
+private int value;
+ private Runnable execution;
+private MenuInicial(int val, Runnable toRun) {
+    int value = val;
+    execution = toRun;
+}
+public void execute() { 
+    execution.run();
+}
+static void execute(int code) {
+    for (MenuInicial item : values()) {
+        if (item.value == code) {
+            item.run(); break;
+        }
+    }
+    throw new IAException("unknown");
+    }
+};
+\end{lstlisting}
+\end{minipage}
+
+Verificou-se que havia um code smell relacionado com \textbf{Switch Statements}. Para isto cria-se uma classe Enum para cada menu e o utilizador invoca a opção a que corresponde uma função.
+
+\newpage
+\textbf{Temporary Field Smell}
+
+\noindent\begin{minipage}{.45\textwidth}
+\begin{lstlisting}[breaklines,caption=Original,frame=tlrb,language=java]{Name}
+public class Trader implements Serializable{
+private boolean logged = false;
+private User loggedUser;
+private Map<String,User> allUsers = new TreeMap<>();
+\end{lstlisting}
+\end{minipage}\hfill
+\begin{minipage}{.45\textwidth}
+\begin{lstlisting}[breaklines,caption=Refactored,frame=tlrb,language=java]{Name}
+ppublic class Trader implements Serializable{
+private User loggedUser;
+private Map<String,User> allUsers = new TreeMap<>();
+\end{lstlisting}
+\end{minipage}
+
+Na classe Trader era utilizada uma variável de instância "logged" que era apenas usada em alguns casos, não era crucial uma vez que a mesma informação estava disponível noutra variável de instância "loggedUser". Posto isto, foi decidido remover a variável e utilizar apenas a variável "loggedUser". Caso esta esteja a null então é porque não há nenhum utilizado logado, caso contrário há.
+
+\vspace{5mm}
+\textbf{Comments}
+
+Documentou-se as maiores classes TraderApp e Trader já que não apresentavam comentários a nenhuma função. Teve-se também em conta a relevância dos comentários em cada função, garantindo que realmente acrescentariam informação.
+
+\subsection{Métricas antes e depois do refactoring}
+
+Para que se possa perceber quais as implicações do refactoring no código foram medidas uma série de itens antes e depois do processo. Existem métricas estáticas (ex: número de linhas de uma classe) e métricas dinâmicas, medidas em tempo de execução (ex: tempo para o utilizador executar x tarefas).
+As tarefas para as métricas dinâmicas são as seguintes:
+\vspace{5mm}
+\newline A \textbf{tarefa 1} consistia na seguinte sequência encadeada de passos:
+
+\begin{enumerate}
+    \item Registar utilizador
+    \item Login do utilizador
+    \item Comprar CFD
+    \item Fechar sessão
+\end{enumerate}
+
+A \textbf{tarefa 2} consistia na seguinte sequência encadeada de passos:
+
+\begin{enumerate}
+    \item Login do utilizador
+    \item Vender CFD
+    \item Fechar sessão
+\end{enumerate}
+
+\newpage
+
+A \textbf{tarefa 3} consistia na seguinte sequência encadeada de passos:
+
+\begin{enumerate}
+    \item Registar utilizador
+    \item Login do utilizador
+    \item Adicionar ativo à watchlist
+    \item Imprimir watchlist
+    \item Fechar sessão
+\end{enumerate}
+
+De seguida listam-se os resultados das medições.
+\vspace{5mm}
+\newline\textbf{Antes do Refactoring}
+
+\begin{table}[ht]
+\centering
+\begin{adjustbox}{width=1\textwidth}
+\small
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+Classe                       & Nº de Linhas & Expressões & \% Ramos usados & Chamadas & \% Comentários & Classes & Métodos/Classes & Média de Expressões/Método & Complexidade máxima & Profundidade máxima & Profundidade média & Complexidade média \\ \hline
+Trader                       & 188          & 125        & 16.8            & 132      & 5.3            & 2       & 11.50           & 4.30                       & 9                   & 9+                  & 2.99               & 3.04               \\ \hline
+TraderApp                    & 252          & 185        & 19.5            & 141      & 3.2            & 2       & 7.50            & 11.13                      & 7                   & 5                   & 2.58               & 2.87               \\ \hline
+Menu                         & 60           & 41         & 17.1            & 16       & 1.7            & 1       & 5.00            & 5.60                       & 5                   & 4                   & 1.85               & 2.40               \\ \hline
+StockHelper                  & 32           & 19         & 21.1            & 4        & 0.0            & 1       & 3.00            & 4.00                       & 3                   & 3                   & 1.63               & 2.33               \\ \hline
+CFD                          & 97           & 55         & 16.4            & 9        & 9.3            & 1       & 9.00            & 3.78                       & 10                  & 3                   & 1.69               & 2.00               \\ \hline
+StockFetcher                 & 85           & 61         & 1.6             & 32       & 32.9           & 1       & 1.00            & 50.00                      & 2                   & 3                   & 2.11               & 2.00               \\ \hline
+User                         & 123          & 71         & 8.5             & 28       & 0.0            & 1       & 16.00           & 2.75                       & 7                   & 3                   & 1.63               & 1.38               \\ \hline
+CompanyNotFoundException     & 16           & 4          & 0               & 1        & 56.3           & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+ComparatorUser               & 10           & 5          & 0               & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.60               & 1.00               \\ \hline
+SaldoException               & 16           & 4          & 0               & 1        & 56.3           & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+SemAutorizacaoException      & 16           & 4          & 0               & 1        & 56.3           & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+SerializationUtil            & 31           & 22         & 0               & 10       & 0.0            & 1       & 2.00            & 5.50                       & 1                   & 2                   & 1.09               & 1.00               \\ \hline
+Stock                        & 125          & 80         & 0               & 0        & 0.0            & 1       & 20.00           & 1.90                       & 1                   & 2                   & 1.44               & 1.00               \\ \hline
+UtilizadorExistenteException & 16           & 4          & 0               & 1        & 56.3           & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+Utils                        & 25           & 4          & 0               & 1        & 36.0           & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+CFDtype                      & 16           & 3          & 0               & 0        & 60.0           & 1       & 0.00            & 0.00                       & 0                   & 1                   & 0.33               & 0.00               \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Métricas estáticas das classes}
+\end{table}
+
+\begin{table}[]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Tarefa   & Elapsed Time & CPU Time    \\ \hline
+Tarefa 1 & 0.454875s    & 28.6271518s \\ \hline
+Tarefa 2 & 0.334007s    & 65.1614337s \\ \hline
+Tarefa 3 & 0.448339s    & 22.2790403s \\ \hline
+\end{tabular}
+\caption{Métricas dinâmicas das classes}
+\end{table}
+
+\newpage
+
+\textbf{Depois do Refactoring}
+
+\begin{table}[ht]
+\centering
+\begin{adjustbox}{width=1\textwidth}
+\small
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+Classe                       & Nº de Linhas & Expressões & \% Ramos usados & Chamadas & \% Comentários & Classes & Métodos/Classes & Média de Expressões/Método & Complexidade máxima & Profundidade máxima & Profundidade média & Complexidade média \\ \hline
+CFD                          & 97           & 55         & 16.4            & 9        & 9.3            & 1       & 9.00            & 3.78                       & 10                  & 3                   & 1.69               & 2.00               \\ \hline
+CFDtype                      & 15           & 3          & 0.0             & 0        & 60.0           & 1       & 0.00            & 0.00                       & 0                   & 1                   & 0.33               & 0.00               \\ \hline
+CompanyNotFoundException     & 16           & 4          & 0.0             & 1        & 56.3           & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+ComparatorUser               & 10           & 5          & 0.0             & 1        & 0.0            & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.60               & 1.00               \\ \hline
+Menu                         & 60           & 41         & 17.1            & 16       & 1.7            & 1       & 5.00            & 5.60                       & 5                   & 4                   & 1.85               & 2.40               \\ \hline
+MenuInicial                  & 28           & 16         & 12.5            & 6        & 0.0            & 1       & 3.00            & 2.33                       & 3                   & 4                   & 1.44               & 1.67               \\ \hline
+SaldoException               & 16           & 4          & 0.0             & 1        & 56.3           & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+SemAutorizacaoException      & 16           & 4          & 0.0             & 1        & 56.3           & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 1.00               \\ \hline
+SerializationUtil            & 31           & 22         & 0.0             & 10       & 0.0            & 1       & 2.00            & 5.50                       & 1                   & 2                   & 1.09               & 1.00               \\ \hline
+Stock                        & 125          & 80         & 0.0             & 0        & 0.0            & 1       & 20.00           & 1.90                       & 1                   & 2                   & 1.44               & 1.00               \\ \hline
+StockFetcher                 & 85           & 61         & 1.6             & 32       & 32.9           & 1       & 1.00            & 50.00                      & 2                   & 3                   & 2.11               & 2.00               \\ \hline
+StockHelper                  & 32           & 19         & 21.1            & 4        & 0.0            & 1       & 3.00            & 4.00                       & 3                   & 3                   & 1.63               & 2.33               \\ \hline
+Trader                       & 192          & 119        & 17.6            & 131      & 0.0            & 2       & 11.00           & 4.32                       & 9                   & 9+                  & 3.05               & 3.14               \\ \hline
+TraderApp                    & 285          & 185        & 19.5            & 141      & 14.4           & 2       & 7.50            & 11.13                      & 7                   & 5                   & 2.58               & 2.87               \\ \hline
+TraderInterface              & 40           & 20         & 0.0             & 0        & 0.0            & 1       & 16.00           & 0.00                       & 0                   & 1                   & 0.80               & 0.00               \\ \hline
+User                         & 123          & 71         & 8.5             & 28       & 0.0            & 1       & 16.00           & 2.75                       & 7                   & 3                   & 1.63               & 1.38               \\ \hline
+UtilizadorExistenteException & 16           & 4          & 0.0             & 1        & 56.3           & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 0.00               \\ \hline
+Utils                        & 25           & 4          & 0.0             & 1        & 36.0           & 1       & 1.00            & 1.00                       & 1                   & 2                   & 0.75               & 0.00               \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Métricas estáticas das classes}
+\end{table}
+
+\begin{table}[]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Tarefa   & Elapsed Time & CPU Time    \\ \hline
+Tarefa 1 & 0.335594s    & 16.8276316s \\ \hline
+Tarefa 2 & 0.246420s    & 38.3032377s \\ \hline
+Tarefa 3 & 0.330771s    & 13.0960804s \\ \hline
+\end{tabular}
+\caption{Métricas dinâmicas das classes}
+\end{table}

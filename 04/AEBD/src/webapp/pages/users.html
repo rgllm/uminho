@@ -1,0 +1,28 @@
+      <div class="container">
+        <br>
+        <center><h1>Users</h1></center>
+        <br>
+        <br>
+        <a class="btn btn-info pull-right" href="/users_history" role="button">See history</a>
+        <p>Users related information</p>
+        <p>Total of regists: <b>{{datafile.count}}</b></p>
+        <br>
+        <br>
+        <br>
+        <div class="row" ng-repeat="i in datafile.items">
+	       	<div class="col-sm-8">
+	       		<p><b>User ID:</b> {{i.user_id}}</p>
+	       		<p><b>Name:</b> {{i.name}}</p>
+	       		<p><b>Default Tablespace</b> {{i.default_tablespace}}</p>
+	       		<p><b>Account Status</b> {{i.account_status}}</p>
+	       		<p><b>Quota:</b> {{i.quota}}</p>
+	       		<p><b>Privilege</b> {{i.privilege}}</p>
+	       		<p><b>Timestamp</b> {{i.timestamp}}</p>
+	       		<br>
+	       		<br>
+	        </div>
+	        <div class="col-sm-4">
+				<div id="cpuUsage_{{$index}}" ></div>
+	        </div>
+        </div>
+  </div>

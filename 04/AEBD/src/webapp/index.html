@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="pt-PT"> 
+
+<!-- define angular app -->
+<html ng-app="app">
+
+<head>
+  <meta charset="UTF-8" /> 
+  <!-- SCROLLS -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <!-- SPELLS -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="app.js"></script>
+
+    <base href="/">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-default" style="margin: 0px">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">OracleDB Stats</a>
+      </div>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/">Datafiles</a></li>
+        <li><a href="/users">Users</a></li>
+        <li><a href="/tablespaces">Tablespaces</a></li>
+        <li><a href="/tables">Tables</a></li>   
+        <li><a href="/memory">Memory</a></li>
+        <li><a href="/sessions">Sessions</a></li>
+        <li><a href="/io_reads">IO Reads</a></li>
+        <li><a href="/io_writes">IO Writes</a></li>     
+      </ul>
+    </div>
+  </nav>
+
+  <div id="main">
+    <div ng-view></div>
+
+  </div>
+
+  <script type="text/javascript" scr="<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <script type="text/javascript" scr="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+

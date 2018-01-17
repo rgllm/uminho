@@ -1,0 +1,29 @@
+<div class="container">
+    <br>
+    <center><h1>Sessions History</h1></center>
+    <br>
+    <br>
+    <a class="btn btn-danger pull-right" href="/sessions" role="button">Return</a>
+    <p>Sessions history related information</p>
+    <p>Total of regists: <b>{{datafile.count}}</b></p>
+    <br>
+    <br>
+    <table class="table">
+        <tr>
+            <th>Session ID</th>
+            <th>Username</th>
+            <th>User ID</th>
+            <th>Schema Name</th>
+            <th>Login time</th>
+        </tr>
+        <tbody ng-repeat="i in datafile.items">
+            <tr>
+                <td>{{i.session_id}}</td>
+                <td>{{i.username}}</td>
+                <td>{{i.user_id}}</td>
+                <td>{{i.schema_name}}</td>
+                <td>{{i.login_time}}</td>
+            </tr>
+        </tbody>
+    </table>
+  </div>

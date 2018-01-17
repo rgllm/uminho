@@ -1,0 +1,25 @@
+      <div class="container">
+        <br>
+        <center><h1>Datafiles</h1></center>
+        <br>
+        <br>
+        <a class="btn btn-info pull-right" href="/datafiles_history" role="button">See history</a>
+        <p>Datafiles related information</p>
+        <p>Total of regists: <b>{{datafile.count}}</b></p>
+        <br>
+        <br>
+        <div class="row" ng-repeat="i in datafile.items">
+            <div class="col-sm-8">
+              <br>
+              <p><b>ID:</b> {{i.file_id}}</p>
+              <p><b>Datafile Name:</b> {{i.datafile_name}}</p>
+              <p><b>Tablespace Name:</b> {{i.tablespace_name}}</p>
+              <p><b>Percentage used:</b> {{i.percentage_used}}%</p>
+              <p><b>Timestamp:</b> {{i.timestamp}}</p>
+          </div>
+          <div class="col-sm-4">
+            <div id="myDiv_{{$index}}" ></div>
+            <br>
+          </div>
+        </div>
+    </div>

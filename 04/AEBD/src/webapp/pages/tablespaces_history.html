@@ -1,0 +1,22 @@
+      <div class="container">
+        <br>
+        <center><h1>Tablespaces History</h1></center>
+        <br>
+        <br>
+        <a class="btn btn-danger pull-right" href="/tablespaces" role="button">Return</a>
+        <p>Tablespaces related information</p>
+        <p>Total of regists: <b>{{datafile.count}}</b></p>
+        <br>
+        <br>
+    <div class="row" ng-repeat="i in datafile.items">
+    	<div class="col-sm-8">
+    		<br>
+    		<br>
+    		<p><b>Tablespace name:</b> {{i.tablespace_name}}</p>
+    		<p><b>Percentage Used:</b> {{i.percentage_used}} %</p>
+    		<p><b>Timestamp:</b> {{i.timestamp}}</p>
+    	</div>
+    	<div class="col-sm-4">
+    		<div id="table_{{$index}}" ></div>
+    	</div>
+</div>

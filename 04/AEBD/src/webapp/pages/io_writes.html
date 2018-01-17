@@ -1,0 +1,22 @@
+<div class="container">
+        <center><h1>IO Writes</h1>
+        <p>IO Writes related information</p>
+        <br>
+        <br>
+        <table class="table">
+            <tr>
+                <th>Metric Name</th>
+                <th>Begin Time</th>
+                <th>End Time</th>
+                <th>Value</th>
+            </tr>
+            <tbody ng-repeat="i in datafile.items">
+                <tr>
+                    <td>{{i.metric_name}}</td>
+                    <td>{{i.begin_time}}</td>
+                    <td>{{i.end_time}}</td>
+                    <td>{{i.value}}</td>
+                </tr>
+            </tbody>
+        </table>
+  </div>

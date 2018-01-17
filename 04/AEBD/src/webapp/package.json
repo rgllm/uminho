@@ -1,0 +1,15 @@
+{
+  "name": "aebd",
+  "version": "1.0.0",
+  "description": "aebd site",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular-chart.js": "^1.1.1",
+    "chartist": "^0.11.0"
+  }
+}

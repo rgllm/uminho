@@ -1,0 +1,16 @@
+      <div class="container">
+        <br>
+        <center><h1>Memory</h1>
+        <p>Memory related information</p></center>
+        <br>
+        <br>
+        <div class="row" ng-repeat="i in datafile.items">
+            <div class="col-xs-6">
+              <div id="memory_{{$index+1}}" ></div>
+          </div>
+          <div class="col-xs-6">
+            <div id="memory_{{$index}}" ></div>
+            <br>
+          </div>
+        </div>
+    </div>

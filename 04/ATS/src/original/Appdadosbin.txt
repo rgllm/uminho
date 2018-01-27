@@ -1,0 +1,286 @@
+------- UMeR --------
+E-mail: rogerio
+Nome: rogerio
+Password: rogerio
+Morada: rogerio
+Data de nascimento: 21-04-1990
+Grau de cumprimento de horário: 100
+Classificação do motorista: 100
+Número de Kms realizados na UMeR até ao momento: 0.00
+O motorista encontra-se em horário de trabalho: false
+
+E-mail: 10
+Nome: 10
+Password: 10
+Morada: 10
+Data de nascimento: 00-00-0000
+Grau de cumprimento de horário: 100
+Classificação do motorista: 100
+Número de Kms realizados na UMeR até ao momento: 0.00
+O motorista encontra-se em horário de trabalho: false
+
+E-mail: a
+Nome: a
+Password: a
+Morada: a
+Data de nascimento: 00-00-0000Coordenada inicial: Coordenada X: 3 Coordenada Y: 3
+Coordenada final: Coordenada X: 6 Coordenada Y: 6
+Tempo que demorou a viagem: 0.20
+Mail do ator: 1
+Data da viagem: 3-5-2017
+Preço real da viagem: 38.18
+Desvio entre o valor previsto e o preço real faturado: 0.00
+Montante de dinheiro utilizado no serviço UMeR: 38.18
+
+E-mail: b
+Nome: b
+Password: b
+Morada: b
+Data de nascimento: 00-00-0000Coordenada inicial: Coordenada X: 7 Coordenada Y: 7
+Coordenada final: Coordenada X: 2 Coordenada Y: 2
+Tempo que demorou a viagem: 0.42
+Mail do ator: 2
+Data da viagem: 3-5-2017
+Preço real da viagem: 56.57
+Desvio entre o valor previsto e o preço real faturado: 0.00
+Montante de dinheiro utilizado no serviço UMeR: 56.57
+
+E-mail: c
+Nome: c
+Password: c
+Morada: c
+Data de nascimento: 00-00-0000Coordenada inicial: Coordenada X: 11 Coordenada Y: 1
+Coordenada final: Coordenada X: 4 Coordenada Y: 3
+Tempo que demorou a viagem: 0.33
+Mail do ator: 3
+Data da viagem: 3-5-2017
+Preço real da viagem: 58.24
+Desvio entre o valor previsto e o preço real faturado: 0.00
+Montante de dinheiro utilizado no serviço UMeR: 58.24
+
+E-mail: d
+Nome: d
+Password: d
+Morada: d
+Data de nascimento: 00-00-0000Montante de dinheiro utilizado no serviço UMeR: 0.00
+
+E-mail: e
+Nome: e
+Password: e
+Morada: e
+Data de nascimento: 00-00-0000Montante de dinheiro utilizado no serviço UMeR: 0.00
+
+E-mail: f
+Nome: f
+Password: f
+Morada: f
+Data de nascimento: 00-00-0000Montante de dinheiro utilizado no serviço UMeR: 0.00
+
+E-mail: g
+Nome: g
+Password: g
+Morada: g
+Data de nascimento: 00-00-0000Montante de dinheiro utilizado no serviço UMeR: 0.00
+
+E-mail: h
+Nome: h
+Password: h
+Morada: h
+Data de nascimento: 00-00-0000Montante de dinheiro utilizado no serviço UMeR: 0.00
+
+E-mail: i
+Nome: i
+Password: i
+Morada: i
+Data de nascimento: 00-00-0000Montante de dinheiro utilizado no serviço UMeR: 0.00
+
+E-mail: j
+Nome: j
+Password: j
+Morada: j
+Data de nascimento: 00-00-0000Montante de dinheiro utilizado no serviço UMeR: 0.00
+
+E-mail: k
+Nome: k
+Password: k
+Morada: k
+Data de nascimento: 00-00-0000Montante de dinheiro utilizado no serviço UMeR: 0.00
+
+E-mail: l
+Nome: l
+Password: l
+Morada: l
+Data de nascimento: 00-00-0000Montante de dinheiro utilizado no serviço UMeR: 0.00
+
+E-mail: m
+Nome: m
+Password: m
+Morada: m
+Data de nascimento: 00-00-0000Montante de dinheiro utilizado no serviço UMeR: 0.00
+
+E-mail: n
+Nome: n
+Password: n
+Morada: n
+Data de nascimento: 00-00-0000Montante de dinheiro utilizado no serviço UMeR: 0.00
+
+E-mail: o
+Nome: o
+Password: o
+Morada: o
+Data de nascimento: 00-00-0000Montante de dinheiro utilizado no serviço UMeR: 0.00
+
+E-mail: 1
+Nome: 1
+Password: 1
+Morada: 1
+Data de nascimento: 00-00-0000Coordenada inicial: Coordenada X: 3 Coordenada Y: 3
+Coordenada final: Coordenada X: 6 Coordenada Y: 6
+Tempo que demorou a viagem: 0.20
+Mail do ator: a
+Data da viagem: 3-5-2017
+Preço real da viagem: 38.18
+Desvio entre o valor previsto e o preço real faturado: 0.00
+
+Grau de cumprimento de horário: 0
+Classificação do motorista: 89
+Número de Kms realizados na UMeR até ao momento: 8.49
+O motorista encontra-se em horário de trabalho: true
+Veiculo:Matrícula: 1
+Velocidade Média/km: 42km/h
+Preço Base: 9.0€
+Fiabilidade: 100
+Lugares: 4
+Coordenadas: Coordenada X: 0 Coordenada Y: 0
+Ocupado: true
+
+E-mail: 2
+Nome: 2
+Password: 2
+Morada: 2
+Data de nascimento: 00-00-0000Coordenada inicial: Coordenada X: 7 Coordenada Y: 7
+Coordenada final: Coordenada X: 2 Coordenada Y: 2
+Tempo que demorou a viagem: 0.42
+Mail do ator: b
+Data da viagem: 3-5-2017
+Preço real da viagem: 56.57
+Desvio entre o valor previsto e o preço real faturado: 0.00
+
+Grau de cumprimento de horário: 0
+Classificação do motorista: 67
+Número de Kms realizados na UMeR até ao momento: 16.97
+O motorista encontra-se em horário de trabalho: true
+Veiculo:Matrícula: 2
+Velocidade Média/km: 40km/h
+Preço Base: 8.0€
+Fiabilidade: 100
+Lugares: 4
+Coordenadas: Coordenada X: 0 Coordenada Y: 0
+Ocupado: true
+
+E-mail: 3
+Nome: 3
+Password: 3
+Morada: 3
+Data de nascimento: 00-00-0000Coordenada inicial: Coordenada X: 11 Coordenada Y: 1
+Coordenada final: Coordenada X: 4 Coordenada Y: 3
+Tempo que demorou a viagem: 0.33
+Mail do ator: c
+Data da viagem: 3-5-2017
+Preço real da viagem: 58.24
+Desvio entre o valor previsto e o preço real faturado: 0.00
+
+Grau de cumprimento de horário: 0
+Classificação do motorista: 95
+Número de Kms realizados na UMeR até ao momento: 18.33
+O motorista encontra-se em horário de trabalho: true
+Veiculo:Matrícula: 3
+Velocidade Média/km: 30km/h
+Preço Base: 9.0€
+Fiabilidade: 100
+Lugares: 4
+Coordenadas: Coordenada X: 0 Coordenada Y: 0
+Ocupado: true
+
+E-mail: 4
+Nome: 4
+Password: 4
+Morada: 4
+Data de nascimento: 00-00-0000
+Grau de cumprimento de horário: 100
+Classificação do motorista: 100
+Número de Kms realizados na UMeR até ao momento: 0.00
+O motorista encontra-se em horário de trabalho: true
+Veiculo:Matrícula: 4
+Velocidade Média/km: 58km/h
+Preço Base: 6.0€
+Fiabilidade: 100
+Lugares: 4
+Coordenadas: Coordenada X: 0 Coordenada Y: 0
+Ocupado: true
+
+E-mail: 5
+Nome: 5
+Password: 5
+Morada: 5
+Data de nascimento: 00-00-0000
+Grau de cumprimento de horário: 100
+Classificação do motorista: 100
+Número de Kms realizados na UMeR até ao momento: 0.00
+O motorista encontra-se em horário de trabalho: true
+Veiculo:Matrícula: 5
+Velocidade Média/km: 57km/h
+Preço Base: 8.0€
+Fiabilidade: 100
+Lugares: 4
+Coordenadas: Coordenada X: 0 Coordenada Y: 0
+Ocupado: true
+
+E-mail: 6
+Nome: 6
+Password: 6
+Morada: 6
+Data de nascimento: 00-00-0000
+Grau de cumprimento de horário: 100
+Classificação do motorista: 100
+Número de Kms realizados na UMeR até ao momento: 0.00
+O motorista encontra-se em horário de trabalho: true
+Veiculo:Matrícula: 6
+Velocidade Média/km: 30km/h
+Preço Base: 9.0€
+Fiabilidade: 100
+Lugares: 9
+Coordenadas: Coordenada X: 0 Coordenada Y: 0
+Ocupado: true
+
+E-mail: 7
+Nome: 7
+Password: 7
+Morada: 7
+Data de nascimento: 00-00-0000
+Grau de cumprimento de horário: 100
+Classificação do motorista: 100
+Número de Kms realizados na UMeR até ao momento: 0.00
+O motorista encontra-se em horário de trabalho: false
+
+E-mail: 8
+Nome: 8
+Password: 8
+Morada: 8
+Data de nascimento: 00-00-0000
+Grau de cumprimento de horário: 100
+Classificação do motorista: 100
+Número de Kms realizados na UMeR até ao momento: 0.00
+O motorista encontra-se em horário de trabalho: false
+
+E-mail: 9
+Nome: 9
+Password: 9
+Morada: 9
+Data de nascimento: 00-00-0000
+Grau de cumprimento de horário: 100
+Classificação do motorista: 100
+Número de Kms realizados na UMeR até ao momento: 0.00
+O motorista encontra-se em horário de trabalho: false
+
+

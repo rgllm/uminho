@@ -39,6 +39,7 @@ If you're a Software Engineering student looking at this, the projects will *pro
     - [Databases Administration and Exploitation](https://github.com/rgllm/uminho/tree/master/04/AEBD) - Oracle database monitoring tool made with AngularJS, REST API and Java.
     - [Software Architectures](https://github.com/rgllm/uminho/tree/master/04/AS) - trading platform made in Java and with Yahoo Finance API.
     - [Requirements Engineering](https://github.com/rgllm/uminho/tree/master/04/ER) - notifications platform for Talent Spy platform.
+    - [Software Testing and Analysis](https://github.com/rgllm/uminho/tree/master/04/ATS) - analysis of a JAVA project using JUnit, Coverage and RAPL.
 
 ## SlocCount
 

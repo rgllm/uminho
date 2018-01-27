@@ -1,0 +1,10 @@
+\chapter{Análise dos Resultados e Conclusão}
+%\label{sec:Conclusion}
+
+Como podemos ver pelos gráficos acima, a refabricação do código teve impacto no consumo energético. Como dito na secção \ref{refactor} a refabricação de código tem como objetivo reestruturar o código de forma a torna-lo mais compreensível por outros programadores e aumentar a sua reutilização e manutenção. Algumas técnicas de refabricação contribuem também para tornar o código mais eficiente, nomeadamente o exemplo fornecido no excerto de código em \ref{exemplo}, em que uma condição mais complexa é substituída por uma mais simples. No programa original era usado o método \texttt{size()} da collection e comparado com o valor $0$, que pode ser otimizado usando o método de classe mais apropriado para verificar se uma coleção tem $0$ elementos - \texttt{isEmpty()}. 
+\newline
+Outro mau cheiro que tem implicações negativas na performance e consequentemente no consumo energético é o \textit{middle man} - quando uma classe apenas redireciona os métodos para outras classes. Apesar de este caso não ter sido encontrado no projeto analisado, seria outro caso em que se esperaria que a sua refabricação tivesse um impacto positivo no consumo energético.
+\newline
+Assim, podemos concluir que a refabricação é um processo com muitas vantagens e que deve ser aplicada sempre que possível, principalmente quando queremos código mais reutilizável e compreensível, e também quando temos (que deverá ser sempre) preocupação em produzir Green Software.
+\newline
+Por tudo isto, consideramos que os objetivos do enunciado foram todos cumpridos. Na nossa opinião trabalhar com novas ferramentas como o Cobertura e o RAPL foi uma oportunidade de enorme valor, constituindo uma boa forma de aprender ferramentas muito úteis para o futuro.

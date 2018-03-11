@@ -1,2 +1,2 @@
-# lei
-Estudo comparativo de ferramentas para a conceção e desenvolvimento de redes neuronais.
+# Laboratórios de Engenharia Informática
+

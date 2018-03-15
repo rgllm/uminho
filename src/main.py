@@ -1,6 +1,5 @@
 import os
 import numpy as np
-import nibabel as nib
 import matplotlib.pyplot as plt
 import math as m
 
@@ -27,6 +26,9 @@ for region in range(0,R.shape[0]):
 
 print(z)
 
-ax = plt.subplots()
+np.fill_diagonal(z,1)
+
+print(z)
+
 plt.matshow(z, cmap=plt.cm.inferno)
 plt.show()

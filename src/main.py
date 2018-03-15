@@ -2,27 +2,31 @@ import os
 import numpy as np
 import nibabel as nib
 import matplotlib.pyplot as plt
-from nibabel.testing import data_path
+import math as m
 
+file = open("testdata.txt","r")
+delimiter = ' '
+n_lines=0
 
+mean_sig = np.loadtxt(file)
+file.close()
 
+print(mean_sig)
 
-epi_img = nib.load('/Users/rgllm/Downloads/someones_epi.nii.gz')
+R=np.corrcoef(mean_sig)
 
-epi_img_data = epi_img.get_data()
+print(R)
 
-print(epi_img_data.shape)
+z = np.zeros(R.shape)
 
-def show_slices(slices):
-    fig,axes = plt.subplots(1, len(slices))
-    for i, slice in enumerate(slices):
-        axes[i].imshow(slice.T, cmap="gray", origin="lower")
+print(z)
 
-#Slices over the first, second and third dimensions of the array.
+for region in range(0,R.shape[0]):
+    for time in range(0,R.shape[1]):
+        z[region,time]=0.5*m.log((1+R[region,time])/(1-R[region,time]))
 
-slice_0=epi_img_data[30, :, :]
-slice_1=epi_img_data[:, 10, :]
-slice_2=epi_img_data[:, :, 5]
-show_slices([slice_0, slice_1, slice_2])
-plt.suptitle("Center slices for EPI image")
+print(z)
+
+ax = plt.subplots()
+plt.matshow(z, cmap=plt.cm.inferno)
 plt.show()

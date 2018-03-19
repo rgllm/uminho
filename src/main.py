@@ -4,31 +4,31 @@ import matplotlib.pyplot as plt
 import math as m
 
 file = open("testdata.txt","r")
-delimiter = ' '
-n_lines=0
 
 mean_sig = np.loadtxt(file)
 file.close()
 
-print(mean_sig)
+print("mean_sig Shape: ",mean_sig.shape)
 
-R=np.corrcoef(mean_sig)
+#Matlab: R = corrcoef(A) returns the matrix of correlation coefficients for A,
+# where the columns of A represent random variables and the rows represent observations.
+#NumPy: If rowvar is True (default), then each row represents a variable,
+# with observations in the columns. Otherwise, the relationship is transposed:
+# each column represents a variable, while the rows contain observations.
+R=np.corrcoef(mean_sig,rowvar=False)
 
-print(R)
+print("R Shape: ",R.shape)
 
 z = np.zeros(R.shape)
 
-print(z)
+print("Z shape: ",z.shape)
 
-for region in range(0,R.shape[0]):
-    for time in range(0,R.shape[1]):
-        z[region,time]=0.5*m.log((1+R[region,time])/(1-R[region,time]))
+for j in range(0,R.shape[0]):
+    for n in range(0,R.shape[1]):
+        if R[j,n]!=1:
+            z[j,n]=0.5*m.log((1.0+R[j,n])/(1.0-R[j,n]))
 
-print(z)
+np.fill_diagonal(z,1.0)
 
-np.fill_diagonal(z,1)
-
-print(z)
-
-plt.matshow(z, cmap=plt.cm.inferno)
+plt.matshow(z, cmap=plt.cm.jet,vmin=-1,vmax=1)
 plt.show()

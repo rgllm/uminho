@@ -16,8 +16,15 @@ for p=1:(n_participants*n_cond)
     
     mean_sig = import_txtfile(strcat(pathname,file));
     
+    %disp(mean_sig)
+    
     %Pearson Correlation
     R=corrcoef(mean_sig);
+    
+    %disp(R)
+    
+    disp(size(R,1))
+    disp(size(R,2))
     
     %Fisher's Z-transform of the correlation coefficient R
     z=zeros(size(R,1),size(R,2));
@@ -26,11 +33,18 @@ for p=1:(n_participants*n_cond)
             z(j,n)=.5.*log((1+R(j,n))./(1-R(j,n)));
         end
     end
+   
     
     %Put '1's in the diagonal matrix
     z(isinf(z))=1; 
     index=index+1;
 end
+
+ %disp(z)
+ 
+%if z(j,n)>1.0
+   % disp('HELLO')
+%end
 
 save(name_mat_file) 
 

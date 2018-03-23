@@ -60,3 +60,5 @@ typings/
 # Mac Files
 
 .DS_STORE
+
+desktop.ini

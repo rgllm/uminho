@@ -1,4 +1,20 @@
-def corrcoef(x, y=None, rowvar=True, bias=np._NoValue, ddof=np._NoValue):
+def dot_N
+
+
+dot(a, b)[i,j,k,m] = sum(a[i,j,:] * b[k,:,m])
+
+def dot_3
+
+#meta programação - ao chamar o corrcoef_N gerar o programa com o número respetivo de for
+
+
+
+def cov_N
+
+
+
+
+def corrcoef_N(x, n, y=None, rowvar=True, bias=np._NoValue, ddof=np._NoValue):
     """
     Return Pearson product-moment correlation coefficients.
     Please refer to the documentation for `cov` for more detail.  The
@@ -51,7 +67,7 @@ def corrcoef(x, y=None, rowvar=True, bias=np._NoValue, ddof=np._NoValue):
                       DeprecationWarning, stacklevel=2)
     c = cov(x, y, rowvar)
     try:
-        d = diag(c)
+        d = diag(c)c
     except ValueError:
         # scalar covariance
         # nan if incorrect value (nan, inf, 0), 1 otherwise

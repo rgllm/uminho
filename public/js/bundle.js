@@ -360,12 +360,25 @@ var Header = function (_React$Component) {
             )
           ),
           _react2.default.createElement(
-            'div',
-            { id: 'navbar', className: 'navbar-collapse collapse' },
+            'ul',
+            { className: 'nav navbar-nav' },
             _react2.default.createElement(
-              'div',
-              { className: 'nav navbar-nav' },
-              _react2.default.createElement('input', { type: 'text', placeholder: 'Search a company' })
+              'li',
+              null,
+              _react2.default.createElement(
+                _reactRouter.IndexLink,
+                { to: '/', activeStyle: active },
+                'Home'
+              )
+            ),
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement(
+                _reactRouter.Link,
+                { to: '/contact', activeStyle: active },
+                'Contact'
+              )
             )
           )
         )

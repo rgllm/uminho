@@ -9,6 +9,7 @@
     "deploy": "npm test && git push heroku master",
     "postinstall": "npm run build",
     "start": "node server.js",
+    "dev": "nodemon server.js",
     "watch": "npm-run-all --parallel watch:*",
     "watch:css": "nodemon -e scss -w public/css -x npm run build:css",
     "watch:js": "watchify app/main.js -t [ babelify --presets [es2015 react] ] -v -o public/js/bundle.js"
@@ -30,7 +31,7 @@
     "morgan": "^1.7.0",
     "node-sass": "^3.6.0",
     "nodemailer": "^2.3.0",
-    "nodemon": "^1.9.1",
+    "nodemon": "^1.17.3",
     "npm-run-all": "^1.8.0",
     "react": "15.1.0",
     "react-dom": "15.1.0",

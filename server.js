@@ -5,14 +5,14 @@ var compression = require('compression');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
-var dotenv = require('dotenv');
+//var dotenv = require('dotenv');
 var React = require('react');
 var ReactDOM = require('react-dom/server');
 var Router = require('react-router');
 var Provider = require('react-redux').Provider;
 
 // Load environment variables from .env file
-dotenv.load();
+//dotenv.load();
 
 // ES6 Transpiler
 require('babel-core/register');

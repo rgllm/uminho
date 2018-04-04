@@ -20,7 +20,6 @@ class Header extends React.Component {
               <li><IndexLink to="/" activeStyle={active}>Home</IndexLink></li>
               <li><Link to="/contact" activeStyle={active}>Contact</Link></li>
           </ul>
-          </div>
         </div>
       </nav>
     );

@@ -3,6 +3,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math as m
 
+def dot_2(a, b):
+    assert len(a) == len(b), 'Vector sizes must match'
+    return sum(aterm * bterm for aterm, bterm in zip(a, b))
+
+def corrcoef_2(x):
+    c = np.zeros((x.shape[0],x.shape[0]))
+    for k1 in range(0,x.shape[0]):
+        for k2 in range(0,x.shape[0]):
+            c[k1,k2] = dot_2(x[k1,:],x[k2,:])
+    return c
+
 file = open("testdata.txt","r")
 
 mean_sig = np.loadtxt(file)
@@ -15,14 +26,15 @@ print("mean_sig Shape: ",mean_sig.shape)
 #NumPy: If rowvar is True (default), then each row represents a variable,
 # with observations in the columns. Otherwise, the relationship is transposed:
 # each column represents a variable, while the rows contain observations.
-R=np.corrcoef(mean_sig,rowvar=False)
-
+R=corrcoef_2(mean_sig)
+print
 print("R Shape: ",R.shape)
 
 z = np.zeros(R.shape)
 
 print("Z shape: ",z.shape)
 
+print(R)
 for j in range(0,R.shape[0]):
     for n in range(0,R.shape[1]):
         if R[j,n]!=1:

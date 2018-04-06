@@ -1,17 +1,43 @@
-def dot_N
+import dot_N
+
+print(dot.dot_2([1,2,3],[1,2,3]))
+
+def corrcoef_2(x, n):
+    c = np.zeros(x.shape[0],x.shape[0])
+    for k1 in range(0,x.shape[0]):
+        for k2 in range(0,x.shape[0]):
+            c[k1,k2] = dot.dot_2(x[k1,:],x[k2,:])
+    return c
 
 
-dot(a, b)[i,j,k,m] = sum(a[i,j,:] * b[k,:,m])
+def corrcoef_3(x, n):
+    c = np.zeros(x.shape[0],x.shape[0]x.shape[0])
+    for k1 in range(0,x.shape[0]):
+        for k2 in range(0,x.shape[0]):
+            for k3 in range(0,x.shape[0]):
+            c[k1,k2,k3] = dot.dot_3(x[k1,:],x[k2,:],x[k3,:])
+    return c
 
-def dot_3
-
-#meta programação - ao chamar o corrcoef_N gerar o programa com o número respetivo de for
-
-
-
-def cov_N
-
-
+#penso que o prof. vitor alves referiu uma solução temporária tipo esta para opção à metaprogramação
+def corrcoef_Nate5(x, n):
+    c = np.zeros(x.shape[0],x.shape[0]x.shape[0])
+    for k1 in range(0,x.shape[0]):
+        for k2 in range(0,x.shape[0]):
+            if n < 2:
+                break
+            if n == 2:
+                c[k1,k2] = dot.dot_2(x[k1,:],x[k2,:])
+            for k3 in range(0,x.shape[0]):
+                if n<3:
+                    break
+                if n==3:
+                    c[k1,k2,k3] = dot.dot_3(x[k1,:],x[k2,:],x[k3,:])
+                for k4 in range(0,x.shape[0]):
+                    if n<4:
+                        break
+                    if n==4:
+                        c[k1,k2,k3,k4] = dot.dot_4(x[k1,:],x[k2,:],x[k3,:], [k4,:])
+    return c
 
 
 def corrcoef_N(x, n, y=None, rowvar=True, bias=np._NoValue, ddof=np._NoValue):
@@ -82,5 +108,5 @@ def corrcoef_N(x, n, y=None, rowvar=True, bias=np._NoValue, ddof=np._NoValue):
     np.clip(c.real, -1, 1, out=c.real)
     if np.iscomplexobj(c):
         np.clip(c.imag, -1, 1, out=c.imag)
-
+  
 return c

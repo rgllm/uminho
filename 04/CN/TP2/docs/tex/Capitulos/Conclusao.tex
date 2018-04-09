@@ -1,0 +1,50 @@
+\chapter{Trabalho Futuro}
+
+Em contextos reais de exploração de datasets, através de algoritmos de \textit{Machine Learning}, muitos dos conjuntos de dados encontram-se em bruto e com bastante ruído pelo meio. Neste projeto o foco principal não se encontra na extração de conhecimento deste dataset em especifico, mas sim na criação de uma RNA capaz de realizar a classificação de publicações. 
+
+Nesse sentido, poderia ser relevante reunir um conjunto de publicações da rede social \textit{twitter} através de diversas APIs disponibilizadas na linguagem \textit{Python}, sendo assim possível filtrar desde inicio o contexto da publicação e o idioma em que a mesma é recolhida. 
+
+Este aspeto é frisado por se ter observado apesar do dataset ter um grande volume de dados, a maioria dos exemplos são vagos e associados apenas a eventos ou referências a \textit{websites}, não apresentando assim qualquer tipo de informação sentimental. 
+Das 990472 instâncias utilizadas do dataset, cerca de 92\% foram classificadas como neutras pela API utilizada para criar os atributos \textit{target}, sobre os quais a rede desenvolve o seu processo de aprendizagem supervisionado. 
+
+Por este motivo, uma melhor seleção dos \textit{Tweets} recolhidos ou uma redução do dataset para equilibrar o número de casos neutros com os casos associados a sentimentos negativos/positivos será uma possível mais valia para o projeto e capacidade de previsão das RNAs criadas. 
+
+Ainda assim, no sentido de tirar o melhor partido do dataset fornecido, foi realizada uma redução das dimensões do mesmo. Desta modo foi possível focar em especifico apenas publicações que se encontrassem em inglês. 
+Uma vez que a API de análise sentimental de texto e representação de frases em vetores de palavras está essencialmente focada na língua inglesa, procurou-se assim melhorar a qualidade dos dados fornecidos à rede. 
+
+Ao utilizar um dataset de menores dimensões mas ainda assim significativo (100 mil instâncias), foi possível reduzir o tempo de aprendizagem e recursos necessários para executar o treino da RNA. Com estas vantagens, foi possível explorar mais configurações e topologias de RNAs, no sentido de obter melhores resultados. 
+
+Uma vez que uma RNA não está desenvolvida para ser "alimentada" com conteúdo textual na forma de \textit{Strings}, outro ponto chave deste projeto está ligado com a representação de texto num formato capaz de ser interpretado e fornecido de forma coerente à camada de \textit{input} da rede. 
+
+Neste projeto a representação de uma frase recai num vetor de palavras, sendo que cada índice do vetor representa uma determinada palavra. Esta representação está limitada a nível das dimensões do vetor, principalmente se a cada \textit{Epoch} da rede for necessário ter preparados um número elevado (>500) de instâncias para processar numa iteração de treino. 
+
+Nos testes realizados foram utilizados vetores com 3500 posições, referentes às 3500 palavras mais utilizadas na língua inglesa. Contudo, outras formas de representação textual poderiam ser exploradas, como \textit{N-grams}, no sentido de comparar os resultados obtidos a nivel de capacidade de previsão da RNA. 
+
+Contudo, devido ao espetro temporal do projeto, a equipa teve que se manter apenas com a representação inicialmente construida para representar texto.
+
+Outra técnica bastante utilizada em contextos de \textit{Machine Learning} passa por utilizar arquiteturas previamente criadas e com bons resultados estudados num contexto semelhante. 
+Nesse sentido, a abordagem realizada por Pedro M. Sosa em \cite{PedroCNN} poderia ser um bom ponto de partida, se o seu trabalho fosse disponibilizado com mais detalhe. 
+Na sua abordagem, o uso de redes convulocionais, com ligações recorrentes, permite ter em conta o contexto da frase num todo, dado que palavras já "processadas" influenciam as iterações posteriores, com as palavras seguintes do mesmo input. 
+
+
+\chapter{Conclusão}
+\label{chp:conclusao}
+
+No sentido de desenvolver uma Rede Neuronal Artificial capaz de realizar a classificação de texto em níveis emocionais distintos, os capítulos anteriores apresentam todas as etapas desenvolvidas ao longo deste projeto. 
+
+O capitulo inicial, onde se introduzem os principais conceitos associados com RNAs, apresenta-se essencial, no sentido em que foca todos os aspetos necessários para compreender muitas das decisões tomadas ao longo do projeto, relacionadas com o modo de funcionamento e aprendizagem destas estruturas. 
+
+Relativamente ao dataset utilizado, destaca-se a dificuldade encontrada na fase de pré processamento, até ser possível obter informação útil e totalmente "limpa" do mesmo. 
+Só depois de converter os textos das publicações num formato uniforme, quer a nível de codificação de caracteres como de linguagem, é que foi possível aplicar métodos para determinar o valor sentimental de cada publicação e ser-se capaz de adaptar os \textit{tweets} para um formato de \textit{input} capaz de alimentar as RNAs construidas.
+
+A nível dos padrões de treino executados, foram explorados praticamente todos os aspetos possíveis de configurar numa RNA. Estas configurações foram realizadas de acordo com o contexto do problema e objetivos a alcançar, focando as principais técnicas utilizadas atualmente. 
+
+Neste processo destaca-se a exploração de diferentes topologias, métodos de inicialização de pesos e funções de ativação, como as atuais variações da função ReLU. 
+No geral, quer utilizando o dataset completo quer utilizando uma versão reduzida e exclusivamente com \textit{Tweets} em inglês, sem traduções posteriores, verifica-se que a accuracy média a nível da fase de teste atinge os 88\%. Qualquer um dos modelos propostos, baseados neste dataset com as limitações referidas ao longo do relatório, fica assim "fixo" a esta capacidade de previsão. 
+
+A conjugação dos diferentes parâmetros anteriormente referidos, permite atenuar ligeiramente efeitos de overfitting aos dados de treino. 
+Contudo, a capacidade de previsão da rede mantém-se bastante semelhante em qualquer um dos diversos cenários de Treino/Teste realizados e interpretados ao longo do Capitulo \ref{cht:analiseresultados}. 
+
+Em suma, apesar da qualidade de um processo de treino de uma RNA estar intrinsecamente ligado com os parâmetros e técnicas utilizadas na fase de aprendizagem, destaca-se a importância que a qualidade dos dados utilizados também desempenham na fase de treino. 
+Como consequência deste aspeto, apesar do tratamento do dataset ter sido uma parte constante ao longo do projeto, outras formas de representação de texto e cálculo do valor sentimental de cada \textit{Tweet} seriam relevantes de explorar para obter resultados mais sólidos de classificação por parte das RNAs criadas. 
+

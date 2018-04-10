@@ -41,6 +41,7 @@ If you're a Software Engineering student looking at this, the projects will *pro
     - [Requirements Engineering](https://github.com/rgllm/uminho/tree/master/04/ER) - notifications platform for Talent Spy platform.
     - [Software Testing and Analysis](https://github.com/rgllm/uminho/tree/master/04/ATS) - analysis of a JAVA project using JUnit, Coverage and RAPL.
     - [Natural Computing](https://github.com/rgllm/uminho/tree/04/CN) - TP1 is a paper about neural networks. TP2 is a Twitter sentiment analysis implementation on neural networks.
+    - [Autonomous Systems](https://github.com/rgllm/uminho/tree/04/SA) - Robocode team.
 
 ## SlocCount
 

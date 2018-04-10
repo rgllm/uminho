@@ -1,0 +1,126 @@
+\chapter{Modelos Emocionais}
+
+\section{Modelo emocional PAC}
+
+O modelo de estados emocionais PAD procura descrever e medir os diferentes estados emocionais de uma entidade, com base em três dimensões: Satisfação (\textit{Pleasure}), Excitação (\textit{Arousal}) e Controlo (\textit{Dominance}). 
+
+Estas dimensões são quantificadas numericamente, sendo que o nível da emoção é tanto maior quanto maior o seu valor. 
+Além desta técnica de medição e representação simples, este sistema emocional assenta em conceitos que definem que o ambiente circundante afeta de forma direta o estado psicológico e emocional do individuo. 
+
+Esta característica torna o modelo PAC viável de adaptar para um contexto de programação de robôs, dado que além de quantificar o estado emocional com apenas três níveis concretos, atribui a alteração do estado do agente a eventos e influências do ambiente. 
+Neste sentido, apenas agentes com capacidade sensorial do ambiente podem implementar uma arquitetura baseada neste sistema, pois só assim serão capazes de percecionar os acontecimentos do meio onde se inserem. 
+
+Na sua vertente psicológica, estas emoções podem ser descritas da seguinte forma: 
+
+\begin{itemize}
+    \item \textbf{Satisfação} (\textit{Pleasure}): Mede o quão satisfeito ou insatisfeito a entidade se encontra face a uma determinada situação. 
+    
+    Na perspetiva das emoções humanas, sentimentos como medo ou raiva levam a reduzidos níveis de satisfação. Em contrapartida, felicidade ou alegria levam a valores altos de satisfação. 
+    
+    \item \textbf{Excitação} (\textit{Arousal}): Mede a quantidade de energia da entidade em estudo. 
+    
+    A nível do comportamento humano, altos níveis de excitação podem estar, por exemplo, associados a situação de medo ou raiva, onde a quantidade de adrenalina aumenta na corrente sanguínea. Contextos enfadonhos ou cansaço são medidos com baixo nível de excitação. 
+    
+    \item \textbf{Controlo} (\textit{Dominance}): Representa o grau de controlo da entidade face uma determinada situação. O seu valor define se um sujeito apresenta  poder de atuação e decisão ou se age como um sujeito submisso. 
+\end{itemize}
+
+A nível do contexto de programação de \textit{robôs}, alguns dos seus comportamentos podem ser enquadrados nestas três dimensões. 
+Conforme o nível de uma determinada dimensão, é possível alterar o estado interno do \textit{robô}, levando-o a tomar decisões distintas conforme o seu estado emocional. 
+
+A titulo de exemplo, a listagem abaixo agrupa alguns dos comportamentos do robôs à respetiva dimensão emocional. 
+
+\begin{enumerate}
+
+    \item Se o robô destruir ou acertar num inimigo, o seu nível de satisfação e excitação sobem, sendo que destruir um adversário alterar o estado emocional de forma mais positiva que apenas acertar com um tiro;
+    
+    \item Se o robô for atingido com um tiro inimigo, o seu nível de satisfação e excitação descem;
+    
+    \item Se o robô representar o chefe da equipa, o seu nível de controlo é máximo, podendo com isso dar indicações a outros robôs da equipa;
+    
+    \item No inicio de cada ronda, os níveis de excitação devem ser máximos para cada robô, até porque o seu nível de energia é máxima;
+    
+    \item Robôs das classes mais simples, como o caso dos \textit{Droids}, devem apresentar reduzidos valores de controlo;
+    
+    \item Sempre que um robô se cruzar com um elemento da sua equipa, a sua excitação deve aumentar, simulando assim o incentivo trocado por dois elementos de equipa quando se cruzam; 
+    
+    \item De forma semelhante ao ponto anterior, sempre que um robô deteta no seu radar um inimigo, deve aumentar o seu nível de excitação, simulando assim a "adrenalina" libertada quando um inimigo se aproxima; 
+    
+    \item .... ToDo
+
+\end{enumerate}
+
+Este sistema emocional pode ser integrado no paradigma de uma arquitetura reativa, dado que a deteção de um evento e a determinação da sua consequência no estado emocional do agente, podem ser implementados com base em expressões condicionais pré estabelecidas. 
+
+
+\section{Modelo emocional OCC}
+
+O modelo emocional OCC, de forma semelhante ao modelo PAC, procura quantificar o peso de uma determinada emoção com base nos eventos, agentes ou objetos que pertencem ao ambiente no qual o agente que exibe a emoção se insere. 
+
+Contudo, este modelo permite a representação de um número muito maior de emoções, baseando-se num conjunto de 5 fases para identificar e definir o estado inicial do agente. 
+Apesar da sua extensão, as fases do processo de quantificação de emoções podem ser descritas da seguinte forma:
+
+\begin{itemize}
+    \item \textit{Classificação}: Fase onde o individuo avalia um evento, ação ou objeto, resultando num conjunto de novas informações que vão afetar diferentes categorias emocionais. 
+    
+    A nível da programação de robôs, esta fase corresponde à sensorização do meio, levando à aquisição de novas informações quando este muda de estado;
+    
+    \item \textbf{Quantificação}: Fase onde é quantificada a intensidade na qual cada categoria emocional é afetada. 
+    
+    Assim, para um determinado evento, é estimado o peso com que esse estimulo irá influenciar as diferentes traços do estado emocional do agente; 
+    
+    \item \textbf{Interação}: Determinada a influência que um evento irá causar nas categorias emocionais, esta fase realiza a alteração do estado dessas mesmas categorias, conforme o peso calculado na fase anterior; 
+    
+    \item \textbf{Mapeamento}: Alterado o estado emocional do agente, esta fase determina o conjunto de expressões que podem ser tomadas, com base no novo estado emocional. 
+    
+    A nível dos robôs, esta fase pode ser vista como o levantamento do conjunto de ações que podem ser tomadas, com base nos objetivos do robô e no estimulo recebido;
+    
+    \item \textbf{Expressão}: Por fim, a fase da expressão simboliza a execução de uma das decisões agrupadas e avaliadas na fase anterior. 
+    
+    Considerando o comportamento dos robôs, alguns eventos podem alterar o seu estado emocional mas não levar à execução imediata de uma ação. 
+    Pode assim haver situações em que o robô não manifesta/executa ações, usando apenas a informação adquirira para alterar o seu estado interno. 
+    
+\end{itemize}
+
+Dado que as tarefas associadas às diferentes fases deste modelo emocional são, de certa forma, subjetivas, a sua implementação enquadra-se numa arquitetura deliberativa. 
+Integrando este modelo emocional complexo nas etapas de decisão deste tipo de arquiteturas, é assim possível modelar o comportamento e interpretação de eventos por parte de um robô, para um conjunto arbitrário de emoções e ações. 
+
+
+\section{Modelo emocional OCEAN}
+
+O modelo OCEAN, também conhecido como \textit{"Big Five"}, procura reduzir os principais traços emotivos num conjunto de 5 personalidades base, justificando assim a sua designação. 
+
+Este conjunto de 5 classes, procura ser independente de qualquer fator cultural ou linguístico, agrupando os indivíduos em grupos que podem ser vistos como clusters para um determinado conjunto de comportamentos.
+
+O estado emocional de um agente pode ser modelado através da atribuição de pesos a cada um destes grupos de personalidade, focando assim determinadas características de comportamento. 
+Estes grupos podem ser descritos da seguinte forma:
+
+\begin{itemize}
+    \item \textbf{Curiosidade} (\textit{Openness}): Indivíduos com gosto em aprender e arriscar novas experiências, procurando conhecimento complexo, ambíguo e subtil, através da análise do ambiente onde se rodeiam.
+
+    Associado a características humanas como cultura, originalidade e intelectualidade. 
+    
+    Robôs que se enquadrem neste grupo devem assumir um posição de vanguarda, arriscando executar ações novas e explorando o ambiente à sua volta, usando essa informação em ser proveito. 
+    
+    \item \textbf{Consciência} (\textit{Conscientiousness}): Caracteriza os elementos com vontade para conquistar e atingir um determinado objetivo. Os indivíduos demonstram assim uma disciplina interna, com capacidade de planeamento e escolha de comportamentos com base nos seus objetivos. 
+    
+    Robôs com este tipo de características devem ser capazes de tomar as suas decisões tendo em conta o plano de ação da equipa, atingindo assim os objetivos da mesma. 
+    
+    \item \textbf{Extraversão} (\textit{Extraversion}): Indivíduos com energia, capacidade de dialogo e assertividade. A sua energia e motivação é adquirira através da comunicação com outros elementos do ambiente. 
+    
+    Robôs neste segmento devem apresentar uma elevada capacidade de comunicação com os restantes elementos da sua equipa. 
+    As suas ações e motivações são assim adaptadas conforme o conjunto de informações e decisões trocados com os restantes elementos da equipa. 
+    
+    \item \textbf{Conformismo} (\textit{Agreeableness}): Indivíduos com características passivas e amigáveis, capazes de se acomodar e cooperar com qualquer contexto que lhes seja imposto. Representam o oposto dos elementos competitivos e antagonistas de um determinado ambiente. 
+    
+    Robôs enquadrados neste grupo devem estar associados às classes mais simples de robôs, capazes de facilmente moldar o seu comportamento conforme as instruções que recebem de outros robôs da sua equipa. 
+    Podem ser vistos como os elementos obedientes da equipa, com uma capacidade limitada para julgar ou contrariar as ações que lhes são incutidas. 
+    
+    \item \textbf{Neuroticismo} (\textit{Neuroticism}): Grupo de indivíduos que manifesta um conjuntos de emoções negativas, explorando este tipo de sentimentos. 
+    Apresentam reações exageradas, baseadas em emoções negativas, para atuar perante um determinado evento. 
+    
+    Robôs com este tipo de comportamento compulsivo e negativo podem manifestar sentimentos de raiva ou vingança.
+    Por exemplo, ao encontrarem um inimigo, perseguirem o mesmo na tentativa de o abater, deixando de seguir o plano de ação geral da equipa. 
+
+    
+\end{itemize}
+

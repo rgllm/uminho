@@ -41,7 +41,7 @@ If you're a Software Engineering student looking at this, the projects will *pro
     - [Requirements Engineering](https://github.com/rgllm/uminho/tree/master/04/ER) - notifications platform for Talent Spy platform.
     - [Software Testing and Analysis](https://github.com/rgllm/uminho/tree/master/04/ATS) - analysis of a JAVA project using JUnit, Coverage and RAPL.
     - [Natural Computing](https://github.com/rgllm/uminho/tree/04/CN) - TP1 is a paper about neural networks. TP2 is a Twitter sentiment analysis implementation on neural networks.
-    - [Autonomous Systems](https://github.com/rgllm/uminho/tree/04/SA) - Robocode team.
+    - [Autonomous Systems](https://github.com/rgllm/uminho/tree/04/SA) - TP1 is a Robocode team. TP2 is a integration of PhidgetRFID, AdaFruit and IFTTT.
 
 ## SlocCount
 
@@ -64,8 +64,8 @@ Totals grouped by language (dominant language first):
 - Estimated Average Number of Developers (Effort/Schedule)  = 6.42
 - Total Estimated Cost to Develop                           = $ 991,460
 - (average salary = $56,286/year, overhead = 2.40).
-                          
-                          
+
+
 ## Contributors
 
 * [Rogério Moreira](https://github.com/rgllm)

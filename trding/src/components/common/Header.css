@@ -72,5 +72,18 @@
 }
 
 .Header-picture{
-    margin-right: 20px;
+    margin-right: 30px;
+    border-radius: 50%;
+    width:45px;
+    height:45px;
+    transition: opacity .2s;
+}
+
+.Header-name{
+  position: relative;
+  right:20px;
+  font-size:17px;
+  color: white;
+  opacity: .8;
+  transition: opacity .2s;
 }

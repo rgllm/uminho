@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/common/Header';
+import Footer from './components/common/Footer'
 import './index.css';
 import List from './components/list/List';
 import NotFound from './components/notfound/NotFound';
@@ -17,6 +18,7 @@ const Main = () => {
 					<Route path="/currency/:id" component={Detail}  exact />
 					<Route component={NotFound} />
 				</Switch>
+				<Footer />
 			</div>
     </BrowserRouter>
 	);

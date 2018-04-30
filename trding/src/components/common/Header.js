@@ -5,6 +5,7 @@ import './Header.css';
 import logo from './logo.png';
 import Search from './Search';
 import FacebookLogin from 'react-facebook-login';
+import mongoose from 'mongoose';
 
 class Header extends React.Component {
   constructor(){
@@ -67,8 +68,10 @@ class Header extends React.Component {
 
           <Search />
 
-            <img src={picture} alt='profile-picture' className="Header-picture"/>
-          </div>
+          <span className="Header-name">{name}</span>
+          <img src={picture} alt='profile-picture' className="Header-picture"/>
+
+        </div>
       );
     }
   }

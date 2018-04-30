@@ -8,7 +8,6 @@ import NotFound from './components/notfound/NotFound';
 import Detail from './components/detail/Detail';
 
 const Main = () => {
-	const title = 'Trding'
 	return(
     <BrowserRouter>
 			<div>

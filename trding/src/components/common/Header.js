@@ -6,23 +6,72 @@ import logo from './logo.png';
 import Search from './Search';
 import FacebookLogin from 'react-facebook-login';
 
- const Header = () =>{
- 	return (
- 		<div className="Header">
+class Header extends React.Component {
+  constructor(){
+    super();
 
-      <Link to="/">
- 		     <img src={logo} alt='logo' className="Header-logo"/>
-      </Link>
+    this.state = {
+			login: false,
+      name: null,
+      email: null,
+      picture: null,
+		};
 
-      <Search />
+    this.handleLogin = this.handleLogin.bind(this);
+  }
 
-        <FacebookLogin
-            appId="1088597931155576"
-            autoLoad={true}
-            fields="name,email,picture"
-            cssClass="Login-button"/>
- 		</div>
- 	);
+  handleLogin(response){
+    const name = response.name;
+    const email = response.email;
+    const picture = response.picture.data.url;
+
+    this.setState({ login: true, name: name, email: email, picture: picture});
+
+    console.log("Name: ",name);
+    console.log("Email: ",email);
+    console.log("Picture URL: ",picture);
+    console.log("Object: ",response);
+  }
+
+  render(){
+
+    const { login, name, email, picture } = this.state;
+
+    if(!login){
+      return (
+     		<div className="Header">
+
+          <Link to="/">
+     		     <img src={logo} alt='logo' className="Header-logo"/>
+          </Link>
+
+          <Search />
+
+            <FacebookLogin
+                appId="141112822652545"
+                autoLoad={true}
+                fields="name,email,picture"
+                cssClass="loginBtn loginBtn--facebook"
+                textButton="Login"
+                callback={this.handleLogin}/>
+     		</div>
+     	);
+    }
+    else{
+      return (
+        <div className="Header">
+
+          <Link to="/">
+             <img src={logo} alt='logo' className="Header-logo"/>
+          </Link>
+
+          <Search />
+
+            <img src={picture} alt='profile-picture' className="Header-picture"/>
+          </div>
+      );
+    }
+  }
  }
 
  export default Header;

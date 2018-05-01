@@ -1,8 +1,9 @@
 #install.packages("rjson")
+#install.packages("jsonlite")
 library(GA)
 library(jsonlite)
 
-json <- fromJSON("~/desktop/cn3/data/json/o.json")
+json <- fromJSON("../Desktop/cn3/data/json/o.json")
 
 n_customers = json$meta_data$nb_customers
 n_depots = json$meta_data$nb_depots
@@ -13,9 +14,7 @@ customers = json$customers
 depots = json$depots
 
 customerDistances = matrix(nrow=n_customers, ncol = n_customers)
-
 customerDemand = matrix(ncol=n_customers, nrow=1)
-
 depotsDistances = matrix(nrow = n_customers, ncol = n_depots)
 
 #calculate customers distances from c0 -> c49

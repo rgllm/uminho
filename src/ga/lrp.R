@@ -3,12 +3,13 @@
 library(GA)
 library(jsonlite)
 
-json <- fromJSON("../Desktop/cn3/data/json/o.json")
+json <- fromJSON("../Desktop/cn3/data/json/barreto_json/coordChrist50.json")
 
 nr_clientes = json$meta_data$nb_customers
 nr_depositos = json$meta_data$nb_depots
 vehicle_cap = json$meta_data$vehicle_cap
 vehicle_cost = json$meta_data$vehicle_cost
+depot_cost = 10; # json@meta_data$....
 cost_type = json$meta_data$cost_type
 clientes = json$customers
 depositos = json$depots
@@ -21,7 +22,7 @@ depositosStock = matrix(ncol=nr_depositos, nrow=1)
 
 i = 1
 for(depot in depositos){
-  depositosStock[i] = depot$capacity
+  depositosStock[i] = 120; #depot$capacity ---> está a ser mal lido do json
   i = i+1
 }
 

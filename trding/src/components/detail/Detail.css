@@ -45,3 +45,45 @@
   color: #9cb3c9;
   margin-right: 6px;
 }
+
+.Buy-button {
+  text-align: center;
+  border: none;
+  border-radius: 16px;
+  background-color: #05c46b;
+  transition: background-color .2s;
+  color: white;
+  cursor: pointer;
+  margin: 10px;
+  width: 100px;
+  height: 34px;
+}
+
+.Buy-button:hover {
+  background-color: #0be881;
+}
+
+.Buy-button:focus {
+  outline: none;
+}
+
+.Sell-button {
+  text-align: center;
+  border: none;
+  border-radius: 16px;
+  background-color: #ff3f34;
+  transition: background-color .2s;
+  color: white;
+  cursor: pointer;
+  margin: 10px;
+  width: 100px;
+  height: 34px;
+}
+
+.Sell-button:hover {
+  background-color: #ff5e57;
+}
+
+.Sell-button:focus {
+  outline: none;
+}

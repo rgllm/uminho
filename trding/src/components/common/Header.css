@@ -82,8 +82,19 @@
 .Header-name{
   position: relative;
   right:20px;
+  display: block;
   font-size:17px;
   color: white;
+  opacity: .8;
+  transition: opacity .2s;
+}
+
+.Header-balance{
+  position: relative;
+  right:20px;
+  font-size:12px;
+  color: white;
+  display: block;
   opacity: .8;
   transition: opacity .2s;
 }

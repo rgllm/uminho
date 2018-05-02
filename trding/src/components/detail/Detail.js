@@ -64,6 +64,16 @@ class Detail extends React.Component{
           <h1 className="Detail-heading">
             {currency.name} ({currency.symbol})
           </h1>
+        <div>
+          <button
+          className="Buy-button">
+            Buy {currency.symbol}
+          </button>
+          <button
+          className="Sell-button">
+            Sell {currency.symbol}
+          </button>
+        </div>
           <div className="Detail-container">
             <div className="Detail-item">
               Price <span className="Detail-value">$ {currency.price}</span>

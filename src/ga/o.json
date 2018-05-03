@@ -255,27 +255,32 @@
         "d0": {
             "x": 10,
             "y": 49,
-            "capacity": 40
+            "capacity": 10000
+            "opening_cost": 40
         },
         "d1": {
             "x": 20,
             "y": 30,
-            "capacity": 40
+            "capacity": 10000
+            "opening_cost": 40
         },
         "d2": {
             "x": 5,
             "y": 25,
-            "capacity": 40
+            "capacity": 10000
+            "opening_cost": 40
         },
         "d3": {
             "x": 54,
             "y": 17,
-            "capacity": 40
+            "capacity": 10000
+            "opening_cost": 40
         },
         "d4": {
             "x": 43,
             "y": 53,
-            "capacity": 40
+            "capacity": 10000
+            "opening_cost": 40
         }
     },
     "meta_data": {

@@ -72,6 +72,7 @@ class PsoTools(object):
 				depots['d'+str(i)]['x'] = x
 				depots['d'+str(i)]['y'] = y
 			else:
+				i=i-1
 				break
 		
 		# Customers cordinates and vehicule capacity		
@@ -101,7 +102,7 @@ class PsoTools(object):
 		# Customers demands		
 		for i, line in enumerate(inFile):
 			if i < nb_customers:
-				demand = int(line)
+				demand = float(line)
 				customers['c'+str(i)]['demand'] = demand
 			else:
 				break
@@ -110,11 +111,11 @@ class PsoTools(object):
 		for i, line in enumerate(inFile):
 			if i < nb_depots:
 				openning_cost = float(line)
-				depots['d'+str(i)]['capacity'] = openning_cost
+				depots['d'+str(i)]['opening_cost'] = openning_cost
 			elif i == nb_depots:
 				pass
 			elif i == nb_depots+1:	
-				vehicle_cost = int(line)
+				vehicle_cost = float(line)
 				meta_data['vehicle_cost'] = vehicle_cost
 			elif i == nb_depots+2:	
 				pass

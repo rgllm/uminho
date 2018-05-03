@@ -3,10 +3,10 @@ library(permute)
 
 cli_Dist = as.matrix(customerDistances);
 cli_Demand = as.matrix(customerDemand, nrow=1);
-cli_Depots_Dist = as.matrix(depotsDistances);
+cli_Depots_Dist = as.matrix(depositosDistances);
 nr_clientes = ncol(cli_Demand)
 nr_depositos = ncol(depositosStock)
-nr_camioes = nr_depositos # pior cenário há tantos quantos depositos. 
+nr_camioes = round(sum(cli_Demand) / vehicle_cap, 0) 
 
 # Função para calcular o custo por kms percorrido num dado percurso
 custo_viagem <- function(depositosDistances, customerDistances, percurso, deposito){
@@ -27,126 +27,155 @@ custo_viagem <- function(depositosDistances, customerDistances, percurso, deposi
 }
 
 #Function to calculate tour length 
-tourLength <- function(tour, customerDistances, customerDemand, depositosDistances) {
-  tour = c(1:50, 1:50,1:50, 1:50, 1:50)
-  tour
+CustoTotal <- function(genoma, customerDistances, customerDemand, depositosDistances) {
+  # Cada cromossoma representa um deposito, que pode ou nao ser aberto
+  cromossomas = matrix(data=genoma, nrow=nr_depositos, ncol=nr_camioes*nr_clientes, byrow=TRUE);
   
-  # reshape do cromossoma numa matrix
-  # Cada linha define o percurso de um camião
-  percursos = matrix(data=tour,nrow=nr_camioes, ncol =nr_clientes, byrow = TRUE)
-  
-  custo = 0
-  
-  # array para saber se a solução visita todos os clientes
-  cli_visitados = matrix(0, ncol = nr_clientes, nrow = 1)
+  # custo inicial da solução é zero
+  custo = 0;
   
   # vetor com a procura de cada client. No final, a soma deve ser zero (toda a procura satisfeita)
   procura = cli_Demand
   
-  for (i in c(1:nrow(percursos))){
-    # Ficar apenas com os valores do cromossoma entre [1: nr_cliente ]
-    percurso = intersect(percursos[i,], c(1:nr_clientes))
+  # Primeiro ciclo divide o genoma em cromossomas
+  # - Computar cada um dos depositos (cromossomas)
+  for(it_dep in c(1:nrow(cromossomas))){
+    # Teste inicial para saber se o deposito é ou não aberto 
+    # - Olha para os dados do deposito sem considerar as divisões por camião
+    # - Fica apenas com os valores do cromossoma entre [1:nr_clientes]
+    # - Se length(deposito == 0) nenhum camião do deposito é utilizado -> o deposito nao é aberto
+    deposito = intersect(cromossomas[it_dep,], c(1:nr_clientes));
     
-    carga_atual = vehicle_cap # Carga inicial do camião no inicio do percurso
-    stock_atual = depositosStock[i] # 
-    
-    # Marcar quais os clientes visitados 
-    for (p in c(1:length(percurso))){
-      # -> o camião passa por clientes, mesmo já tendo esgotado o stock do deposito
-      if((carga_atual==0)&& (stock_atual==0) && (p!=length(percurso))){  
-        return(0)  
-        #cat("Falha1")
-      }
+    if(length(deposito)!=0){ # O deposito é aberto -> terá influencia no custo 
+      # opening costs for the depots
+      custo = custo + depot_cost[it_dep]
       
-      # carga do camião = 0 --> recarregar com stock do deposito
-      if((carga_atual==0) && (stock_atual>=0)){
-        if(stock_atual >= vehicle_cap){
-          recarga = vehicle_cap # se houver stock suficiente, atesta o stock do camiao
-        }else{
-          recarga = stock_atual # senão, careega parcialmente o camião, com o que sobra de stock 
+      # stock inicial do deposito 
+      stock_atual = depositosStock[it_dep] # 
+      
+      # Dividir as infos do deposito por cada camião 
+      deposito = matrix(data=cromossomas[it_dep,], nrow=nr_camioes, ncol=nr_clientes)  
+    
+      # Segundo ciclo divide o cromossoma em genes
+      # - Computar cada um dos camiões (gene) do deposito i
+      for(it_cam in c(1:nrow(deposito))){
+        # Obter os alelos de um gene = clientes por onde passa o camião 
+        camiao = matrix(data=deposito[it_cam,], nrow=1, ncol=nr_clientes);
+        
+        # Ficar com o percurso efetivamente possivel de desempenhar por um camião 
+        percurso = intersect(camiao, c(1:nr_clientes))
+        
+        # Se length(percurso == 0) o camião não é utilizado -> não trás custos 
+        if(length(percurso!=0)){
+          # opening cost of a route (cost of a vehicle)
+          custo = custo + vehicle_cost
+          
+          # Se 1 camião é usado, o stock do deposito baixa 
+          stock_atual = stock_atual - vehicle_cap
+          
+          # Carga inicial do camião no inicio do percurso
+          carga_atual = vehicle_cap 
+          
+          for(cli in c(1:length(percurso))){
+            cliente = percurso[cli]
+            
+            # senão, vamos satisfazer o máximo de procura do cliente 
+            if(carga_atual >= procura[cliente]){
+              # só se consideram entregas completas da procura do cliente
+              entregar = procura[cliente] 
+              carga_atual = carga_atual - entregar; # reduzir capacidade disponivel do camião
+              procura[cliente] = 0 # reduzir a procura do cliente 
+            }else{
+              # passamos por um cliente sem stock no camião para o atender
+              # aumentar absurdamente o custo da solução, para penalizar
+              custo = custo + 10000000000
+            }
+          }
+          
+          # Calcular o custo de uma viagem 
+          c_viagem <- custo_viagem(depositosDistances, customerDistances, percurso)
+          custo = custo + c_viagem
         }
-        carga_atual = carga_atual + recarga; 
-        stock_atual = stock_atual - recarga;
       }
-      
-      # cliente já satisfeito por outros camiões. Não se justifica vir até ele se a sua procura está a 0. 
-      if(procura[p] == 0 ){ 
-        break;
-        #return(0)  
-        #cat("Falha2")
-      }
-      
-      # senão, vamos satisfazer o máximo de procura do cliente 
-      if(carga_atual >= procura[p]){
-        entregar = procura[p] # entregar tudo de uma vez, pq ainda há carga no camião
-      }else{
-        entregar = carga_atual # entregar só o que temos 
-      }
-      carga_atual = carga_atual - entregar; # reduzir capacidade disponivel do camião
-      procura[p] = procura[p] - entregar # reduzir a procura do cliente 
-      cli_visitados[p] = 1; 
     }
-    
-    # opening costs for the depots
-    custo = custo + depot_cost
-    
-    # opening cost of a route (cost of a vehicle)
-    custo = custo + vehicle_cost
-  
-    # Calcular o custo de uma viagem 
-    c_viagem <- custo_viagem(depositosDistances, customerDistances, percurso, i)
-    custo = custo + c_viagem
   }
-
-  # Se não se visitaram todos os clientes OU a procura não foi satisfeita, a solução nao é valida
-  if((sum(cli_visitados)!=nr_clientes) || (sum(procura[p])!=0)){  
-    return(0)  
-    #cat("Falha3")
+  if(sum(procura)!=0){  
+    return(custo = custo + 10000000000) # o genoma nao satisfaz a procura de todo os cliente
   }else{ 
-    return(-custo)
+    return(custo)
     #custo
   }
-  
 }
 
-#Firness function to be maximized
-tspFitness <- function(tour, ...) {
-  1 / (0.00001 + tourLength(tour, ...))
+#Firness function to be minimized 
+tspFitness <- function(genoma, customerDistances, customerDemand, depositosDistances) {
+  1 / CustoTotal(genoma, customerDistances, customerDemand, depositosDistances)
 }
 
+
+sizeGenoma = nr_depositos * nr_camioes * nr_clientes
 GA <- ga(type = "permutation", fitness = tspFitness,
          customerDistances=customerDistances, customerDemand=customerDemand, depositosDistances=depositosDistances,
-         nBits = nr_camioes*nr_clientes,
-         min = 1, max = nr_camioes*nr_clientes, popSize = 100, maxiter = 1000,
-         run = 1000, pmutation = 0.2)
+         #nBits = nr_camioes*nr_clientes,
+         #population = ga_Population, 
+         min = 1, max = sizeGenoma, popSize = 100, 
+         maxiter = 500, run = 500, 
+         pmutation = 0.3, pcrossover =0.2, elitism = 0.2)
 
 summary(GA)
 
 custo = 0
-tour = GA@solution[1,]
-tour = matrix(data=tour,nrow=nr_camioes, ncol =nr_clientes)
-for(i in c(1:nrow(tour))){
-  percurso = intersect(tour[i,], c(1:nr_clientes))
-  percurso = c(percurso, percurso[1])
-  percurso <- embed(percurso, 2)[,2:1]
-  custo = custo + sum(custo_viagem(cli_Depots_Dist, cli_Dist, percurso))
-  }
-cat("custo = ", custo )
+tours = GA@solution
+for(g in c(1:nrow(tours))){
+  custo <- CustoTotal(genoma = tours[g,], customerDistances, customerDemand, depositosDistances)
+  cat("custo solução ", g, " = ", (custo), "\n" )
+}
 
 #Visualization 
 
-#mds <- cmdscale(eurodist)
-#x <- mds[, 1]
-#y <- -mds[, 2]
-#plot(x, y, type = "n", asp = 1, xlab = "", ylab = "")
-#abline(h = pretty(range(x), 10), v = pretty(range(y), 10),
-#       col = "light gray")
-#tour <- GA@solution[1, ]
-#tour <- c(tour, tour[1])
-#n <- length(tour)
-#arrows(x[tour[-n]], y[tour[-n]], x[tour[-1]], y[tour[-1]],
-#       length = 0.15, angle = 25, col = "steelblue", lwd = 2)
-#text(x, y, labels(eurodist), cex=0.8)
+# Marcar clientes no mapa
+mds <- cmdscale(cli_Dist)
+x <- mds[, 1];    y <- mds[, 2];      n <- length(x)
+plot(x,y, type="n", asp=1, xlab="", ylab="", main="Tour after GA converted")
+points(x,y,pch=15, cex=1.5, col="blue")
+abline(h = pretty(range(x), 10), v = pretty(range(y), 10), col="lightgrey")
+
+# Marcar depositos no mapa
+depot_Dist = auxiliarPlot[nr_clientes:nrow(auxiliarPlot),nr_clientes:nrow(auxiliarPlot)]
+mds <- cmdscale(depot_Dist)
+x <- mds[, 1];    y <- mds[, 2];      n <- length(x)
+points(x,y,pch=17, cex=1.5, col="red")
+
+#repor localizaçao 
+mds <- cmdscale(cli_Dist)
+x <- mds[, 1];    y <- mds[, 2];      n <- length(x)
+
+# imprimir as rotas 
+cores_dep = c("chocolate1", "cornsilk1", "cyan4", "darkgoldenrod1", "darkolivegreen1", "darkmagenta", "darkgreen", "darkorchid2", "gold1", "gray33")
+
+tours <- GA@solution[1, ]
+cromossomas = matrix(data=tours, nrow=nr_depositos, ncol=nr_camioes*nr_clientes, byrow=TRUE);
+for(it_dep in c(1:nrow(cromossomas))){
+    # Dividir as infos do deposito por cada camião 
+    deposito = matrix(data=cromossomas[it_dep,], nrow=nr_camioes, ncol=nr_clientes)  
+
+    for(it_cam in c(1:nrow(deposito))){
+      # Obter os alelos de um gene = clientes por onde passa o camião 
+      camiao = matrix(data=deposito[it_cam,], nrow=1, ncol=nr_clientes);
+      
+      # Ficar com o percurso efetivamente possivel de desempenhar por um camião 
+      percurso = intersect(camiao, c(1:nr_clientes))
+      if(length(percurso)!=0){
+        tour = percurso 
+        cat(percurso, "\n")
+        tour <- c(tour, tour[1]) # adicionar o regresso ao ponto partida
+        n <- length(tour)
+        arrows(x[tour[-n]], y[tour[-n]],x[tour[-1]], y[tour[-1]], length = 0.15, angle=45, col=cores_dep[it_dep], lwd=2)
+        
+        text(x, y-100, labels(cli_Dist), cex=0.8)
+      }
+    }
+  }
 
 
 

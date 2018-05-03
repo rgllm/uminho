@@ -6,6 +6,7 @@ import logo from './logo.png';
 import Search from './Search';
 import FacebookLogin from 'react-facebook-login';
 import MyAssets from '../myassets/MyAssets';
+import DropDownButton from './DropDownButton';
 
 class Header extends React.Component {
   constructor(){
@@ -67,16 +68,18 @@ class Header extends React.Component {
           </Link>
 
           <Search />
-
+          
           <div>
+            
             <Link to="/myassets">
             <span className="Header-name">{name}</span>
             </Link>
             <span className="Header-balance">Account Balance: 5000 $</span>
           </div>
           <img src={picture} alt='profile-picture' className="Header-picture"/>
-
+          <DropDownButton/>
         </div>
+        
       );
     }
   }

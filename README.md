@@ -1,19 +1,12 @@
 ## Trding app for EW
 
-Slack channel: 
-
 ### Configuration
 - **Platform:** node
-- **Framework**: express
-- **Template Engine**: jade
-- **CSS Framework**: bootstrap
 - **CSS Preprocessor**: css
 - **JavaScript Framework**: react
 - **Build Tool**: npm
-- **Unit Testing**: none
 - **Database**: none
-- **Authentication**: 
-- **Deployment**: heroku
+- **Authentication**: facebook
 
 ### License
 The MIT License (MIT)

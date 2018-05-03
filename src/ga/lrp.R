@@ -3,7 +3,11 @@
 library(GA)
 library(jsonlite)
 
-json <- fromJSON("../Desktop/cn3/data/json/barreto_json/coordChrist50.json")
+runForAll <- function(fileName) { 
+  
+print(fileName)
+
+json <- fromJSON(fileName)
 
 nr_clientes = json$meta_data$nb_customers
 nr_depositos = json$meta_data$nb_depots
@@ -104,3 +108,15 @@ for (d1 in depositos){
 
 remove(i,j, x1, x2, y1, y2, distance, c, c1, c2, d, d1, d2, depot)
 remove(clientes, depositos, json)
+}
+
+
+folderName = '~/Desktop/cn3/data/json/tuzun_json/'
+
+files <- list.files(folderName, full.names=TRUE)
+
+files <- files[ grepl("\\.[json]", files) ]
+
+for (i in 1:length(files)){
+  runForAll(files[i])
+}

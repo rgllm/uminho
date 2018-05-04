@@ -116,8 +116,6 @@ tspFitness <- function(genoma, customerDistances, customerDemand, depositosDista
 sizeGenoma = nr_depositos * nr_camioes * nr_clientes
 GA <- ga(type = "permutation", fitness = tspFitness,
          customerDistances=customerDistances, customerDemand=customerDemand, depositosDistances=depositosDistances,
-         #nBits = nr_camioes*nr_clientes,
-         #population = ga_Population, 
          min = 1, max = sizeGenoma, popSize = 100, 
          maxiter = 500, run = 500, 
          pmutation = 0.3, pcrossover =0.2, elitism = 0.2)
@@ -132,50 +130,55 @@ for(g in c(1:nrow(tours))){
 }
 
 #Visualization 
-
-# Marcar clientes no mapa
-mds <- cmdscale(cli_Dist)
-x <- mds[, 1];    y <- mds[, 2];      n <- length(x)
-plot(x,y, type="n", asp=1, xlab="", ylab="", main="Tour after GA converted")
-points(x,y,pch=15, cex=1.5, col="blue")
-abline(h = pretty(range(x), 10), v = pretty(range(y), 10), col="lightgrey")
-
-# Marcar depositos no mapa
-depot_Dist = auxiliarPlot[nr_clientes:nrow(auxiliarPlot),nr_clientes:nrow(auxiliarPlot)]
-mds <- cmdscale(depot_Dist)
-x <- mds[, 1];    y <- mds[, 2];      n <- length(x)
-points(x,y,pch=17, cex=1.5, col="red")
-
-#repor localizaçao 
-mds <- cmdscale(cli_Dist)
-x <- mds[, 1];    y <- mds[, 2];      n <- length(x)
-
-# imprimir as rotas 
-cores_dep = c("chocolate1", "cornsilk1", "cyan4", "darkgoldenrod1", "darkolivegreen1", "darkmagenta", "darkgreen", "darkorchid2", "gold1", "gray33")
-
-tours <- GA@solution[1, ]
-cromossomas = matrix(data=tours, nrow=nr_depositos, ncol=nr_camioes*nr_clientes, byrow=TRUE);
-for(it_dep in c(1:nrow(cromossomas))){
-    # Dividir as infos do deposito por cada camião 
-    deposito = matrix(data=cromossomas[it_dep,], nrow=nr_camioes, ncol=nr_clientes)  
-
-    for(it_cam in c(1:nrow(deposito))){
-      # Obter os alelos de um gene = clientes por onde passa o camião 
-      camiao = matrix(data=deposito[it_cam,], nrow=1, ncol=nr_clientes);
-      
-      # Ficar com o percurso efetivamente possivel de desempenhar por um camião 
-      percurso = intersect(camiao, c(1:nr_clientes))
-      if(length(percurso)!=0){
-        tour = percurso 
-        cat(percurso, "\n")
-        tour <- c(tour, tour[1]) # adicionar o regresso ao ponto partida
-        n <- length(tour)
-        arrows(x[tour[-n]], y[tour[-n]],x[tour[-1]], y[tour[-1]], length = 0.15, angle=45, col=cores_dep[it_dep], lwd=2)
+visualizacao <- function(){ 
+  plot(x,y, type="n", asp=1, xlab="", ylab="", main="Tour after GA converted")
+  
+  # Todos os pontos 
+  mds <- cmdscale(auxiliarPlot)
+  x <- mds[, 1];    
+  y <- mds[, 2];
+  abline(h = pretty(range(x), 10), v = pretty(range(y), 10), col="lightgrey")
+  
+  # imprimir as rotas 
+  cores_dep = c("chartreuse", "chocolate1", "cyan", "darkorange", "darkolivegreen1", "darkviolet", "gold", "yellow", "gold1", "gray33")
+  
+  tours <- GA@solution[1, ]
+  cromossomas = matrix(data=tours, nrow=nr_depositos, ncol=nr_camioes*nr_clientes, byrow=TRUE);
+  for(it_dep in c(1:nrow(cromossomas))){
+      # Dividir as infos do deposito por cada camião 
+      deposito = matrix(data=cromossomas[it_dep,], nrow=nr_camioes, ncol=nr_clientes)  
+      c = 1
+      cat("Deposito ", it_dep, ": \n")
+      for(it_cam in c(1:nrow(deposito))){
+        # Obter os alelos de um gene = clientes por onde passa o camião 
+        camiao = matrix(data=deposito[it_cam,], nrow=1, ncol=nr_clientes);
         
-        text(x, y-100, labels(cli_Dist), cex=0.8)
+        # Ficar com o percurso efetivamente possivel de desempenhar por um camião 
+        percurso = intersect(camiao, c(1:nr_clientes))
+        if(length(percurso)!=0){
+          cat("\tCamião ", c, " realiza o percurso pelos clientes: ", percurso, "\n")
+          c <- c+1
+          
+          # truque para aparecer o deposito no percurso
+          tour <- c(nr_clientes + it_dep, percurso)
+          tour <- c(tour, tour[1]) # adicionar o regresso ao ponto partida
+          n <- length(tour)
+          arrows(x[tour[-n]], y[tour[-n]],x[tour[-1]], y[tour[-1]], length = 0.15, angle=45, col=cores_dep[it_dep], lty=it_cam%%6, lwd=2)
+          
+          text(x, y, labels(auxiliarPlot[1,]), pos=3, cex=0.8)
+        }
       }
-    }
   }
+  
+  # Marcar clientes no mapa
+  mds <- cmdscale(auxiliarPlot)
+  x <- mds[1:nr_clientes, 1];    
+  y <- mds[1:nr_clientes, 2];      
+  n <- length(x)
+  points(x,y,pch=15, cex=1.5, col="blue")
+  
+  x <- mds[nr_clientes:ncol(auxiliarPlot), 1];    y <- mds[nr_clientes:ncol(auxiliarPlot), 2];      n <- length(x)
+  points(x,y,pch=17, cex=1.5, col="red")
+}
 
-
-
+x <- visualizacao()

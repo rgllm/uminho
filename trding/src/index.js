@@ -8,6 +8,7 @@ import List from './components/list/List';
 import NotFound from './components/notfound/NotFound';
 import Detail from './components/detail/Detail';
 import MyAssets from './components/myassets/MyAssets';
+import Account from './components/account/Account';
 
 const Main = () => {
 	return(
@@ -17,7 +18,8 @@ const Main = () => {
 				<Switch>
 					<Route path="/" component={List} exact />
 					<Route path="/currency/:id" component={Detail}  exact />
-					<Route path="/myassets" component={MyAssets} exact />
+					<Route path="/history" component={MyAssets} exact />
+					<Route path="/account" component={Account} exact />
 					<Route component={NotFound} />
 				</Switch>
 				<Footer />

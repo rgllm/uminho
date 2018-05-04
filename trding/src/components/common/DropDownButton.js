@@ -12,15 +12,15 @@ const DropDownButton = (props) => {
   function onSelect({ key }) {
     console.log(`${key} selected`);
   }
-  
+
   function onVisibleChange(visible) {
     console.log(visible);
   }
   const menu = (
     <Menu onSelect={onSelect}>
-        <MenuItem><Link to="/watchlist">WatchList</Link></MenuItem>
+        <MenuItem><Link to="/account">My Account</Link></MenuItem>
         <MenuItem><Link to="/portfolio">Portfolio</Link></MenuItem>
-        <MenuItem><Link to="/history">History</Link></MenuItem>
+        <MenuItem><Link to="/history">Transaction History</Link></MenuItem>
     </Menu>
   );
 
@@ -34,7 +34,7 @@ const DropDownButton = (props) => {
           onVisibleChange={onVisibleChange}
           overlayClassName="dropDownButton"
         >
-          <button class="dropDownButton"><i class="fas fa-angle-down fa-lg"></i></button>
+          <button className="dropDownButton"><i class="fas fa-angle-down fa-lg"></i></button>
         </Dropdown>
       </div>
     </div>

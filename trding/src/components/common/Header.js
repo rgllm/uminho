@@ -68,18 +68,14 @@ class Header extends React.Component {
           </Link>
 
           <Search />
-          
+
           <div>
-            
-            <Link to="/myassets">
             <span className="Header-name">{name}</span>
-            </Link>
-            <span className="Header-balance">Account Balance: 5000 $</span>
           </div>
           <img src={picture} alt='profile-picture' className="Header-picture"/>
           <DropDownButton/>
         </div>
-        
+
       );
     }
   }

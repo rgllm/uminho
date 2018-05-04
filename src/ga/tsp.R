@@ -1,5 +1,4 @@
 library(GA)
-library(permute)
 
 cli_Dist = as.matrix(customerDistances);
 cli_Demand = as.matrix(customerDemand, nrow=1);
@@ -131,12 +130,12 @@ for(g in c(1:nrow(tours))){
 
 #Visualization 
 visualizacao <- function(){ 
-  plot(x,y, type="n", asp=1, xlab="", ylab="", main="Tour after GA converted")
   
   # Todos os pontos 
   mds <- cmdscale(auxiliarPlot)
   x <- mds[, 1];    
   y <- mds[, 2];
+  plot(x,y, type="n", asp=1, xlab="", ylab="", main="Tour after GA converted")
   abline(h = pretty(range(x), 10), v = pretty(range(y), 10), col="lightgrey")
   
   # imprimir as rotas 

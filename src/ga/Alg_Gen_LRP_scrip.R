@@ -309,7 +309,7 @@ CustoTotal <- function(genoma, customerDistances, customerDemand, depositosDista
 
 #----------------------------------------------------------------------------------------------------------------
 # Fitness function to be minimized 
-tspFitness <- function(genoma, customerDistances, customerDemand, depositosDistances) {
+lrpFitness <- function(genoma, customerDistances, customerDemand, depositosDistances) {
   1 / CustoTotal(genoma, customerDistances, customerDemand, depositosDistances)
 }
 #----------------------------------------------------------------------------------------------------------------
@@ -321,10 +321,10 @@ run_GA <- function(){
   # nr_camioes previamente optimizado para o número minimo suficiente 
   sizeGenoma = nr_depositos * nr_camioes * nr_clientes
   
-  GA <- ga(type = "permutation", fitness = tspFitness,
+  GA <- ga(type = "permutation", fitness = lrpFitness,
            customerDistances=customerDistances, customerDemand=customerDemand, depositosDistances=depositosDistances,
-           min = 1, max = sizeGenoma, popSize = 15, 
-           maxiter = 15, run = 500, 
+           min = 1, max = sizeGenoma, popSize = 150, 
+           maxiter = 500, run = 500, 
            pmutation = 0.3, pcrossover =0.2, elitism = 0.2, monitor = FALSE )
   return(GA)
 }
@@ -341,7 +341,7 @@ custo_solucao <- function(GA){
 }
 
 
-foldersName = c('~/GitHub/cn3/data/json/barreto_json/', '~/GitHub/cn3/data/json/prodhon_json/', '~/GitHub/cn3/data/json/tuzun_json/')
+foldersName = c('~/GitHub/cn3/data/json/barreto_json/') #, '~/GitHub/cn3/data/json/prodhon_json/', '~/GitHub/cn3/data/json/tuzun_json/')
     
 #for(folderName in foldersName){
 for(f in c(1:length(foldersName))){
@@ -351,9 +351,13 @@ for(f in c(1:length(foldersName))){
   split_names = strsplit(foldersName[f], "/")
   folder_name = split_names[[1]][length(split_names[[1]])]
   cat("Folder name:\t", folder_name, "\n")
-  cat("\t File Name", "\t\t\t ", "Time to run GA", "\t\t Custo melhor solução", "\n")
+  cat("\t File Name", "\t\t\t    ", "Time to run GA", "\t\t   Custo melhor solução", "\n")
+  resultados <- matrix(nrow=length(files), ncol=3)
   for (it_files in 1:length(files)){
+    
     json <- fromJSON(files[it_files])
+    #fileaux = '~/GitHub/cn3/data/json/prodhon_json/coord20-5-1.json'
+    #json <- fromJSON(fileaux)
     
     nr_clientes = json$meta_data$nb_customers
     nr_depositos = json$meta_data$nb_depots
@@ -467,19 +471,14 @@ for(f in c(1:length(foldersName))){
     
     start <- Sys.time()
     res <- run_GA()
-    taken <- round((Sys.time() - start)/60, 2) # end time after runing GA 
+    taken <- round((Sys.time() - start), 2) # end time after runing GA 
     custo = custo_solucao(res)
     split_names = strsplit(files[it_files], "/")
     file_name = split_names[[1]][length(split_names[[1]])]
-        
-    cat("\t", file_name, "\t\t\t", taken, "min\t\t\t", custo, "U.M\n")
-  } 
+    
+    resultados[it_files,] = c(file_name, round(taken,2), round(custo,2))
+    cat("\t", file_name, "\t\t\t", taken, "min\t\t\t", round(custo,2), "U.M\n")
+  }
+  folder_name = strsplit(folder_name, "_json")
+  write.csv(resultados, file =cat("./barreto.csv", sep=""), row.names=FALSE)
 }
-
-mat <- matrix(1:10,ncol=2)
-rownames(mat) <- letters[1:5]
-colnames(mat) <- LETTERS[1:2]
-
-mat
-write.matrix(format(mat, scientific=FALSE), 
-             file = paste("", "dat2.csv", sep="/"), sep=","))

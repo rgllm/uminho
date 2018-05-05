@@ -1,6 +1,8 @@
 #install.packages("rjson")
 library(GA)
 library(jsonlite)
+library(parallel)
+library(doParallel)
 
 #----------------------------------------------------------------------------------------------------------------
 # Load to usefull data from previous created json file to matrix and variables at R 
@@ -117,6 +119,91 @@ runForAll <- function(fileName) {
 } # end of read_data_from_Json
 #----------------------------------------------------------------------------------------------------------------
 
+#----------------------------------------------------------------------------------------------------------------
+# função para calcular o custo de um genoma (conjunto de cromossomas referentes a N depósitos)
+detalhesSolucao <- function(genoma, customerDistances, customerDemand, depositosDistances) {
+  # Cada cromossoma representa um deposito, que pode ou nao ser aberto
+  cromossomas = matrix(data=genoma, nrow=nr_depositos, ncol=nr_camioes*nr_clientes, byrow=TRUE);
+  
+  # custo inicial da solução é zero
+  custo = 0;
+  used_depositos = 0
+  used_camioes = matrix(ncol = nr_depositos, nrow = 1)
+  for(it in c(1:length(used_camioes))){ used_camioes[it] = 0 }
+  
+  # vetor com a procura de cada client. No final, a soma deve ser zero (toda a procura satisfeita)
+  procura = cli_Demand
+  
+  # Primeiro ciclo divide o genoma em cromossomas
+  # - Computar cada um dos depositos (cromossomas)
+  for(it_dep in c(1:nrow(cromossomas))){
+    # Teste inicial para saber se o deposito é ou não aberto 
+    # - Olha para os dados do deposito sem considerar as divisões por camião
+    # - Fica apenas com os valores do cromossoma entre [1:nr_clientes]
+    # - Se length(deposito == 0) nenhum camião do deposito é utilizado -> o deposito nao é aberto
+    deposito = intersect(cromossomas[it_dep,], c(1:nr_clientes));
+    
+    if(length(deposito)!=0){ # O deposito é aberto -> terá influencia no custo 
+      # opening costs for the depots
+      custo = custo + depot_cost[it_dep]
+      used_depositos = used_depositos + 1; 
+      
+      # stock inicial do deposito 
+      stock_atual = depositosStock[it_dep] # 
+      
+      # Dividir as infos do deposito por cada camião 
+      deposito = matrix(data=cromossomas[it_dep,], nrow=nr_camioes, ncol=nr_clientes)  
+      
+      # Segundo ciclo divide o cromossoma em genes
+      # - Computar cada um dos camiões (gene) do deposito i
+      for(it_cam in c(1:nrow(deposito))){
+        # Obter os alelos de um gene = clientes por onde passa o camião 
+        camiao = matrix(data=deposito[it_cam,], nrow=1, ncol=nr_clientes);
+        
+        # Ficar com o percurso efetivamente possivel de desempenhar por um camião 
+        percurso = intersect(camiao, c(1:nr_clientes))
+        
+        # Se length(percurso == 0) o camião não é utilizado -> não trás custos 
+        if(length(percurso!=0)){
+          # opening cost of a route (cost of a vehicle)
+          custo = custo + vehicle_cost
+          used_camioes[it_dep] = used_camioes[it_dep] + 1; 
+          
+          # Se 1 camião é usado, o stock do deposito baixa 
+          stock_atual = stock_atual - vehicle_cap
+          
+          # Carga inicial do camião no inicio do percurso
+          carga_atual = vehicle_cap 
+          
+          for(cli in c(1:length(percurso))){
+            cliente = percurso[cli]
+            
+            # senão, vamos satisfazer o máximo de procura do cliente 
+            if(carga_atual >= procura[cliente]){
+              # só se consideram entregas completas da procura do cliente
+              entregar = procura[cliente] 
+              carga_atual = carga_atual - entregar; # reduzir capacidade disponivel do camião
+              procura[cliente] = 0 # reduzir a procura do cliente 
+            }else{
+              # passamos por um cliente sem stock no camião para o atender
+              # aumentar absurdamente o custo da solução, para penalizar
+              custo = custo + 10000000000
+            }
+          }
+          
+          # Calcular o custo de uma viagem 
+          c_viagem <- custo_viagem(depositosDistances, customerDistances, percurso)
+          custo = custo + c_viagem
+        }
+      }
+    }
+  }
+  if(sum(procura)!=0){  
+    custo = custo + 10000000000 # o genoma nao satisfaz a procura de todo os cliente
+  }
+  return(list(custo, used_depositos, used_camioes))
+} # Fim da função que calcula o custo de um genoma ("cromossoma" com vários cromossomas referentes a N depositos)
+#----------------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------------
 # Função para gerar grafo com todas as rotas, clientes e depositos 
 visualizacaoRotas <- function(){ 
@@ -323,9 +410,9 @@ run_GA <- function(){
   
   GA <- ga(type = "permutation", fitness = lrpFitness,
            customerDistances=customerDistances, customerDemand=customerDemand, depositosDistances=depositosDistances,
-           min = 1, max = sizeGenoma, popSize = 150, 
-           maxiter = 500, run = 500, 
-           pmutation = 0.3, pcrossover =0.2, elitism = 0.2, monitor = FALSE )
+           min = 1, max = sizeGenoma, popSize = 15, 
+           maxiter = 25, run = 500, 
+           pmutation = 0.3, pcrossover =0.2, elitism = 0.2, monitor = FALSE)
   return(GA)
 }
 #----------------------------------------------------------------------------------------------------------------
@@ -341,7 +428,8 @@ custo_solucao <- function(GA){
 }
 
 
-foldersName = c('~/GitHub/cn3/data/json/barreto_json/') #, '~/GitHub/cn3/data/json/prodhon_json/', '~/GitHub/cn3/data/json/tuzun_json/')
+foldersName = c('~/GitHub/cn3/data/json/barreto_json/') 
+#foldersName = c('~/GitHub/cn3/data/json/prodhon_json/') #, '~/GitHub/cn3/data/json/tuzun_json/')
     
 #for(folderName in foldersName){
 for(f in c(1:length(foldersName))){
@@ -352,7 +440,9 @@ for(f in c(1:length(foldersName))){
   folder_name = split_names[[1]][length(split_names[[1]])]
   cat("Folder name:\t", folder_name, "\n")
   cat("\t File Name", "\t\t\t    ", "Time to run GA", "\t\t   Custo melhor solução", "\n")
-  resultados <- matrix(nrow=length(files), ncol=3)
+  resultados <- matrix(nrow=length(files)+1, ncol=8)
+  resultados[1,] = c("File Name", "Nr Clientes", "Nr Depots", "Nr Camioes", "Tempo (min)", "Custo (U.M.)", "Nr Used Depots", "Nr Used camioes per depot")
+
   for (it_files in 1:length(files)){
     
     json <- fromJSON(files[it_files])
@@ -468,17 +558,24 @@ for(f in c(1:length(foldersName))){
     nr_clientes = ncol(cli_Demand)
     nr_depositos = ncol(depositosStock)
     nr_camioes = round(sum(cli_Demand) / vehicle_cap, 0) 
-    
+  
     start <- Sys.time()
     res <- run_GA()
     taken <- round((Sys.time() - start), 2) # end time after runing GA 
-    custo = custo_solucao(res)
+    
+    best_tour = res@solution[1,]
+    detailhes = detalhesSolucao(best_tour, customerDistances, customerDemand,depositosDistances)
+    custo = detailhes[[1]][1]
+    used_depositos = detailhes[[2]]
+    used_camioes = paste(detailhes[[3]], collapse = " ")
     split_names = strsplit(files[it_files], "/")
     file_name = split_names[[1]][length(split_names[[1]])]
     
-    resultados[it_files,] = c(file_name, round(taken,2), round(custo,2))
-    cat("\t", file_name, "\t\t\t", taken, "min\t\t\t", round(custo,2), "U.M\n")
+    resultados[it_files+1,] = c(file_name, nr_clientes, nr_depositos, nr_camioes, round(taken,2), round(custo,2), used_depositos, used_camioes)
+    cat("\t", file_name, ": nr clientes: ", nr_clientes, ", nr depositos: ", nr_depositos, ", nr camioes: ", nr_camioes, "\n", sep="")
+    cat("\t\ Tempo:", taken, "min\t Custo:", round(custo,2), "U.M\t Depósitos", used_depositos, "\t Veiculos:", used_camioes, "\n")
   }
-  folder_name = strsplit(folder_name, "_json")
-  write.csv(resultados, file =cat("./barreto.csv", sep=""), row.names=FALSE)
+  
+  write.csv(resultados, file ="./barreto.csv", row.names=FALSE)
 }
+

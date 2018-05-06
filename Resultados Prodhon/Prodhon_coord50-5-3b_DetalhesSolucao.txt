@@ -1,0 +1,21 @@
+Deposito  1 : não é aberto.
+Deposito  2 : 
+	Camião  1  realiza o percurso pelos clientes:  40 41 
+	Camião  2  realiza o percurso pelos clientes:  29 17 27 
+	Camião  3  realiza o percurso pelos clientes:  32 3 
+	Camião  4  realiza o percurso pelos clientes:  37 13 12 22 38 
+Deposito  3 : 
+	Camião  1  realiza o percurso pelos clientes:  4 26 2 
+	Camião  2  realiza o percurso pelos clientes:  20 10 30 46 
+	Camião  3  realiza o percurso pelos clientes:  8 39 
+	Camião  4  realiza o percurso pelos clientes:  35 15 36 44 
+	Camião  5  realiza o percurso pelos clientes:  21 9 50 43 25 
+Deposito  4 : 
+	Camião  1  realiza o percurso pelos clientes:  34 16 
+	Camião  2  realiza o percurso pelos clientes:  42 5 23 7 
+	Camião  3  realiza o percurso pelos clientes:  48 49 24 
+Deposito  5 : 
+	Camião  1  realiza o percurso pelos clientes:  14 33 1 
+	Camião  2  realiza o percurso pelos clientes:  11 47 19 
+	Camião  3  realiza o percurso pelos clientes:  18 45 31 
+	Camião  4  realiza o percurso pelos clientes:  28 6 

@@ -1,0 +1,77 @@
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Binary files
+!/*.*
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+dist
+cabal-dev
+*.o
+*.hi
+*.chi
+*.chs.h
+<<<<<<< HEAD
+*.dyn_o
+*.dyn_hi
+.hpc
+.hsenv
+.cabal-sandbox/
+cabal.sandbox.config
+*.prof
+*.aux
+*.hp
+.stack-work/
+.DS_STORE
+
+
+#OSX files
+.DS_STORE
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.ctxt
+*.package
+*.class
+*.bluej
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+/04/AI/agentes02/agentes02/nbproject/private/
+/04/AI/agentes02/nbproject/private/
+/04/AI/agentes02/build/
+/04/AI/agentes03/nbproject/private/
+/04/AI/agentes03/build/

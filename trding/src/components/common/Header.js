@@ -28,11 +28,6 @@ class Header extends React.Component {
     const picture = response.picture.data.url;
 
     this.setState({ login: true, name: name, email: email, picture: picture});
-
-    console.log("Name: ",name);
-    console.log("Email: ",email);
-    console.log("Picture URL: ",picture);
-    console.log("Object: ",response);
   }
 
   render(){

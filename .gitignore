@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Object files
 *.o
 *.ko
@@ -75,3 +76,9 @@ hs_err_pid*
 /04/AI/agentes02/build/
 /04/AI/agentes03/nbproject/private/
 /04/AI/agentes03/build/
+=======
+.DS_STORE
+.pyc
+__pycache__
+.Rhistory
+>>>>>>> cn3/master

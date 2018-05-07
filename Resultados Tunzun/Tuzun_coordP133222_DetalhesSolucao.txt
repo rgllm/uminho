@@ -1,0 +1,117 @@
+Deposito  1 : 
+	Camião  1  realiza o percurso pelos clientes:  85 
+	Camião  2  realiza o percurso pelos clientes:  57 25 14 
+	Camião  3  realiza o percurso pelos clientes:  60 
+Deposito  2 : 
+	Camião  1  realiza o percurso pelos clientes:  94 8 
+	Camião  2  realiza o percurso pelos clientes:  7 111 
+	Camião  3  realiza o percurso pelos clientes:  106 146 
+	Camião  4  realiza o percurso pelos clientes:  74 
+	Camião  5  realiza o percurso pelos clientes:  144 
+	Camião  6  realiza o percurso pelos clientes:  116 6 
+Deposito  3 : 
+	Camião  1  realiza o percurso pelos clientes:  118 13 
+	Camião  2  realiza o percurso pelos clientes:  91 
+	Camião  3  realiza o percurso pelos clientes:  123 
+Deposito  4 : 
+	Camião  1  realiza o percurso pelos clientes:  148 129 
+	Camião  2  realiza o percurso pelos clientes:  114 
+	Camião  3  realiza o percurso pelos clientes:  43 
+Deposito  5 : 
+	Camião  1  realiza o percurso pelos clientes:  102 
+	Camião  2  realiza o percurso pelos clientes:  34 
+	Camião  3  realiza o percurso pelos clientes:  139 
+	Camião  4  realiza o percurso pelos clientes:  5 24 
+Deposito  6 : 
+	Camião  1  realiza o percurso pelos clientes:  23 121 
+	Camião  2  realiza o percurso pelos clientes:  137 
+	Camião  3  realiza o percurso pelos clientes:  17 27 
+	Camião  4  realiza o percurso pelos clientes:  31 55 52 
+	Camião  5  realiza o percurso pelos clientes:  36 41 
+Deposito  7 : 
+	Camião  1  realiza o percurso pelos clientes:  35 
+	Camião  2  realiza o percurso pelos clientes:  72 97 
+	Camião  3  realiza o percurso pelos clientes:  29 
+	Camião  4  realiza o percurso pelos clientes:  145 
+	Camião  5  realiza o percurso pelos clientes:  110 76 
+Deposito  8 : 
+	Camião  1  realiza o percurso pelos clientes:  115 
+	Camião  2  realiza o percurso pelos clientes:  67 33 86 
+	Camião  3  realiza o percurso pelos clientes:  80 
+	Camião  4  realiza o percurso pelos clientes:  22 3 20 
+Deposito  9 : 
+	Camião  1  realiza o percurso pelos clientes:  48 
+	Camião  2  realiza o percurso pelos clientes:  61 
+	Camião  3  realiza o percurso pelos clientes:  73 141 66 
+	Camião  4  realiza o percurso pelos clientes:  103 107 
+	Camião  5  realiza o percurso pelos clientes:  100 112 
+	Camião  6  realiza o percurso pelos clientes:  105 117 68 
+	Camião  7  realiza o percurso pelos clientes:  83 
+Deposito  10 : 
+	Camião  1  realiza o percurso pelos clientes:  75 96 
+	Camião  2  realiza o percurso pelos clientes:  65 51 
+	Camião  3  realiza o percurso pelos clientes:  18 
+	Camião  4  realiza o percurso pelos clientes:  64 126 
+	Camião  5  realiza o percurso pelos clientes:  108 
+	Camião  6  realiza o percurso pelos clientes:  124 
+	Camião  7  realiza o percurso pelos clientes:  32 39 
+Deposito  11 : 
+	Camião  1  realiza o percurso pelos clientes:  147 130 
+	Camião  2  realiza o percurso pelos clientes:  46 26 
+	Camião  3  realiza o percurso pelos clientes:  93 12 
+	Camião  4  realiza o percurso pelos clientes:  62 
+	Camião  5  realiza o percurso pelos clientes:  77 
+	Camião  6  realiza o percurso pelos clientes:  132 81 
+Deposito  12 : 
+	Camião  1  realiza o percurso pelos clientes:  95 92 122 
+	Camião  2  realiza o percurso pelos clientes:  140 136 
+	Camião  3  realiza o percurso pelos clientes:  87 
+	Camião  4  realiza o percurso pelos clientes:  10 
+	Camião  5  realiza o percurso pelos clientes:  15 
+	Camião  6  realiza o percurso pelos clientes:  47 37 133 
+	Camião  7  realiza o percurso pelos clientes:  30 
+Deposito  13 : 
+	Camião  1  realiza o percurso pelos clientes:  59 
+	Camião  2  realiza o percurso pelos clientes:  1 138 
+Deposito  14 : 
+	Camião  1  realiza o percurso pelos clientes:  21 45 28 
+	Camião  2  realiza o percurso pelos clientes:  142 
+	Camião  3  realiza o percurso pelos clientes:  71 
+	Camião  4  realiza o percurso pelos clientes:  63 
+Deposito  15 : 
+	Camião  1  realiza o percurso pelos clientes:  82 
+	Camião  2  realiza o percurso pelos clientes:  78 113 
+	Camião  3  realiza o percurso pelos clientes:  56 
+	Camião  4  realiza o percurso pelos clientes:  38 
+	Camião  5  realiza o percurso pelos clientes:  119 
+	Camião  6  realiza o percurso pelos clientes:  53 
+	Camião  7  realiza o percurso pelos clientes:  135 42 49 
+Deposito  16 : 
+	Camião  1  realiza o percurso pelos clientes:  11 
+	Camião  2  realiza o percurso pelos clientes:  2 120 
+	Camião  3  realiza o percurso pelos clientes:  150 
+	Camião  4  realiza o percurso pelos clientes:  89 84 
+	Camião  5  realiza o percurso pelos clientes:  109 
+	Camião  6  realiza o percurso pelos clientes:  101 44 40 
+	Camião  7  realiza o percurso pelos clientes:  104 
+	Camião  8  realiza o percurso pelos clientes:  88 
+	Camião  9  realiza o percurso pelos clientes:  16 
+Deposito  17  não é aberto.
+Deposito  18 : 
+	Camião  1  realiza o percurso pelos clientes:  127 
+	Camião  2  realiza o percurso pelos clientes:  125 
+	Camião  3  realiza o percurso pelos clientes:  58 
+	Camião  4  realiza o percurso pelos clientes:  70 
+	Camião  5  realiza o percurso pelos clientes:  134 
+Deposito  19 : 
+	Camião  1  realiza o percurso pelos clientes:  19 54 
+	Camião  2  realiza o percurso pelos clientes:  98 
+	Camião  3  realiza o percurso pelos clientes:  149 99 
+	Camião  4  realiza o percurso pelos clientes:  79 69 
+	Camião  5  realiza o percurso pelos clientes:  128 
+	Camião  6  realiza o percurso pelos clientes:  143 
+Deposito  20 : 
+	Camião  1  realiza o percurso pelos clientes:  4 9 
+	Camião  2  realiza o percurso pelos clientes:  50 
+	Camião  3  realiza o percurso pelos clientes:  131 
+	Camião  4  realiza o percurso pelos clientes:  90 

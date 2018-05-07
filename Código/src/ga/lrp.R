@@ -1,0 +1,120 @@
+library(GA)
+library(jsonlite)
+
+runForAll <- function(fileName) { 
+  
+  json <- fromJSON(fileName)
+  
+  nr_clientes = json$meta_data$nb_customers
+  nr_depositos = json$meta_data$nb_depots
+  vehicle_cap = json$meta_data$vehicle_cap
+  vehicle_cost = json$meta_data$vehicle_cost
+  cost_type = json$meta_data$cost_type
+  clientes = json$customers
+  depositos = json$depots
+  
+  customerDistances = matrix(nrow=nr_clientes, ncol = nr_clientes)
+  customerDemand = matrix(ncol=nr_clientes, nrow=1)
+  depositosDistances = matrix(nrow = nr_clientes, ncol = nr_depositos)
+  auxiliarDepositos = matrix(nrow = nr_depositos, ncol = nr_depositos)
+  auxiliarPlot = matrix(nrow = nr_clientes + nr_depositos, ncol = nr_clientes + nr_depositos)
+  depositosStock = matrix(ncol=nr_depositos, nrow=1)
+  depot_cost = matrix(ncol=nr_depositos, nrow=1)
+  
+  #calculate clientes distances from c0 -> c49
+  
+  i=1
+  cli_pos = matrix(nrow=nr_clientes, ncol=2, byrow = TRUE)
+  for(c1 in clientes){
+    cli_pos[i, 1] = c1$x
+    cli_pos[i, 2] = c1$y
+    i = i+1
+  }
+  
+  i = 1
+  depot_pos = matrix(nrow=nr_depositos, ncol=2, byrow = TRUE)
+  for(depot in depositos){
+    depot
+    depositosStock[i] = depot$capacity
+    depot_cost[i] = depot$opening_cost
+    depot_pos[i,1] = depot$x
+    depot_pos[i,2] = depot$y
+    i = i+1
+  }
+  
+  i=1
+  j=1
+  
+  for (c1 in clientes){
+    x1 = c1$x;
+    y1 = c1$y;
+    customerDemand[i] = c1$demand;
+    for (c2 in clientes){
+      x2 = c2$x;
+      y2 = c2$y;
+      d = sqrt((x1 - x2)^2 + (y1-y2)^2);
+      customerDistances[i,j] = d;
+      customerDistances[j,i] = d;
+      auxiliarPlot[i,j] = d;
+      auxiliarPlot[j,i] = d;
+      j = j+1;
+    }
+    j=1
+    i = i+1;
+  }
+  
+  i=1
+  j=1
+  for (c in clientes){
+    x1 = c$x;
+    y1 = c$y;
+    for (d in depositos){
+      x2 = d$x;
+      y2 = d$y;
+      distance = sqrt((x1 - x2)^2 + (y1-y2)^2);
+      depositosDistances[i,j] = distance;
+      auxiliarPlot[i, nr_clientes + j] = distance; 
+      auxiliarPlot[nr_clientes + j,i] = distance; 
+      j = j+1;
+    }
+    j=1
+    i = i+1;
+  }
+  
+  i=1
+  j=1
+  for (d1 in depositos){
+    x1 = d1$x;
+    y1 = d1$y;
+    for (d2 in depositos){
+      x2 = d2$x;
+      y2 = d2$y;
+      distance = sqrt((x1 - x2)^2 + (y1-y2)^2);
+      auxiliarDepositos[i,j] = distance;
+      auxiliarDepositos[j,i] = distance;
+      auxiliarPlot[nr_clientes + i, nr_clientes + j] = distance;
+      auxiliarPlot[nr_clientes + j, nr_clientes + i] = distance;
+      j = j+1;
+    }
+    j=1
+    i = i+1;
+  }
+  
+  #auxiliarPlot[nr_clientes:nrow(auxiliarPlot), nr_clientes:nrow(auxiliarPlot)]
+  
+  remove(i,j, x1, x2, y1, y2, distance, c, c1, c2, d, d1, d2, depot)
+  remove(clientes, depositos, json)
+}
+
+folderName = '~/GitHub/cn3/data/json/barreto_json/'
+
+files <- list.files(folderName, full.names=TRUE)
+files <- files[ grepl("\\.[json]", files) ]
+
+for (i in 1:length(files)){
+  start <- Sys.time()
+  runForAll(files[i])
+  end <- Sys.time()
+  taken <- end - start
+  print(paste(files[i]," ----> ",taken, sep = ""))
+} 

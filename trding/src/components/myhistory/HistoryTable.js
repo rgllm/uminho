@@ -1,11 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import './TransactionTable.css';
+import './HistoryTable.css';
 import PropTypes from 'prop-types';
 import { renderChangePercent, renderProfit } from '../../helpers';
 
-const TransactionTable = (props) => {
-  const {transactions, currencies, history} = props;
+const HistoryTable = (props) => {
+  const {transactions,history} = props;
   console.log(transactions);
 
   return(
@@ -14,17 +14,16 @@ const TransactionTable = (props) => {
         <thead className="Table-header">
           <tr>
             <th>Cryptocurrency</th>
-            <th>Type</th>
-            <th>Opening price</th>
             <th>Current price</th>
-            <th>Profit</th>
+            <th>Purchase Price</th>
+            <th>Transaction Type</th>
           </tr>
         </thead>
         <tbody className="Table-body">
-          {transactions.map((transaction, i) => (
+          {transactions.map((transaction) => (
             <tr
               key={transaction.id}
-              onClick={() => history.push(`/currency/${transaction.code}`)}
+              onClick={() => history.push({javascript:void(0)})}
               >
               <td>
                 <span className="Table-rank">{}</span>
@@ -32,7 +31,7 @@ const TransactionTable = (props) => {
               </td>
               <td>
                 <span className="Table-dollar">{}</span>
-                 {transaction.type}
+                 {transaction.current_price}
               </td> 
               <td>
                 <span className="Table-dollar">{}</span>
@@ -40,11 +39,7 @@ const TransactionTable = (props) => {
               </td>
               <td>
                 <span className="Table-dollar">{}</span>
-                 {currencies[i]}
-              </td>
-              <td>
-                <span className="Table-dollar">{}</span>
-                 {renderProfit(currencies[i], transaction.purchase_price, transaction.type)}
+                 {transaction.type}
               </td>
             </tr>
           ))}
@@ -54,10 +49,9 @@ const TransactionTable = (props) => {
   );
 }
 
-TransactionTable.propTypes = {
+HistoryTable.propTypes = {
   transactions: PropTypes.array.isRequired,
-  currencies: PropTypes.array.isRequired,
   history: PropTypes.object.isRequired,
 };
 
-export default withRouter(TransactionTable);
+export default withRouter(HistoryTable);

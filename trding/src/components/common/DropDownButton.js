@@ -18,9 +18,15 @@ const DropDownButton = (props) => {
   }
   const menu = (
     <Menu onSelect={onSelect}>
+<<<<<<< HEAD
         <MenuItem><Link to="/account">My Account</Link></MenuItem>
         <MenuItem><Link to="/portfolio">Portfolio</Link></MenuItem>
         <MenuItem><Link to="/history">Transaction History</Link></MenuItem>
+=======
+        <MenuItem><Link to="/watchlist">WatchList</Link></MenuItem>
+        <MenuItem><Link to="/myassets">Portfolio</Link></MenuItem>
+        <MenuItem><Link to="/myhistory">History</Link></MenuItem>
+>>>>>>> 3a13ba0cd0f96bc3daad639d7e2dc07b0c29cdbb
     </Menu>
   );
 

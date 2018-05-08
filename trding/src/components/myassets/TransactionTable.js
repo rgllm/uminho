@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { renderChangePercent, renderProfit } from '../../helpers';
 
 const TransactionTable = (props) => {
-  const {transactions,history} = props;
+  const {transactions, currencies, history} = props;
   console.log(transactions);
 
   return(
@@ -21,10 +21,10 @@ const TransactionTable = (props) => {
           </tr>
         </thead>
         <tbody className="Table-body">
-          {transactions.map((transaction) => (
+          {transactions.map((transaction, i) => (
             <tr
               key={transaction.id}
-              onClick={() => history.push({javascript:void(0)})}
+              onClick={() => history.push(`/currency/${transaction.code}`)}
               >
               <td>
                 <span className="Table-rank">{}</span>
@@ -40,11 +40,11 @@ const TransactionTable = (props) => {
               </td>
               <td>
                 <span className="Table-dollar">{}</span>
-                 0
+                 {currencies[i]}
               </td>
               <td>
                 <span className="Table-dollar">{}</span>
-                 0
+                 {renderProfit(currencies[i], transaction.purchase_price, transaction.type)}
               </td>
             </tr>
           ))}
@@ -56,6 +56,7 @@ const TransactionTable = (props) => {
 
 TransactionTable.propTypes = {
   transactions: PropTypes.array.isRequired,
+  currencies: PropTypes.array.isRequired,
   history: PropTypes.object.isRequired,
 };
 

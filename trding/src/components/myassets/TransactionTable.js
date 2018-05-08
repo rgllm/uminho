@@ -6,7 +6,6 @@ import { renderChangePercent, renderProfit } from '../../helpers';
 
 const TransactionTable = (props) => {
   const {transactions,history} = props;
-  console.log(transactions);
 
   return(
     <div className="Table-container">
@@ -33,7 +32,7 @@ const TransactionTable = (props) => {
               <td>
                 <span className="Table-dollar">{}</span>
                  {transaction.type}
-              </td> 
+              </td>
               <td>
                 <span className="Table-dollar">{}</span>
                  {transaction.purchase_price}

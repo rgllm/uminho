@@ -7,6 +7,8 @@ import Search from './Search';
 import FacebookLogin from 'react-facebook-login';
 import MyAssets from '../myassets/MyAssets';
 import DropDownButton from './DropDownButton';
+import Login from './Login.js';
+import config from 'react-global-configuration';
 
 class Header extends React.Component {
   constructor(){
@@ -23,12 +25,13 @@ class Header extends React.Component {
   }
 
   handleLogin(response){
-    const name = response.name;
-    const email = response.email;
-    const picture = response.picture.data.url;
+      const name = response.name;
+      const email = response.email;
+      const picture = response.picture.data.url;
+      this.setState({ login: true, name: name, email: email, picture: picture});
+      config.set({ login: true, name: name, email: email  });
 
-    this.setState({ login: true, name: name, email: email, picture: picture});
-  }
+}
 
   render(){
 
@@ -44,13 +47,7 @@ class Header extends React.Component {
 
           <Search />
 
-            <FacebookLogin
-                appId="141112822652545"
-                autoLoad={true}
-                fields="name,email,picture"
-                cssClass="loginBtn loginBtn--facebook"
-                textButton="Login"
-                callback={this.handleLogin}/>
+            <Login onLogin={this.handleLogin}/>
      		</div>
      	);
     }

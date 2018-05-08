@@ -19,8 +19,8 @@ const DropDownButton = (props) => {
   const menu = (
     <Menu onSelect={onSelect}>
         <MenuItem><Link to="/watchlist">WatchList</Link></MenuItem>
-        <MenuItem><Link to="/portfolio">Portfolio</Link></MenuItem>
-        <MenuItem><Link to="/history">History</Link></MenuItem>
+        <MenuItem><Link to="/myassets">Portfolio</Link></MenuItem>
+        <MenuItem><Link to="/myhistory">History</Link></MenuItem>
     </Menu>
   );
 

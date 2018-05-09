@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { renderChangePercent, renderProfit, renderTypeBox } from '../../helpers';
 
 const TransactionTable = (props) => {
-  const {transactions, currencies, history} = props;
+  const {transactions, currencies, handleCloseClick, history} = props;
   console.log(transactions);
 
   return(
@@ -44,7 +44,7 @@ const TransactionTable = (props) => {
                  {renderProfit(currencies[i], transaction.purchase_price, transaction.type)}
               </td>
               <td>
-                <div className="Close-button">CLOSE</div>
+                <div className="Close-button" onClick={() => handleCloseClick()}>CLOSE</div>
               </td>
 
             </tr>

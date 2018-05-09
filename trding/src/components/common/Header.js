@@ -7,6 +7,8 @@ import Search from './Search';
 import FacebookLogin from 'react-facebook-login';
 import MyAssets from '../myassets/MyAssets';
 import DropDownButton from './DropDownButton';
+import Login from './Login.js';
+import config from 'react-global-configuration';
 
 class Header extends React.Component {
   constructor(){
@@ -23,17 +25,13 @@ class Header extends React.Component {
   }
 
   handleLogin(response){
-    const name = response.name;
-    const email = response.email;
-    const picture = response.picture.data.url;
+      const name = response.name;
+      const email = response.email;
+      const picture = response.picture.data.url;
+      this.setState({ login: true, name: name, email: email, picture: picture});
+      config.set({ login: true, name: name, email: email  });
 
-    this.setState({ login: true, name: name, email: email, picture: picture});
-
-    console.log("Name: ",name);
-    console.log("Email: ",email);
-    console.log("Picture URL: ",picture);
-    console.log("Object: ",response);
-  }
+}
 
   render(){
 
@@ -49,13 +47,7 @@ class Header extends React.Component {
 
           <Search />
 
-            <FacebookLogin
-                appId="141112822652545"
-                autoLoad={true}
-                fields="name,email,picture"
-                cssClass="loginBtn loginBtn--facebook"
-                textButton="Login"
-                callback={this.handleLogin}/>
+            <Login onLogin={this.handleLogin}/>
      		</div>
      	);
     }
@@ -68,18 +60,14 @@ class Header extends React.Component {
           </Link>
 
           <Search />
-          
+
           <div>
-            
-            <Link to="/myassets">
             <span className="Header-name">{name}</span>
-            </Link>
-            <span className="Header-balance">Account Balance: 5000 $</span>
           </div>
           <img src={picture} alt='profile-picture' className="Header-picture"/>
           <DropDownButton/>
         </div>
-        
+
       );
     }
   }

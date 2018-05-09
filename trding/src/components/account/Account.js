@@ -1,7 +1,5 @@
 import React from 'react';
-import { API_URL, STRIPE_KEY } from '../../config';
-import { handleResponse, renderChangePercent } from '../../helpers';
-import Loading from '../common/Loading';
+import { STRIPE_KEY } from '../../config';
 import './Account.css';
 import StripeCheckout from 'react-stripe-checkout';
 import Login from '../common/Login.js';

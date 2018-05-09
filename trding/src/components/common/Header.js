@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import './Header.css';
 import logo from './logo.png';
 import Search from './Search';
-import FacebookLogin from 'react-facebook-login';
-import MyAssets from '../myassets/MyAssets';
 import DropDownButton from './DropDownButton';
 import Login from './Login.js';
 import config from 'react-global-configuration';

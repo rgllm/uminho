@@ -25,7 +25,7 @@ export const renderProfit = (current, old, type) =>{
 	current = parseFloat(current);
 	old = parseFloat(old);
 
-	if (type === "sell") {
+	if (type == "sell") {
 		if (old > current)
 			return <span className="percent-raised">{Math.round((old - current) * 100) / 100}$ &uarr;</span>
 		else 

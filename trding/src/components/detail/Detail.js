@@ -5,18 +5,6 @@ import Loading from '../common/Loading';
 import './Detail.css';
 import Modal from 'react-modal';
 
-
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
-  }
-};
-
 const appElement = document.createElement("el");
 document.body.appendChild(appElement);
 Modal.setAppElement(appElement);
@@ -45,7 +33,6 @@ class Detail extends React.Component{
   }
 
   afterOpenModal() {
-    this.subtitle.style.color = '#f00';
   }
 
   closeModal() {
@@ -87,7 +74,73 @@ class Detail extends React.Component{
 
   }
 
+  render_buymodal(currency_name,current_price) {
+    return(
+      <el>
+        <Modal
+          ariaHideApp={true}
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          overlayClassName="backdrop"
+          className= "modal"
+        >
+          <h2 className="headingname">BUY 
+          <div className="currencyname">{currency_name}</div>
+          <div className="currencyname">$ {current_price}</div>
+          </h2>
+          <form>
+            <input className="input_units" placeholder="Number of Units" /> 
+            <button className="confirm_button">Confirm</button>
+            <input className="input_amount" placeholder="Amount ($)" />
+            <button className="confirm_button2">Confirm</button>
+
+          </form>
+          <button 
+            onClick={this.closeModal}
+            type="button" class="close" aria-label="Close" className = "closebutton">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </Modal>
+      </el>
+    );
+  }
+
+  render_sellmodal(currency_name, current_price) {
+    return (
+      <el>
+        <Modal
+          ariaHideApp={true}
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          className="modal"
+          overlayClassName ="backdrop"
+          contentLabel="Example Modal"
+        >
+          <h2 className="headingname">SELL
+          <div className="currencyname">{currency_name}</div>
+            <div className="currencyname">$ {current_price}</div>
+          </h2>
+          <form>
+            <input className="input_units" placeholder="Number of Units" />
+            <button className="confirm_button">Confirm</button>
+            <input className="input_amount" placeholder="Amount ($)" />
+            <button className="confirm_button2">Confirm</button>
+          </form>
+          <button
+            onClick={this.closeModal}
+            type="button" class="close" aria-label="Close" className="closebutton">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </Modal>
+      </el>
+    );
+  }
+
+
   render(){
+
     const { loading, error, currency } = this.state;
     if(loading){
       return <div className="loading-container"><Loading/></div>
@@ -107,32 +160,14 @@ class Detail extends React.Component{
             onClick={this.openModal}>
             Buy {currency.symbol}
           </button>
-          <el>
-            <Modal
-              ariaHideApp={true}
-              isOpen={this.state.modalIsOpen}
-              onAfterOpen={this.afterOpenModal}
-              onRequestClose={this.closeModal}
-              style={customStyles}
-              contentLabel="Example Modal"
-            >
-
-              <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
-              <button onClick={this.closeModal}>close</button>
-              <div>I am a modal</div>
-              <form>
-                <input />
-                <button>tab navigation</button>
-                <button>stays</button>
-                <button>inside</button>
-                <button>the modal</button>
-              </form>
-            </Modal>
-          </el>
+          {this.render_buymodal(currency.name, currency.price)}
           <button
-          className="Sell-button">
-            Sell {currency.symbol}
+          className="Sell-button"
+          onClick={this.openModal}>
+          Sell {currency.symbol}
           </button>
+          {this.render_sellmodal(currency.name, currency.price)}
+
         </div>
           <div className="Detail-container">
             <div className="Detail-item">

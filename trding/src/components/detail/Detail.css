@@ -87,24 +87,7 @@
 .Sell-button:focus {
   outline: none;
 }
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width:100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-}
 
-.modal-main {
-  position:fixed;
-  background: white;
-  width: 80%;
-  height: auto;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
-}
 
 .display-block {
   display: block;
@@ -112,4 +95,123 @@
 
 .display-none {
   display: none;
+}
+
+ .backdrop {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background: rgba(109, 109, 109, 0.3);
+  }
+
+.modal {
+  position:fixed;
+  background: #0f273d;
+  width: 30%;
+  height: 50%;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  }
+
+  .headingname {
+    text-align: left;
+    margin-left: 3%;
+    font-size: 20px;
+    font-weight: 400;
+    color: #05c46b;
+  }
+
+  .currencyname {
+    margin-top: 3%;
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
+  }
+
+  .closebutton {
+  position: fixed;
+  top: 83%;
+  left: 85%;
+  text-align: center;
+  border: none;
+  border-radius: 15px;
+  background-color: white;
+  transition: background-color .2s;
+  color: #0f273d;
+  cursor: pointer;
+  margin: 15px;
+  width: 30px;
+  height: 30px;
+  }
+
+  .closebutton:hover {
+  background-color: #bbbbbb;
+}
+
+.closebutton:focus {
+  outline: none;
+}
+
+.input_units{
+  position: fixed;
+  top: 33%;
+  left: 3%;
+}
+
+.input_amount{
+  position: fixed;
+  top: 42%;
+  left: 3%;
+}
+
+ .confirm_button {
+  position: fixed;
+  top: 29%;
+  left: 45%;
+  text-align: center;
+  border: none;
+  border-radius: 2px;
+  background-color: white;
+  transition: background-color .2s;
+  color: #0f273d;
+  cursor: pointer;
+  margin: 15px;
+  width: 70px;
+  height: 24px;
+  }
+
+.confirm_button:hover {
+  background-color: #bbbbbb;
+}
+
+.confirm_button:focus {
+  outline: none;
+}
+
+ .confirm_button2 {
+  position: fixed;
+  top: 38%;
+  left: 45%;
+  text-align: center;
+  border: none;
+  border-radius: 2px;
+  background-color: white;
+  transition: background-color .2s;
+  color: #0f273d;
+  cursor: pointer;
+  margin: 15px;
+  width: 70px;
+  height: 24px;
+  }
+
+  .confirm_button2:hover {
+  background-color: #bbbbbb;
+}
+
+.confirm_button2:focus {
+  outline: none;
 }

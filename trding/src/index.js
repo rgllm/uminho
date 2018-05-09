@@ -34,8 +34,3 @@ ReactDOM.render(
 	<Main />,
 	document.getElementById('root')
 );
-
-/*
-simple presentation components use functional components
-class based component for state or lifecycle hooks
-*/

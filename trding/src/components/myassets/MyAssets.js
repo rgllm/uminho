@@ -46,7 +46,7 @@ class MyAssets extends React.Component {
 			      	.then(handleResponse)
 		      		.then(( currency) => {
 			        	this.setState(previousState => ({
-    						currencies: [...previousState.currencies, currency.price.replace(/,/g, '')]
+    						currencies: previousState.currencies.concat(currency.price.replace(/,/g, ''))
 						}));
 			      	})
 			      	.catch((error) => {

@@ -15,6 +15,7 @@
     "react-facebook-login": "^4.0.1",
     "react-global": "^0.1.8",
     "react-global-configuration": "^1.2.1",
+    "react-modal": "^3.4.4",
     "react-router-dom": "^4.2.2",
     "react-stripe-checkout": "^2.6.3"
   },

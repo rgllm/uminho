@@ -3,8 +3,27 @@ import { API_URL } from '../../config';
 import { handleResponse, renderChangePercent } from '../../helpers';
 import Loading from '../common/Loading';
 import './Detail.css';
+import Modal from 'react-modal';
+
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+};
+
+const appElement = document.createElement("el");
+document.body.appendChild(appElement);
+Modal.setAppElement(appElement);
+
 
 class Detail extends React.Component{
+
   constructor(){
     super();
 
@@ -12,7 +31,25 @@ class Detail extends React.Component{
       currency: {},
       loading: false,
       error: null,
-    };
+      modalIsOpen: false,
+      };
+
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+
+  }
+
+  openModal() {
+    this.setState({ modalIsOpen: true });
+  }
+
+  afterOpenModal() {
+    this.subtitle.style.color = '#f00';
+  }
+
+  closeModal() {
+    this.setState({ modalIsOpen: false });
   }
 
   componentDidMount(){
@@ -66,9 +103,32 @@ class Detail extends React.Component{
           </h1>
         <div>
           <button
-          className="Buy-button">
+            className="Buy-button"
+            onClick={this.openModal}>
             Buy {currency.symbol}
           </button>
+          <el>
+            <Modal
+              ariaHideApp={true}
+              isOpen={this.state.modalIsOpen}
+              onAfterOpen={this.afterOpenModal}
+              onRequestClose={this.closeModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+
+              <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
+              <button onClick={this.closeModal}>close</button>
+              <div>I am a modal</div>
+              <form>
+                <input />
+                <button>tab navigation</button>
+                <button>stays</button>
+                <button>inside</button>
+                <button>the modal</button>
+              </form>
+            </Modal>
+          </el>
           <button
           className="Sell-button">
             Sell {currency.symbol}
@@ -104,5 +164,6 @@ class Detail extends React.Component{
       );
   }
 }
+
 
 export default Detail;

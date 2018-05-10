@@ -97,15 +97,15 @@
   display: none;
 }
 
- .backdrop {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    background: rgba(109, 109, 109, 0.3);
-  }
+.backdrop {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background: rgba(109, 109, 109, 0.3);
+}
 
 .modal {
   position:fixed;
@@ -115,17 +115,25 @@
   top:50%;
   left:50%;
   transform: translate(-50%, -50%);
-  }
+  border: 1px solid #fff; 
+}
 
-  .headingname {
-    text-align: left;
-    margin-left: 3%;
-    font-size: 20px;
-    font-weight: 400;
-    color: #05c46b;
+.headingname {
+  text-align: left;
+  margin-top: 7%;
+  margin-bottom: 2%;
+  margin-left: 9%;
+  font-size: 20px;
+  font-weight: 400;
+  color: #05c46b;
   }
 
   .currencyname {
+    margin-left: 9%;
+    flex: 0;
+    text-align : left;
+    justify-content: left;
+    align-items: left;
     margin-top: 3%;
     font-size: 20px;
     font-weight: 400;
@@ -133,22 +141,22 @@
   }
 
   .closebutton {
-  position: fixed;
-  top: 83%;
-  left: 85%;
-  text-align: center;
-  border: none;
-  border-radius: 15px;
-  background-color: white;
-  transition: background-color .2s;
-  color: #0f273d;
-  cursor: pointer;
-  margin: 15px;
-  width: 30px;
-  height: 30px;
+    position: fixed;
+    top: 83%;
+    left: 85%;
+    text-align: center;
+    border: none;
+    border-radius: 15px;
+    background-color: white;
+    transition: background-color .2s;
+    color: #0f273d;
+    cursor: pointer;
+    margin: 15px;
+    width: 30px;
+    height: 30px;
   }
 
-  .closebutton:hover {
+.closebutton:hover {
   background-color: #bbbbbb;
 }
 
@@ -156,62 +164,87 @@
   outline: none;
 }
 
-.input_units{
-  position: fixed;
-  top: 33%;
-  left: 3%;
+.form {
+  margin-left: 5%;
+  flex: 0;
+  text-align : center;
+  justify-content: center;
+  align-items: center;
 }
-
-.input_amount{
-  position: fixed;
-  top: 42%;
-  left: 3%;
-}
-
- .confirm_button {
-  position: fixed;
-  top: 29%;
-  left: 45%;
+.inputs{
   text-align: center;
-  border: none;
-  border-radius: 2px;
-  background-color: white;
+  padding: 8px 8px;
+  top: 35%;
+  width: 200px;
+}
+
+.button-amount {
+  background: #1f364d;
+  color: #fff;
+  border-top: 1px solid #fff; 
+  border-right: 1px solid #fff;       
+  border-bottom: 1px solid #fff;    
+}
+
+.button-units {
+  background: #1f364d;
+  color: #fff;
+  border: 1px solid #fff;    
+}
+
+.button_parent {
+  flex: 0;
+  text-align : center;
+  justify-content: center;
+  align-items: center;
+}
+.button-amount,
+.button-units {
+  display: inline-block;
+  border-radius: 0;
+  padding: 10px 10px;
+  font-weight: 300;
+  -moz-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.button-amount:hover,
+.button-units:hover {
+  background: #0f273d;
+}
+
+.button-amount:focus,
+.button-units:focus {
+  background: #1f364d;
+
+}
+.button_tabs {
+  background: #1f364d;
+  border-radius: 10px;
+}
+
+.confirm-button {
+
+  flex: 0;
+  text-align : center;
+  justify-content: center;
+  align-items: center;  border: none;
+  border-radius: 10px;
+  background-color: #05c46b;
   transition: background-color .2s;
-  color: #0f273d;
+  color: white;
   cursor: pointer;
-  margin: 15px;
-  width: 70px;
-  height: 24px;
-  }
-
-.confirm_button:hover {
-  background-color: #bbbbbb;
+  margin-top: 3%;
+  margin-left: 9%;
+  width: 90px;
+  height: 30px;
 }
 
-.confirm_button:focus {
-  outline: none;
+.confirm-button:hover {
+  background-color: #0be881;
 }
 
- .confirm_button2 {
-  position: fixed;
-  top: 38%;
-  left: 45%;
-  text-align: center;
-  border: none;
-  border-radius: 2px;
-  background-color: white;
-  transition: background-color .2s;
-  color: #0f273d;
-  cursor: pointer;
-  margin: 15px;
-  width: 70px;
-  height: 24px;
-  }
-
-  .confirm_button2:hover {
-  background-color: #bbbbbb;
-}
-
-.confirm_button2:focus {
+.confirm-button:focus {
   outline: none;
 }

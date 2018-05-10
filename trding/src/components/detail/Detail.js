@@ -4,6 +4,8 @@ import { handleResponse, renderChangePercent } from '../../helpers';
 import Loading from '../common/Loading';
 import './Detail.css';
 import Modal from 'react-modal';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+
 
 const appElement = document.createElement("el");
 document.body.appendChild(appElement);
@@ -74,8 +76,37 @@ class Detail extends React.Component{
 
   }
 
-  render_buymodal(currency_name,current_price) {
+  render_tabs() {
+    return (
+      <Tabs>
+        <TabList>
+          <Tab className = "button-units">
+            Number of Units
+          </Tab>
+          <Tab className = "button-amount">
+           Amount
+          </Tab> 
+        </TabList>
+        <div className="form">
+        <TabPanel>
+          <form className="inputs">
+            <input placeholder="Number of Units" />
+          </form>
+        </TabPanel>
+        <TabPanel>
+          <form className="inputs" >
+            <input placeholder="Amount" />
+          </form>
+        </TabPanel>
+        </div>
+        <button className="confirm-button">Confirm</button>
+      </Tabs>
+    );
+  }
+
+  render_modal(currency_name,current_price) {
     return(
+
       <el>
         <Modal
           ariaHideApp={true}
@@ -85,17 +116,12 @@ class Detail extends React.Component{
           overlayClassName="backdrop"
           className= "modal"
         >
-          <h2 className="headingname">BUY 
+ 
           <div className="currencyname">{currency_name}</div>
           <div className="currencyname">$ {current_price}</div>
-          </h2>
-          <form>
-            <input className="input_units" placeholder="Number of Units" /> 
-            <button className="confirm_button">Confirm</button>
-            <input className="input_amount" placeholder="Amount ($)" />
-            <button className="confirm_button2">Confirm</button>
+          
+          <div> {this.render_tabs()} </div>
 
-          </form>
           <button 
             onClick={this.closeModal}
             type="button" class="close" aria-label="Close" className = "closebutton">
@@ -106,42 +132,12 @@ class Detail extends React.Component{
     );
   }
 
-  render_sellmodal(currency_name, current_price) {
-    return (
-      <el>
-        <Modal
-          ariaHideApp={true}
-          isOpen={this.state.modalIsOpen}
-          onAfterOpen={this.afterOpenModal}
-          onRequestClose={this.closeModal}
-          className="modal"
-          overlayClassName ="backdrop"
-          contentLabel="Example Modal"
-        >
-          <h2 className="headingname">SELL
-          <div className="currencyname">{currency_name}</div>
-            <div className="currencyname">$ {current_price}</div>
-          </h2>
-          <form>
-            <input className="input_units" placeholder="Number of Units" />
-            <button className="confirm_button">Confirm</button>
-            <input className="input_amount" placeholder="Amount ($)" />
-            <button className="confirm_button2">Confirm</button>
-          </form>
-          <button
-            onClick={this.closeModal}
-            type="button" class="close" aria-label="Close" className="closebutton">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </Modal>
-      </el>
-    );
-  }
+  
 
 
   render(){
 
-    const { loading, error, currency } = this.state;
+    const { loading, error, currency} = this.state;
     if(loading){
       return <div className="loading-container"><Loading/></div>
     }
@@ -160,13 +156,12 @@ class Detail extends React.Component{
             onClick={this.openModal}>
             Buy {currency.symbol}
           </button>
-          {this.render_buymodal(currency.name, currency.price)}
           <button
           className="Sell-button"
           onClick={this.openModal}>
           Sell {currency.symbol}
           </button>
-          {this.render_sellmodal(currency.name, currency.price)}
+          {this.render_modal(currency.name, currency.price)}
 
         </div>
           <div className="Detail-container">

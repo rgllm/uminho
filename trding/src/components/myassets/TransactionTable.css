@@ -30,7 +30,6 @@
 } 
 
 .Box-type-sell {
-  color:white;
   border-radius: 7px;
   display:block;
   width:70%;
@@ -48,11 +47,10 @@
   padding: 24px 20px;
   border-bottom: 2px solid #0c2033;
   color: #fff;
-  cursor: pointer;
 }
 
 .Table-rank {
-  color: #9cb3c9;
+  color: #D02328;
   margin-right: 18px;
   font-size: 12px;
 }
@@ -64,14 +62,13 @@
 
 .Close-button{
   font-weight: bold;
-  border-radius: 7px;
-  color:#0c2033;
-  width: 70%;
+  color:#B22222;
   display:block;
-  height: 100%;
   text-align: center;
-  background-color: white;
-  box-shadow: 0px 0px 40px 0px#1f364d;
-
-
 }
+
+.Close-button:hover{
+  color: #8B0000;
+}
+
+

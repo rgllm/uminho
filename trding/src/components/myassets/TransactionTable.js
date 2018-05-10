@@ -18,7 +18,7 @@ const TransactionTable = (props) => {
             <th>Opening price</th>
             <th>Current price</th>
             <th>Profit</th>
-            <th></th>
+            <th>Close</th>
           </tr>
         </thead>
         <tbody className="Table-body">
@@ -44,7 +44,7 @@ const TransactionTable = (props) => {
                  {renderProfit(currencies[i], transaction.purchase_price, transaction.type)}
               </td>
               <td>
-                <div className="Close-button" onClick={() => handleCloseClick()}>CLOSE</div>
+                <span className="Close-button" onClick={() => handleCloseClick()}>✖</span>
               </td>
 
             </tr>

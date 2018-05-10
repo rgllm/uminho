@@ -1,5 +1,5 @@
 .Table-container {
-  overflow-x: auto; /* Needed for table to be responsive */
+  overflow-x: auto;
 }
 
 .Table {
@@ -27,7 +27,7 @@
   width:70%;
   text-align: center;
   background-color: #388E8E;
-} 
+}
 
 .Box-type-sell {
   border-radius: 7px;
@@ -35,7 +35,7 @@
   width:70%;
   text-align: center;
   background-color: #2F4F4F ;
-} 
+}
 
 .Table-body {
   border-radius: 25px;
@@ -70,5 +70,3 @@
 .Close-button:hover{
   color: #8B0000;
 }
-
-

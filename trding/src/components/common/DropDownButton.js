@@ -6,7 +6,6 @@ import 'rc-dropdown/assets/index.css';
 import { Link } from 'react-router-dom';
 
 import Menu, { Item as MenuItem, Divider } from 'rc-menu';
-//var DDButton = require('react-dropdown-button')
 
 const DropDownButton = (props) => {
   function onSelect({ key }) {

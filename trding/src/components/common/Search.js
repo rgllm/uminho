@@ -82,7 +82,7 @@ class Search extends React.Component{
       return(
         <div className="Search-result-container">
             <div className="Search-no-result">
-              No results matching your critera.
+              No results matching.
             </div>
         </div>
       )

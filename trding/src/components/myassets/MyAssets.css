@@ -1,5 +1,5 @@
 .Table-container {
-  overflow-x: auto; /* Needed for table to be responsive */
+  overflow-x: auto;
 }
 
 .Table {

@@ -3,7 +3,6 @@ import FacebookLogin from 'react-facebook-login'
 import './Login.css';
 import * as firebase from 'firebase';
 import firebaseApp from '../../firebase/Firebase';
-//import isEmail from 'validator/lib/isEmail';
 
 class Login extends React.Component {
 	constructor(props) {

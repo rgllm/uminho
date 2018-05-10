@@ -7,8 +7,6 @@ import HistoryTable from './HistoryTable'
 import Loading from '../common/Loading';
 import Pagination from '../list/Pagination'
 
-console.log(myData);
-
 class MyHistory extends React.Component {
 
   constructor() {

@@ -8,7 +8,7 @@ import Loading from '../common/Loading';
 import Pagination from '../list/Pagination'
 
 class MyAssets extends React.Component {
-  	
+
 	constructor(){
 	    super();
 
@@ -36,7 +36,7 @@ class MyAssets extends React.Component {
 		fetch(`//api.jsonbin.io/b/5af1dc79c2e3344ccd96b341`)
 			.then(handleResponse)
 			.then((data) => {
-				
+
 				this.setState({
 					transactions: data.transactions,
 					totalPages: data.totalPages,
@@ -77,8 +77,6 @@ class MyAssets extends React.Component {
 		   nextPage--;
 		 }
 		 this.setState({page: nextPage}, () => {
-		   //call fetchCurrencies inside setState callback
-		   //to make sure first state page is updated
 		   this.fetchTransaction();
 		 });
 	}
@@ -89,8 +87,6 @@ class MyAssets extends React.Component {
 
 	render(){
 		const { loading, error, transactions, currencies, page, totalPages } = this.state;
-
-		console.log(currencies);
 
 		if(loading){
 			return <div className="loading-container"><Loading /></div>
@@ -103,8 +99,8 @@ class MyAssets extends React.Component {
 		return(
 				<div>
 				<TransactionTable
-					transactions={transactions} 
-					currencies={currencies} 
+					transactions={transactions}
+					currencies={currencies}
 					handleCloseClick={this.handleCloseClick}
 				/>
 

@@ -2,8 +2,8 @@ import React from 'react';
 import { STRIPE_KEY } from '../../config';
 import './Account.css';
 import StripeCheckout from 'react-stripe-checkout';
-import Login from '../common/Login.js';
-import config from 'react-global-configuration';
+import * as firebase from 'firebase';
+import firebaseApp from '../../firebase/Firebase';
 
 const fromUSDToCent = amount => amount * 100;
 
@@ -13,30 +13,27 @@ class Account extends React.Component{
 
     this.state = {
       logged: false,
-      name: '',
-      email: '',
+      userProfile: "",
       balance: 0,
       depositValue: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.onToken = this.onToken.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
   }
 
-  handleLogin(response){
-      const name = response.name;
-      const email = response.email;
-      this.setState({ logged: true, name: name, email: email});
-  }
+  componentDidMount() {
+     firebase.auth().onAuthStateChanged(function(user) {
+       if (user) {
+         this.setState({
+           logged: true,
+           userProfile: user,
+         });
+       } else {
+       }
+     }.bind(this));
+   }
 
-  componentDidMount(){
-    const name = config.get('name');
-    if(name != null){
-      const email = config.get('email');
-      this.setState({ logged: true, name: name, email: email});
-    }
-  }
 
   handleChange(event){
     const amount = Number(event.target.value);
@@ -57,13 +54,12 @@ class Account extends React.Component{
     let login
 
 
-    const { logged, name, email, balance, depositValue } = this.state;
+    const { logged, userProfile, balance, depositValue } = this.state;
 
     if(!logged){
       return(
           <div className="Account">
             <h1>Please login first</h1>
-            <Login onLogin={this.handleLogin}/>
           </div>
       );
     }
@@ -75,10 +71,10 @@ class Account extends React.Component{
           </h1>
           <div className="Account-container">
             <div className="Account-item">
-              Name: <span className="Account-value">{name}</span>
+              Name: <span className="Account-value">{userProfile.displayName}</span>
             </div>
             <div className="Account-item">
-              Email: <span className="Account-value">{email}</span>
+              Email: <span className="Account-value">{userProfile.email}</span>
             </div>
             <div className="Account-item">
               Balance: <span className="Account-value">{Number(balance)} $</span>
@@ -99,13 +95,12 @@ class Account extends React.Component{
               <StripeCheckout
                 name="Trding App"
                 description="Deposit funds on your account."
-                email={email}
+                email={userProfile.email}
                 token={this.onToken}
                 stripeKey={STRIPE_KEY}
                 amount={fromUSDToCent(depositValue)}
                 currency="USD"
                 bitcoin={true}
-                alipay={true}
                 >
                 <button className="Pay-button">
                   Pay with Credit Card

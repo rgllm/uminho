@@ -4,38 +4,55 @@ import { Link } from 'react-router-dom';
 import './Header.css';
 import logo from './logo.png';
 import Search from './Search';
+import MyAssets from '../myassets/MyAssets';
 import DropDownButton from './DropDownButton';
-import Login from './Login.js';
-import config from 'react-global-configuration';
+import * as firebase from 'firebase';
+import firebaseApp from '../../firebase/Firebase';
 
 class Header extends React.Component {
-  constructor(){
-    super();
 
-    this.state = {
-			login: false,
-      name: null,
-      email: null,
-      picture: null,
-		};
+constructor(props) {
+  super(props);
 
-    this.handleLogin = this.handleLogin.bind(this);
-  }
+  this.state = {
+    logged: false,
+    userProfile: "",
+  };
 
-  handleLogin(response){
-      const name = response.name;
-      const email = response.email;
-      const picture = response.picture.data.url;
-      this.setState({ login: true, name: name, email: email, picture: picture});
-      config.set({ login: true, name: name, email: email  });
-
+  this.handleFacebook = this.handleFacebook.bind(this);
 }
+
+handleFacebook() {
+  var provider = new firebase.auth.FacebookAuthProvider();
+  firebase.auth().signInWithPopup(provider)
+     .then(function(result) {
+     })
+     .catch(function(error) {
+     });
+}
+
+
+componentDidMount() {
+   firebase.auth().onAuthStateChanged(function(user) {
+     if (user) {
+       this.setState({
+         logged: true,
+         userProfile: user,
+       });
+     } else {
+     }
+   }.bind(this));
+ }
+
+  componentWillUnmount() {
+      this.unregisterAuthObserver();
+  }
 
   render(){
 
-    const { login, name, email, picture } = this.state;
+    const{ logged, userProfile } = this.state;
 
-    if(!login){
+    if(!logged){
       return (
      		<div className="Header">
 
@@ -45,7 +62,7 @@ class Header extends React.Component {
 
           <Search />
 
-            <Login onLogin={this.handleLogin}/>
+            <button type="button" className="loginBtn loginBtn--facebook" onClick={this.handleFacebook}> Sign in with Facebook </button>
      		</div>
      	);
     }
@@ -60,15 +77,15 @@ class Header extends React.Component {
           <Search />
 
           <div>
-            <span className="Header-name">{name}</span>
+            <span className="Header-name">{userProfile.displayName}</span>
           </div>
-          <img src={picture} alt='profile-picture' className="Header-picture"/>
+          <img src={userProfile.photoURL} alt='profile-picture' className="Header-picture"/>
           <DropDownButton/>
         </div>
 
       );
     }
   }
- }
+}
 
  export default Header;

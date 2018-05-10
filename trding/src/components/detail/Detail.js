@@ -3,8 +3,15 @@ import { API_URL } from '../../config';
 import { handleResponse, renderChangePercent } from '../../helpers';
 import Loading from '../common/Loading';
 import './Detail.css';
+import Modal from 'react-modal';
+
+const appElement = document.createElement("el");
+document.body.appendChild(appElement);
+Modal.setAppElement(appElement);
+
 
 class Detail extends React.Component{
+
   constructor(){
     super();
 
@@ -12,7 +19,24 @@ class Detail extends React.Component{
       currency: {},
       loading: false,
       error: null,
-    };
+      modalIsOpen: false,
+      };
+
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+
+  }
+
+  openModal() {
+    this.setState({ modalIsOpen: true });
+  }
+
+  afterOpenModal() {
+  }
+
+  closeModal() {
+    this.setState({ modalIsOpen: false });
   }
 
   componentDidMount(){
@@ -50,7 +74,73 @@ class Detail extends React.Component{
 
   }
 
+  render_buymodal(currency_name,current_price) {
+    return(
+      <el>
+        <Modal
+          ariaHideApp={true}
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          overlayClassName="backdrop"
+          className= "modal"
+        >
+          <h2 className="headingname">BUY 
+          <div className="currencyname">{currency_name}</div>
+          <div className="currencyname">$ {current_price}</div>
+          </h2>
+          <form>
+            <input className="input_units" placeholder="Number of Units" /> 
+            <button className="confirm_button">Confirm</button>
+            <input className="input_amount" placeholder="Amount ($)" />
+            <button className="confirm_button2">Confirm</button>
+
+          </form>
+          <button 
+            onClick={this.closeModal}
+            type="button" class="close" aria-label="Close" className = "closebutton">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </Modal>
+      </el>
+    );
+  }
+
+  render_sellmodal(currency_name, current_price) {
+    return (
+      <el>
+        <Modal
+          ariaHideApp={true}
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          className="modal"
+          overlayClassName ="backdrop"
+          contentLabel="Example Modal"
+        >
+          <h2 className="headingname">SELL
+          <div className="currencyname">{currency_name}</div>
+            <div className="currencyname">$ {current_price}</div>
+          </h2>
+          <form>
+            <input className="input_units" placeholder="Number of Units" />
+            <button className="confirm_button">Confirm</button>
+            <input className="input_amount" placeholder="Amount ($)" />
+            <button className="confirm_button2">Confirm</button>
+          </form>
+          <button
+            onClick={this.closeModal}
+            type="button" class="close" aria-label="Close" className="closebutton">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </Modal>
+      </el>
+    );
+  }
+
+
   render(){
+
     const { loading, error, currency } = this.state;
     if(loading){
       return <div className="loading-container"><Loading/></div>
@@ -66,13 +156,18 @@ class Detail extends React.Component{
           </h1>
         <div>
           <button
-          className="Buy-button">
+            className="Buy-button"
+            onClick={this.openModal}>
             Buy {currency.symbol}
           </button>
+          {this.render_buymodal(currency.name, currency.price)}
           <button
-          className="Sell-button">
-            Sell {currency.symbol}
+          className="Sell-button"
+          onClick={this.openModal}>
+          Sell {currency.symbol}
           </button>
+          {this.render_sellmodal(currency.name, currency.price)}
+
         </div>
           <div className="Detail-container">
             <div className="Detail-item">
@@ -104,5 +199,6 @@ class Detail extends React.Component{
       );
   }
 }
+
 
 export default Detail;

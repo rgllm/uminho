@@ -8,11 +8,11 @@
   border-spacing: 0;
 }
 
-.Table-head {
+.Table-header {
   background-color: #0c2033;
 }
 
-.Table-head tr th {
+.Table-header tr th {
   padding: 10px 20px;
   color: #9cb3c9;
   text-align: left;
@@ -20,7 +20,25 @@
   font-weight: 400;
 }
 
+
+.Box-type-buy {
+  border-radius: 7px;
+  display:block;
+  width:70%;
+  text-align: center;
+  background-color: #388E8E;
+} 
+
+.Box-type-sell {
+  border-radius: 7px;
+  display:block;
+  width:70%;
+  text-align: center;
+  background-color: #2F4F4F ;
+} 
+
 .Table-body {
+  border-radius: 25px;
   text-align: left;
   background-color: #0f273d;
 }
@@ -29,11 +47,10 @@
   padding: 24px 20px;
   border-bottom: 2px solid #0c2033;
   color: #fff;
-  cursor: pointer;
 }
 
 .Table-rank {
-  color: #9cb3c9;
+  color: #D02328;
   margin-right: 18px;
   font-size: 12px;
 }
@@ -42,3 +59,16 @@
   color: #9cb3c9;
   margin-right: 6px;
 }
+
+.Close-button{
+  font-weight: bold;
+  color:#B22222;
+  display:block;
+  text-align: center;
+}
+
+.Close-button:hover{
+  color: #8B0000;
+}
+
+

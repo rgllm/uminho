@@ -22,6 +22,7 @@ class MyAssets extends React.Component {
 	    };
 
 	    this.handlePaginationClick = this.handlePaginationClick.bind(this);
+	    this.handleCloseClick = this.handleCloseClick.bind(this);
 
 	}
 
@@ -46,7 +47,7 @@ class MyAssets extends React.Component {
 			      	.then(handleResponse)
 		      		.then(( currency) => {
 			        	this.setState(previousState => ({
-    						currencies: [...previousState.currencies, currency.price.replace(/,/g, '')]
+    						currencies: previousState.currencies.concat(currency.price.replace(/,/g, ''))
 						}));
 			      	})
 			      	.catch((error) => {
@@ -82,6 +83,10 @@ class MyAssets extends React.Component {
 		 });
 	}
 
+	handleCloseClick(){
+		window.confirm("Close asset?");
+	}
+
 	render(){
 		const { loading, error, transactions, currencies, page, totalPages } = this.state;
 
@@ -98,7 +103,9 @@ class MyAssets extends React.Component {
 		return(
 				<div>
 				<TransactionTable
-					transactions={transactions} currencies={currencies}
+					transactions={transactions} 
+					currencies={currencies} 
+					handleCloseClick={this.handleCloseClick}
 				/>
 
 			<Pagination

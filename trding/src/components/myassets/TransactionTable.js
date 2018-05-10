@@ -2,10 +2,10 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import './TransactionTable.css';
 import PropTypes from 'prop-types';
-import { renderChangePercent, renderProfit } from '../../helpers';
+import { renderChangePercent, renderProfit, renderTypeBox } from '../../helpers';
 
 const TransactionTable = (props) => {
-  const {transactions, currencies, history} = props;
+  const {transactions, currencies, handleCloseClick, history} = props;
   console.log(transactions);
 
   return(
@@ -18,34 +18,35 @@ const TransactionTable = (props) => {
             <th>Opening price</th>
             <th>Current price</th>
             <th>Profit</th>
+            <th>Close</th>
           </tr>
         </thead>
         <tbody className="Table-body">
           {transactions.map((transaction, i) => (
-            <tr
-              key={transaction.id}
-              onClick={() => history.push(`/currency/${transaction.code}`)}
-              >
+            <tr>
               <td>
                 <span className="Table-rank">{}</span>
                 {transaction.name}
               </td>
               <td>
-                <span className="Table-dollar">{}</span>
-                 {transaction.type}
+                {renderTypeBox(transaction.type)}
               </td> 
               <td>
-                <span className="Table-dollar">{}</span>
+                <span className="Table-dollar">$</span>
                  {transaction.purchase_price}
               </td>
               <td>
-                <span className="Table-dollar">{}</span>
+                <span className="Table-dollar">$</span>
                  {currencies[i]}
               </td>
               <td>
                 <span className="Table-dollar">{}</span>
                  {renderProfit(currencies[i], transaction.purchase_price, transaction.type)}
               </td>
+              <td>
+                <span className="Close-button" onClick={() => handleCloseClick()}>✖</span>
+              </td>
+
             </tr>
           ))}
         </tbody>

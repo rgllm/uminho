@@ -92,7 +92,7 @@ def LSTM_data():
     model = build_model2(janela)
 
     model.fit(X_train, y_train, batch_size=5, epochs=200, verbose=1)
-    print_model(model,"lstm_model.png")
+    #print_model(model,"lstm_model.png")
     trainScore = model.evaluate(X_train, y_train, verbose=1)
     print('Train Score: %.2f MSE (%.2f RMSE)' % (trainScore[0], math.sqrt(trainScore[0])))
     testScore = model.evaluate(X_test, y_test, verbose=0)

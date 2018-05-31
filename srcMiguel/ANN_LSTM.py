@@ -34,7 +34,7 @@ class ANN_LSTM():
 		# ANN "normal"
 		model.add(Dense(16, activation="relu", kernel_initializer="uniform"))
 		model.add(Dense(8, activation="relu", kernel_initializer="uniform"))
-		model.add(Dense(1, activation="linear", kernel_initializer="uniform"))
+		model.add(Dense(1, activation="relu", kernel_initializer="uniform"))
 		
 		# Para evitar minimos locais no optimizador, explorar outras variantes: 
 		# -> sgd 		adam		 RMSprop	Ada[grad|delta] 	...
@@ -101,7 +101,7 @@ class ANN_LSTM():
 		self.nr_nodos = df.shape[1]
 
 		#tamanho da Janela deslizante
-		janela = 1	# analise com influencia do mês anterior 
+		janela = 4	# analise com influencia do mês anterior 
 
 		''' As datas estão por ondem crescente, logo a rede treina com os casos num sentido progressivo no tempo
 			Se as ordem temporal fosse decrescente, tinha que se inverter, para a rede não aprender
@@ -120,10 +120,12 @@ class ANN_LSTM():
 
 		# Treinar a rede 
 		# validations split com 10% dos 24 casos dos dados anteriormente filtrados para treino 
-		model.fit(X_train, y_train, batch_size=1, epochs=500, verbose=2)
+		history = model.fit(X_train, y_train, batch_size=1, epochs=500, 
+							validation_split=0, verbose=2)
 
 		#print_model(model,"lstm_model.png")
-		
+		#self.print_history_accuracy(history)
+		#self.print_history_loss(history)
 		# Testar a rede com dados de treino -> possivel overfiting 
 		# util para perceber se a rede entendeu a tendência
 		trainScore = model.evaluate(X_train, y_train, verbose=1)

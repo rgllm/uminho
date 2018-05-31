@@ -23,17 +23,17 @@ class ANN_LSTM():
 		model = Sequential()
 
 		# return sequences = true -> passa os valores processados para a frente 
-		model.add(LSTM(256, input_shape=(janela, nr_nodos), return_sequences=True))
+		model.add(LSTM(128, input_shape=(janela, nr_nodos), return_sequences=True))
 		model.add(Dropout(0.2))
 		
-		model.add(LSTM(128, input_shape=(janela, nr_nodos), return_sequences=True))
+		model.add(LSTM(64, input_shape=(janela, nr_nodos), return_sequences=True))
 
 		# return sequences = false, na ultima camada LSTM 
-		model.add(LSTM(64, input_shape=(janela, nr_nodos), return_sequences=False))
+		model.add(LSTM(32, input_shape=(janela, nr_nodos), return_sequences=False))
 		
 		# ANN "normal"
-		model.add(Dense(50, activation="relu", kernel_initializer="uniform"))
 		model.add(Dense(16, activation="relu", kernel_initializer="uniform"))
+		model.add(Dense(8, activation="relu", kernel_initializer="uniform"))
 		model.add(Dense(1, activation="linear", kernel_initializer="uniform"))
 		
 		# Para evitar minimos locais no optimizador, explorar outras variantes: 

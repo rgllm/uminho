@@ -3,17 +3,17 @@ var express = require('express');
 var path = require('path');
 var mongoose = require('mongoose')
 var User = require('./models/User')
+var session = require('express-session');
 // Autenticação FB 
 var passport = require('passport'), 
 	FacebookStrategy = require('passport-facebook').Strategy;
 
 passport.serializeUser(function(user, done) {
-  console.log(user);
   done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
-  user.findById(id, function(err, user) {
+  User.findById(id, function(err, user) {
     done(err, user);
   });
 });
@@ -29,21 +29,22 @@ passport.use(new FacebookStrategy({
     callbackURL: "http://localhost:3000/auth/facebook/callback",
     profileFields:['id','displayName','emails']
   }, function(accessToken, refreshToken, profile, done) {
-      console.log(profile);
       var me = new User({
-        email:profile.emails[0].value,
-        name:profile.displayName
+        email: profile.emails[0].value,
+        name: profile.displayName
       });
   
       /* save if new */
       User.findOne({email:me.email}, function(err, u) {
         if(!u) {
+          me.portfolio = []
+          me.watchlist = []
+          me.history = []
           me.save(function(err, me) {
             if(err) return done(err);
             done(null,me);
           });
         } else {
-          console.log(u);
           done(null, u);
         }
       });
@@ -53,14 +54,18 @@ passport.use(new FacebookStrategy({
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var testsRouter = require('./routes/tests');
 
 var app = express();
+app.use(session({
+  secret: "trding2018",
+  resave: true,
+  saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/auth/facebook', passport.authenticate('facebook', {scope:"email"}));
-app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' }));
-
+app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/login/success', failureRedirect: '/login/failed' }));
 
 
 // view engine setup
@@ -72,7 +77,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/tests', testsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -87,7 +92,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send({error: 'error'});
 });
 
 module.exports = app;

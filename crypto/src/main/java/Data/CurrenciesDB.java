@@ -6,6 +6,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,14 +53,25 @@ public class CurrenciesDB {
         mongo.close();
     }
 
-    public List<Currencies> getCrypto() {
+    public List<Currency> getCrypto() {
         FindIterable<Document> cur = database.getCollection("currencies").find();
-        List<Currencies> list = new ArrayList<>();
+        List<Currency> list = new ArrayList<>();
         for (Document doc: cur)
             list.add(
-                    new Currency(doc.getString("_id"))
-            )
+                    new Currency(
+                            doc.getString("_id"),
+                            doc.getString("name"),
+                            doc.getString("symbol"),
+                            doc.getInteger("rank"),
+                            (new BigDecimal(doc.getString("price").replaceAll(",",""))),
+                            (new BigDecimal(doc.getString("market_cap").replaceAll(",",""))),
+                            (new BigDecimal(doc.getString("percentage24").replaceAll(",",""))),
+                            (new BigDecimal(doc.getString("volume24").replaceAll(",",""))),
+                            doc.getDouble("totalSupply")
+                    )
+            );
 
+        return list;
 
     }
 

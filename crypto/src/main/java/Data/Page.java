@@ -3,6 +3,7 @@ package Data;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Page {
 
@@ -10,9 +11,9 @@ public class Page {
     private int totalPages;
     private int page;
     private int perPage;
-    private ArrayList<Currency> currencies;
+    private List<Currency> currencies;
 
-    public Page(int totalCurrencies, int totalPages, int page, int perPage, ArrayList<Currency> currencies) {
+    public Page(int totalCurrencies, int totalPages, int page, int perPage, List<Currency> currencies) {
         this.totalCurrencies = totalCurrencies;
         this.totalPages = totalPages;
         this.page = page;
@@ -41,7 +42,7 @@ public class Page {
     }
 
     @JsonProperty
-    public ArrayList<Currency> getCurrencies() {
+    public List<Currency> getCurrencies() {
         return currencies;
     }
 }

@@ -1,5 +1,6 @@
 package Data;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.bson.Document;
 
 import java.math.BigDecimal;
@@ -56,6 +57,50 @@ public class Currency {
                 .append("totalSupply", totalSupply);
     }
 
+    @JsonProperty
+    public String getId() {
+        return id;
+    }
+
+    @JsonProperty
+    public String getName() {
+        return name;
+    }
+
+    @JsonProperty
+    public String getSymbol() {
+        return symbol;
+    }
+
+    @JsonProperty
+    public int getRank() {
+        return rank;
+    }
+
+    @JsonProperty
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    @JsonProperty
+    public BigDecimal getMarket_cap() {
+        return market_cap;
+    }
+
+    @JsonProperty
+    public BigDecimal getPercentage24() {
+        return percentage24;
+    }
+
+    @JsonProperty
+    public BigDecimal getVolume24() {
+        return volume24;
+    }
+
+    @JsonProperty
+    public Double getTotalSupply() {
+        return totalSupply;
+    }
 
 }
 

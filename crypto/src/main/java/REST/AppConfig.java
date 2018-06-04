@@ -6,16 +6,17 @@ import io.dropwizard.Configuration;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class AppConfig extends Configuration {
+
     @NotEmpty
-    private String version;
+    private String port = "8080";
 
     @JsonProperty
-    public String getVersion() {
-        return version;
+    public String getPort() {
+        return this.port;
     }
 
     @JsonProperty
-    public void setVersion(String version) {
-        this.version = version;
+    public void setPort(String port) {
+        this.port = port;
     }
 }

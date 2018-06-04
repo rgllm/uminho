@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gson.*;
+import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
 
 public class CurrenciesFetch implements Runnable {
 
@@ -19,7 +22,7 @@ public class CurrenciesFetch implements Runnable {
         this.db_url = db_url;
     }
 
-    private String fetchJson(){
+    public static String fetchJson(String db_url){
         StringBuilder sb = new StringBuilder();
 
         try {
@@ -35,7 +38,7 @@ public class CurrenciesFetch implements Runnable {
         return sb.toString();
     }
 
-    private List<Currency> parseJson(String json){
+    public static List<Currency> parseJson(String json){
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
 
@@ -56,7 +59,7 @@ public class CurrenciesFetch implements Runnable {
                     object.get("rank").getAsInt(),
                     objectQ.get("price").getAsBigDecimal(),
                     objectQ.get("market_cap").getAsBigDecimal(),
-                    objectQ.get("percent_change_24h").getAsBigDecimal(),
+                    objectQ.get("percent_change_1h").getAsBigDecimal(),
                     objectQ.get("volume_24h").getAsBigDecimal(),
                     object.get("total_supply").getAsDouble()
             ));
@@ -65,13 +68,9 @@ public class CurrenciesFetch implements Runnable {
         return list;
     }
 
+    @Override
     public void run() {
-        CurrenciesDB db = new CurrenciesDB("ds141720.mlab.com" ,41720, "trding_users", "trding", "trding2018");
-        db.connect();
-        db.init((ArrayList<Currency>) parseJson(fetchJson()));
+        CurrenciesDB.insertDB((ArrayList<Currency>) parseJson(fetchJson(this.db_url)));
     }
-
-
-
 
 }

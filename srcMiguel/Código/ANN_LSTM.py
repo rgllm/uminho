@@ -23,22 +23,25 @@ class ANN_LSTM():
 		model = Sequential()
 
 		# return sequences = true -> passa os valores processados para a frente 
-		model.add(LSTM(128, input_shape=(janela, nr_nodos), return_sequences=True))
+		model.add(LSTM(64, input_shape=(janela, nr_nodos), return_sequences=True))
 		model.add(Dropout(0.2))
 		
-		model.add(LSTM(64, input_shape=(janela, nr_nodos), return_sequences=True))
-
+		model.add(LSTM(42, input_shape=(janela, nr_nodos), return_sequences=True))
+		model.add(Dropout(0.2))
 		# return sequences = false, na ultima camada LSTM 
-		model.add(LSTM(32, input_shape=(janela, nr_nodos), return_sequences=False))
+		model.add(LSTM(22, input_shape=(janela, nr_nodos), return_sequences=False))
 		
 		# ANN "normal"
 		model.add(Dense(16, activation="relu", kernel_initializer="uniform"))
+		model.add(Dropout(0.2))
 		model.add(Dense(8, activation="relu", kernel_initializer="uniform"))
+		model.add(Dropout(0.2))
 		model.add(Dense(1, activation="relu", kernel_initializer="uniform"))
 		
 		# Para evitar minimos locais no optimizador, explorar outras variantes: 
 		# -> sgd 		adam		 RMSprop	Ada[grad|delta] 	...
-		model.compile(loss='mse',optimizer='adam',metrics=['accuracy','mean_squared_error'])
+
+		model.compile(loss='mse',optimizer='RMSprop',metrics=['accuracy','mean_squared_error'])
 		return model
 	#------------------------------------------------------------------------
 
@@ -96,12 +99,12 @@ class ANN_LSTM():
 		# 'fst_sem', 'snd_sem', 'Sales'] -> semestres
 		
 		# ignorar dados de trimestre e semestre 
-		df.drop(df.columns[[range(17,df.shape[1]-1)]], axis=1,
+		df.drop(df.columns[[range(13,df.shape[1]-1)]], axis=1,
 				inplace=True)
 		self.nr_nodos = df.shape[1]
 
 		#tamanho da Janela deslizante
-		janela = 4	# analise com influencia do mês anterior 
+		janela = 1	# analise com influencia do mês anterior 
 
 		''' As datas estão por ondem crescente, logo a rede treina com os casos num sentido progressivo no tempo
 			Se as ordem temporal fosse decrescente, tinha que se inverter, para a rede não aprender

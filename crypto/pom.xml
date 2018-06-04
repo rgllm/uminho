@@ -45,7 +45,7 @@
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>org.crypto.REST.AppService</mainClass>
+                                    <mainClass>REST.AppService</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -74,13 +74,6 @@
             <version>2.3</version>
         </dependency>
     </dependencies>
-
-
-    <properties>
-        <properties>
-            <dropwizard.version>INSERT VERSION HERE</dropwizard.version>
-        </properties>
-    </properties>
 
 
 </project>

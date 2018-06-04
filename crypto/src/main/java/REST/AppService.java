@@ -10,7 +10,7 @@ public class AppService extends Application<AppConfig> {
     }
 
     public static void main(String[] args) throws Exception {
-        (new AppService()).run();
+        (new AppService()).run(args);
     }
 
     @Override

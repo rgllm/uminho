@@ -1,10 +1,11 @@
 package Data;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
+import Resources.Currencies;
+import com.mongodb.*;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,19 +13,20 @@ import java.util.stream.Collectors;
 
 public class CurrenciesDB {
 
-    private String host;
-    private Integer port;
-    private String db_name;
+    MongoClient mongo;
+    MongoDatabase database;
 
-    private String user;
-    private String password;
+    public CurrenciesDB() {
+        MongoCredential credential = MongoCredential.createCredential("trding", "trding_users", "trding2018".toCharArray());
+        mongo = new MongoClient(
+                new ServerAddress("ds141720.mlab.com", 41720),
+                Arrays.asList(credential)
+        );
 
-    public CurrenciesDB(String host, Integer port, String db_name, String user, String password) {
-        this.host = host;
-        this.port = port;
-        this.db_name = db_name;
-        this.user = user;
-        this.password = password;
+        System.out.println("Credentials :: "+ credential);
+        System.out.println("[MongoDB] Connected to the database successfully.");
+        database = mongo.getDatabase("trding_users");
+
     }
 
 
@@ -50,21 +52,15 @@ public class CurrenciesDB {
         mongo.close();
     }
 
-    MongoClient mongo;
-    MongoDatabase database;
+    public List<Currencies> getCrypto() {
+        FindIterable<Document> cur = database.getCollection("currencies").find();
+        List<Currencies> list = new ArrayList<>();
+        for (Document doc: cur)
+            list.add(
+                    new Currency(doc.getString("_id"))
+            )
 
-    public void connect() {
-        mongo = new MongoClient( host , port );
 
-        MongoCredential credential;
-        credential = MongoCredential.createCredential(user, db_name, password.toCharArray());
-        System.out.println("[MongoDB] Connected to the database successfully.");
-
-        database = mongo.getDatabase(db_name);
-        System.out.println("Credentials :: "+ credential);
     }
-
-
-
 
 }

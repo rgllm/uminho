@@ -4,8 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.bson.Document;
 
 import java.math.BigDecimal;
+import java.util.concurrent.CompletableFuture;
 
-public class Currency {
+public class Currency implements Comparable<Currency>{
     private String id;
     private String name;
     private String symbol;
@@ -50,10 +51,10 @@ public class Currency {
                 .append("name", name)
                 .append("symbol", symbol)
                 .append("rank", rank)
-                .append("price", price)
-                .append("market_cap", market_cap)
-                .append("percentage24", percentage24)
-                .append("volume24", volume24)
+                .append("price", price.toString())
+                .append("market_cap", market_cap.toString())
+                .append("percentage24", percentage24.toString())
+                .append("volume24", volume24.toString())
                 .append("totalSupply", totalSupply);
     }
 
@@ -102,5 +103,9 @@ public class Currency {
         return totalSupply;
     }
 
+    @Override
+    public int compareTo(Currency currency) {
+        return this.rank - currency.getRank();
+    }
 }
 

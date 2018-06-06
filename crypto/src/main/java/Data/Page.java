@@ -7,13 +7,13 @@ import java.util.List;
 
 public class Page {
 
-    private int totalCurrencies;
-    private int totalPages;
+    private long totalCurrencies;
+    private long totalPages;
     private int page;
     private int perPage;
     private List<Currency> currencies;
 
-    public Page(int totalCurrencies, int totalPages, int page, int perPage, List<Currency> currencies) {
+    public Page(long totalCurrencies, long totalPages, int page, int perPage, List<Currency> currencies) {
         this.totalCurrencies = totalCurrencies;
         this.totalPages = totalPages;
         this.page = page;
@@ -22,12 +22,12 @@ public class Page {
     }
 
     @JsonProperty
-    public int getTotalCurrencies() {
+    public long getTotalCurrencies() {
         return totalCurrencies;
     }
 
     @JsonProperty
-    public int getTotalPages() {
+    public long getTotalPages() {
         return totalPages;
     }
 

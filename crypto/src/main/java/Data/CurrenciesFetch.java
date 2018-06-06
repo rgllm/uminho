@@ -3,6 +3,7 @@ package Data;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -57,11 +58,11 @@ public class CurrenciesFetch implements Runnable {
                     object.get("name").getAsString(),
                     object.get("symbol").getAsString(),
                     object.get("rank").getAsInt(),
-                    objectQ.get("price").getAsBigDecimal(),
-                    objectQ.get("market_cap").getAsBigDecimal(),
-                    objectQ.get("percent_change_1h").getAsBigDecimal(),
-                    objectQ.get("volume_24h").getAsBigDecimal(),
-                    object.get("total_supply").getAsDouble()
+                    objectQ.get("price").isJsonNull() ? new BigDecimal(0) : objectQ.get("price").getAsBigDecimal(),
+                    objectQ.get("market_cap").isJsonNull() ? new BigDecimal(0) : objectQ.get("market_cap").getAsBigDecimal(),
+                    objectQ.get("percent_change_1h").isJsonNull() ? new BigDecimal(0) : objectQ.get("percent_change_1h").getAsBigDecimal(),
+                    objectQ.get("volume_24h").isJsonNull() ? new BigDecimal(0) : objectQ.get("volume_24h").getAsBigDecimal(),
+                    object.get("total_supply").isJsonNull() ? 0 : object.get("total_supply").getAsDouble()
             ));
         }
 
@@ -70,7 +71,30 @@ public class CurrenciesFetch implements Runnable {
 
     @Override
     public void run() {
-        CurrenciesDB.insertDB((ArrayList<Currency>) parseJson(fetchJson(this.db_url)));
+        while(true){
+            CurrenciesDB.clearDB();
+
+            JsonParser parser = new JsonParser();
+            JsonObject rootObj = parser.parse(fetchJson("https://api.coinmarketcap.com/v2/global/")).getAsJsonObject();
+            int data = rootObj.getAsJsonObject("data").get("active_cryptocurrencies").getAsInt();
+
+            int i = 1;
+            List<Currency> list = new ArrayList<>();
+            while(i <= data){
+                list.addAll(
+                    parseJson(
+                        fetchJson("https://api.coinmarketcap.com/v2/ticker/?start=" + i + "&limit=100")));
+                i+=100;
+            }
+
+            CurrenciesDB.insertDB(list);
+
+            try {
+                Thread.sleep(1000 * 60);
+            } catch (InterruptedException e) {e.printStackTrace();}
+        }
+
+
     }
 
 }

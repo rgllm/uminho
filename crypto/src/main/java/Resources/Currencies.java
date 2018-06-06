@@ -10,18 +10,21 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Path("/currencies")
+@Path("/cryptocurrencies")
 @Produces(MediaType.APPLICATION_JSON)
 public class Currencies {
 
-    //CurrenciesDB db = new CurrenciesDB();
+    CurrenciesDB db;
 
-    private Page newPage(int page){
-        List<Currency> list = CurrenciesFetch.parseJson(CurrenciesFetch.fetchJson("https://api.coinmarketcap.com/v2/ticker/"));
-        return new Page(list.size(), list.size()/20, page, 20, list.subList((page-1)*20,page*20));
+    public Currencies() {
+        this.db = new CurrenciesDB();
     }
 
-
+    private Page newPage(int page){
+        List<Currency> list = db.getCrypto((page-1)*20, page*20);
+        long size = db.getSize();
+        return new Page(size, size/20, page, 20, list);
+    }
 
     @GET
     public Page getAll(@DefaultValue("-1") @QueryParam("page") int page, @DefaultValue("-1") @QueryParam("perPage") int perPage){
@@ -32,13 +35,7 @@ public class Currencies {
 
     }
 
-    @Path("/{id}")
-    @GET
-    public Currency getCurrency(@PathParam("id") String id){
-        return
-                CurrenciesFetch.parseJson(CurrenciesFetch.fetchJson("https://api.coinmarketcap.com/v2/ticker/"))
-                .stream().filter(X -> X.getName().toLowerCase().equals(id) == true).collect(Collectors.toList()).get(0);
-    }
+
 }
 
 

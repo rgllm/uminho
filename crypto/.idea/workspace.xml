@@ -64,8 +64,8 @@
       <file leaf-file-name="CurrenciesDB.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Data/CurrenciesDB.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
-              <caret line="127" column="36" lean-forward="false" selection-start-line="127" selection-start-column="36" selection-end-line="127" selection-end-column="36" />
+            <state relative-caret-position="-1889">
+              <caret line="21" column="94" lean-forward="false" selection-start-line="21" selection-start-column="94" selection-end-line="21" selection-end-column="94" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -148,6 +148,7 @@
     <findStrings>
       <find>proper</find>
       <find>bson</find>
+      <find>trding_users</find>
     </findStrings>
   </component>
   <component name="GradleLocalSettings">
@@ -860,8 +861,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Data/CurrenciesDB.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="127" column="36" lean-forward="false" selection-start-line="127" selection-start-column="36" selection-end-line="127" selection-end-column="36" />
+        <state relative-caret-position="-1889">
+          <caret line="21" column="94" lean-forward="false" selection-start-line="21" selection-start-column="94" selection-end-line="21" selection-end-column="94" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

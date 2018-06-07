@@ -19,7 +19,7 @@ public class CurrenciesDB {
     private MongoDatabase database;
 
     public CurrenciesDB() {
-        MongoCredential credential = MongoCredential.createCredential("trding", "trding_users", "trding2018".toCharArray());
+        MongoCredential credential = MongoCredential.createCredential("trding", "trding_crypto", "trding2018".toCharArray());
         mongo = new MongoClient(
                 new ServerAddress("ds141720.mlab.com", 41720),
                 Arrays.asList(credential)
@@ -27,7 +27,7 @@ public class CurrenciesDB {
 
         System.out.println("Credentials :: "+ credential);
         System.out.println("[MongoDB] Connected to the database successfully.");
-        database = mongo.getDatabase("trding_users");
+        database = mongo.getDatabase("trding_crypto");
     }
 
 
@@ -58,7 +58,7 @@ public class CurrenciesDB {
     //static methods
 
     public static void clearDB(){
-        MongoCredential credential = MongoCredential.createCredential("trding", "trding_users", "trding2018".toCharArray());
+        MongoCredential credential = MongoCredential.createCredential("trding", "trding_crypto", "trding2018".toCharArray());
         MongoClient mongo = new MongoClient(
                 new ServerAddress("ds141720.mlab.com", 41720),
                 Arrays.asList(credential)
@@ -66,7 +66,7 @@ public class CurrenciesDB {
 
         System.out.println("Credentials :: "+ credential);
         System.out.println("[MongoDB] Connected to the database successfully.");
-        MongoDatabase database = mongo.getDatabase("trding_users");
+        MongoDatabase database = mongo.getDatabase("trding_crypto");
 
         if (database.getCollection("currencies").count() > 0)
             database.getCollection("currencies").deleteMany(new BasicDBObject());
@@ -75,7 +75,7 @@ public class CurrenciesDB {
     }
 
     public static void insertDB(List<Currency> list){
-        MongoCredential credential = MongoCredential.createCredential("trding", "trding_users", "trding2018".toCharArray());
+        MongoCredential credential = MongoCredential.createCredential("trding", "trding_crypto", "trding2018".toCharArray());
         MongoClient mongo = new MongoClient(
                 new ServerAddress("ds141720.mlab.com", 41720),
                 Arrays.asList(credential)
@@ -83,7 +83,7 @@ public class CurrenciesDB {
 
         System.out.println("Credentials :: "+ credential);
         System.out.println("[MongoDB] Connected to the database successfully.");
-        MongoDatabase database = mongo.getDatabase("trding_users");
+        MongoDatabase database = mongo.getDatabase("trding_crypto");
 
         List<org.bson.Document> docList = list.stream().map(X -> X.toDoc()).collect(Collectors.toList());
 

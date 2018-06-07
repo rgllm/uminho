@@ -122,4 +122,28 @@ public class CurrenciesDB {
             );
         return list;
     }
+
+    public Currency getCryptoID(int id) {
+        Document pattern = new Document();
+        pattern.put("_id", id + "");
+        FindIterable<Document> cur = database.getCollection("currencies").find(pattern);
+
+        List<Currency> list = new ArrayList<>();
+        for (Document doc: cur)
+            list.add(
+                    new Currency(
+                            doc.getString("_id"),
+                            doc.getString("name"),
+                            doc.getString("symbol"),
+                            doc.getInteger("rank"),
+                            (new BigDecimal(doc.getString("price").replaceAll(",",""))),
+                            (new BigDecimal(doc.getString("market_cap").replaceAll(",",""))),
+                            (new BigDecimal(doc.getString("percentage24").replaceAll(",",""))),
+                            (new BigDecimal(doc.getString("volume24").replaceAll(",",""))),
+                            doc.getDouble("totalSupply")
+                    )
+            );
+
+        return list.get(0);
+    }
 }

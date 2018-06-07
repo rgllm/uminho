@@ -11,9 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gson.*;
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoCredential;
+
 
 public class CurrenciesFetch implements Runnable {
 

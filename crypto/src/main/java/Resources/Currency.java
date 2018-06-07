@@ -20,10 +20,8 @@ public class Currency {
 
     @GET
     @Path("/{id}")
-    public Data.Currency getCurrency(@PathParam("id") String id){
-        return
-                db.resultsTo(id)
-                        .stream().filter(X -> X.getName().toLowerCase().equals(id) == true).collect(Collectors.toList()).get(0);
+    public Data.Currency getCurrency(@PathParam("id") int id){
+        return db.getCryptoID(id);
     }
 
 

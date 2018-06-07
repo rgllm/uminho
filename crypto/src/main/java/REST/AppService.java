@@ -14,9 +14,10 @@ public class AppService extends Application<AppConfig> {
     }
 
     public static void main(String[] args) throws Exception {
-        //(new CurrenciesFetch("https://api.coinmarketcap.com/v2/ticker/")).run();
-        System.out.println("adasdA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        (new Thread(new CurrenciesFetch("https://api.coinmarketcap.com/v2/ticker/"))).start();
         (new AppService()).run(args);
+        System.out.println("adasdA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
     }
 
     @Override
@@ -32,7 +33,5 @@ public class AppService extends Application<AppConfig> {
         environment.jersey().register(currencies);
         environment.jersey().register(ac);
         environment.jersey().register(c);
-
-
     }
 }

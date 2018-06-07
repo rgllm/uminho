@@ -4,12 +4,12 @@ var PastAction = require('./PastAction')
 var Currency = require('./Currency')
 
 var userSchema = mongoose.Schema({
-	id:String,
 	email:String,
 	name:String,
 	watchlist: [String],
 	portfolio: [Action],
-	history: [PastAction]
+	history: [PastAction],
+	balance: Number
 });
 
 var User = mongoose.model('User', userSchema);

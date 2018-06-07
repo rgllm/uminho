@@ -40,6 +40,7 @@ passport.use(new FacebookStrategy({
           me.portfolio = []
           me.watchlist = []
           me.history = []
+          me.balance = 0
           me.save(function(err, me) {
             if(err) return done(err);
             done(null,me);

@@ -27,7 +27,7 @@ passport.use(new FacebookStrategy({
     clientID: "141112822652545",
     clientSecret: "c77219de66fc4713f659be19a1e5a6c4",
     callbackURL: "http://206.189.27.195/auth/facebook/callback",
-    profileFields:['id','displayName','emails']
+    profileFields:['id','displayName','emails', 'photos']
   }, function(accessToken, refreshToken, profile, done) {
       var me = new User({
         email: profile.emails[0].value,

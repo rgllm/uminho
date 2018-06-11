@@ -26,10 +26,10 @@ constructor(props) {
 }
 
 handleFacebook() {
-  fetch(`209.97.129.204/users/auth/facebook`, {mode: 'no-cors'})
-      .then(handleResponse) 
+  fetch(`http://209.97.129.204/users/auth/facebook`, {mode: 'no-cors'})
+      
 			.then((data) => {
-        console.log(data)
+        console.log(data.json())
         if(data.success){
           this.setState({
             userProfile: data.user,

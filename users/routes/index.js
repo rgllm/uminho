@@ -5,6 +5,7 @@ var request = require('request')
 
 /* route to return login success */
 router.get('/login/success', function(req, res, next) {
+  res.type("json")
   res.send({success: "User logged in successfully", user: req.user});
 });
 /* route to return login insuccess */

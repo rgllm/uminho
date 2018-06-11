@@ -26,7 +26,7 @@ mongoose.Promise = global.Promise
 passport.use(new FacebookStrategy({
     clientID: "141112822652545",
     clientSecret: "c77219de66fc4713f659be19a1e5a6c4",
-    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    callbackURL: "http://localhost:80/auth/facebook/callback",
     profileFields:['id','displayName','emails']
   }, function(accessToken, refreshToken, profile, done) {
       var me = new User({

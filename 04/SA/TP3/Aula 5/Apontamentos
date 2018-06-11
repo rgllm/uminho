@@ -1,0 +1,21 @@
+- Um dataset é uma serie temporal se a troca das instâncias afeta o significado do contexto;
+- Alterar a sequencia das leituras (shufle) altera o significado da tabela, pq a ordem está associado 
+com a ordem temporal (tensões arteriais ao longo do tempo, vendas diárias, etc... )
+
+- Trabalhos anteriores resolvidos com camadas sequencias (feed forward)
+  O processo de aprendizagem é independente caso a caso 
+  Em sequencias temporais, a influencia dos casos anteriores é relevante
+  -> há comportamentos relacionados com a entrada anterior
+
+- Problemas de regesssão / previsão numerica
+  Introduzir efeito de memoria na rede (recorrencia com os históricos apresentados)
+  ->Daí a importancia/ordem temporal
+
+Long Short Term Memory LSTM
+
+- A informação de saída de um nodo afeta nodos anterior (ou o próprio)
+LSTM  - memoria curta -> casos imediatamente antes trabalhados
+	  - memoria "comprida" -> generalização de todos os casos ao longo do tempo  
+
+
+

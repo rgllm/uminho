@@ -34,10 +34,10 @@ const Table = (props) => {
               </td>
               <td>
                 <span className="Table-dollar">$</span>
-                 {currency.marketCap}
+                 {currency.market_cap}
               </td>
               <td>
-                {renderChangePercent(currency.percentChange24h)}
+                {renderChangePercent(currency.percentage24)}
               </td>
             </tr>
           ))}

@@ -58,7 +58,7 @@ class Detail extends React.Component{
   fetchCurrency(currencyId){
     this.setState({ loading:true });
 
-    fetch(`${API_URL}/cryptocurrencies/${currencyId}`)
+    fetch(`${API_URL}/cryptocurrency/${currencyId}`)
       .then(handleResponse)
       .then((currency) => {
         this.setState({
@@ -173,17 +173,17 @@ class Detail extends React.Component{
             </div>
             <div className="Detail-item">
               24h Change
-              <span className="Detail-value">{renderChangePercent(currency.percentChange24h)}</span>
+              <span className="Detail-value">{renderChangePercent(currency.percentage24)}</span>
             </div>
             <div className="Detail-item">
               <span className="Detail-title">Market cap</span>
               <span className="Detail-dollar">$</span>
-              {currency.marketCap}
+              {currency.market_cap}
             </div>
             <div className="Detail-item">
               <span className="Detail-title">24H Volume</span>
               <span className="Detail-dollar">$</span>
-              {currency.volume24h}
+              {currency.volume24}
             </div>
             <div className="Detail-item">
               <span className="Detail-title">Total supply</span>

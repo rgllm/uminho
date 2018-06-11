@@ -23,12 +23,7 @@ constructor(props) {
 }
 
 handleFacebook() {
-  var provider = new firebase.auth.FacebookAuthProvider();
-  firebase.auth().signInWithPopup(provider)
-     .then(function(result) {
-     })
-     .catch(function(error) {
-     });
+ 
 }
 
 

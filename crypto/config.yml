@@ -1,1 +1,4 @@
-port: 8080
+server:
+  applicationConnectors:
+  - type: http 
+    port: 80

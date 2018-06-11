@@ -70,7 +70,6 @@ public class CurrenciesFetch implements Runnable {
     @Override
     public void run() {
         while(true){
-            CurrenciesDB.clearDB();
 
             JsonParser parser = new JsonParser();
             JsonObject rootObj = parser.parse(fetchJson("https://api.coinmarketcap.com/v2/global/")).getAsJsonObject();
@@ -84,11 +83,11 @@ public class CurrenciesFetch implements Runnable {
                         fetchJson("https://api.coinmarketcap.com/v2/ticker/?start=" + i + "&limit=100")));
                 i+=100;
             }
-
+	    CurrenciesDB.clearDB();
             CurrenciesDB.insertDB(list);
 
             try {
-                Thread.sleep(1000 * 60);
+                Thread.sleep(1000 * 60 * 5);
             } catch (InterruptedException e) {e.printStackTrace();}
         }
 

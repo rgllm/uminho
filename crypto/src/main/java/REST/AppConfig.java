@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class AppConfig extends Configuration {
 
     @NotEmpty
-    private String port = "8080";
+    private String port = "80";
 
     @JsonProperty
     public String getPort() {

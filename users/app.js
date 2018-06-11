@@ -4,7 +4,6 @@ var path = require('path');
 var mongoose = require('mongoose')
 var User = require('./models/User')
 var session = require('express-session');
-var cors = require('cors')
 // Autenticação FB 
 var passport = require('passport'), 
 	FacebookStrategy = require('passport-facebook').Strategy;
@@ -58,7 +57,14 @@ var indexRouter = require('./routes/index');
 var testsRouter = require('./routes/tests');
 
 var app = express();
-app.use(cors())
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Headers", "Origin,Content-Type, Authorization, x-id, Content-Length, X-Requested-With");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  next();
+});
+
 app.use(session({
   secret: "trding2018",
   resave: true,

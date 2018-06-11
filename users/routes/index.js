@@ -114,6 +114,7 @@ router.get('/portfolio/close/:action_id', function(req, res, next) {
           if(action){
             var currency_id = action.currency_id
             request({
+              timeout: 3000,
               url: "http://167.99.193.161/cryptocurrency/"+currency_id,
               json: true
             }, function (error, response, body) {

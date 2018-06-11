@@ -4,6 +4,7 @@ var path = require('path');
 var mongoose = require('mongoose')
 var User = require('./models/User')
 var session = require('express-session');
+var cors = require('cors')
 // Autenticação FB 
 var passport = require('passport'), 
 	FacebookStrategy = require('passport-facebook').Strategy;
@@ -57,6 +58,7 @@ var indexRouter = require('./routes/index');
 var testsRouter = require('./routes/tests');
 
 var app = express();
+app.use(cors())
 app.use(session({
   secret: "trding2018",
   resave: true,

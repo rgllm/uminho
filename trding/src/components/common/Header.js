@@ -26,7 +26,8 @@ constructor(props) {
 }
 
 handleFacebook() {
-  fetch(`http://209.97.129.204/users/auth/facebook`)
+  fetch(`209.97.129.204/users/auth/facebook`, {mode: 'no-cors'})
+      .then(handleResponse) 
 			.then((data) => {
         console.log(data)
         if(data.success){

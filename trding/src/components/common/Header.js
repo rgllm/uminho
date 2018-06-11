@@ -8,6 +8,9 @@ import MyAssets from '../myassets/MyAssets';
 import DropDownButton from './DropDownButton';
 import * as firebase from 'firebase';
 import firebaseApp from '../../firebase/Firebase';
+import { API_URL } from '../../config';
+import { handleResponse } from '../../helpers';
+
 
 class Header extends React.Component {
 
@@ -23,7 +26,21 @@ constructor(props) {
 }
 
 handleFacebook() {
- 
+  fetch(`http://209.97.129.204/users/auth/facebook`)
+			.then((data) => {
+        console.log(data)
+        if(data.success){
+          this.setState({
+            userProfile: data.user,
+            logged: true
+          });
+        }else{
+          /* MENSAGEM DE ERRO A DIZER QUE A AUTENTICAÇÃO FALHOU */
+        }
+			})
+			.catch((error) => {
+				this.setState({error: error.error, loading: false})
+			});
 }
 
 

@@ -54,7 +54,6 @@ passport.use(new FacebookStrategy({
 
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var testsRouter = require('./routes/tests');
 
 var app = express();

@@ -43,8 +43,6 @@ router.post('/balance/add', function(req, res, next){
   }
 })
 
-
-
 /* GET user's portfolio */
 router.get('/portfolio', function(req, res, next) {
   if(req.isAuthenticated()){

@@ -114,7 +114,7 @@ router.get('/portfolio/close/:action_id', function(req, res, next) {
           if(action){
             var currency_id = action.currency_id
             request({
-              url: "http://167.99.193.161:8080/cryptocurrency/"+currency_id,
+              url: "http://167.99.193.161/cryptocurrency/"+currency_id,
               json: true
             }, function (error, response, body) {
               if (!error && response.statusCode === 200) {

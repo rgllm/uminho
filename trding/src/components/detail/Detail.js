@@ -19,14 +19,20 @@ class Detail extends React.Component{
 
     this.state = {
       currency: {},
+      currency_id: null,
+      invested_: '',
+      method_: null,
       loading: false,
       error: null,
       modalIsOpen: false,
+      nunits: '',
+      amount: '',
       };
 
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.publish = this.publish.bind(this);
 
   }
 
@@ -76,6 +82,45 @@ class Detail extends React.Component{
 
   }
 
+  buyCurrency(currencyId){
+    this.setState({ loading: true });
+
+    return (fetch('http://206.189.27.195/portfolio/add', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          currency_id: this.currency,
+          open_value: this.currency.price,
+          invested: this.amount,
+          method: this.method_,
+        })
+      })
+      .then((res) => res.json())
+      .catch((error) => {
+        this.setState({
+          loading: false,
+          error: error.errorMessage,
+        });
+      }));
+  }
+
+  publish() {
+    console.log("AMOUNT"+this.state.amount, "NUNITS"+this.state.nunits, "METHOD"+this.state.method_);
+  }
+
+  renderInvested(){
+    if(this.state.amount === '') {
+      this.setState({invested_ : this.nunits*this.open_value});
+    }
+    else this.setState({invested_: this.amount});
+    
+    console.log("INVESTED"+this.state.invested_);
+  }
+ 
+
   render_tabs() {
     return (
       <Tabs>
@@ -90,19 +135,26 @@ class Detail extends React.Component{
         <div className="form">
         <TabPanel>
           <form className="inputs">
-            <input placeholder="Number of Units" />
+              <input placeholder="Number of Units" value={this.state.nunits} onChange={(e) => { this.setState({ nunits: e.target.value }) }}
+ />
           </form>
         </TabPanel>
         <TabPanel>
-          <form className="inputs" >
-            <input placeholder="Amount" />
+          <form className="inputs">
+              <input placeholder="Amount" value={this.state.amount} id="amount" onChange={(e) => { this.setState({ amount: e.target.value }) }}
+/>
           </form>
         </TabPanel>
+        <div className="radio">
+            <input type="radio" name="method" value="buy" onChange={(e) => { this.setState({ method_: e.target.value }) }}/> BUY
+            <input type="radio" name="method" value="sell" onChange={(e) => { this.setState({ method_: e.target.value }) }} /> SELL
         </div>
-        <button className="confirm-button">Confirm</button>
+        </div>
+        <button className="confirm-button" onClick={this.publish} >Confirm</button>
       </Tabs>
     );
   }
+
 
   render_modal(currency_name,current_price) {
     return(
@@ -118,7 +170,7 @@ class Detail extends React.Component{
         >
  
           <div className="currencyname">{currency_name}</div>
-          <div className="currencyname">$ {current_price}</div>
+          <div className="currencyname">${current_price}</div>
           
           <div> {this.render_tabs()} </div>
 
@@ -137,7 +189,7 @@ class Detail extends React.Component{
 
   render(){
 
-    const { loading, error, currency} = this.state;
+    const { loading, error, currency, method_, nunits, amount, invested_} = this.state;
     if(loading){
       return <div className="loading-container"><Loading/></div>
     }

@@ -171,6 +171,16 @@
   justify-content: center;
   align-items: center;
 }
+
+.radio {
+  margin-left: 1%;
+  flex: 1;
+  padding: 5%;
+  text-align : left;
+  justify-content: left;
+  align-items: left;
+}
+
 .inputs{
   text-align: center;
   padding: 8px 8px;

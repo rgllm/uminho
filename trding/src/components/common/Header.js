@@ -27,9 +27,8 @@ constructor(props) {
 
 handleFacebook() {
   fetch(`http://209.97.129.204/users/auth/facebook`)
-      
 			.then((data) => {
-        console.log(data.json())
+        console.log(data)
         if(data.success){
           this.setState({
             userProfile: data.user,

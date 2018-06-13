@@ -28,7 +28,7 @@ constructor(props) {
 
 handleFacebook(setUser) {
   return (response)=>{
-    fetch("http://206.189.27.195/auth", {
+    fetch("http://209.97.129.204/users/auth", {
       method: "post",
       headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
       body: "user_email="+response.email

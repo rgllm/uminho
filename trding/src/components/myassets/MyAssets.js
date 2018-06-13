@@ -6,6 +6,7 @@ import { API_URL } from '../../config';
 import TransactionTable from './TransactionTable'
 import Loading from '../common/Loading';
 import Pagination from '../list/Pagination'
+import {UserContext} from '../../UserContext';
 
 class MyAssets extends React.Component {
 
@@ -14,7 +15,6 @@ class MyAssets extends React.Component {
 
 	    this.state = {
 	      loading: false,
-	      portfolio: [],
 	      currencies: [],
 	      error: null,
 	      totalPages: 0,
@@ -29,7 +29,7 @@ class MyAssets extends React.Component {
 	}
 
 	componentDidMount(){	
-		this.fetchPortfolio();
+		
 		
 	}
 
@@ -90,10 +90,14 @@ class MyAssets extends React.Component {
 	}
 
 
-	fetchPortfolio() {
+	fetchPortfolio(user) {
 
 		var all = this.fetchAll();
-		fetch(`//api.jsonbin.io/b/5b203550c83f6d4cc734b323`)
+		fetch(`http://206.189.27.195/portfolio`, {
+			method: "post",
+			headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
+			body: "user_email="+user.data.email
+		  })
 			.then(handleResponse)
 			.then((data) => {
 				var oldcurrencies = new Array();
@@ -183,17 +187,20 @@ class MyAssets extends React.Component {
 	}
 
 
-	handlePaginationClick(direction){
-		 let nextPage = this.state.page;
+	handlePaginationClick(user){
+		console.log(user)
+		return (direction)=>{
+			let nextPage = this.state.page;
 
-		 if(direction === 'next'){
-		   nextPage++;
-		 }else{
-		   nextPage--;
-		 }
-		 this.setState({page: nextPage}, () => {
-		   this.fetchPortfololio();
-		 });
+			if(direction === 'next'){
+				nextPage++;
+			}else{
+				nextPage--;
+			}
+			this.setState({page: nextPage}, () => {
+			this.fetchPortfololio(user);
+			});
+		}
 	}
 
 	handleCloseClick(){
@@ -211,20 +218,34 @@ class MyAssets extends React.Component {
 		}
 
 		return(
-				<div>
-				<TransactionTable
-					portfolio={portfolio}
-					currencies={currencies}
-					handleCloseClick={this.handleCloseClick}
-				/>
+			<UserContext.Consumer>
+				{({user, setUser})=>{
+					console.log(user)
+					if(!user.logged){
+						return(<div className="MyAssets">
+						<h1>Please login first</h1>
+					  </div>)
+					}else{
+						return(
+							<div>
+								<TransactionTable
+									portfolio={user.data.portfolio}
+									currencies={currencies}
+									handleCloseClick={this.handleCloseClick}
+								/>
 
-			<Pagination
-				page={page}
-				totalPages={totalPages}
-				handlePaginationClick={this.handlePaginationClick}
-			/>
-			</div>
-		);
+							<Pagination
+								page={page}
+								totalPages={totalPages}
+								handlePaginationClick={this.handlePaginationClick(user)}
+							/>
+							</div>
+						)
+					}}
+				}
+			</UserContext.Consumer>
+		)
+
 	}
 }
 

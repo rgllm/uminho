@@ -24,15 +24,7 @@ class Account extends React.Component{
   }
 
   componentDidMount() {
-     firebase.auth().onAuthStateChanged(function(user) {
-       if (user) {
-         this.setState({
-           logged: true,
-           userProfile: user,
-         });
-       } else {
-       }
-     }.bind(this));
+     
    }
 
 
@@ -47,15 +39,11 @@ class Account extends React.Component{
   }
 
   refreshState(user){
-    if(  user.logged != this.state.logged
-      || user.data.email != this.state.userProfile.email
-      || user.data.displayName != this.state.displayName
-      || user.data.balance != this.state.balance){
-        /*console.log(user)
+    if(  user.logged != this.state.logged || user.data.balance != this.state.balance){
         this.setState({
           logged: user.logged,
           userProfile: {...user.data}
-        })*/
+        })
     }
   }
 

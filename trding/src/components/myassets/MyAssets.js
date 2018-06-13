@@ -93,7 +93,7 @@ class MyAssets extends React.Component {
 	fetchPortfolio(user) {
 
 		var all = this.fetchAll();
-		fetch(`http://206.189.27.195/portfolio`, {
+		fetch(`http://${API_URL}/users/portfolio`, {
 			method: "post",
 			headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
 			body: "user_email="+user.data.email

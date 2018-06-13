@@ -12,7 +12,7 @@ router.get('/cryptocurrencies/', function(req, res, next) {
 });
 
 router.get('/autocomplete/', function(req, res, next) {
-  res.redirect(crypto_service_URL + "/autocomplete")
+  res.redirect(crypto_service_URL + "/autocomplete" + `&searchQuery=${req.query.searchQuery}`  )
 });
 
 module.exports = router;

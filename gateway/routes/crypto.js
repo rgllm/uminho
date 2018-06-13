@@ -19,8 +19,7 @@ router.get('/cryptocurrencies/', function(req, res, next) {
     }
   }*/
   var url = crypto_service_URL + req.url
-  req.headers['Access-Control-Allow-Origin'] = '*'
-  req.pipe(request(url)).pipe(res)
+  req.pipe(request(url)).pipe(res=>{res.headers['Access-Control-Allow-Origin'] = '*';return res}).pipe(res)
   ///res.redirect(crypto_service_URL + `/cryptocurrencies${query!="?" ? query : "" }`)
 });
 

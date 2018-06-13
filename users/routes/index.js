@@ -47,7 +47,7 @@ router.post('/balance/add', function(req, res, next){
           user.balance += parseInt(amount)
           user.save(function(errSave,u){
             if(!errSave){
-              res.send({success: true})
+              res.send({success: true, balance: u.balance})
             }
             else{
               res.send({error: "Error occurred in communication with database (save user)"})

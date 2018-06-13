@@ -1,10 +1,10 @@
 import React from 'react';
-import { STRIPE_KEY } from '../../config';
+import { STRIPE_KEY , API_URL} from '../../config';
 import './Account.css';
 import StripeCheckout from 'react-stripe-checkout';
-import * as firebase from 'firebase';
 import firebaseApp from '../../firebase/Firebase';
 import {UserContext} from '../../UserContext';
+import { handleResponse } from '../../helpers';
 
 const fromUSDToCent = amount => amount * 100;
 
@@ -47,9 +47,23 @@ class Account extends React.Component{
     }
   }
 
-  onToken(token) {
-    const { balance, depositValue } = this.state;
-    this.setState({ balance: Number(balance) + Number(depositValue)});
+  onToken(user) {
+    return (token)=>{
+      const { balance, depositValue } = this.state;
+      fetch(`${API_URL}/balance/add`, {
+        method: "post",
+        headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
+        body: `user_email=${user.data.email}&amount=${depositValue}`
+      }).then(handleResponse)
+      .then(response=>{
+        if(response.success){
+          this.setState({ balance: response.balance});
+        }
+        else{
+          alert("An error occurred while depositing funds. Please try again")
+        }
+      })
+    }
   }
 
   render(){
@@ -98,7 +112,7 @@ class Account extends React.Component{
                       name="Trding App"
                       description="Deposit funds on your account."
                       email={userProfile.email}
-                      token={this.onToken}
+                      token={this.onToken(user)}
                       stripeKey={STRIPE_KEY}
                       amount={fromUSDToCent(depositValue)}
                       currency="USD"

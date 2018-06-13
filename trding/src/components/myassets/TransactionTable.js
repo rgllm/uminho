@@ -4,9 +4,10 @@ import './TransactionTable.css';
 import PropTypes from 'prop-types';
 import { renderChangePercent, renderProfit, renderTypeBox } from '../../helpers';
 
+
 const TransactionTable = (props) => {
-  const {transactions, currencies, handleCloseClick, history} = props;
-  console.log(transactions);
+  const {portfolio, currencies, handleCloseClick, history} = props;
+  console.log(portfolio);
 
   return(
     <div className="Table-container">
@@ -17,23 +18,24 @@ const TransactionTable = (props) => {
             <th>Type</th>
             <th>Opening price</th>
             <th>Current price</th>
+            <th>Invested</th>
             <th>Profit</th>
             <th>Close</th>
           </tr>
         </thead>
         <tbody className="Table-body">
-          {transactions.map((transaction, i) => (
+          {portfolio.map((action, i) => (
             <tr>
               <td>
                 <span className="Table-rank">{}</span>
-                {transaction.name}
+                {action.currency_id}
               </td>
               <td>
-                {renderTypeBox(transaction.type)}
+                {renderTypeBox(action.method)}
               </td> 
               <td>
                 <span className="Table-dollar">$</span>
-                 {transaction.purchase_price}
+                 {action.open_value}
               </td>
               <td>
                 <span className="Table-dollar">$</span>
@@ -41,7 +43,11 @@ const TransactionTable = (props) => {
               </td>
               <td>
                 <span className="Table-dollar">{}</span>
-                 {renderProfit(currencies[i], transaction.purchase_price, transaction.type)}
+                {action.invested}
+              </td>
+              <td>
+                <span className="Table-dollar">{}</span>
+                 {renderProfit(currencies[i], action.open_value, action.method)}
               </td>
               <td>
                 <span className="Close-button" onClick={() => handleCloseClick()}>✖</span>
@@ -56,7 +62,7 @@ const TransactionTable = (props) => {
 }
 
 TransactionTable.propTypes = {
-  transactions: PropTypes.array.isRequired,
+  portfolio: PropTypes.array.isRequired,
   currencies: PropTypes.array.isRequired,
   history: PropTypes.object.isRequired,
 };

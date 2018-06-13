@@ -14,7 +14,7 @@ class MyAssets extends React.Component {
 
 	    this.state = {
 	      loading: false,
-	      transactions: [],
+	      portfolio: [],
 	      currencies: [],
 	      error: null,
 	      totalPages: 0,
@@ -27,29 +27,29 @@ class MyAssets extends React.Component {
 	}
 
 	componentDidMount(){
-		this.fetchTransaction();
+		this.fetchPortfolio();
 	}
 
-	fetchTransaction(){
+	fetchPortfolio(){
 		this.setState({loading:true});
 
-		fetch(`//api.jsonbin.io/b/5af1dc79c2e3344ccd96b341`)
+		fetch(`//api.jsonbin.io/b/5b203550c83f6d4cc734b323`)
 			.then(handleResponse)
 			.then((data) => {
 
 				this.setState({
-					transactions: data.transactions,
-					totalPages: data.totalPages,
+					portfolio: data,
+					loading: false,
 				});
 
-			    data.transactions.map((transaction) => {
-			    	fetch(`${API_URL}/cryptocurrencies/${transaction.code}`)
+			    this.portfolio.map((action) => {
+					fetch(`${API_URL}/cryptocurrency/${action.currency_id}`)
 			      	.then(handleResponse)
-		      		.then(( currency) => {
-			        	this.setState(previousState => ({
-    						currencies: previousState.currencies.concat(currency.price.replace(/,/g, ''))
-						}));
-			      	})
+		      		.then((currency) => {
+			        	this.setState({
+    						currencies: currency,
+						});
+					  })
 			      	.catch((error) => {
 			        	this.setState({
 			          		loading: false,
@@ -77,7 +77,7 @@ class MyAssets extends React.Component {
 		   nextPage--;
 		 }
 		 this.setState({page: nextPage}, () => {
-		   this.fetchTransaction();
+		   this.fetchPortfololio();
 		 });
 	}
 
@@ -86,7 +86,7 @@ class MyAssets extends React.Component {
 	}
 
 	render(){
-		const { loading, error, transactions, currencies, page, totalPages } = this.state;
+		const { loading, error, portfolio, currencies, page, totalPages } = this.state;
 
 		if(loading){
 			return <div className="loading-container"><Loading /></div>
@@ -99,7 +99,7 @@ class MyAssets extends React.Component {
 		return(
 				<div>
 				<TransactionTable
-					transactions={transactions}
+					portfolio={portfolio}
 					currencies={currencies}
 					handleCloseClick={this.handleCloseClick}
 				/>

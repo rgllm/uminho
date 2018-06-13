@@ -13,9 +13,12 @@ const HistoryTable = (props) => {
         <thead className="Table-header">
           <tr>
             <th>Cryptocurrency</th>
-            <th>Current price</th>
-            <th>Purchase Price</th>
-            <th>Transaction Type</th>
+            <th>Open Date</th>
+            <th>Open Value</th>
+            <th>Invested</th>
+            <th>Close Value</th>
+            <th>Close Date</th>
+            <th>Profit/Loss</th>
           </tr>
         </thead>
         <tbody className="Table-body">
@@ -26,19 +29,31 @@ const HistoryTable = (props) => {
               >
               <td>
                 <span className="Table-rank">{}</span>
-                {transaction.name}
+                {transaction.currency_id}
               </td>
               <td>
                 <span className="Table-dollar">{}</span>
-                 {transaction.current_price}
+                 {transaction.open_date}
               </td>
               <td>
                 <span className="Table-dollar">{}</span>
-                 {transaction.purchase_price}
+                 {transaction.open_value}
               </td>
               <td>
                 <span className="Table-dollar">{}</span>
-                 {transaction.type}
+                 {transaction.invested}
+              </td>
+              <td>
+                <span className="Table-dollar">{}</span>
+                {transaction.close_value}
+              </td>
+              <td>
+                <span className="Table-dollar">{}</span>
+                {transaction.close_date}
+              </td>
+              <td>
+                <span className="Table-dollar">{}</span>
+                {transaction.profit_loss}
               </td>
             </tr>
           ))}

@@ -35,8 +35,6 @@ class MyHistory extends React.Component {
       nextPage--;
     }
     this.setState({ page: nextPage }, () => {
-      //call fetchCurrencies inside setState callback
-      //to make sure first state page is updated
       this.fetchCurrencies();
     });
   }
@@ -45,13 +43,12 @@ class MyHistory extends React.Component {
 
     this.setState({ loading: true });
 
-    fetch(`http://api.jsonbin.io/b/5af07f23c2e3344ccd96b22d`)
+    fetch(`http://api.jsonbin.io/b/5b2042f17a973f4ce5785bd3`)
       .then(handleResponse)
       .then((data) => {
         this.setState({
-          transactions: data.transactions,
+          transactions: data,
           loading: false,
-          totalPages: data.totalPages,
         });
       })
       .catch((error) => {

@@ -83,8 +83,6 @@ componentWillUnmount() {
           );
         }
         else{
-          console.log("-----------------------------------")
-          console.log(user)
           return (
             <div className="Header">
     

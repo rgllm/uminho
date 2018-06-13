@@ -113,7 +113,7 @@ router.post('/portfolio/add', function(req, res, next) {
                                   method: method })
             user.save(function(errSave, u){
               if(!errSave){
-                res.send({success: "Action added to portfolio successfully", date: open_date})
+                res.send({success: "Action added to portfolio successfully", user: u})
               }
               else{
                 res.send({error: "Error occurred in communication with database (save user)"})

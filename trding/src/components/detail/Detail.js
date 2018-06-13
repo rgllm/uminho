@@ -5,7 +5,7 @@ import Loading from '../common/Loading';
 import './Detail.css';
 import Modal from 'react-modal';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-
+import { UserContext } from '../../UserContext'
 
 const appElement = document.createElement("el");
 document.body.appendChild(appElement);
@@ -82,19 +82,24 @@ class Detail extends React.Component{
 
   }
 
-  buyCurrency(currencyId){
+  buyCurrency(user){
     this.setState({ loading: true });
-
-    return (fetch(`http://${API_URL}/users/portfolio/add`, {
+    /* currency_id,open_value,invested,method */
+    var invested = this.state.invested_
+    if(this.nunits!=""){
+      invested = this.nunits*this.open_value
+    }
+    fetch(`${API_URL}/users/portfolio/add`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          user_email: user.data.email,
           currency_id: this.currency,
           open_value: this.currency.price,
-          invested: this.amount,
+          invested: invested,
           method: this.method_,
         })
       })
@@ -104,11 +109,14 @@ class Detail extends React.Component{
           loading: false,
           error: error.errorMessage,
         });
-      }));
+      });
   }
 
-  publish() {
-    console.log("AMOUNT"+this.state.amount, "NUNITS"+this.state.nunits, "METHOD"+this.state.method_);
+  publish(user) {
+    console.log("AMOUNT: "+this.state.amount, "NUNITS: "+this.state.nunits, "METHOD: "+this.state.method_);
+    
+    
+
   }
 
   renderInvested(){
@@ -123,36 +131,47 @@ class Detail extends React.Component{
 
   render_tabs() {
     return (
-      <Tabs>
-        <TabList>
-          <Tab className = "button-units">
-            Number of Units
-          </Tab>
-          <Tab className = "button-amount">
-           Amount
-          </Tab> 
-        </TabList>
-        <div className="form">
-        <TabPanel>
-          <form className="inputs">
-              <input placeholder="Number of Units" value={this.state.nunits} onChange={(e) => { this.setState({ nunits: e.target.value }) }}
- />
-          </form>
-        </TabPanel>
-        <TabPanel>
-          <form className="inputs">
-              <input placeholder="Amount" value={this.state.amount} id="amount" onChange={(e) => { this.setState({ amount: e.target.value }) }}
-/>
-          </form>
-        </TabPanel>
-        <div className="radio">
-            <input type="radio" name="method" value="buy" onChange={(e) => { this.setState({ method_: e.target.value }) }}/> BUY
-            <input type="radio" name="method" value="sell" onChange={(e) => { this.setState({ method_: e.target.value }) }} /> SELL
-        </div>
-        </div>
-        <button className="confirm-button" onClick={this.publish} >Confirm</button>
-      </Tabs>
-    );
+      <UserContext.Consumer>
+        {({user, setUser})=>{
+          if(user.logged){
+            return (
+              <Tabs>
+                <TabList>
+                  <Tab className = "button-units">
+                    Number of Units
+                  </Tab>
+                  <Tab className = "button-amount">
+                  Amount
+                  </Tab> 
+                </TabList>
+                <div className="form">
+                <TabPanel>
+                  <form className="inputs">
+                      <input placeholder="Number of Units" value={this.state.nunits} onChange={(e) => { this.setState({ nunits: e.target.value , amount: ""}) }}
+        />
+                  </form>
+                </TabPanel>
+                <TabPanel>
+                  <form className="inputs">
+                      <input placeholder="Amount" value={this.state.amount} id="amount" onChange={(e) => { this.setState({ amount: e.target.value, nunits: "" }) }}
+        />
+                  </form>
+                </TabPanel>
+                <div className="radio">
+                    <input type="radio" name="method" value="buy" onChange={(e) => { this.setState({ method_: e.target.value }) }}/> BUY
+                    <input type="radio" name="method" value="sell" onChange={(e) => { this.setState({ method_: e.target.value }) }} /> SELL
+                </div>
+                </div>
+                <button className="confirm-button" onClick={this.buyCurrency(user)} >Confirm</button>
+              </Tabs>
+            );
+          }
+          else{
+            return(<div>Please login first</div>)
+          }
+        }}
+      </UserContext.Consumer>
+    )
   }
 
 
@@ -176,7 +195,7 @@ class Detail extends React.Component{
 
           <button 
             onClick={this.closeModal}
-            type="button" class="close" aria-label="Close" className = "closebutton">
+            type="button" className="close" aria-label="Close" className = "closebutton">
             <span aria-hidden="true">&times;</span>
           </button>
         </Modal>
@@ -198,52 +217,65 @@ class Detail extends React.Component{
       return <div className="error">{error}</div>
     }
     return(
-        <div className="Detail">
-          <h1 className="Detail-heading">
-            {currency.name} ({currency.symbol})
-          </h1>
-        <div>
-          <button
-            className="Buy-button"
-            onClick={this.openModal}>
-            Buy {currency.symbol}
-          </button>
-          <button
-          className="Sell-button"
-          onClick={this.openModal}>
-          Sell {currency.symbol}
-          </button>
-          {this.render_modal(currency.name, currency.price)}
+      <UserContext.Consumer>
+        {({user, setUser})=>{
+          if(user.logged){
+            return (
+              <div className="Detail">
+                <h1 className="Detail-heading">
+                  {currency.name} ({currency.symbol})
+                </h1>
+              <div>
+                <button
+                  className="Buy-button"
+                  onClick={this.openModal}>
+                  Buy {currency.symbol}
+                </button>
+                <button
+                className="Sell-button"
+                onClick={this.openModal}>
+                Sell {currency.symbol}
+                </button>
+                {this.render_modal(currency.name, currency.price)}
 
-        </div>
-          <div className="Detail-container">
-            <div className="Detail-item">
-              Price <span className="Detail-value">$ {currency.price}</span>
-            </div>
-            <div className="Detail-item">
-              Rank <span className="Detail-value">{currency.rank}</span>
-            </div>
-            <div className="Detail-item">
-              24h Change
-              <span className="Detail-value">{renderChangePercent(currency.percentage24)}</span>
-            </div>
-            <div className="Detail-item">
-              <span className="Detail-title">Market cap</span>
-              <span className="Detail-dollar">$</span>
-              {currency.market_cap}
-            </div>
-            <div className="Detail-item">
-              <span className="Detail-title">24H Volume</span>
-              <span className="Detail-dollar">$</span>
-              {currency.volume24}
-            </div>
-            <div className="Detail-item">
-              <span className="Detail-title">Total supply</span>
-              {currency.totalSupply}
-            </div>
-          </div>
-        </div>
-      );
+              </div>
+                <div className="Detail-container">
+                  <div className="Detail-item">
+                    Price <span className="Detail-value">$ {currency.price}</span>
+                  </div>
+                  <div className="Detail-item">
+                    Rank <span className="Detail-value">{currency.rank}</span>
+                  </div>
+                  <div className="Detail-item">
+                    24h Change
+                    <span className="Detail-value">{renderChangePercent(currency.percentage24)}</span>
+                  </div>
+                  <div className="Detail-item">
+                    <span className="Detail-title">Market cap</span>
+                    <span className="Detail-dollar">$</span>
+                    {currency.market_cap}
+                  </div>
+                  <div className="Detail-item">
+                    <span className="Detail-title">24H Volume</span>
+                    <span className="Detail-dollar">$</span>
+                    {currency.volume24}
+                  </div>
+                  <div className="Detail-item">
+                    <span className="Detail-title">Total supply</span>
+                    {currency.totalSupply}
+                  </div>
+                </div>
+              </div>
+            );
+          
+          }
+          else{
+            return(<div>Please login first</div>)
+          }
+        }}
+        </UserContext.Consumer>
+    )
+      
   }
 }
 

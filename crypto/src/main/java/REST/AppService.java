@@ -11,17 +11,10 @@ import org.eclipse.jetty.servlets.CrossOriginFilter;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import java.util.EnumSet;
-import com.thetransactioncompany.cors.CORSFilter;
+
 
 
 public class AppService extends Application<AppConfig> {
-
-    public static final String CORSFILTER = "CORS";
-    private static final String CORS_SUPPORTED_METHODS = "cors.supportedMethods";
-    private static final String CORS_SUPPORTS_CREDENTIALS = "cors.supportsCredentials";
-    private static final String CORS_EXPOSED_HEADERS = "cors.exposedHeaders";
-    private static final String CORS_SUPPORTED_HEADERS = "cors.supportedHeaders";
-    private static final String CORS_ALLOW_ORIGIN = "cors.allowOrigin";
 
     public AppService() {
     }
@@ -39,13 +32,16 @@ public class AppService extends Application<AppConfig> {
 
     @Override
     public void run(AppConfig appConfig, Environment environment) throws Exception {
-        final FilterRegistration.Dynamic filter = env.servlets().addFilter(CORSFILTER, CORSFilter.class);
-        filter.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), false, env.getApplicationContext().getContextPath() + "*");
-        filter.setInitParameter(CORS_ALLOW_ORIGIN, appConfigs.getAllowOrigin());
-        filter.setInitParameter(CORS_SUPPORTED_HEADERS, appConfigs.getSupportedHeaders());
-        filter.setInitParameter(CORS_EXPOSED_HEADERS, appConfigs.getExposedHeaders());
-        filter.setInitParameter(CORS_SUPPORTS_CREDENTIALS, appConfigs.getSupportsCredentials());
-        filter.setInitParameter(CORS_SUPPORTED_METHODS, appConfigs.getSupportedMethods());
+        final FilterRegistration.Dynamic cors =
+                environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+
+        // Configure CORS parameters
+        cors.setInitParameter("allowedOrigins", "*");
+        cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
+        cors.setInitParameter("allowedMethods", "GET");
+
+        // Add URL mapping
+        cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
 
 	final Currencies currencies = new Currencies();
         final Autocomplete ac = new Autocomplete();

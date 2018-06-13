@@ -28,12 +28,25 @@ constructor(props) {
 
 handleFacebook(setUser) {
   return (response)=>{
-    setUser(true, {email: response.email, displayName: response.name, photoURL: response.picture.data.url})
-    fetch("http://209.97.129.204/users/auth", {
+    fetch("http://206.189.27.195/auth", {
       method: "post",
-      body: {user_email: response.email}
-    }).then((resp)=>{
-        console.log(resp)
+      headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
+      body: "user_email="+response.email
+    })
+    .then(function(response) {
+      return response.json();})
+    .then((resp)=>{
+        if(resp.success){
+          setUser(true, {email: response.email,
+                         displayName: response.name,
+                         photoURL: response.picture.data.url,
+                         balance: resp.balance,
+                         history: resp.history,
+                         portfolio: resp.portfolio,
+                         watchlist: resp.watchlist
+                        })
+        }
+        
     })
   }
 }
@@ -44,7 +57,6 @@ componentDidMount() {
  }
 
 componentWillUnmount() {
-    this.unregisterAuthObserver();
 }
 
   render(){

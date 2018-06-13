@@ -16,7 +16,7 @@ class Main extends React.Component{
 		super(props);
 		
 		this.setUser = (logged, user) =>{
-			console.log(user) 
+			//console.log(user) 
 			this.setState({
 				user:{
 					logged: logged,

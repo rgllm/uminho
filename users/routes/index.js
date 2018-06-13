@@ -10,12 +10,13 @@ router.post('/auth', function(req,res,next){
     User.findOne({email: user_email}, function(errFind, user){
       if(!errFind){
         if(user){
-          res.send({success: "User authenticated successfully"})
+          res.send({success: "User authenticated successfully",
+                    user: user})
         }
         else{
             new User({email: user_email, portfolio: [], history: [], watchlist: [], balance: 100000}).save(function(errSave,usr){
               if(!errSave){
-                res.send({success: "Account created successfully"})
+                res.send({success: "Account created successfully", user: usr})
               }
               else{
                 res.send({error: "Error occurred in communication with database (create user)"})

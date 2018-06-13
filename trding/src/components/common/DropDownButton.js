@@ -9,11 +9,11 @@ import Menu, { Item as MenuItem, Divider } from 'rc-menu';
 
 const DropDownButton = (props) => {
   function onSelect({ key }) {
-    console.log(`${key} selected`);
+    //console.log(`${key} selected`);
   }
 
   function onVisibleChange(visible) {
-    console.log(visible);
+    //console.log(visible);
   }
   const menu = (
     <Menu onSelect={onSelect}>

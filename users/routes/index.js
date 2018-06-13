@@ -6,6 +6,7 @@ var request = require('request')
 
 router.post('/auth', function(req,res,next){
   var user_email = req.body.user_email
+  console.log(req.body)
   if(user_email) {
     User.findOne({email: user_email}, function(errFind, user){
       if(!errFind){

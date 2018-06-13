@@ -40,10 +40,10 @@ handleFacebook(setUser) {
           setUser(true, {email: response.email,
                          displayName: response.name,
                          photoURL: response.picture.data.url,
-                         balance: resp.balance,
-                         history: resp.history,
-                         portfolio: resp.portfolio,
-                         watchlist: resp.watchlist
+                         balance: resp.user.balance,
+                         history: resp.user.history,
+                         portfolio: resp.user.portfolio,
+                         watchlist: resp.user.watchlist
                         })
         }
         
@@ -82,6 +82,8 @@ componentWillUnmount() {
           );
         }
         else{
+          console.log("-----------------------------------")
+          console.log(user)
           return (
             <div className="Header">
     

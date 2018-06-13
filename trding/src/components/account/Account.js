@@ -51,11 +51,11 @@ class Account extends React.Component{
       || user.data.email != this.state.userProfile.email
       || user.data.displayName != this.state.displayName
       || user.data.balance != this.state.balance){
-        console.log(user)
+        /*console.log(user)
         this.setState({
           logged: user.logged,
           userProfile: {...user.data}
-        })
+        })*/
     }
   }
 
@@ -77,10 +77,9 @@ class Account extends React.Component{
             )
           }
           else{
-            let login
-            console.log(user)
-            this.refreshState(user)
-            const { logged, userProfile, balance, depositValue } = this.state;
+            const logged = user.logged
+            const userProfile = user.data
+            const depositValue = 0;
             return(
               <div className="Account">
                 <h1 className="Account-heading">
@@ -94,7 +93,7 @@ class Account extends React.Component{
                     Email: <span className="Account-value">{userProfile.email}</span>
                   </div>
                   <div className="Account-item">
-                    Balance: <span className="Account-value">{Number(balance)} $</span>
+                    Balance: <span className="Account-value">{Number(userProfile.balance)} $</span>
                   </div>
                   <div className="Account-item">
                     Deposit Funds:
@@ -102,10 +101,8 @@ class Account extends React.Component{
                       className="Deposit-input"
                       type="number"
                       min="0.00"
-                      step="10000.00"
                       placeholder="Value to deposit"
                       onChange={this.handleChange}
-                      value={depositValue}
                       /> $
                     <br/>
                     <br/>

@@ -6,8 +6,10 @@ import { renderChangePercent, renderProfit, renderTypeBox } from '../../helpers'
 
 
 const TransactionTable = (props) => {
+  console.log("PROPS: ",props);
   const {portfolio, currencies, handleCloseClick, history} = props;
-  console.log(portfolio);
+  console.log("Portfolio: ",portfolio);
+  console.log("Currencies: ", currencies);
 
   return(
     <div className="Table-container">
@@ -28,7 +30,7 @@ const TransactionTable = (props) => {
             <tr>
               <td>
                 <span className="Table-rank">{}</span>
-                {action.currency_id}
+                {currencies[i].name}
               </td>
               <td>
                 {renderTypeBox(action.method)}
@@ -39,7 +41,7 @@ const TransactionTable = (props) => {
               </td>
               <td>
                 <span className="Table-dollar">$</span>
-                 {currencies[i]}
+                 {currencies[i].price}
               </td>
               <td>
                 <span className="Table-dollar">{}</span>
@@ -47,7 +49,7 @@ const TransactionTable = (props) => {
               </td>
               <td>
                 <span className="Table-dollar">{}</span>
-                 {renderProfit(currencies[i], action.open_value, action.method)}
+                 {renderProfit(currencies[i].price, action.open_value, action.method)}
               </td>
               <td>
                 <span className="Close-button" onClick={() => handleCloseClick()}>✖</span>
@@ -63,7 +65,7 @@ const TransactionTable = (props) => {
 
 TransactionTable.propTypes = {
   portfolio: PropTypes.array.isRequired,
-  currencies: PropTypes.array.isRequired,
+  //currencies: PropTypes.array.isRequired,
   history: PropTypes.object.isRequired,
 };
 

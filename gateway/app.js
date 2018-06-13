@@ -25,8 +25,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/crypto', cryptoRouter);
 app.use('/users', usersRouter);
 
-const proxy = require('express-http-proxy')
-app.use('/*', proxy('http://209.97.129.204'))
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

@@ -34,6 +34,7 @@ handleFacebook(setUser) {
       body: "user_email="+response.email
     })
     .then(function(response) {
+      console.log(response)
       return response.json();})
     .then((resp)=>{
         if(resp.success){

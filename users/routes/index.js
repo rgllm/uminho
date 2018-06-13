@@ -3,22 +3,44 @@ var router = express.Router();
 var User = require('../models/User');
 var request = require('request')
 
-/* route to return login success */
-router.get('/login/success', function(req, res, next) {
-  res.type("json")
-  res.send({success: "User logged in successfully", user: req.user});
-});
-/* route to return login insuccess */
-router.get('/login/failed', function(req, res, next) {
-  res.send({error: "Facebook authentication failed"});
-});
+
+router.post('/auth', function(req,res,next){
+  var user_email = req.body.user_email
+  if(user_email) {
+    User.findOne({email: user_email}, function(errFind, user){
+      if(!errFind){
+        if(user){
+          res.send({success: "User authenticated successfully"})
+        }
+        else{
+            new User({email: user_email, portfolio: [], history: [], watchlist: [], balance: 100000}).save(function(errSave,usr){
+              if(!errSave){
+                res.send({success: "Account created successfully"})
+              }
+              else{
+                res.send({error: "Error occurred in communication with database (create user)"})
+              }
+            })
+        }
+      }
+      else{
+        res.send({error: "Error occurred in communication with database (find user)"})
+      }
+    })
+  }
+  else{
+    res.send({error: "Fields required: user_email (must be not empty)"})
+  }
+})
+
 
 /* Add funds to user's balance */
 router.post('/balance/add', function(req, res, next){
-  if(req.isAuthenticated()){
-    var amount = req.body.amount
+  var amount = req.body.amount
+  var user_email = req.body.user_email
+  if(user_email) {
     if(amount && amount!=""){
-      User.findOne({email: req.user.email}, function(err, user){
+      User.findOne({email: req.body.user_email}, function(err, user){
         if(!err){
           user.balance += parseInt(amount)
           user.save(function(errSave,u){
@@ -31,39 +53,54 @@ router.post('/balance/add', function(req, res, next){
           })
         }
         else{
-          res.send({error: "Error occurred in communication with database (get user)"})
+          res.send({error: "Error occurred in communication with database (find user)"})
         }
       })
     }
     else{
       res.send({error: "Fields required: amount (must be not empty)"})
     }
-  }
+ }
   else{
-    res.send({error: "User not authenticated"})
+    res.send({error: "Fields required: user_email (must be not empty)"})
   }
+
 })
 
 /* GET user's portfolio */
-router.get('/portfolio', function(req, res, next) {
-  if(req.isAuthenticated()){
-    res.send(req.user.portfolio)
+router.post('/portfolio', function(req, res, next) {
+  var user_email = req.body.user_email
+  if(user_email) {
+    User.findOne({email: user_email}, function(errFind, user){
+      if(!errFind){
+        if(user){
+          res.send({success: user.portfolio})
+        }
+        else{
+          res.send({error: "The given email doesn't have an account created"})
+        }
+      }
+      else{
+        res.send({error: "Error occurred in communication with database (find user)"})
+      }
+    })
   }
   else{
-    res.send({error: "User not authenticated"})
+    res.send({error: "Fields required: user_email (must be not empty)"})
   }
 });
 
 /* Add currency to user's portfolio */
 router.post('/portfolio/add', function(req, res, next) {
-  if(req.isAuthenticated()){
-    var currency_id = req.body.currency_id
-    var open_date = new Date()
-    var open_value = req.body.open_value
-    var invested = req.body.invested
-    var method = req.body.method
+  var currency_id = req.body.currency_id
+  var open_date = new Date()
+  var open_value = req.body.open_value
+  var invested = req.body.invested
+  var method = req.body.method
+  var user_email = req.body.user_email
+  if(user_email){
     if(currency_id && open_date && open_value && invested && method){
-      User.findOne({email: req.user.email}, function(err, user){
+      User.findOne({email: user_email}, function(err, user){
         if(!err){
           if(user.balance >= invested){
             user.balance -= invested
@@ -95,17 +132,17 @@ router.post('/portfolio/add', function(req, res, next) {
     }
   }
   else{
-    res.send({error: "User not authenticated"})
+    res.send({error: "Fields required: user_email (must be not empty)"})
   }
 });
 
 /* Close action from user's portfolio */
-router.get('/portfolio/close/:action_id', function(req, res, next) {
-  if(req.isAuthenticated()){
-    var action_id = req.params.action_id
-    
+router.post('/portfolio/close/:action_id', function(req, res, next) {
+  var action_id = req.params.action_id
+  var user_email = req.body.user_email
+  if(user_email){
     if(action_id){
-      User.findOne({email: req.user.email}, function(err, user){
+      User.findOne({email: user_email}, function(err, user){
         if(!err){
           console.log(action_id)
           console.log(user.portfolio)
@@ -180,26 +217,41 @@ router.get('/portfolio/close/:action_id', function(req, res, next) {
     }
   }
   else{
-    res.send({error: "User not authenticated"})
+    res.send({error: "Fields required: user_email (must be not empty)"})
   }
+
 });
 
 /* GET user's watchlist */
-router.get('/watchlist', function(req, res, next) {
-  if(req.isAuthenticated()){
-    res.send(req.user.watchlist)
+router.post('/watchlist', function(req, res, next) {
+  var user_email = req.body.user_email
+  if(user_email) {
+    User.findOne({email: user_email}, function(errFind, user){
+      if(!errFind){
+        if(user){
+          res.send({success: user.watchlist})
+        }
+        else{
+          res.send({error: "The given email doesn't have an account created"})
+        }
+      }
+      else{
+        res.send({error: "Error occurred in communication with database (find user)"})
+      }
+    })
   }
   else{
-    res.send({error: "User not authenticated"})
+    res.send({error: "Fields required: user_email (must be not empty)"})
   }
 });
 
 /* Add currency to user's watchlist  */
 router.post('/watchlist/add', function(req, res, next) {
-  if(req.isAuthenticated()){
-    var currency_id = req.body.currency_id
+  var currency_id = req.body.currency_id
+  var user_email = req.body.user_email
+  if(user_email){
     if(currency_id){
-      User.findOne({email: req.user.email}, function(err, user){
+      User.findOne({email: user_email}, function(err, user){
         if(!err){
           var currencyAlreadyInWatchlist = user.watchlist.find(c=> c == currency_id)
           if(currencyAlreadyInWatchlist){
@@ -227,16 +279,18 @@ router.post('/watchlist/add', function(req, res, next) {
     }
   }
   else{
-    res.send({error: "User not authenticated"})
+    res.send({error: "Fields required: user_email (must be not empty)"})
   }
+ 
 });
 
 /* Remove currency from user's watchlist  */
 router.post('/watchlist/remove', function(req, res, next) {
-  if(req.isAuthenticated()){
-    var currency_id = req.body.currency_id
+  var currency_id = req.body.currency_id
+  var user_email = req.body.user_email
+  if(user_email){
     if(currency_id){
-      User.findOne({email: req.user.email}, function(err, user){
+      User.findOne({email: user_email}, function(err, user){
         if(!err){
           var currencyIsInWatchlist = user.watchlist.find(c=> c == currency_id)
           if(!currencyIsInWatchlist){
@@ -264,18 +318,31 @@ router.post('/watchlist/remove', function(req, res, next) {
     }
   }
   else{
-    res.send({error: "User not authenticated"})
+    res.send({error: "Fields required: user_email (must be not empty)"})
   }
 });
 
 
 /* GET user's history */
-router.get('/history', function(req, res, next) {
-  if(req.isAuthenticated()){
-    res.send(req.user.history)
+router.post('/history', function(req, res, next) {
+  var user_email = req.body.user_email
+  if(user_email) {
+    User.findOne({email: user_email}, function(errFind, user){
+      if(!errFind){
+        if(user){
+          res.send({success: user.history})
+        }
+        else{
+          res.send({error: "The given email doesn't have an account created"})
+        }
+      }
+      else{
+        res.send({error: "Error occurred in communication with database (find user)"})
+      }
+    })
   }
   else{
-    res.send({error: "User not authenticated"})
+    res.send({error: "Fields required: user_email (must be not empty)"})
   }
 });
 

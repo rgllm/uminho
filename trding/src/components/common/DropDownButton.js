@@ -33,7 +33,7 @@ const DropDownButton = (props) => {
           onVisibleChange={onVisibleChange}
           overlayClassName="dropDownButton"
         >
-          <button className="dropDownButton"><i class="fas fa-angle-down fa-lg"></i></button>
+          <button className="dropDownButton"><i className="fas fa-angle-down fa-lg"></i></button>
         </Dropdown>
       </div>
     </div>

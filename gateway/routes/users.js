@@ -1,9 +1,15 @@
 var express = require('express');
 var router = express.Router();
 var users_service_URL = "http://206.189.27.195"
+var request = require('request')
 
 router.post('/auth', function(req,res,next){
-  res.redirect(users_service_URL + '/auth')
+  res.redirect(307, users_service_URL + '/auth')
+  request({url: 'users_service_URL' + '/auth', headers: req.headers, body: req.body }, function(err, remoteResponse, remoteBody){
+    if(err) {return res.status(500).end("Error");}
+    res.writeHead(remoteResponse.headers);
+res.end(remoteBody)
+})
 })
 
 router.post('/balance/add', function(req,res,next){

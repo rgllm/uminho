@@ -5,7 +5,6 @@
   "devDependencies": {
     "react-scripts": "1.1.0"
   },
-  "proxy": "http://209.97.129.204/",
   "dependencies": {
     "express": "^4.16.3",
     "firebase": "^5.0.2",

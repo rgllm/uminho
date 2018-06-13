@@ -39,7 +39,7 @@ class Account extends React.Component{
   }
 
   refreshState(user){
-    if(  user.logged != this.state.logged || user.data.balance != this.state.balance){
+    if(  user.logged != this.state.logged || user.data.email!=this.state.userProfile.email|| user.data.balance != this.state.balance){
         this.setState({
           logged: user.logged,
           userProfile: {...user.data}
@@ -47,17 +47,19 @@ class Account extends React.Component{
     }
   }
 
-  onToken(user) {
+  onToken(user, setUser) {
     return (token)=>{
       const { balance, depositValue } = this.state;
-      fetch(`${API_URL}/balance/add`, {
+      fetch(`${API_URL}/users/balance/add`, {
         method: "post",
         headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
         body: `user_email=${user.data.email}&amount=${depositValue}`
       }).then(handleResponse)
       .then(response=>{
         if(response.success){
-          this.setState({ balance: response.balance});
+          console.log(response)
+          setUser(true, {...user.data, balance: response.balance})
+
         }
         else{
           alert("An error occurred while depositing funds. Please try again")
@@ -112,7 +114,7 @@ class Account extends React.Component{
                       name="Trding App"
                       description="Deposit funds on your account."
                       email={userProfile.email}
-                      token={this.onToken(user)}
+                      token={this.onToken(user, setUser)}
                       stripeKey={STRIPE_KEY}
                       amount={fromUSDToCent(depositValue)}
                       currency="USD"

@@ -6,6 +6,7 @@ import myData from './transaction_2.json';
 import HistoryTable from './HistoryTable'
 import Loading from '../common/Loading';
 import Pagination from '../list/Pagination'
+import { API_URL } from '../../config';
 
 class MyHistory extends React.Component {
 
@@ -43,7 +44,7 @@ class MyHistory extends React.Component {
 
     this.setState({ loading: true });
 
-    fetch(`http://api.jsonbin.io/b/5b2042f17a973f4ce5785bd3`)
+    fetch(`${API_URL}/users/history`)
       .then(handleResponse)
       .then((data) => {
         this.setState({

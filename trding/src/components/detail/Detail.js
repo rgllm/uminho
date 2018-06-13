@@ -64,7 +64,7 @@ class Detail extends React.Component{
   fetchCurrency(currencyId){
     this.setState({ loading:true });
 
-    fetch(`${API_URL}/cryptocurrency/${currencyId}`)
+    fetch(`${API_URL}/crypto/cryptocurrency/${currencyId}`)
       .then(handleResponse)
       .then((currency) => {
         this.setState({
@@ -85,7 +85,7 @@ class Detail extends React.Component{
   buyCurrency(currencyId){
     this.setState({ loading: true });
 
-    return (fetch('http://206.189.27.195/portfolio/add', {
+    return (fetch(`http://${API_URL}/users/portfolio/add`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

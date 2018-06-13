@@ -44,7 +44,7 @@ class Search extends React.Component{
 
     this.setState({ loading:true });
 
-    fetch(`${API_URL}/autocomplete?searchQuery=${searchQuery}`)
+    fetch(`${API_URL}/crypto/autocomplete?searchQuery=${searchQuery}`)
       .then(handleResponse)
       .then((result) => {
           this.setState({

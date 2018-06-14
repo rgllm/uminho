@@ -20,7 +20,7 @@ router.post('/portfolio/add', function(req,res,next){
 })
 
 router.post('/portfolio/close/:action_id', function(req,res,next){
-  res.redirect(307, users_service_URL + '/portfolio/close')
+  res.redirect(307, users_service_URL + '/portfolio/close/' + req.params.action_id)
 })
 
 router.post('/watchlist', function(req,res,next){

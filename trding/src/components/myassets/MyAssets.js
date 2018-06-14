@@ -79,6 +79,8 @@ class MyAssets extends React.Component {
 	handleCloseClick(user, setUser){
 		return (action_id)=>{
 			if(window.confirm("Close asset?")){
+				this.setState({loading:true})
+				alert(action_id)
 				fetch(`${API_URL}/users/portfolio/close/${action_id}`,{
 					method: "post",
 					headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
@@ -88,7 +90,9 @@ class MyAssets extends React.Component {
 				  .then(res=>{
 					if(res.success){
 						setUser(true, res.user)
+
 						alert(res.success)
+						this.setState({loading:false})
 					}
 					else{
 						alert(res.error)

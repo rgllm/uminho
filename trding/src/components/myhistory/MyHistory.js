@@ -17,7 +17,7 @@ class MyHistory extends React.Component {
       loading: false,
       transactions: [],
       error: null,
-      totalPages: 0,
+      totalPages: 1,
       page: 1,
     };
     this.handlePaginationClick = this.handlePaginationClick.bind(this);
@@ -47,7 +47,7 @@ class MyHistory extends React.Component {
     fetch(`${API_URL}/users/history`,{
       method: "post",
       headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
-      body: "user_email="+user.email
+      body: "user_email="+user.data.email
     })
       .then(handleResponse)
       .then((data) => {

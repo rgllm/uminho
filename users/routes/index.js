@@ -166,11 +166,11 @@ router.post('/portfolio/close/:action_id', function(req, res, next) {
                 var difference, profit_loss
                 if(method=="buy"){
                   difference = current_value*units - open_value*units;
-                  profit_loss = open_value*units - difference;
+                  profit_loss = open_value*units + difference;
                 }
                 else if(method=="sell"){
                   difference = current_value*units - open_value*units;
-                  profit_loss = open_value*units + difference;
+                  profit_loss = open_value*units - difference;
                 }
                 else{
                   return res.send({error: "Database inconsistency: Action's method isn't 'buy' or 'sell'"})

@@ -21,7 +21,7 @@ class MyAssets extends React.Component {
 				loading: false,
 				currencies: [],
 				error: null,
-				totalPages: 0,
+				totalPages: 1,
 				page: 1,
 			};
 		
@@ -89,7 +89,7 @@ class MyAssets extends React.Component {
 				  .then(handleResponse)
 				  .then(res=>{
 					if(res.success){
-						setUser(true, {...user, balance: res.user.balance, history: res.user.history, portfolio: res.user.portfolio})
+						setUser(true, {...user.data, balance: res.user.balance, history: res.user.history, portfolio: res.user.portfolio})
 
 						alert(res.success)
 						this.setState({loading:false})

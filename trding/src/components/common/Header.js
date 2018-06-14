@@ -75,7 +75,8 @@ componentWillUnmount() {
                 appId="141112822652545"
                 autoLoad={true}
                 fields="name,email,picture"
-                
+                cssClass="loginBtn loginBtn--facebook"
+                textButton="Sign in"
                 callback={this.handleFacebook(setUser)} />
               {/*<button type="button" className="loginBtn loginBtn--facebook" onClick={this.handleFacebook(setUser)}> Sign in with Facebook </button>*/}
             </div>

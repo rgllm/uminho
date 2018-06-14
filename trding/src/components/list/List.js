@@ -30,7 +30,7 @@ class List extends React.Component {
 		this.setState({ loading: true});
 
 		const { page } = this.state;
-
+		
 		fetch(`${API_URL}/crypto/cryptocurrencies?page=${page}&perPage=20`)
 			.then(handleResponse)
 			.then((data) => {

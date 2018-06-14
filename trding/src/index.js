@@ -11,6 +11,8 @@ import MyAssets from './components/myassets/MyAssets';
 import MyHistory from './components/myhistory/MyHistory';
 import Account from './components/account/Account';
 import {UserContext} from './UserContext';
+
+
 class Main extends React.Component{
 	constructor(props) {
 		super(props);
@@ -33,8 +35,8 @@ class Main extends React.Component{
 
 	render() {
 		return(
-		<BrowserRouter>
-			<UserContext.Provider value={this.state}>
+		<UserContext.Provider value={this.state}>
+			<BrowserRouter>
 				<div>
 				<Header />
 					<Switch>
@@ -47,8 +49,8 @@ class Main extends React.Component{
 					</Switch>
 					<Footer />
 				</div>
-			</UserContext.Provider>
-		</BrowserRouter>
+			</BrowserRouter>
+		</UserContext.Provider>
 		);
 	}
 }

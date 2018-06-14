@@ -52,7 +52,7 @@ const TransactionTable = (props) => {
                  {renderProfit(currencies[i].price, action.open_value, action.method)}
               </td>
               <td>
-                <span className="Close-button" onClick={() => handleCloseClick()}>✖</span>
+                <span className="Close-button" onClick={() => {handleCloseClick(action._id)}}>✖</span>
               </td>
 
             </tr>
@@ -65,7 +65,7 @@ const TransactionTable = (props) => {
 
 TransactionTable.propTypes = {
   portfolio: PropTypes.array.isRequired,
-  //currencies: PropTypes.array.isRequired,
+  currencies: PropTypes.array.isRequired,
   history: PropTypes.object.isRequired,
 };
 

@@ -71,48 +71,56 @@ class Detail extends React.Component{
           loading: false,
           error: null,
           currency: currency,
-      });
+        });
       })
-      .catch((error) => {
-        this.setState({
-          loading: false,
-          error: error.errorMessage,
-      });
-      });
-
-  }
-
-  buyCurrency(user){
-    this.setState({ loading: true });
-    /* currency_id,open_value,invested,method */
-    var invested = this.state.invested_
-    if(this.nunits!=""){
-      invested = this.nunits*this.open_value
-    }
-    fetch(`${API_URL}/users/portfolio/add`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user_email: user.data.email,
-          currency_id: this.currency,
-          open_value: this.currency.price,
-          invested: invested,
-          method: this.method_,
-        })
-      })
-      .then((res) => res.json())
       .catch((error) => {
         this.setState({
           loading: false,
           error: error.errorMessage,
         });
       });
+
   }
 
-  publish(user) {
+  buyCurrency(user, setUser){
+    return () =>{
+      console.log(JSON.stringify(this.state,null,2))
+      /* currency_id,open_value,invested,method */
+      this.setState({ loading: true });
+      var invested = this.state.amount == "" ? 0 : parseFloat(this.state.amount) 
+      console.log("111 - " + invested)
+      if(this.nunits!=""){
+        invested = parseInt(this.state.nunits)* this.state.currency.price
+      }
+      console.log("222 - " + invested)
+      console.log("##########")
+      console.log(this.state.method_)
+      fetch(`${API_URL}/users/portfolio/add`, {
+        method: 'post',
+        headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
+        body: `user_email=${user.data.email}&currency_id=${this.state.currency.id}&open_value=${this.state.currency.price}&invested=${invested}&method=${this.state.method_}`
+      })
+      .then((res) => res.json())
+      .then(res=>{
+        console.log(res)
+        if(res.success){
+          setUser(true, res.user)
+        }
+        else{
+          alert(res.error)
+        }
+        this.setState({loading:false})
+      })
+      .catch((error) => {
+        this.setState({
+          loading: false,
+          error: error.errorMessage,
+        });
+      });
+    }
+  }
+
+  publish(user, setUser) {
     console.log("AMOUNT: "+this.state.amount, "NUNITS: "+this.state.nunits, "METHOD: "+this.state.method_);
     
     
@@ -162,7 +170,7 @@ class Detail extends React.Component{
                     <input type="radio" name="method" value="sell" onChange={(e) => { this.setState({ method_: e.target.value }) }} /> SELL
                 </div>
                 </div>
-                <button className="confirm-button" onClick={this.buyCurrency(user)} >Confirm</button>
+                <button className="confirm-button" onClick={this.buyCurrency(user, setUser)} >Confirm</button>
               </Tabs>
             );
           }

@@ -34,7 +34,6 @@ handleFacebook(setUser) {
       body: "user_email="+response.email
     })
     .then(function(response) {
-      console.log(response)
       return response.json();})
     .then((resp)=>{
         if(resp.success){
@@ -74,7 +73,7 @@ componentWillUnmount() {
              <Search />
              <FacebookLogin
                 appId="141112822652545"
-                autoLoad={false}
+                autoLoad={true}
                 fields="name,email,picture"
                 
                 callback={this.handleFacebook(setUser)} />

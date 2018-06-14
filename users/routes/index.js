@@ -192,7 +192,7 @@ router.post('/portfolio/close/:action_id', function(req, res, next) {
                 user.balance += profit_loss
                 user.save(function(errSave, u){
                   if(!errSave){
-                    res.send({success: "Action closed successfully"})
+                    res.send({success: "Action closed successfully", user:  u})
                   }
                   else{
                     res.send({error: "Error occurred in communication with database (save user)"})

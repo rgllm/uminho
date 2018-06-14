@@ -21,7 +21,7 @@ public class CurrenciesDB {
     public CurrenciesDB() {
         MongoCredential credential = MongoCredential.createCredential("trding", "trding_crypto", "trding2018".toCharArray());
         mongo = new MongoClient(
-                new ServerAddress("ds141720.mlab.com", 41720),
+                new ServerAddress(ADRESS, PORT),
                 Arrays.asList(credential)
         );
 
@@ -60,7 +60,7 @@ public class CurrenciesDB {
     public static void clearDB(){
         MongoCredential credential = MongoCredential.createCredential("trding", "trding_crypto", "trding2018".toCharArray());
         MongoClient mongo = new MongoClient(
-                new ServerAddress("ds141720.mlab.com", 41720),
+                new ServerAddress(ADRESS, PORT),
                 Arrays.asList(credential)
         );
 
@@ -77,7 +77,7 @@ public class CurrenciesDB {
     public static void insertDB(List<Currency> list){
         MongoCredential credential = MongoCredential.createCredential("trding", "trding_crypto", "trding2018".toCharArray());
         MongoClient mongo = new MongoClient(
-                new ServerAddress("ds141720.mlab.com", 41720),
+                new ServerAddress(ADRESS, PORT),
                 Arrays.asList(credential)
         );
 

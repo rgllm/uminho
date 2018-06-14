@@ -7,7 +7,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser')
 
 //Conexão à BD
-mongoose.connect('mongodb://trding:trding2018@ds141720.mlab.com:41720/trding_users')
+mongoose.connect('mongodb://')
 mongoose.Promise = global.Promise
 
 

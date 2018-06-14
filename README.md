@@ -42,6 +42,7 @@ If you're a Software Engineering student looking at this, the projects will *pro
     - [Software Testing and Analysis](https://github.com/rgllm/uminho/tree/master/04/ATS) - analysis of a JAVA project using JUnit, Coverage and RAPL.
     - [Natural Computing](https://github.com/rgllm/uminho/tree/04/CN) - TP1 is a paper about neural networks. TP2 is a Twitter sentiment analysis implementation on neural networks.
     - [Autonomous Systems](https://github.com/rgllm/uminho/tree/04/SA) - TP1 is a Robocode team. TP2 is a integration of PhidgetRFID, AdaFruit and IFTTT.
+    - [Web Engineering](https://github.com/rgllm/uminho/tree/master/04/EW/) - Cryptocurrencies trading platform based on microservices architeture and CoinMarketCap API.
 
 ## SlocCount
 

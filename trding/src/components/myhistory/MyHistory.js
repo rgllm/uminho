@@ -7,10 +7,10 @@ import HistoryTable from './HistoryTable'
 import Loading from '../common/Loading';
 import Pagination from '../list/Pagination'
 import { API_URL } from '../../config';
-
+import {UserContext} from '../../UserContext'
 class MyHistory extends React.Component {
 
-  constructor() {
+  constructor(props) {
     super();
 
     this.state = {
@@ -23,8 +23,8 @@ class MyHistory extends React.Component {
     this.handlePaginationClick = this.handlePaginationClick.bind(this);
   }
 
-  componentDidMount() {
-    this.fetchCurrencies();
+  componentWillMount() {
+    this.fetchCurrencies(this.props.user);
   }
 
   handlePaginationClick(direction) {
@@ -36,19 +36,24 @@ class MyHistory extends React.Component {
       nextPage--;
     }
     this.setState({ page: nextPage }, () => {
-      this.fetchCurrencies();
+      this.fetchCurrencies(this.props.user);
     });
   }
 
-  fetchCurrencies() {
+  fetchCurrencies(user) {
 
     this.setState({ loading: true });
 
-    fetch(`${API_URL}/users/history`)
+    fetch(`${API_URL}/users/history`,{
+      method: "post",
+      headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
+      body: "user_email="+user.email
+    })
       .then(handleResponse)
       .then((data) => {
+        alert(JSON.stringify(data, null, 2))
         this.setState({
-          transactions: data,
+          transactions: data.success,
           loading: false,
         });
       })
@@ -67,7 +72,6 @@ class MyHistory extends React.Component {
     if (error) {
       return <div className="error">{error}</div>
     }
-
     return (
       <div>
         <HistoryTable
@@ -81,7 +85,15 @@ class MyHistory extends React.Component {
         />
       </div>
     );
+
   }
 }
 
-export default MyHistory;
+export default props => ( <UserContext.Consumer>
+	{({user, setUser}) => {
+	   return <MyHistory {...props} user={user} setUser={setUser} />
+	}}
+  </UserContext.Consumer>
+)
+
+//export default MyHistory;

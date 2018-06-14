@@ -332,6 +332,7 @@ router.post('/history', function(req, res, next) {
     User.findOne({email: user_email}, function(errFind, user){
       if(!errFind){
         if(user){
+          console.log("history: \n" + JSON.stringify(user.history,null,2))
           res.send({success: user.history})
         }
         else{

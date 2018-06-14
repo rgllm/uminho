@@ -1,0 +1,37 @@
+.dropDownButton{
+  position: relative;
+  margin-right:50px;
+  background-color: rgba(0,0,0,0);
+  border:none;
+  color: white;
+  transition: opacity .2s;
+}
+
+.dropDownButton:hover {
+  color: gray;
+  cursor: pointer;
+}
+
+.rc-dropdown-menu > .rc-dropdown-menu-item{
+  padding:10px 15px!important;
+}
+
+.rc-dropdown-menu > .rc-dropdown-menu-item-selected::after{
+  content:""!important;
+}
+
+a{
+  padding: 15px;
+  font-size: 15px;
+  margin: 50px 0!important;
+}
+
+a:link {
+  text-decoration: inherit;
+  color: inherit;
+}
+
+a:visited {
+  text-decoration: inherit;
+  color: inherit;
+}

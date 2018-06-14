@@ -1,0 +1,260 @@
+.Detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 40px;
+  padding: 0 60px;
+}
+
+.Detail-heading {
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.Detail-container {
+  width: 100%;
+  max-width: 400px;
+  margin-top: 30px;
+  padding: 40px 40px 0;
+  border-radius: 4px;
+  box-shadow: 0px 0px 40px 0px#1f364d;
+}
+
+.Detail-item {
+  margin-bottom: 50px;
+}
+
+.Detail-value {
+  border-radius: 20px;
+  background-color: #1f364d;
+  font-size: 14px;
+  padding: 8px 12px;
+  margin-left: 10px;
+}
+
+.Detail-title {
+  display: block;
+  color: #9cb3c9;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.Detail-dollar {
+  color: #9cb3c9;
+  margin-right: 6px;
+}
+
+.Buy-button {
+  text-align: center;
+  border: none;
+  border-radius: 16px;
+  background-color: #05c46b;
+  transition: background-color .2s;
+  color: white;
+  cursor: pointer;
+  margin: 10px;
+  width: 100px;
+  height: 34px;
+}
+
+.Buy-button:hover {
+  background-color: #0be881;
+}
+
+.Buy-button:focus {
+  outline: none;
+}
+
+.Sell-button {
+  text-align: center;
+  border: none;
+  border-radius: 16px;
+  background-color: #ff3f34;
+  transition: background-color .2s;
+  color: white;
+  cursor: pointer;
+  margin: 10px;
+  width: 100px;
+  height: 34px;
+}
+
+.Sell-button:hover {
+  background-color: #ff5e57;
+}
+
+.Sell-button:focus {
+  outline: none;
+}
+
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+
+.backdrop {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background: rgba(109, 109, 109, 0.3);
+}
+
+.modal {
+  position:fixed;
+  background: #0f273d;
+  width: 30%;
+  height: 50%;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #fff; 
+}
+
+.headingname {
+  text-align: left;
+  margin-top: 7%;
+  margin-bottom: 2%;
+  margin-left: 9%;
+  font-size: 20px;
+  font-weight: 400;
+  color: #05c46b;
+  }
+
+  .currencyname {
+    margin-left: 9%;
+    flex: 0;
+    text-align : left;
+    justify-content: left;
+    align-items: left;
+    margin-top: 3%;
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
+  }
+
+  .closebutton {
+    position: fixed;
+    top: 83%;
+    left: 85%;
+    text-align: center;
+    border: none;
+    border-radius: 15px;
+    background-color: white;
+    transition: background-color .2s;
+    color: #0f273d;
+    cursor: pointer;
+    margin: 15px;
+    width: 30px;
+    height: 30px;
+  }
+
+.closebutton:hover {
+  background-color: #bbbbbb;
+}
+
+.closebutton:focus {
+  outline: none;
+}
+
+.form {
+  margin-left: 5%;
+  flex: 0;
+  text-align : center;
+  justify-content: center;
+  align-items: center;
+}
+
+.radio {
+  margin-left: 1%;
+  flex: 1;
+  padding: 5%;
+  text-align : left;
+  justify-content: left;
+  align-items: left;
+}
+
+.inputs{
+  text-align: center;
+  padding: 8px 8px;
+  top: 35%;
+  width: 200px;
+}
+
+.button-amount {
+  background: #1f364d;
+  color: #fff;
+  border-top: 1px solid #fff; 
+  border-right: 1px solid #fff;       
+  border-bottom: 1px solid #fff;    
+}
+
+.button-units {
+  background: #1f364d;
+  color: #fff;
+  border: 1px solid #fff;    
+}
+
+.button_parent {
+  flex: 0;
+  text-align : center;
+  justify-content: center;
+  align-items: center;
+}
+.button-amount,
+.button-units {
+  display: inline-block;
+  border-radius: 0;
+  padding: 10px 10px;
+  font-weight: 300;
+  -moz-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.button-amount:hover,
+.button-units:hover {
+  background: #0f273d;
+}
+
+.button-amount:focus,
+.button-units:focus {
+  background: #1f364d;
+
+}
+.button_tabs {
+  background: #1f364d;
+  border-radius: 10px;
+}
+
+.confirm-button {
+
+  flex: 0;
+  text-align : center;
+  justify-content: center;
+  align-items: center;  border: none;
+  border-radius: 10px;
+  background-color: #05c46b;
+  transition: background-color .2s;
+  color: white;
+  cursor: pointer;
+  margin-top: 3%;
+  margin-left: 9%;
+  width: 90px;
+  height: 30px;
+}
+
+.confirm-button:hover {
+  background-color: #0be881;
+}
+
+.confirm-button:focus {
+  outline: none;
+}

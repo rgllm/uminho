@@ -13,6 +13,7 @@ const HistoryTable = (props) => {
         <thead className="Table-header">
           <tr>
             <th>Cryptocurrency</th>
+            <th>Units</th>
             <th>Open Date</th>
             <th>Open Value</th>
             <th>Invested</th>
@@ -30,6 +31,10 @@ const HistoryTable = (props) => {
               <td>
                 <span className="Table-rank">{}</span>
                 {transaction.currency_id}
+              </td>
+              <td>
+                <span className="Table-rank">{}</span>
+                {transaction.invested/transaction.open_value}
               </td>
               <td>
                 <span className="Table-dollar">{}</span>

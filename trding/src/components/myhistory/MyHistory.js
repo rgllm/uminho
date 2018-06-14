@@ -51,7 +51,6 @@ class MyHistory extends React.Component {
     })
       .then(handleResponse)
       .then((data) => {
-        alert(JSON.stringify(data, null, 2))
         this.setState({
           transactions: data.success,
           loading: false,

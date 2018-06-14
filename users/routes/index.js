@@ -165,7 +165,7 @@ router.post('/portfolio/close/:action_id', function(req, res, next) {
                 
                 var difference, profit_loss
                 difference = current_value - open_value
-                profit_loss = invested + difference
+                profit_loss =  difference
                 if(method!="buy" && method !="sell"){
                   return res.send({error: "Database inconsistency: Action's method isn't 'buy' or 'sell'"})
                 }
@@ -183,7 +183,7 @@ router.post('/portfolio/close/:action_id', function(req, res, next) {
 
                 user.portfolio = user.portfolio.filter(x => String(x._id) != String(action_id))
                 user.history.push(history_entry)
-                user.balance += profit_loss
+                user.balance += invested + profit_loss
                 user.save(function(errSave, u){
                   if(!errSave){
                     res.send({success: "Action closed successfully", user:  u})

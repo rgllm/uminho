@@ -104,12 +104,13 @@ class Detail extends React.Component{
       .then(res=>{
         console.log(res)
         if(res.success){
-          setUser(true, res.user)
+          setUser(true, {...user.data, balance: res.user.balance, portfolio: res.user.portfolio})
         }
         else{
           alert(res.error)
         }
         this.setState({loading:false})
+        this.closeModal()
       })
       .catch((error) => {
         this.setState({

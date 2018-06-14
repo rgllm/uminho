@@ -18,6 +18,7 @@ const TransactionTable = (props) => {
           <tr>
             <th>Cryptocurrency</th>
             <th>Type</th>
+            <th>Units</th>
             <th>Opening price</th>
             <th>Current price</th>
             <th>Invested</th>
@@ -36,6 +37,10 @@ const TransactionTable = (props) => {
                 {renderTypeBox(action.method)}
               </td> 
               <td>
+                
+                 {action.invested / action.open_value}
+              </td>
+              <td>
                 <span className="Table-dollar">$</span>
                  {action.open_value}
               </td>
@@ -44,7 +49,7 @@ const TransactionTable = (props) => {
                  {currencies[i].price}
               </td>
               <td>
-                <span className="Table-dollar">{}</span>
+                <span className="Table-dollar">$</span>
                 {action.invested}
               </td>
               <td>

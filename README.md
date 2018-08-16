@@ -8,7 +8,7 @@ I use git for pretty much all of the course, but in a lot of different platforms
 
 All of the code here is student code, so don't get your hopes up.
 
-If you're a Software Engineering student looking at this, the projects will *probably* help you, especially because every now and then the professors hand over the same project assignments. If you need help through any part or if you need to find out what was the assignment we were supposed to do, your best bet is probably to hit me up on [Twitter](https://twitter.com/rgllm).
+If you're a Software Engineering student looking at this, the projects will *probably* help you, especially because every now and then the teachers hand over the same project assignments. If you need help through any part or if you need to find out what was the assignment we were supposed to do, your best bet is probably to hit me up on [Twitter](https://twitter.com/rgllm).
 
 ## Content
 
@@ -44,28 +44,6 @@ If you're a Software Engineering student looking at this, the projects will *pro
     - [Autonomous Systems](https://github.com/rgllm/uminho/tree/04/SA) - TP1 is a Robocode team. TP2 is a integration of PhidgetRFID, AdaFruit and IFTTT.
     - [Web Engineering](https://github.com/rgllm/uminho/tree/master/04/EW/) - Cryptocurrencies trading platform based on microservices architeture and CoinMarketCap API.
 
-## SlocCount
-
-
-Totals grouped by language (dominant language first):
-- java:         14044 (45.43%)
-- cpp:           8157 (26.39%)
-- ansic:         4758 (15.39%)
-- cs:            1911 (6.18%)
-- haskell:        841 (2.72%)
-- perl:           512 (1.66%)
-- yacc:           455 (1.47%)
-- lex:            136 (0.44%)
-- sh:              98 (0.32%)
-
-
-- Total Physical Source Lines of Code (SLOC)                = 30,912
-- Development Effort Estimate, Person-Years (Person-Months) = 7.34 (88.07)
-- Schedule Estimate, Years (Months)                         = 1.14 (13.71)
-- Estimated Average Number of Developers (Effort/Schedule)  = 6.42
-- Total Estimated Cost to Develop                           = $ 991,460
-- (average salary = $56,286/year, overhead = 2.40).
-
 
 ## Contributors
 
@@ -77,3 +55,4 @@ Totals grouped by language (dominant language first):
 * [Tiago Sá](https://github.com/ReiDeGuisande)
 * [Mariana Carvalho](https://github.com/mcarvalho13)
 * [José Cunha](https://github.com/JoseCunha96)
+* [Miguel Miranda](https://github.com/MikeDM16)
